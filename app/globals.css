@@ -1,0 +1,325 @@
+@import "tailwindcss";
+
+@theme {
+  --color-crema: #fbf7f2;
+  --color-crema-deep: #f4ede4;
+  --color-rosa-polvo: #f6e9e6;
+  --color-lavanda: #f1ecf6;
+  --color-salvia: #eef3ec;
+  --color-ciruela: #3f2e3a;
+  --color-ciruela-soft: #54404e;
+  --color-ink: #3f2e3a;
+  --color-ink-soft: #6e5a66;
+  --color-rosa: #c98b93;
+  --color-rosa-deep: #9c5f6c;
+  --color-malva: #a9799b;
+  --color-malva-deep: #8e5f80;
+  --color-dorado: #c8a46a;
+  --color-dorado-soft: #ddbf8c;
+  --color-linea: #e7dcd3;
+
+  --color-chakra-raiz: #d9776f;
+  --color-chakra-sacro: #e9a66b;
+  --color-chakra-plexo: #e8c96a;
+  --color-chakra-corazon: #8fb996;
+  --color-chakra-garganta: #7fb3d5;
+  --color-chakra-tercer-ojo: #7c86c2;
+  --color-chakra-corona: #a88bc7;
+
+  --text-display: clamp(4.25rem, 2.2rem + 10vw, 11.5rem);
+  --text-display--line-height: 0.92;
+  --text-h1: clamp(2.6rem, 1.75rem + 3.8vw, 5.25rem);
+  --text-h1--line-height: 1.02;
+  --text-h2: clamp(2.05rem, 1.55rem + 2.3vw, 3.75rem);
+  --text-h2--line-height: 1.06;
+  --text-h3: clamp(1.45rem, 1.25rem + 0.85vw, 2.05rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.06rem, 0.98rem + 0.38vw, 1.3rem);
+  --text-lead--line-height: 1.6;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--letter-spacing: 0.22em;
+
+  --ease-breath: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-drift: drift 38s ease-in-out infinite alternate;
+  --animate-drift-slow: drift-alt 52s ease-in-out infinite alternate;
+
+  @keyframes drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(4%, -6%, 0) scale(1.08) rotate(14deg);
+    }
+    100% {
+      transform: translate3d(-5%, 4%, 0) scale(0.96) rotate(-10deg);
+    }
+  }
+
+  @keyframes drift-alt {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1.05);
+    }
+    100% {
+      transform: translate3d(-7%, 5%, 0) scale(0.92);
+    }
+  }
+}
+
+@theme inline {
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-manrope), "Manrope", system-ui, sans-serif;
+  --font-script: var(--font-allura), "Allura", cursive;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-crema);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-rosa-polvo);
+    color: var(--color-ciruela);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-malva-deep);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  button,
+  [role="button"],
+  summary {
+    cursor: pointer;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    line-height: var(--text-eyebrow--line-height);
+    letter-spacing: var(--text-eyebrow--letter-spacing);
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-ink-soft);
+  }
+
+  .script-accent {
+    font-family: var(--font-script);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.6s var(--ease-breath);
+    padding-bottom: 2px;
+  }
+
+  .link-underline:hover,
+  .link-underline:focus-visible,
+  .link-underline[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+
+  .link-underline-static {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: background-size 0.6s var(--ease-breath);
+  }
+
+  .link-underline-static:hover,
+  .link-underline-static:focus-visible {
+    background-size: 0% 1px;
+  }
+
+  .mask-arch {
+    border-radius: 999px 999px 1.75rem 1.75rem;
+  }
+
+  .mask-arch-full {
+    border-radius: 999px 999px 999px 999px;
+  }
+
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-dorado) 20%, var(--color-dorado) 80%, transparent);
+    opacity: 0.7;
+  }
+
+  .chakra-gradient {
+    background: linear-gradient(
+      120deg,
+      var(--color-chakra-raiz),
+      var(--color-chakra-sacro),
+      var(--color-chakra-plexo),
+      var(--color-chakra-corazon),
+      var(--color-chakra-garganta),
+      var(--color-chakra-tercer-ojo),
+      var(--color-chakra-corona)
+    );
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+    opacity: 0.7;
+    pointer-events: none;
+    will-change: transform;
+  }
+
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.18 0 0 0 0 0.23 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  .container-page {
+    width: 100%;
+    max-width: 82rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 0.6rem + 3vw, 3rem);
+  }
+
+  .section-pad {
+    padding-block: clamp(4.5rem, 3rem + 6vw, 9rem);
+  }
+
+  .prose-legal h2 {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    scroll-margin-top: 7rem;
+  }
+
+  .prose-legal p,
+  .prose-legal li {
+    color: var(--color-ink-soft);
+    margin-bottom: 0.9rem;
+  }
+
+  .prose-legal ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose-legal a {
+    color: var(--color-malva-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-legal strong {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 40s) linear infinite;
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-reverse .marquee-track {
+    animation-direction: reverse;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
