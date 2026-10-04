@@ -8,9 +8,12 @@ type PageMetaInput = {
   description: string;
   path: string;
   absoluteTitle?: boolean;
+  defaultImage?: boolean;
 };
 
-export function pageMetadata({ title, description, path, absoluteTitle = true }: PageMetaInput): Metadata {
+const defaultOgImage = { url: "/opengraph-image", width: 1200, height: 630, alt: "Despierta con Tati" };
+
+export function pageMetadata({ title, description, path, absoluteTitle = true, defaultImage = false }: PageMetaInput): Metadata {
   const url = absoluteUrl(path);
   return {
     title: absoluteTitle ? { absolute: title } : title,
@@ -23,11 +26,13 @@ export function pageMetadata({ title, description, path, absoluteTitle = true }:
       url,
       title,
       description,
+      ...(defaultImage ? { images: [defaultOgImage] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      ...(defaultImage ? { images: [defaultOgImage.url] } : {}),
     },
   };
 }

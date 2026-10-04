@@ -69,3 +69,10 @@ export const cookieCategories: CookieCategoryInfo[] = [
     items: [],
   },
 ];
+
+export const cookieTableHeaders = {
+  name: "Nombre",
+  provider: "Proveedor",
+  purpose: "Finalidad",
+  duration: "Duración",
+};

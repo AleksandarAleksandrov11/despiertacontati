@@ -215,6 +215,8 @@ export const notFoundPage = {
   ],
 };
 
+export const loadingLabel = "Cargando";
+
 export const errorPage = {
   title: "Algo no ha ido bien.",
   text: "Vuelve a intentarlo. Si sigue igual, escríbeme por WhatsApp.",
