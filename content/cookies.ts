@@ -9,7 +9,7 @@ export const cookieBanner = {
   policy: "Política de cookies",
   panel: {
     title: "Configurar cookies",
-    intro: "Elige qué permites. Puedes cambiarlo cuando quieras desde el pie de la web, en \"Configurar cookies\".",
+    intro: "Elige qué permites. Puedes cambiarlo cuando quieras desde el pie de la web, en «Configurar cookies».",
     save: "Guardar selección",
     acceptAll: "Aceptar todas",
     rejectAll: "Rechazar todas",

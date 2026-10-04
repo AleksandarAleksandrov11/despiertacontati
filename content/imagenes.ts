@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import amanecerPlaya from "@/public/images/amanecer-playa-mujer-caminando.webp";
+import amanecerPlaya from "@/public/images/amanecer-playa-mujer-caminando-vertical.webp";
 import cuencoLibros from "@/public/images/cuenco-tibetano-libros.webp";
 import cuencoSalvia from "@/public/images/cuenco-tibetano-salvia.webp";
 import duchaLuminosa from "@/public/images/ducha-luminosa.webp";

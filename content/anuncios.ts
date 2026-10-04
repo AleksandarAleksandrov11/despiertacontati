@@ -56,14 +56,14 @@ export const anuncios: Anuncio[] = [
   {
     id: "meditacion-esponja-gratitud",
     type: "Meditación",
-    title: "Meditación \"La esponja de la gratitud\"",
+    title: "Meditación «La esponja de la gratitud»",
     status: "Ya disponible",
     modality: "Grabada",
     text: "Para hacer en la ducha. Te la envío por WhatsApp.",
     cta: {
       kind: "whatsapp",
       label: "Quiero esta meditación",
-      message: "Hola, Tati. Quiero la meditación \"La esponja de la gratitud\". ¿Cómo me la envías?",
+      message: "Hola, Tati. Quiero la meditación «La esponja de la gratitud». ¿Cómo me la envías?",
     },
   },
 ];

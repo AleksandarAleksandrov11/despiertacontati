@@ -109,7 +109,7 @@ export const faqs = {
     },
     {
       question: "No sé qué necesito. ¿Puedo escribirte igual?",
-      answer: "Claro. Marca \"Aún no lo sé\" y lo vemos juntas.",
+      answer: "Claro. Marca «Aún no lo sé» y lo vemos juntas.",
     },
     dondeFaq,
     disclaimerFaq,

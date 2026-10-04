@@ -2,6 +2,7 @@ import type { ImageKey } from "./imagenes";
 
 export const inicio = {
   hero: {
+    eyebrow: "Terapeuta holística en Valencia",
     title: "Despierta.",
     subtitle: "Conócete, toma conciencia y elige mejor.",
     support: "Reiki, meditación y tarot terapéutico en Valencia y online.",
@@ -18,8 +19,8 @@ export const inicio = {
       { title: "El dinero te quita el sueño", accent: "var(--color-chakra-raiz)" },
       { title: "Una relación te tiene atascada", accent: "var(--color-chakra-garganta)" },
     ],
-    closingLead: "Primero,",
-    closingScript: "bajar revoluciones.",
+    closingLead: "Primero, bajar",
+    closingScript: "revoluciones",
   },
   destacados: {
     eyebrow: "Para empezar",
@@ -32,6 +33,7 @@ export const inicio = {
     phases: ["Inhala", "Sostén", "Exhala"],
     start: "Iniciar",
     pause: "Pausar",
+    reset: "Reiniciar",
     cycles: "ciclos",
     idle: "Pulsa y sigue el círculo",
   },

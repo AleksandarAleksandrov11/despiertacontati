@@ -16,7 +16,7 @@ export function RotatingWord({ words, interval = 2800, className }: { words: str
   return (
     <span className={className}>
       <span className="sr-only">{words.join(", ")}</span>
-      <span aria-hidden className="relative inline-grid overflow-hidden align-bottom">
+      <span aria-hidden className="relative -mx-3 inline-grid overflow-hidden px-3 align-bottom">
         <span className="invisible col-start-1 row-start-1">
           {words.reduce((a, b) => (a.length >= b.length ? a : b))}
         </span>

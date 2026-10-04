@@ -38,4 +38,4 @@ export const meditaciones: Meditacion[] = [
 ];
 
 export const meditacionWhatsapp = (title: string) =>
-  `Hola, Tati. Quiero la meditación "${title}". ¿Cómo me la envías?`;
+  `Hola, Tati. Quiero la meditación «${title}». ¿Cómo me la envías?`;

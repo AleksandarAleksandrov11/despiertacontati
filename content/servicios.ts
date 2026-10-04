@@ -57,9 +57,8 @@ export const servicios: Servicio[] = [
 ];
 
 export const metodo = {
-  eyebrow: "El Método Despierta",
+  eyebrow: "Método Despierta",
   title: "Calma, claridad y decisión.",
-  intro: "Un orden que funciona: primero bajas revoluciones, después ves claro y entonces decides.",
   steps: [
     {
       number: "01",
@@ -67,7 +66,7 @@ export const metodo = {
       tool: "Reiki",
       accent: "var(--color-chakra-corazon)",
       image: "reikiRostro" as ImageKey,
-      text: "Con ansiedad cuesta mucho meditar. Por eso empezamos por el Reiki: te tumbas y el cuerpo suelta.",
+      text: "Con ansiedad cuesta meditar. Primero, Reiki para bajar revoluciones.",
       href: "/servicios/reiki",
     },
     {
@@ -76,7 +75,7 @@ export const metodo = {
       tool: "Meditación",
       accent: "var(--color-chakra-tercer-ojo)",
       image: "meditacionCasa" as ImageKey,
-      text: "Con calma llega la claridad. Aprendes a parar y a escucharte, en casa o en cualquier rato del día.",
+      text: "Con calma llega la claridad: aprendes a parar.",
       href: "/servicios/meditacion",
     },
     {
@@ -85,7 +84,7 @@ export const metodo = {
       tool: "Tarot terapéutico",
       accent: "var(--color-chakra-plexo)",
       image: "tarotBaraja" as ImageKey,
-      text: "El tarot te pone un espejo delante. Ves lo que hay y eliges mejor.",
+      text: "El tarot te pone un espejo. Ves claro y eliges.",
       href: "/servicios/tarot-terapeutico",
     },
   ],
@@ -137,21 +136,21 @@ export const clasesGrupales = ["Meditación grupal online", "Meditación grupal 
 export const destacados = [
   {
     title: "Meditaciones grabadas",
-    text: "Para la ducha, para la ansiedad, para dormir o para decidir. Te llegan por WhatsApp.",
+    text: "Para la ducha, la ansiedad o dormir.",
     image: "teCama" as ImageKey,
     href: "/servicios/meditacion#grabadas",
     cta: "Ver meditaciones",
   },
   {
     title: "Clases grupales",
-    text: "Meditación en grupo, online y en Valencia. Abro grupo muy pronto.",
+    text: "Online y en Valencia. Abro grupo pronto.",
     image: "grupoParque" as ImageKey,
     href: "/tablon",
     cta: "Ver el tablón",
   },
   {
     title: "Sesiones individuales",
-    text: "Reiki o tarot terapéutico, en Valencia u online. Un rato solo para ti.",
+    text: "Reiki o tarot, en Valencia u online.",
     image: "reikiSesion" as ImageKey,
     href: "/servicios",
     cta: "Ver servicios",

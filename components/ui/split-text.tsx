@@ -1,9 +1,11 @@
-import type { CSSProperties, ElementType } from "react";
+import type { CSSProperties, ReactNode } from "react";
+
+type TextTag = "h1" | "h2" | "h3" | "p" | "span" | "div";
 import { cn } from "@/lib/utils";
 
 type SplitTextProps = {
   text: string;
-  as?: ElementType;
+  as?: TextTag;
   className?: string;
   delay?: number;
 };
@@ -40,10 +42,10 @@ export function FadeUp({
   className,
   as: Tag = "div",
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   className?: string;
-  as?: ElementType;
+  as?: TextTag;
 }) {
   return (
     <Tag className={cn("fade-up", className)} style={{ "--d": `${delay}ms` } as CSSProperties}>

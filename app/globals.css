@@ -325,6 +325,15 @@
   animation-delay: var(--d, 0ms);
 }
 
+@keyframes scroll-cue {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(200%);
+  }
+}
+
 @keyframes marquee {
   to {
     transform: translate3d(-50%, 0, 0);
