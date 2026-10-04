@@ -15,6 +15,7 @@ export type Servicio = {
   summary: string;
   formats: string[];
   topic: ContactTopic;
+  more: string;
 };
 
 export const servicios: Servicio[] = [
@@ -29,6 +30,7 @@ export const servicios: Servicio[] = [
     summary: "Primero, bajar revoluciones. El cuerpo se afloja y la cabeza deja de ir a mil.",
     formats: ["Presencial en Valencia", "Online", "Individual", "Cursos"],
     topic: "reiki",
+    more: "Conoce el Reiki",
   },
   {
     slug: "meditacion",
@@ -41,6 +43,7 @@ export const servicios: Servicio[] = [
     summary: "Con calma llega la claridad. Meditaciones grabadas y clases en grupo para practicar en tu día a día.",
     formats: ["Presencial en Valencia", "Online", "Grupal", "Grabada"],
     topic: "meditacion",
+    more: "Conoce la meditación",
   },
   {
     slug: "tarot-terapeutico",
@@ -53,6 +56,7 @@ export const servicios: Servicio[] = [
     summary: "Un espejo para ver tu situación desde fuera y elegir con más claridad.",
     formats: ["Presencial en Valencia", "Online", "Individual"],
     topic: "tarot",
+    more: "Conoce el tarot terapéutico",
   },
 ];
 
@@ -175,6 +179,8 @@ export const reikiPage = {
     ],
     online: "Online funciona igual: tú en casa, tumbada y tranquila, y yo te envío el Reiki a distancia.",
   },
+  modalidadesHeading: { eyebrow: "Modalidades", title: "Elige cómo." },
+  ctaWhatsapp: "Hola, Tati. Me gustaría reservar una sesión de Reiki.",
   modalidades: [
     {
       title: "Sesión de Reiki",
@@ -243,7 +249,13 @@ export const meditacionPage = {
     title: "Meditar en compañía.",
     text: "Estoy a punto de abrir grupo online y otro presencial en Valencia. Mira el tablón y apúntate.",
     image: "grupoSala" as ImageKey,
+    cta: "Quiero plaza",
+    ctaWhatsapp: "Hola, Tati. Quiero plaza en un grupo de meditación. ¿Me cuentas cuándo empieza?",
+    tablon: "Ver el tablón",
   },
+  grabadasCta: "Quiero esta meditación",
+  verGrabadas: "Ver meditaciones",
+  ctaWhatsapp: "Hola, Tati. Me interesa la meditación y me gustaría que me contaras cómo empezar.",
 };
 
 export const tarotPage = {
@@ -266,6 +278,7 @@ export const tarotPage = {
   cartas: {
     eyebrow: "Lo que te llevas",
     title: "Gira las cartas.",
+    flipLabel: "Girar carta",
     items: [
       { title: "Claridad", text: "Ves la situación tal como es, sin el ruido de la preocupación." },
       { title: "Autoconocimiento", text: "Entiendes desde dónde estás eligiendo y qué te frena." },
@@ -273,7 +286,8 @@ export const tarotPage = {
     ],
   },
   complementarios: {
-    eyebrow: "También trabajo con",
+    eyebrow: "Complementarios",
+    title: "Dos herramientas más.",
     items: [
       {
         title: "Registros akáshicos",
@@ -286,15 +300,18 @@ export const tarotPage = {
     ],
   },
   instagram: {
+    eyebrow: "En Instagram",
     title: "Tarot con Tati",
     text: "Tiradas, cartas del día y reflexiones en mi cuenta de tarot.",
+    cta: "Ir a @tarotcontati8",
   },
+  ctaWhatsapp: "Hola, Tati. Me gustaría reservar una sesión de tarot terapéutico.",
 };
 
 export const serviciosPage = {
   eyebrow: "Servicios",
   title: "Calma, claridad y decisión.",
-  subtitle: "Reiki, meditación y tarot terapéutico en Valencia y online. Tú eliges por dónde entrar; yo te digo por dónde empezar.",
+  subtitle: "Reiki, meditación y tarot terapéutico en Valencia y online.",
   porDonde: {
     eyebrow: "Por dónde empezar",
     title: "El tarot va al final.",

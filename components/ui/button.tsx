@@ -28,7 +28,7 @@ type NativeButtonProps = CommonProps & {
 export type ButtonProps = LinkProps | NativeButtonProps;
 
 const pill =
-  "group relative inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 py-3 text-[0.95rem] font-medium tracking-[0.01em] transition-[background-color,color,border-color,box-shadow] duration-500 ease-[var(--ease-breath)] disabled:pointer-events-none disabled:opacity-60";
+  "group relative inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 py-3 text-center text-[0.95rem] font-medium tracking-[0.01em] transition-[background-color,color,border-color,box-shadow] duration-500 ease-[var(--ease-breath)] disabled:pointer-events-none disabled:opacity-60";
 
 const styles: Record<Tone, Record<Variant, string>> = {
   light: {

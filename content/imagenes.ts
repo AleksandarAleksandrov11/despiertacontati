@@ -11,7 +11,7 @@ import meditacionCasa from "@/public/images/meditacion-en-casa.webp";
 import grupoParque from "@/public/images/meditacion-grupo-parque.webp";
 import grupoSala from "@/public/images/meditacion-grupo-sala.webp";
 import pendulo from "@/public/images/pendulo-piedras-chakras.webp";
-import piedrasChakras from "@/public/images/piedras-chakras-lino.webp";
+import piedrasChakras from "@/public/images/piedras-cuarzo-amatista.webp";
 import reikiSesion from "@/public/images/reiki-manos-sesion.webp";
 import reikiRostro from "@/public/images/reiki-manos-sobre-rostro.webp";
 import tarotBaraja from "@/public/images/tarot-baraja-abierta.webp";
@@ -86,7 +86,7 @@ export const imagenes = {
   },
   piedrasChakras: {
     src: piedrasChakras,
-    alt: "Piedras de los chakras pulidas sobre una bolsita de lino",
+    alt: "Piedras pulidas de cuarzo y amatista en tonos rosa, lila y crema",
   },
   reikiSesion: {
     src: reikiSesion,
