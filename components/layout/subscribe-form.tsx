@@ -64,7 +64,7 @@ export function SubscribeForm() {
           placeholder={suscripcion.placeholder}
           aria-invalid={errors.email ? true : undefined}
           aria-describedby={errors.email ? `${id}-email-error` : undefined}
-          className="min-h-12 w-full bg-transparent text-crema placeholder:text-crema/55 focus:outline-none"
+          className="min-h-12 w-full bg-transparent text-crema placeholder:text-crema/70 focus:outline-none"
           {...register("email")}
         />
         <button

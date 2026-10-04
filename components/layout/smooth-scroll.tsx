@@ -41,9 +41,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       else if (!instance) start();
     }
 
-    onChange();
+    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 600));
+    const cancelIdle = window.cancelIdleCallback ?? window.clearTimeout;
+    const idleId = idle(onChange, { timeout: 1500 });
     reduce.addEventListener("change", onChange);
     return () => {
+      cancelIdle(idleId);
       reduce.removeEventListener("change", onChange);
       stop();
     };

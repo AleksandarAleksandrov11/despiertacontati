@@ -4,7 +4,7 @@ import { legalNav, mainNav, site } from "@/content/site";
 import { suscripcion } from "@/content/paginas";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
-import { SubscribeForm } from "./subscribe-form";
+import { LazySubscribeForm } from "./lazy-subscribe-form";
 import { CookieSettingsButton } from "./cookie-settings-button";
 import { FooterYear } from "./footer-year";
 import { whatsappHref } from "@/lib/utils";
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
 
           <nav aria-label={site.ui.footerNav} className="lg:col-span-2">
-            <h2 className="eyebrow mb-4 text-crema/60">{site.ui.footerNav}</h2>
+            <h2 className="eyebrow mb-4 text-crema/75">{site.ui.footerNav}</h2>
             <ul className="space-y-1">
               {mainNav.map((item) => (
                 <li key={item.href}>
@@ -61,7 +61,7 @@ export function Footer() {
           </nav>
 
           <nav aria-label={site.ui.footerServices} className="lg:col-span-2">
-            <h2 className="eyebrow mb-4 text-crema/60">{site.ui.footerServices}</h2>
+            <h2 className="eyebrow mb-4 text-crema/75">{site.ui.footerServices}</h2>
             <ul className="space-y-1">
               {services.map((item) => (
                 <li key={item.href}>
@@ -79,7 +79,7 @@ export function Footer() {
           </nav>
 
           <div className="lg:col-span-3">
-            <h2 className="eyebrow mb-4 text-crema/60">{site.ui.footerContact}</h2>
+            <h2 className="eyebrow mb-4 text-crema/75">{site.ui.footerContact}</h2>
             <ul className="space-y-1">
               <li>
                 <a href={whatsappHref()} target="_blank" rel="noopener noreferrer" className={linkClass}>
@@ -98,7 +98,7 @@ export function Footer() {
               </li>
               <li className="pt-2 text-crema/75">{site.location.label}</li>
             </ul>
-            <h2 className="eyebrow mb-3 mt-8 text-crema/60">{site.ui.footerSocial}</h2>
+            <h2 className="eyebrow mb-3 mt-8 text-crema/75">{site.ui.footerSocial}</h2>
             <ul className="space-y-1">
               <li>
                 <a href={site.social.instagram.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
@@ -114,13 +114,13 @@ export function Footer() {
           </div>
 
           <div className="sm:col-span-2 lg:col-span-2">
-            <h2 className="eyebrow mb-4 text-crema/60">{suscripcion.title}</h2>
+            <h2 className="eyebrow mb-4 text-crema/75">{suscripcion.title}</h2>
             <p className="mb-4 text-crema/75">{suscripcion.text}</p>
-            <SubscribeForm />
+            <LazySubscribeForm />
           </div>
         </div>
 
-        <div className="mt-16 border-t border-crema/15 pt-8 text-sm text-crema/65">
+        <div className="mt-16 border-t border-crema/15 pt-8 text-sm text-crema/80">
           <p className="mb-5 max-w-2xl">{site.disclaimer}</p>
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <p>
@@ -142,7 +142,7 @@ export function Footer() {
                 </li>
               </ul>
             </nav>
-            <p className="text-crema/50">{site.credit.label}</p>
+            <p className="text-crema/75">{site.credit.label}</p>
           </div>
         </div>
       </div>

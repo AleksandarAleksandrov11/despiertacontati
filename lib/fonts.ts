@@ -20,4 +20,5 @@ export const allura = Allura({
   weight: "400",
   variable: "--font-allura",
   display: "swap",
+  preload: false,
 });

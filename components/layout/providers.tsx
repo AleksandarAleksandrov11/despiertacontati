@@ -1,14 +1,16 @@
 "use client";
 
-import { LazyMotion, MotionConfig, domAnimation } from "motion/react";
+import { LazyMotion, MotionConfig } from "motion/react";
 import type { ReactNode } from "react";
 import { ConsentProvider } from "./consent";
 import { SmoothScroll } from "./smooth-scroll";
 
+const loadFeatures = () => import("./motion-features").then((mod) => mod.default);
+
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
-      <LazyMotion features={domAnimation} strict>
+      <LazyMotion features={loadFeatures} strict>
         <ConsentProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </ConsentProvider>

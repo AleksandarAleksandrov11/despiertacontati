@@ -49,7 +49,7 @@ export function PageHeader({ eyebrow, title, subtitle, image, tone = "crema", ch
           )}
         </div>
         {image && (
-          <FadeUp delay={250} className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+          <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
             <SiteImage
               name={image}
               shape="arch"
@@ -57,7 +57,7 @@ export function PageHeader({ eyebrow, title, subtitle, image, tone = "crema", ch
               sizes="(min-width: 1024px) 34vw, (min-width: 640px) 384px, 90vw"
               className="aspect-[4/5]"
             />
-          </FadeUp>
+          </div>
         )}
       </div>
     </section>

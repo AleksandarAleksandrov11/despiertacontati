@@ -5,9 +5,7 @@ import { Providers } from "@/components/layout/providers";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
-import { WhatsappFloat } from "@/components/layout/whatsapp-float";
-import { CookieBanner } from "@/components/layout/cookie-banner";
-import { ConsentScripts } from "@/components/layout/consent-scripts";
+import { ClientExtras } from "@/components/layout/client-extras";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,9 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {children}
           </main>
           <Footer />
-          <WhatsappFloat />
-          <CookieBanner />
-          <ConsentScripts />
+          <ClientExtras />
         </Providers>
       </body>
     </html>

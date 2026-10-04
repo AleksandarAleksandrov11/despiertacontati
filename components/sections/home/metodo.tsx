@@ -30,7 +30,7 @@ function MethodStep({ step, index, onActive, active }: { step: Step; index: numb
       >
         <span className="size-2.5 rounded-full transition-colors duration-700" style={{ backgroundColor: active ? step.accent : "transparent" }} />
       </span>
-      <div className={cn("transition-opacity duration-700", active ? "opacity-100" : "opacity-55")}>
+      <div>
         <p className="font-serif text-xl italic text-ink-soft">{step.number}</p>
         <h3 className="mt-1 text-h2">{step.step}</h3>
         <Link href={step.href} className="eyebrow mt-3 inline-flex min-h-11 items-center gap-2.5 hover:text-ciruela">
@@ -41,7 +41,7 @@ function MethodStep({ step, index, onActive, active }: { step: Step; index: numb
         <SiteImage
           name={step.image}
           sizes="(min-width: 1024px) 40vw, 90vw"
-          className="mt-8 aspect-[16/10] max-w-xl"
+          className={cn("mt-8 aspect-[16/10] max-w-xl transition-opacity duration-700", active ? "opacity-100" : "opacity-60")}
         />
       </div>
     </li>

@@ -41,7 +41,7 @@ export function Hero() {
 
         <div className="relative mx-auto w-full max-w-[22rem] sm:max-w-sm lg:col-span-5 lg:max-w-none">
           <HeroVisual />
-          <FadeUp delay={300} className="relative mx-auto w-[82%]">
+          <div className="relative mx-auto w-[82%]">
             <SiteImage
               name={hero.image}
               shape="arch"
@@ -53,7 +53,7 @@ export function Hero() {
             <p className="absolute -bottom-6 -left-4 rounded-2xl bg-crema/90 px-5 py-3 shadow-[0_20px_40px_-25px_rgba(63,46,58,0.45)] backdrop-blur sm:-left-10">
               <RotatingWord words={hero.rotating} className="script-accent text-[2.6rem] text-rosa-deep" />
             </p>
-          </FadeUp>
+          </div>
         </div>
       </div>
       <a
