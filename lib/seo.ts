@@ -106,6 +106,37 @@ export function serviceJsonLd({
   };
 }
 
+export function personJsonLd() {
+  const sameAs = [site.social.instagram.url, site.social.tarot.url];
+  return {
+    "@type": "Person",
+    "@id": personId,
+    name: site.person.fullName,
+    alternateName: site.person.shortName,
+    jobTitle: site.person.jobTitle,
+    url: absoluteUrl("/sobre-mi"),
+    email: `mailto:${site.contact.email}`,
+    telephone: site.contact.phoneE164,
+    worksFor: { "@id": businessId },
+    knowsAbout: [
+      "Reiki",
+      "Meditación",
+      "Tarot terapéutico",
+      "Péndulo hebreo",
+      "Registros akáshicos",
+      "Matriz del Destino",
+      "Chakras",
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: site.location.locality,
+      addressRegion: site.location.region,
+      addressCountry: site.location.country,
+    },
+    sameAs,
+  };
+}
+
 export function siteJsonLd() {
   const sameAs = [site.social.instagram.url, site.social.tarot.url];
   return [
@@ -118,34 +149,7 @@ export function siteJsonLd() {
       inLanguage: "es-ES",
       publisher: { "@id": businessId },
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": personId,
-      name: site.person.fullName,
-      alternateName: site.person.shortName,
-      jobTitle: site.person.jobTitle,
-      url: absoluteUrl("/sobre-mi"),
-      email: `mailto:${site.contact.email}`,
-      telephone: site.contact.phoneE164,
-      worksFor: { "@id": businessId },
-      knowsAbout: [
-        "Reiki",
-        "Meditación",
-        "Tarot terapéutico",
-        "Péndulo hebreo",
-        "Registros akáshicos",
-        "Matriz del Destino",
-        "Chakras",
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: site.location.locality,
-        addressRegion: site.location.region,
-        addressCountry: site.location.country,
-      },
-      sameAs,
-    },
+    { "@context": "https://schema.org", ...personJsonLd() },
     {
       "@context": "https://schema.org",
       "@type": ["LocalBusiness", "ProfessionalService"],

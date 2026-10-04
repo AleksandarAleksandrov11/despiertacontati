@@ -69,3 +69,13 @@ export function LotoIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function TarotIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <rect x="4" y="5.5" width="10" height="15" rx="1.5" transform="rotate(-8 9 13)" />
+      <rect x="10" y="3.5" width="10" height="15" rx="1.5" transform="rotate(6 15 11)" />
+      <circle cx="15" cy="11" r="2.2" />
+    </svg>
+  );
+}

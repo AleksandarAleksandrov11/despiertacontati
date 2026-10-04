@@ -95,6 +95,9 @@ export const sobreMi = {
       { name: "Matriz del Destino", icon: "matriz" },
     ],
   },
+  cifrasTitle: "En cifras",
+  manifiestoLabel: "Mi manera de trabajar",
+  lema: { lead: "Recuerda quién eres, toma tu poder y crea tu nueva", script: "vida" },
   cifras: [
     { value: 20, prefix: "+", suffix: "", label: "años acompañando" },
     { value: 2006, prefix: "Desde ", suffix: "", label: "enseñando Reiki" },
