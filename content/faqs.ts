@@ -115,3 +115,8 @@ export const faqs = {
     disclaimerFaq,
   ],
 } satisfies Record<string, Faq[]>;
+
+export const faqHeading = {
+  eyebrow: "Preguntas",
+  title: "Antes de empezar.",
+};

@@ -10,6 +10,7 @@ export const site = {
   description:
     "Tati, terapeuta holística en Valencia con más de 20 años de experiencia. Reiki, meditación y tarot terapéutico para recuperar la calma y decidir mejor.",
   tagline: "Conócete, toma conciencia y elige mejor.",
+  taglineParts: { lead: "Conócete, toma conciencia y", accent: "elige mejor." },
   motto: "Recuerda quién eres, toma tu poder y crea tu nueva vida.",
   location: {
     locality: "Valencia",
@@ -58,6 +59,28 @@ export const site = {
     general: "Hola, Tati. Te escribo desde la web y me gustaría información.",
     error: "Hola, Tati. He intentado escribirte desde el formulario de la web y no se ha enviado. Te cuento por aquí.",
     success: "Hola, Tati. Te acabo de escribir desde el formulario de la web.",
+  },
+  footer: {
+    blurb: "Reiki, meditación y tarot terapéutico.",
+    courses: "Cursos de Reiki",
+    sealAlt: "Sello de Despierta con Tati, bienestar integral",
+  },
+  ui: {
+    skipLink: "Saltar al contenido",
+    mainNav: "Navegación principal",
+    mobileNav: "Menú",
+    openMenu: "Abrir menú",
+    closeMenu: "Cerrar menú",
+    openSubmenu: "Mostrar los servicios",
+    whatsappFloat: "Escríbeme por WhatsApp",
+    footerNav: "Navegación",
+    footerServices: "Servicios",
+    footerContact: "Contacto",
+    footerSocial: "Redes",
+    legalNav: "Información legal",
+    configureCookies: "Configurar cookies",
+    rights: "Despierta con Tati",
+    breadcrumbHome: "Inicio",
   },
 } as const;
 
