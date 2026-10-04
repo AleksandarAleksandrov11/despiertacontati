@@ -1,3 +1,4 @@
+import { site } from "./site";
 import type { ImageKey } from "./imagenes";
 
 export const inicio = {
@@ -171,7 +172,7 @@ export const contactoPage = {
     privacyLabel: "He leído y acepto la",
     privacyLink: "política de privacidad",
     privacyNote:
-      "Responsable: Tatiana Guillem. Finalidad: responder a tu consulta. Legitimación: tu consentimiento. Destinatarios: no se ceden datos salvo obligación legal; el envío se gestiona con Resend. Derechos: acceso, rectificación, supresión y otros, escribiendo a tatiana.guillem@gmail.com.",
+      `Responsable: ${site.legal.holder}. Finalidad: responder a tu consulta. Legitimación: tu consentimiento. Destinatarios: no se ceden datos salvo obligación legal; el envío se gestiona con Resend. Derechos: acceso, rectificación, supresión y otros, escribiendo a ${site.contact.email}.`,
     next: "Siguiente",
     back: "Atrás",
     submit: "Enviar",

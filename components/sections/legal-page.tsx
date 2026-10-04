@@ -13,7 +13,25 @@ function CookiesTable() {
           <p className="font-medium text-ciruela">{category.title}</p>
           <p className="mt-1 text-sm">{category.description}</p>
           {category.items.length > 0 && (
-            <div className="mt-4 overflow-x-auto">
+            <dl className="mt-4 space-y-4 sm:hidden">
+              {category.items.map((item) => (
+                <div key={item.name} className="border-t border-ciruela/10 pt-3 text-sm">
+                  <dt className="font-medium text-ciruela">{item.name}</dt>
+                  <dd className="mt-1">
+                    {cookieTableHeaders.provider}: {item.provider}
+                  </dd>
+                  <dd>
+                    {cookieTableHeaders.purpose}: {item.purpose}
+                  </dd>
+                  <dd>
+                    {cookieTableHeaders.duration}: {item.duration}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
+          {category.items.length > 0 && (
+            <div className="mt-4 hidden overflow-x-auto sm:block">
               <table className="w-full min-w-[32rem] text-left text-sm">
                 <thead>
                   <tr className="border-b border-ciruela/10 text-ciruela">
@@ -98,7 +116,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
               </ol>
             </div>
           </nav>
-          <article className="prose-legal max-w-[70ch] lg:col-span-8 lg:col-start-5">
+          <article className="prose-legal min-w-0 max-w-[70ch] lg:col-span-8 lg:col-start-5">
             {document.sections.map((section) => (
               <section key={section.id} aria-labelledby={section.id}>
                 <h2 id={section.id}>{section.title}</h2>

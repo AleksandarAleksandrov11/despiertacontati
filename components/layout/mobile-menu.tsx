@@ -77,9 +77,9 @@ export function MobileMenu({ open, onClose, pathname }: MobileMenuProps) {
                       href={item.href}
                       onClick={onClose}
                       aria-current={active ? "page" : undefined}
-                      className="flex min-h-12 items-baseline gap-3 py-1 font-serif text-[clamp(2.1rem,9vw,3rem)] leading-tight text-ciruela"
+                      className="group flex min-h-12 items-baseline gap-3 py-1 font-serif text-[clamp(2.1rem,9vw,3rem)] leading-tight text-ciruela"
                     >
-                      <span className="link-underline">{item.label}</span>
+                      <span className="link-underline group-aria-[current=page]:[background-size:100%_1px]">{item.label}</span>
                     </Link>
                     {item.children && (
                       <ul className="mb-2 ml-1 flex flex-wrap gap-x-5 gap-y-1">

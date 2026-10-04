@@ -19,6 +19,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const lastY = useRef(0);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const submenuId = useId();
 
   useEffect(() => {
@@ -42,6 +43,11 @@ export function Header() {
     setMenuOpen(false);
     setSubmenuOpen(false);
     setHidden(false);
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
+    menuButton.current?.focus({ preventScroll: true });
   }
 
   function onSubmenuBlur(event: FocusEvent<HTMLLIElement>) {
@@ -155,6 +161,7 @@ export function Header() {
               </Button>
             </div>
             <button
+              ref={menuButton}
               type="button"
               aria-expanded={menuOpen}
               aria-controls="menu-movil"
@@ -180,7 +187,7 @@ export function Header() {
           </div>
         </div>
       </header>
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} pathname={pathname} />
+      <MobileMenu open={menuOpen} onClose={closeMenu} pathname={pathname} />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { Resend } from "resend";
 import { messageSchema } from "@/lib/schemas";
 import { contactEmail, subscribeEmail } from "@/lib/email";
+import { site } from "@/content/site";
 
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 5;
@@ -46,7 +47,7 @@ export async function POST(request: NextRequest) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL || "tatiana.guillem@gmail.com";
+  const to = process.env.CONTACT_TO_EMAIL || site.contact.email;
   const from = process.env.CONTACT_FROM_EMAIL || "Despierta con Tati <web@despiertacontati.com>";
 
   if (!apiKey) {

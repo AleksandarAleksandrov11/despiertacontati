@@ -13,7 +13,7 @@ function Orb() {
     mesh.current.rotation.x += delta * 0.03;
   });
   return (
-    <mesh ref={mesh} position={[0.85, 0.75, 0]} scale={1.2}>
+    <mesh ref={mesh} position={[0.45, 0.4, 0]} scale={1.05}>
       <sphereGeometry args={[1, 96, 96]} />
       <MeshDistortMaterial
         color="#f7e6e8"
