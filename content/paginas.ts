@@ -134,6 +134,15 @@ export const contactoPage = {
   aside: {
     title: "Si lo prefieres",
     location: "Valencia y online",
+    locationText: "Sesiones presenciales en Valencia y online desde donde estés.",
+    whatsapp: "WhatsApp",
+    phone: "Teléfono",
+    email: "Email",
+    instagram: "Instagram",
+  },
+  cta: {
+    title: "¿Prefieres hablar ya?",
+    text: "Escríbeme por WhatsApp o llámame. Te contesto yo.",
   },
   image: "playaPalmera" as ImageKey,
   form: {

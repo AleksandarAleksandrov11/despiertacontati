@@ -20,3 +20,24 @@ export function getActiveAnuncios(now = new Date()) {
 export function formatAnuncioDate(date: string) {
   return new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric" }).format(new Date(date));
 }
+
+export function eventJsonLd(anuncio: Anuncio, url: string, organizerId: string, locality: string) {
+  const online = anuncio.location === "online";
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: anuncio.title,
+    description: anuncio.text,
+    startDate: anuncio.date,
+    ...(anuncio.endDate ? { endDate: anuncio.endDate } : {}),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: online
+      ? "https://schema.org/OnlineEventAttendanceMode"
+      : "https://schema.org/OfflineEventAttendanceMode",
+    location: online
+      ? { "@type": "VirtualLocation", url }
+      : { "@type": "Place", name: locality, address: { "@type": "PostalAddress", addressLocality: locality, addressCountry: "ES" } },
+    organizer: { "@id": organizerId },
+    url,
+  };
+}
