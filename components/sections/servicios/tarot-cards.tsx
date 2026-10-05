@@ -13,7 +13,7 @@ export function TarotCards() {
   const [flipped, setFlipped] = useState<boolean[]>(cartas.items.map(() => false));
 
   return (
-    <RevealGroup as="ul" className="mt-14 grid justify-items-center gap-8 sm:grid-cols-3 sm:gap-5 lg:gap-10">
+    <RevealGroup as="ul" className="mt-14 grid justify-items-center gap-8 md:grid-cols-3 md:gap-6 lg:gap-10">
       {cartas.items.map((card, index) => {
         const isFlipped = flipped[index];
         return (
@@ -48,13 +48,15 @@ export function TarotCards() {
                   </span>
                 </span>
                 <span
-                  className="absolute inset-0 flex flex-col justify-between rounded-[1.5rem] border border-ciruela/10 bg-crema p-7 shadow-[0_30px_60px_-30px_rgba(63,46,58,0.4)] [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                  className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-[1.5rem] border border-ciruela/10 bg-crema p-6 shadow-[0_30px_60px_-30px_rgba(63,46,58,0.4)] [backface-visibility:hidden] [transform:rotateY(180deg)] lg:p-7"
                   aria-hidden={!isFlipped}
                 >
                   <span className="block h-1 w-12 rounded-full" style={{ backgroundColor: accents[index] }} />
                   <span>
-                    <span className="block font-serif text-[clamp(1.6rem,1.3rem+1vw,2.2rem)] leading-tight text-ciruela">{card.title}</span>
-                    <span className="mt-3 block text-ink-soft">{card.text}</span>
+                    <span lang="es" className="block font-serif text-[1.65rem] leading-tight text-ciruela [hyphens:auto] [overflow-wrap:anywhere] md:text-[1.35rem] lg:text-[1.65rem]">
+                      {card.title}
+                    </span>
+                    <span className="mt-3 block text-ink-soft md:text-sm lg:text-base">{card.text}</span>
                   </span>
                 </span>
               </m.span>

@@ -7,13 +7,11 @@ import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
 import { ContactForm } from "@/components/sections/contact-form";
 import { FaqSection } from "@/components/sections/faq-section";
-import { Disclaimer } from "@/components/sections/disclaimer";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { InstagramIcon, WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
@@ -37,7 +35,7 @@ export default function ContactoPage() {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "Contacto", path: "/contacto" }])} />
       <PageHeader eyebrow={page.eyebrow} title={page.title} subtitle={page.subtitle} tone="rosa" blobs="b" />
-      <Section tone="rosa" className="!pt-0">
+      <Section tone="rosa" className="!pt-0" hideWhatsapp>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           <Reveal className="lg:col-span-7">
             <Suspense fallback={<div className="min-h-[34rem] rounded-[2rem] bg-crema" />}>
@@ -80,18 +78,11 @@ export default function ContactoPage() {
                   </span>
                 </li>
               </ul>
-              <SiteImage
-                name={page.image}
-                shape="arch"
-                sizes="(min-width: 1024px) 30vw, 0px"
-                className="mt-10 hidden aspect-[4/3] lg:block"
-              />
             </aside>
           </Reveal>
         </div>
       </Section>
       <FaqSection faqs={faqs.contacto} />
-      <Disclaimer />
       <CtaBlock title={page.cta.title} text={page.cta.text} tone="salvia" direct />
     </>
   );

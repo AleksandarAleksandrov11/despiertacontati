@@ -6,7 +6,6 @@ import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
 import { Respira } from "@/components/sections/respira";
 import { FaqSection } from "@/components/sections/faq-section";
-import { Disclaimer } from "@/components/sections/disclaimer";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
@@ -56,12 +55,22 @@ export default function MeditacionPage() {
       </PageHeader>
 
       <Section tone="crema" labelledBy="filosofia">
-        <Reveal className="mx-auto max-w-4xl text-center">
-          <h2 id="filosofia" className="text-h2">
-            {page.filosofia.title}
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lead text-ink-soft">{page.filosofia.text}</p>
-        </Reveal>
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
+          <Reveal className="mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:max-w-none">
+            <SiteImage
+              name={page.filosofia.image}
+              shape="arch"
+              sizes="(min-width: 1024px) 38vw, (min-width: 640px) 384px, 90vw"
+              className="aspect-[4/5]"
+            />
+          </Reveal>
+          <Reveal className="lg:col-span-7" delay={0.1}>
+            <h2 id="filosofia" className="text-h2">
+              {page.filosofia.title}
+            </h2>
+            <p className="mt-6 max-w-xl text-lead text-ink-soft">{page.filosofia.text}</p>
+          </Reveal>
+        </div>
       </Section>
 
       <Section tone="rosa" labelledBy="esponja">
@@ -137,7 +146,6 @@ export default function MeditacionPage() {
 
       <Respira />
       <FaqSection faqs={faqs.meditacion} />
-      <Disclaimer />
       <CtaBlock whatsappMessage={page.ctaWhatsapp} />
     </>
   );

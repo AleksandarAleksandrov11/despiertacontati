@@ -135,7 +135,7 @@ export const politicaPrivacidad: LegalDocument = {
       id: "datos",
       title: "Qué datos trato y para qué",
       blocks: [
-        "Formulario de contacto. Trato tu nombre, tu email o teléfono, el servicio que te interesa, la modalidad que prefieres y el mensaje que quieras escribir, para responder a tu consulta y, si lo pides, organizar tu sesión, clase o curso.",
+        "Formulario de contacto. Trato tu nombre, tu email o teléfono, el servicio que te interesa, la modalidad que prefieres y el mensaje que quieras escribir, para responder a tu consulta y, si lo pides, organizar tu sesión, clase o curso. Al enviarlo se abre WhatsApp con tu mensaje para que me lo mandes tú, y puedo recibir además una copia por email.",
         "Suscripción a novedades. Trato tu email para enviarte información sobre nuevos grupos, cursos y meditaciones. Puedes darte de baja cuando quieras escribiéndome o respondiendo a cualquier envío.",
         "WhatsApp. Si me escribes por WhatsApp, trataré tu número, tu nombre de perfil y lo que me cuentes para atender tu consulta. WhatsApp es un servicio de Meta Platforms y se rige también por sus propias condiciones y política de privacidad.",
         "Navegación y analítica. Si das tu consentimiento, uso Vercel Web Analytics y Speed Insights para conocer de forma agregada y anónima cuántas visitas recibe la web y cómo funciona. Estas herramientas no instalan cookies ni permiten identificarte.",
@@ -170,8 +170,8 @@ export const politicaPrivacidad: LegalDocument = {
         {
           list: [
             "Vercel Inc. (Estados Unidos): alojamiento de la web y, si lo aceptas, analítica anónima.",
-            "Resend (Estados Unidos): envío por email de los mensajes del formulario y de las suscripciones.",
-            "Meta Platforms (WhatsApp): solo si decides escribirme por WhatsApp.",
+            "Resend (Estados Unidos): envío por email de las copias del formulario y de las suscripciones.",
+            "Meta Platforms (WhatsApp): cuando envías el formulario o me escribes por WhatsApp.",
           ],
         },
       ],

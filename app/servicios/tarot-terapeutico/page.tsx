@@ -5,13 +5,13 @@ import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
 import { TarotCards } from "@/components/sections/servicios/tarot-cards";
 import { FaqSection } from "@/components/sections/faq-section";
-import { Disclaimer } from "@/components/sections/disclaimer";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { InstagramIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
+import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
@@ -53,27 +53,38 @@ export default function TarotPage() {
       </PageHeader>
 
       <Section tone="rosa" labelledBy="dentro-fuera">
-        <Reveal>
-          <h2 id="dentro-fuera" className="text-h2">
-            {page.dentroFuera.title}
-          </h2>
-        </Reveal>
-        <RevealGroup className="mt-12 grid gap-5 md:grid-cols-2">
-          {[page.dentroFuera.inside, page.dentroFuera.outside].map((item, index) => (
-            <RevealItem key={item.label} className="rounded-[1.75rem] bg-crema/80 p-8 sm:p-10">
-              <div aria-hidden className="relative mb-8 size-20">
-                <span className="absolute inset-0 rounded-full border border-ciruela/20" />
-                {index === 0 ? (
-                  <span className="absolute inset-5 rounded-full bg-chakra-corazon/60" />
-                ) : (
-                  <span className="absolute -right-3 top-5 size-10 rounded-full bg-chakra-plexo/70" />
-                )}
-              </div>
-              <h3 className="text-h3">{item.label}</h3>
-              <p className="mt-3 text-lead text-ink-soft">{item.text}</p>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <SiteImage
+              name={page.dentroFuera.image}
+              sizes="(min-width: 1024px) 38vw, 90vw"
+              className="aspect-[4/3] lg:aspect-[4/5]"
+            />
+          </Reveal>
+          <div className="lg:col-span-7">
+            <Reveal>
+              <h2 id="dentro-fuera" className="text-h2">
+                {page.dentroFuera.title}
+              </h2>
+            </Reveal>
+            <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2">
+              {[page.dentroFuera.inside, page.dentroFuera.outside].map((item, index) => (
+                <RevealItem key={item.label} className="rounded-[1.75rem] bg-crema/80 p-7">
+                  <div aria-hidden className="relative mb-6 size-14">
+                    <span className="absolute inset-0 rounded-full border border-ciruela/20" />
+                    {index === 0 ? (
+                      <span className="absolute inset-3.5 rounded-full bg-chakra-corazon/60" />
+                    ) : (
+                      <span className="absolute -right-2 top-3.5 size-7 rounded-full bg-chakra-plexo/70" />
+                    )}
+                  </div>
+                  <h3 className="text-h3">{item.label}</h3>
+                  <p className="mt-3 text-ink-soft">{item.text}</p>
+                </RevealItem>
+              ))}
+            </RevealGroup>
+          </div>
+        </div>
       </Section>
 
       <Section tone="ciruela" labelledBy="ansiedad">
@@ -124,7 +135,6 @@ export default function TarotPage() {
       </Section>
 
       <FaqSection faqs={faqs.tarot} />
-      <Disclaimer />
       <CtaBlock whatsappMessage={page.ctaWhatsapp} />
     </>
   );

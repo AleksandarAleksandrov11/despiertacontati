@@ -7,9 +7,9 @@ Web de Despierta con Tati, terapia holística en Valencia y online: Reiki, medit
 - Next.js (App Router) y TypeScript
 - Tailwind CSS
 - Motion, Lenis y Embla Carousel
-- React Three Fiber para el orbe del inicio
 - React Hook Form y Zod
-- Resend para el formulario de contacto y la suscripción
+- Formulario de contacto que abre WhatsApp con los datos y envía copia por email con Resend
+- Resend para la suscripción a novedades
 - Vercel Analytics y Speed Insights
 
 ## Arranque
@@ -26,7 +26,7 @@ Scripts disponibles: `npm run dev`, `npm run build`, `npm run start` y `npm run 
 
 | Variable | Uso |
 | --- | --- |
-| `RESEND_API_KEY` | Clave de Resend para enviar los mensajes del formulario y las suscripciones. Sin clave, en desarrollo el envío se simula y en producción el formulario muestra un error con acceso directo a WhatsApp. |
+| `RESEND_API_KEY` | Clave de Resend para recibir por email la copia de cada formulario y las suscripciones. Sin clave, el formulario sigue funcionando por WhatsApp; en desarrollo el email se simula. |
 | `CONTACT_TO_EMAIL` | Dirección que recibe los mensajes. |
 | `CONTACT_FROM_EMAIL` | Remitente verificado en Resend. |
 

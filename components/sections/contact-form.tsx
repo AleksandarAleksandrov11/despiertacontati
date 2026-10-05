@@ -6,19 +6,18 @@ import { AnimatePresence, m } from "motion/react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { contactoPage } from "@/content/paginas";
-import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { contactSchema, contactTopics, type ContactInput } from "@/lib/schemas";
+import { contactWhatsappHref } from "@/lib/contact-whatsapp";
 import { sendMessage } from "@/lib/send-message";
-import { cn, whatsappHref } from "@/lib/utils";
-
-type Status = "idle" | "sending" | "success" | "error";
+import { cn } from "@/lib/utils";
 
 const copy = contactoPage.form;
 const stepFields: (keyof ContactInput)[][] = [["servicio"], ["modalidad"], ["mensaje"], ["nombre", "contacto", "privacidad"]];
+const lastStep = stepFields.length - 1;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 function isTopic(value: string | null): value is ContactInput["servicio"] {
@@ -30,16 +29,16 @@ export function ContactForm() {
   const preset = params.get("servicio");
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [status, setStatus] = useState<Status>("idle");
+  const [sentHref, setSentHref] = useState<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
   const id = useId();
 
   const {
     register,
-    handleSubmit,
     trigger,
     setValue,
+    getValues,
     control,
     reset,
     formState: { errors },
@@ -56,8 +55,8 @@ export function ContactForm() {
     },
   });
 
-  const servicio = useWatch({ control, name: "servicio" });
-  const modalidad = useWatch({ control, name: "modalidad" });
+  const values = useWatch({ control });
+  const waHref = contactWhatsappHref(values);
 
   useEffect(() => {
     if (firstRender.current) {
@@ -65,110 +64,104 @@ export function ContactForm() {
       return;
     }
     headingRef.current?.focus({ preventScroll: true });
-  }, [step, status]);
+  }, [step, sentHref]);
+
+  function goTo(target: number) {
+    setDirection(target > step ? 1 : -1);
+    setStep(Math.max(0, Math.min(target, lastStep)));
+  }
 
   async function next() {
     const valid = await trigger(stepFields[step]);
-    if (!valid) return;
-    setDirection(1);
-    setStep((current) => Math.min(current + 1, stepFields.length - 1));
-  }
-
-  function back() {
-    setDirection(-1);
-    setStep((current) => Math.max(current - 1, 0));
+    if (valid) goTo(step + 1);
   }
 
   function choose(field: "servicio" | "modalidad", value: string) {
     setValue(field, value as never, { shouldValidate: true });
-    window.setTimeout(() => {
-      setDirection(1);
-      setStep((current) => Math.min(current + 1, stepFields.length - 1));
-    }, 280);
+    window.setTimeout(() => goTo(step + 1), 260);
   }
 
-  async function onSubmit(values: ContactInput) {
-    setStatus("sending");
-    try {
-      await sendMessage(values);
-      setStatus("success");
-    } catch {
-      setStatus("error");
+  function validateAll() {
+    const result = contactSchema.safeParse(getValues());
+    if (!result.success) {
+      void trigger(stepFields[lastStep]);
+      return null;
     }
+    return result.data;
+  }
+
+  function complete(data: ContactInput) {
+    if (!data.empresa) void sendMessage(data).catch(() => undefined);
+    const href = contactWhatsappHref(data);
+    window.setTimeout(() => setSentHref(href), 0);
+  }
+
+  function onSend(event: MouseEvent<HTMLAnchorElement>) {
+    const data = validateAll();
+    if (!data) {
+      event.preventDefault();
+      return;
+    }
+    complete(data);
   }
 
   function onKeyDown(event: KeyboardEvent<HTMLFormElement>) {
     if (event.key !== "Enter" || event.shiftKey) return;
     const target = event.target as HTMLElement;
     if (target.tagName === "BUTTON" || target.tagName === "A") return;
-    if (step < stepFields.length - 1) {
-      event.preventDefault();
+    event.preventDefault();
+    if (step < lastStep) {
       void next();
+      return;
     }
+    const data = validateAll();
+    if (!data) return;
+    window.open(contactWhatsappHref(data), "_blank", "noopener,noreferrer");
+    complete(data);
   }
 
   function restart() {
-    reset();
+    reset({ type: "contacto", mensaje: "", nombre: "", contacto: "", empresa: "" });
     setStep(0);
-    setStatus("idle");
+    setSentHref(null);
   }
 
-  if (status === "success" || status === "error") {
-    const success = status === "success";
-    const message = success ? copy.success : copy.error;
+  if (sentHref) {
     return (
       <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease }}
-        className="rounded-[2rem] bg-crema p-8 sm:p-12"
+        className="rounded-[2rem] bg-crema p-8 shadow-[0_30px_80px_-50px_rgba(63,46,58,0.45)] sm:p-12"
         role="status"
       >
-        <span
-          aria-hidden
-          className={cn(
-            "mb-8 inline-flex size-14 items-center justify-center rounded-full",
-            success ? "bg-salvia text-ciruela" : "bg-rosa-polvo text-ciruela",
-          )}
-        >
-          {success ? <Check size={24} strokeWidth={1.25} /> : <WhatsappIcon size={24} />}
+        <span aria-hidden className="mb-8 inline-flex size-14 items-center justify-center rounded-full bg-salvia text-ciruela">
+          <Check size={24} strokeWidth={1.25} />
         </span>
         <h2 ref={headingRef} tabIndex={-1} className="text-h2 outline-none">
-          {message.title}
+          {copy.success.title}
         </h2>
-        <p className="mt-4 max-w-md text-lead text-ink-soft">{message.text}</p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Button
-            href={whatsappHref(success ? site.whatsappMessages.success : site.whatsappMessages.error)}
-            variant={success ? "secondary" : "primary"}
-            icon={<WhatsappIcon size={18} />}
-          >
-            {site.cta.whatsapp}
+        <p className="mt-4 max-w-md text-lead text-ink-soft">{copy.success.text}</p>
+        <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <Button href={sentHref} icon={<WhatsappIcon size={18} />}>
+            {copy.success.open}
           </Button>
-          {success ? (
-            <Button variant="link" onClick={restart}>
-              {copy.success.again}
-            </Button>
-          ) : (
-            <Button variant="link" onClick={handleSubmit(onSubmit)}>
-              {copy.error.retry}
-            </Button>
-          )}
+          <Button variant="link" onClick={restart}>
+            {copy.success.again}
+          </Button>
         </div>
       </m.div>
     );
   }
 
-  const total = copy.steps.length;
   const current = copy.steps[step];
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
-      onKeyDown={onKeyDown}
       noValidate
-      className="relative overflow-hidden rounded-[2rem] bg-crema p-6 sm:p-10"
-      aria-describedby={`${id}-progress`}
+      onSubmit={(event) => event.preventDefault()}
+      onKeyDown={onKeyDown}
+      className="relative overflow-hidden rounded-[2rem] bg-crema shadow-[0_30px_80px_-50px_rgba(63,46,58,0.45)]"
     >
       <input type="hidden" {...register("type")} />
       <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
@@ -176,59 +169,62 @@ export function ContactForm() {
         <input id={`${id}-empresa`} type="text" tabIndex={-1} autoComplete="off" {...register("empresa")} />
       </div>
 
-      <div className="flex items-center justify-between gap-4">
-        <p id={`${id}-progress`} className="eyebrow">
-          {copy.stepLabel} {step + 1} {copy.of} {total}
+      <div className="border-b border-ciruela/10 px-6 pb-6 pt-7 sm:px-10">
+        <p className="sr-only" aria-live="polite">
+          {copy.stepLabel} {step + 1} {copy.of} {copy.steps.length}: {current.label}
         </p>
-        {step > 0 && (
-          <button
-            type="button"
-            onClick={back}
-            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft hover:text-ciruela"
-          >
-            <ArrowLeft size={16} strokeWidth={1.25} aria-hidden />
-            {copy.back}
-          </button>
-        )}
-      </div>
-      <div
-        className="mt-3 h-px w-full bg-ciruela/10"
-        role="progressbar"
-        aria-valuemin={1}
-        aria-valuemax={total}
-        aria-valuenow={step + 1}
-        aria-label={`${copy.stepLabel} ${step + 1} ${copy.of} ${total}`}
-      >
-        <m.div
-          className="h-px origin-left bg-ciruela"
-          initial={false}
-          animate={{ scaleX: (step + 1) / total }}
-          transition={{ duration: 0.8, ease }}
-        />
+        <ol aria-hidden className="grid grid-cols-4 gap-2">
+          {copy.steps.map((item, index) => {
+            const done = index < step;
+            const active = index === step;
+            return (
+              <li key={item.id} className="flex flex-col gap-3">
+                <span className={cn("h-1 rounded-full transition-colors duration-700", index <= step ? "bg-ciruela" : "bg-ciruela/10")} />
+                <span className="flex items-center gap-2">
+                  <span
+                    className={cn(
+                      "inline-flex size-6 shrink-0 items-center justify-center rounded-full text-[0.7rem] font-medium transition-colors duration-500",
+                      active && "bg-ciruela text-crema",
+                      done && "bg-salvia text-ciruela",
+                      !active && !done && "border border-ciruela/20 text-ink-soft",
+                    )}
+                  >
+                    {done ? <Check size={12} strokeWidth={2} /> : index + 1}
+                  </span>
+                  <span className={cn("hidden text-sm sm:inline", active ? "font-medium text-ciruela" : "text-ink-soft")}>{item.label}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
-      <div className="relative mt-10 min-h-[22rem]">
-        <AnimatePresence mode="wait" custom={direction} initial={false}>
+      <div className="px-6 py-8 sm:px-10 sm:py-10">
+        <AnimatePresence mode="wait" initial={false}>
           <m.fieldset
             key={step}
-            custom={direction}
-            initial={{ opacity: 0, x: direction * 40, filter: "blur(6px)" }}
-            animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, x: direction * -40, filter: "blur(6px)" }}
-            transition={{ duration: 0.55, ease }}
+            initial={{ opacity: 0, x: direction * 32 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: direction * -32 }}
+            transition={{ duration: 0.45, ease }}
             aria-labelledby={`${id}-question`}
+            aria-describedby={`${id}-hint`}
+            className="min-w-0"
           >
-            <h2 id={`${id}-question`} ref={headingRef} tabIndex={-1} className="text-h2 outline-none">
+            <h2 id={`${id}-question`} ref={headingRef} tabIndex={-1} className="text-h3 outline-none sm:text-[2.25rem]">
               {current.question}
             </h2>
+            <p id={`${id}-hint`} className="mt-2 text-ink-soft">
+              {current.hint}
+            </p>
 
             {step === 0 && (
-              <div role="radiogroup" aria-label={current.question} className="mt-8 flex flex-wrap gap-3">
+              <div role="radiogroup" aria-labelledby={`${id}-question`} className="mt-8 grid gap-3 sm:grid-cols-2">
                 {copy.topics.map((option) => (
-                  <OptionButton
+                  <OptionCard
                     key={option.value}
                     label={option.label}
-                    selected={servicio === option.value}
+                    selected={values.servicio === option.value}
                     onSelect={() => choose("servicio", option.value)}
                   />
                 ))}
@@ -237,12 +233,12 @@ export function ContactForm() {
             )}
 
             {step === 1 && (
-              <div role="radiogroup" aria-label={current.question} className="mt-8 flex flex-wrap gap-3">
+              <div role="radiogroup" aria-labelledby={`${id}-question`} className="mt-8 grid gap-3 sm:grid-cols-2">
                 {copy.modalities.map((option) => (
-                  <OptionButton
+                  <OptionCard
                     key={option.value}
                     label={option.label}
-                    selected={modalidad === option.value}
+                    selected={values.modalidad === option.value}
                     onSelect={() => choose("modalidad", option.value)}
                   />
                 ))}
@@ -252,14 +248,14 @@ export function ContactForm() {
 
             {step === 2 && (
               <div className="mt-8">
-                <label htmlFor={`${id}-mensaje`} className="sr-only">
+                <label htmlFor={`${id}-mensaje`} className="mb-2 block text-sm font-medium">
                   {copy.messageLabel}
                 </label>
                 <textarea
                   id={`${id}-mensaje`}
                   rows={5}
                   placeholder={copy.messagePlaceholder}
-                  className="w-full resize-none rounded-2xl border border-ciruela/15 bg-white/60 p-5 text-lead placeholder:text-ink-soft/80 focus:border-ciruela/50 focus:outline-none"
+                  className="block w-full resize-none rounded-2xl border border-ciruela/15 bg-white/70 px-5 py-4 text-base leading-relaxed placeholder:text-ink-soft/70 focus:border-ciruela/50 focus:outline-none focus:ring-4 focus:ring-lavanda"
                   aria-invalid={errors.mensaje ? true : undefined}
                   {...register("mensaje")}
                 />
@@ -269,29 +265,50 @@ export function ContactForm() {
 
             {step === 3 && (
               <div className="mt-8 space-y-6">
-                <TextField
-                  id={`${id}-nombre`}
-                  label={copy.nameLabel}
-                  autoComplete="given-name"
-                  error={errors.nombre?.message}
-                  {...register("nombre")}
-                />
-                <TextField
-                  id={`${id}-contacto`}
-                  label={copy.contactLabel}
-                  autoComplete="email"
-                  inputMode="email"
-                  error={errors.contacto?.message}
-                  {...register("contacto")}
-                />
+                <div className="flex flex-wrap items-center gap-2 text-sm">
+                  <span className="text-ink-soft">{copy.summary}:</span>
+                  {[
+                    { label: copy.topics.find((t) => t.value === values.servicio)?.label, step: 0 },
+                    { label: copy.modalities.find((t) => t.value === values.modalidad)?.label, step: 1 },
+                  ]
+                    .filter((item) => item.label)
+                    .map((item) => (
+                      <button
+                        key={item.step}
+                        type="button"
+                        onClick={() => goTo(item.step)}
+                        className="inline-flex min-h-9 items-center rounded-full bg-rosa-polvo px-4 text-ciruela transition-colors hover:bg-lavanda"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                </div>
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <TextField
+                    id={`${id}-nombre`}
+                    label={copy.nameLabel}
+                    placeholder={copy.namePlaceholder}
+                    autoComplete="given-name"
+                    error={errors.nombre?.message}
+                    {...register("nombre", { onChange: () => errors.nombre && trigger("nombre") })}
+                  />
+                  <TextField
+                    id={`${id}-contacto`}
+                    label={copy.contactLabel}
+                    placeholder={copy.contactPlaceholder}
+                    autoComplete="email"
+                    error={errors.contacto?.message}
+                    {...register("contacto", { onChange: () => errors.contacto && trigger("contacto") })}
+                  />
+                </div>
                 <div>
                   <label className="flex cursor-pointer items-start gap-3 text-[0.95rem]">
                     <input
                       type="checkbox"
-                      className="mt-1 size-5 shrink-0 cursor-pointer accent-ciruela"
+                      className="mt-0.5 size-5 shrink-0 cursor-pointer accent-ciruela"
                       aria-invalid={errors.privacidad ? true : undefined}
                       aria-describedby={errors.privacidad ? `${id}-privacidad-error` : undefined}
-                      {...register("privacidad")}
+                      {...register("privacidad", { onChange: () => errors.privacidad && trigger("privacidad") })}
                     />
                     <span>
                       {copy.privacyLabel}{" "}
@@ -302,24 +319,33 @@ export function ContactForm() {
                   </label>
                   {errors.privacidad && <FieldError id={`${id}-privacidad-error`}>{errors.privacidad.message}</FieldError>}
                 </div>
-                <p className="text-xs leading-relaxed text-ink-soft">{copy.privacyNote}</p>
+                <p className="rounded-2xl bg-rosa-polvo/60 px-5 py-4 text-xs leading-relaxed text-ink-soft">{copy.privacyNote}</p>
               </div>
             )}
           </m.fieldset>
         </AnimatePresence>
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center gap-4">
-        {step < total - 1 ? (
-          <>
-            <Button onClick={next} icon={<ArrowRight size={18} strokeWidth={1.25} aria-hidden />} className="flex-row-reverse">
-              {copy.next}
-            </Button>
-            <span className="hidden text-sm text-ink-soft sm:inline">{copy.enterHint}</span>
-          </>
+      <div className="flex flex-col-reverse gap-3 border-t border-ciruela/10 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-10">
+        {step > 0 ? (
+          <button
+            type="button"
+            onClick={() => goTo(step - 1)}
+            className="inline-flex min-h-11 items-center justify-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ciruela"
+          >
+            <ArrowLeft size={16} strokeWidth={1.25} aria-hidden />
+            {copy.back}
+          </button>
         ) : (
-          <Button type="submit" disabled={status === "sending"}>
-            {status === "sending" ? copy.sending : copy.submit}
+          <span className="hidden text-sm text-ink-soft sm:inline">{copy.enterHint}</span>
+        )}
+        {step < lastStep ? (
+          <Button onClick={next} className="w-full flex-row-reverse sm:ml-auto sm:w-auto" icon={<ArrowRight size={18} strokeWidth={1.25} aria-hidden />}>
+            {copy.next}
+          </Button>
+        ) : (
+          <Button href={waHref} onClick={onSend} className="w-full whitespace-nowrap sm:ml-auto sm:w-auto" icon={<WhatsappIcon size={18} />}>
+            {copy.submit}
           </Button>
         )}
       </div>
@@ -327,7 +353,7 @@ export function ContactForm() {
   );
 }
 
-function OptionButton({ label, selected, onSelect }: { label: string; selected: boolean; onSelect: () => void }) {
+function OptionCard({ label, selected, onSelect }: { label: string; selected: boolean; onSelect: () => void }) {
   return (
     <button
       type="button"
@@ -335,21 +361,29 @@ function OptionButton({ label, selected, onSelect }: { label: string; selected: 
       aria-checked={selected}
       onClick={onSelect}
       className={cn(
-        "inline-flex min-h-12 items-center gap-2.5 rounded-full border px-6 text-[0.95rem] transition-all duration-500 ease-[var(--ease-breath)]",
+        "flex min-h-14 w-full items-center justify-between gap-4 rounded-2xl border px-5 py-3 text-left transition-all duration-500 ease-[var(--ease-breath)]",
         selected
           ? "border-ciruela bg-ciruela text-crema"
-          : "border-ciruela/20 text-ciruela hover:border-ciruela/60 hover:bg-white/60",
+          : "border-ciruela/15 bg-white/60 text-ciruela hover:border-ciruela/40 hover:bg-white",
       )}
     >
-      {selected && <Check size={16} strokeWidth={1.5} aria-hidden />}
-      {label}
+      <span className="font-medium">{label}</span>
+      <span
+        aria-hidden
+        className={cn(
+          "inline-flex size-5 shrink-0 items-center justify-center rounded-full border transition-colors",
+          selected ? "border-crema bg-crema text-ciruela" : "border-ciruela/30",
+        )}
+      >
+        {selected && <Check size={12} strokeWidth={2.5} />}
+      </span>
     </button>
   );
 }
 
 function FieldError({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <p id={id} role="alert" className="mt-2 w-full text-sm text-rosa-deep">
+    <p id={id} role="alert" className="col-span-full mt-2 text-sm text-rosa-deep">
       {children}
     </p>
   );
@@ -360,7 +394,7 @@ type TextFieldProps = React.ComponentPropsWithRef<"input"> & { id: string; label
 function TextField({ id, label, error, ...props }: TextFieldProps) {
   return (
     <div>
-      <label htmlFor={id} className="eyebrow mb-2 block">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium">
         {label}
       </label>
       <input
@@ -368,7 +402,10 @@ function TextField({ id, label, error, ...props }: TextFieldProps) {
         type="text"
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
-        className="min-h-12 w-full border-b border-ciruela/20 bg-transparent py-2 text-lead focus:border-ciruela focus:outline-none"
+        className={cn(
+          "block min-h-13 w-full rounded-xl border bg-white/70 px-4 text-base placeholder:text-ink-soft/70 focus:outline-none focus:ring-4 focus:ring-lavanda",
+          error ? "border-rosa-deep/60" : "border-ciruela/15 focus:border-ciruela/50",
+        )}
         {...props}
       />
       {error && <FieldError id={`${id}-error`}>{error}</FieldError>}

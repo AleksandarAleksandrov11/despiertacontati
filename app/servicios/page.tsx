@@ -7,7 +7,6 @@ import { ServiceBlock } from "@/components/sections/servicios/service-block";
 import { PorDonde } from "@/components/sections/servicios/por-donde";
 import { Formatos } from "@/components/sections/servicios/formatos";
 import { FaqSection } from "@/components/sections/faq-section";
-import { Disclaimer } from "@/components/sections/disclaimer";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -49,7 +48,6 @@ export default function ServiciosPage() {
       <PorDonde />
       <Formatos />
       <FaqSection faqs={faqs.servicios} tone="lavanda" />
-      <Disclaimer />
       <CtaBlock />
     </>
   );

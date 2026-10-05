@@ -1,40 +1,26 @@
 import Image from "next/image";
-import { Counter } from "@/components/ui/counter";
+import { site } from "@/content/site";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { Stat } from "@/components/ui/stat";
 import logo from "@/public/brand/logo-despierta-con-tati.png";
 
-type Cifra = { value: number; prefix: string; suffix: string; label: string };
-
-export function Cifras({ cifras, sealAlt, title }: { cifras: Cifra[]; sealAlt: string; title: string }) {
+export function Cifras({ sealAlt, title }: { sealAlt: string; title: string }) {
+  const stats = [site.facts.experience, site.facts.teaching];
   return (
     <Section tone="crema" labelledBy="cifras-title">
       <h2 id="cifras-title" className="sr-only">
         {title}
       </h2>
-      <div className="grid items-center gap-14 md:grid-cols-12">
-        <dl className="grid gap-12 sm:grid-cols-2 md:col-span-9">
-          {cifras.map((cifra, index) => (
-            <Reveal key={cifra.label} delay={index * 0.12} className="border-t border-ciruela/15 pt-8">
-              <dt className="sr-only">{cifra.label}</dt>
-              <dd>
-                <span className="block whitespace-nowrap font-serif text-[clamp(3.5rem,2.5rem+4vw,6.5rem)] leading-none">
-                  {cifra.prefix.trim().length > 1 ? (
-                    <span className="mr-3 align-middle text-[0.35em] italic text-ink-soft">{cifra.prefix.trim()}</span>
-                  ) : (
-                    cifra.prefix
-                  )}
-                  <Counter value={cifra.value} from={cifra.value > 1000 ? 1990 : 0} />
-                  {cifra.suffix}
-                </span>
-                <span aria-hidden className="mt-4 block text-ink-soft">
-                  {cifra.label}
-                </span>
-              </dd>
+      <div className="grid items-center gap-12 md:grid-cols-12">
+        <div className="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:gap-x-16 md:col-span-9">
+          {stats.map((stat, index) => (
+            <Reveal key={stat.value} delay={index * 0.12}>
+              <Stat value={stat.value} prefix={stat.prefix} lines={stat.lines} size="lg" animate />
             </Reveal>
           ))}
-        </dl>
-        <Reveal delay={0.2} className="flex justify-center md:col-span-3 md:justify-end">
+        </div>
+        <Reveal delay={0.2} className="flex justify-start md:col-span-3 md:justify-end">
           <Image
             src={logo}
             alt={sealAlt}

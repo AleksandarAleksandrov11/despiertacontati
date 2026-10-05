@@ -36,8 +36,8 @@ export const site = {
     },
   },
   facts: {
-    experience: "+20 años",
-    experienceLabel: "acompañando",
+    experience: { value: 20, prefix: "+", lines: ["años", "acompañando"] },
+    teaching: { value: 2006, prefix: "", lines: ["empiezo a", "enseñar Reiki"] },
     reikiSince: 2006,
   },
   legal: {
@@ -57,8 +57,6 @@ export const site = {
   },
   whatsappMessages: {
     general: "Hola, Tati. Te escribo desde la web y me gustaría información.",
-    error: "Hola, Tati. He intentado escribirte desde el formulario de la web y no se ha enviado. Te cuento por aquí.",
-    success: "Hola, Tati. Te acabo de escribir desde el formulario de la web.",
   },
   footer: {
     blurb: "Reiki, meditación y tarot terapéutico.",

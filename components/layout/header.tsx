@@ -15,22 +15,14 @@ import { cn } from "@/lib/utils";
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
-  const lastY = useRef(0);
   const menuButton = useRef<HTMLButtonElement>(null);
   const submenuId = useId();
 
   useEffect(() => {
     function onScroll() {
-      const y = window.scrollY;
-      setScrolled(y > 24);
-      const delta = y - lastY.current;
-      if (Math.abs(delta) > 6) {
-        setHidden(delta > 0 && y > 180);
-        lastY.current = y;
-      }
+      setScrolled(window.scrollY > 24);
     }
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -42,7 +34,6 @@ export function Header() {
     setPrevPath(pathname);
     setMenuOpen(false);
     setSubmenuOpen(false);
-    setHidden(false);
   }
 
   function closeMenu() {
@@ -55,17 +46,15 @@ export function Header() {
   }
 
   const solid = scrolled && !menuOpen;
-  const isHidden = hidden && !menuOpen && !submenuOpen;
 
   return (
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow,backdrop-filter] duration-700 ease-[var(--ease-breath)]",
+          "fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-700 ease-[var(--ease-breath)]",
           solid
             ? "bg-crema/80 shadow-[0_8px_30px_-20px_rgba(63,46,58,0.35)] backdrop-blur-xl"
             : "bg-transparent",
-          isHidden ? "-translate-y-full" : "translate-y-0",
         )}
       >
         <div className="container-page flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">

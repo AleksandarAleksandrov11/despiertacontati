@@ -167,6 +167,7 @@ export const reikiPage = {
   subtitle: "Primero, bajar revoluciones.",
   image: "reikiRostro" as ImageKey,
   queEs: {
+    image: "habitacionLuminosa" as ImageKey,
     title: "Qué es",
     text: "El Reiki es una terapia natural de imposición de manos. Ayuda a relajar el cuerpo y a calmar la mente cuando el estrés o la ansiedad no te dejan parar.",
   },
@@ -226,6 +227,7 @@ export const meditacionPage = {
   subtitle: "Medita en lo cotidiano.",
   image: "meditacionEspaldas" as ImageKey,
   filosofia: {
+    image: "tazaVapor" as ImageKey,
     title: "No necesitas cojín, silencio perfecto ni el mejor outfit.",
     text: "Puedes meditar fregando, en la ducha o caminando. Lo que cuenta es parar un momento y darte cuenta.",
   },
@@ -264,6 +266,7 @@ export const tarotPage = {
   subtitle: "Un espejo para ver claro.",
   image: "tarotFlores" as ImageKey,
   dentroFuera: {
+    image: "tarotBaraja" as ImageKey,
     title: "Dentro y fuera.",
     inside: {
       label: "Desde dentro",

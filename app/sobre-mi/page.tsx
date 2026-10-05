@@ -48,7 +48,7 @@ export default function SobreMiPage() {
           </h2>
         </Reveal>
       </Section>
-      <Cifras cifras={page.cifras} sealAlt={page.sello.alt} title={page.cifrasTitle} />
+      <Cifras sealAlt={page.sello.alt} title={page.cifrasTitle} />
       <CtaBlock tone="salvia" />
     </>
   );

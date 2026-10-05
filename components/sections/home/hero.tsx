@@ -4,27 +4,41 @@ import { Button } from "@/components/ui/button";
 import { FadeUp, SplitText } from "@/components/ui/split-text";
 import { RotatingWord } from "@/components/ui/rotating-word";
 import { SiteImage } from "@/components/ui/site-image";
-import { HeroVisual } from "./hero-visual";
+import { Stat } from "@/components/ui/stat";
 
 export function Hero() {
   const { hero } = inicio;
+  const { experience } = site.facts;
   return (
-    <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-crema pb-16 pt-28 lg:pb-12 lg:pt-24">
+    <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-crema pb-20 pt-28 lg:pb-16 lg:pt-28">
       <div aria-hidden className="blob -left-40 -top-32 size-[30rem] bg-rosa-polvo animate-drift" />
       <div aria-hidden className="blob -bottom-40 left-1/3 size-[26rem] bg-lavanda animate-drift-slow" />
-      <div className="container-page relative grid items-center gap-14 lg:grid-cols-12 lg:gap-10">
+      <div className="container-page relative grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-7">
-          <FadeUp as="p" className="eyebrow mb-6">
+          <FadeUp as="p" className="eyebrow mb-8 flex items-center gap-3">
+            <span aria-hidden className="size-1.5 rounded-full bg-rosa" />
             {hero.eyebrow}
           </FadeUp>
-          <SplitText as="h1" text={hero.title} className="font-serif text-display italic text-ciruela" delay={100} />
-          <FadeUp as="p" delay={650} className="mt-6 max-w-xl font-serif text-[clamp(1.6rem,1.25rem+1.4vw,2.5rem)] leading-tight">
-            {hero.subtitle}
-          </FadeUp>
-          <FadeUp as="p" delay={800} className="mt-4 max-w-md text-lead text-ink-soft">
+          <h1 className="font-serif text-ciruela">
+            <span className="block text-[clamp(4.5rem,2.6rem+8.5vw,10rem)] leading-[0.88] tracking-[-0.025em]">
+              <SplitText text={hero.title} delay={100} />
+              <span aria-hidden className="split-char text-rosa" style={{ animationDelay: "500ms" }}>
+                .
+              </span>
+            </span>
+            <FadeUp
+              as="span"
+              delay={600}
+              className="mt-7 flex max-w-xl items-start gap-4 text-[clamp(1.5rem,1.2rem+1.3vw,2.35rem)] italic leading-[1.2] text-ciruela/90"
+            >
+              <span aria-hidden className="mt-[0.65em] h-px w-10 shrink-0 bg-dorado sm:w-14" />
+              <span>{hero.subtitle}</span>
+            </FadeUp>
+          </h1>
+          <FadeUp as="p" delay={800} className="mt-6 max-w-md text-lead text-ink-soft sm:pl-[4.5rem]">
             {hero.support}
           </FadeUp>
-          <FadeUp delay={950} className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+          <FadeUp delay={950} className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:pl-[4.5rem]">
             <Button href={site.cta.primary.href} magnetic>
               {site.cta.primary.label}
             </Button>
@@ -32,39 +46,24 @@ export function Hero() {
               {site.cta.services.label}
             </Button>
           </FadeUp>
-          <FadeUp delay={1100} className="mt-12 flex items-center gap-4">
-            <span className="font-serif text-4xl text-ciruela">{site.facts.experience}</span>
-            <span className="h-px w-10 bg-dorado" aria-hidden />
-            <span className="text-sm text-ink-soft">{site.facts.experienceLabel}</span>
+          <FadeUp delay={1100} className="mt-12 border-t border-ciruela/10 pt-8 sm:ml-[4.5rem]">
+            <Stat value={experience.value} prefix={experience.prefix} lines={experience.lines} />
           </FadeUp>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[22rem] sm:max-w-sm lg:col-span-5 lg:max-w-none">
-          <HeroVisual />
-          <div className="relative mx-auto w-[82%]">
-            <SiteImage
-              name={hero.image}
-              shape="arch"
-              priority
-              sizes="(min-width: 1024px) 32vw, (min-width: 640px) 320px, 75vw"
-              className="aspect-[3/4] shadow-[0_40px_80px_-40px_rgba(63,46,58,0.45)]"
-              imgClassName="scale-105"
-            />
-            <p className="absolute -bottom-6 -left-4 rounded-2xl bg-crema/90 px-5 py-3 shadow-[0_20px_40px_-25px_rgba(63,46,58,0.45)] backdrop-blur sm:-left-10">
-              <RotatingWord words={hero.rotating} className="script-accent text-[2.6rem] text-rosa-deep" />
-            </p>
-          </div>
+        <div className="relative mx-auto w-full max-w-[20rem] sm:max-w-sm lg:col-span-5 lg:max-w-[26rem] lg:justify-self-end">
+          <SiteImage
+            name={hero.image}
+            shape="arch"
+            priority
+            sizes="(min-width: 1024px) 26rem, (min-width: 640px) 24rem, 80vw"
+            className="aspect-[3/4] shadow-[0_40px_80px_-40px_rgba(63,46,58,0.45)]"
+          />
+          <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-ciruela/10 bg-crema/95 px-7 py-2 shadow-[0_20px_40px_-25px_rgba(63,46,58,0.45)] backdrop-blur">
+            <RotatingWord words={hero.rotating} className="script-accent text-[2.4rem] text-rosa-deep" />
+          </p>
         </div>
       </div>
-      <a
-        href="#te-suena"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-ink-soft [@media(min-height:760px)]:lg:flex"
-      >
-        <span className="eyebrow">{hero.scroll}</span>
-        <span aria-hidden className="relative h-12 w-px overflow-hidden bg-ciruela/15">
-          <span className="absolute inset-x-0 top-0 h-1/2 animate-[scroll-cue_2.4s_var(--ease-breath)_infinite] bg-ciruela/60" />
-        </span>
-      </a>
     </section>
   );
 }
