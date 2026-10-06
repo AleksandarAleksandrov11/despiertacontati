@@ -32,7 +32,7 @@ export function SiteImage({ name, sizes, className, imgClassName, priority = fal
         fetchPriority={priority ? "high" : undefined}
         loading={priority ? "eager" : undefined}
         placeholder={priority ? "empty" : "blur"}
-        quality={70}
+        quality={80}
         className={cn("object-cover", imgClassName)}
         style={position ? { objectPosition: position } : undefined}
       />

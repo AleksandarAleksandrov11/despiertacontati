@@ -6,12 +6,13 @@ import { Manifiesto } from "@/components/sections/sobre-mi/manifiesto";
 import { Recorrido } from "@/components/sections/sobre-mi/recorrido";
 import { Herramientas } from "@/components/sections/sobre-mi/herramientas";
 import { Cifras } from "@/components/sections/sobre-mi/cifras";
-import { PhotoMarquee } from "@/components/sections/photo-marquee";
+import { Galeria } from "@/components/sections/sobre-mi/galeria";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata, personJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -39,14 +40,24 @@ export default function SobreMiPage() {
       </PageHeader>
       <Manifiesto lines={page.manifiesto} label={page.manifiestoLabel} />
       <Recorrido eyebrow={page.recorrido.eyebrow} title={page.recorrido.title} />
-      <PhotoMarquee />
+      <Galeria eyebrow={page.galeria.eyebrow} title={page.galeria.title} items={page.galeria.items} />
       <Herramientas eyebrow={page.herramientas.eyebrow} title={page.herramientas.title} items={page.herramientas.items} />
       <Section tone="rosa" labelledBy="lema">
-        <Reveal className="mx-auto max-w-5xl text-center">
-          <h2 id="lema" className="text-h1">
-            {page.lema.lead} <span className="script-accent text-[1.3em] text-rosa-deep">{page.lema.script}</span>.
-          </h2>
-        </Reveal>
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="mx-auto w-full max-w-xs lg:col-span-4 lg:max-w-none">
+            <SiteImage
+              name={page.lema.image}
+              shape="circle"
+              sizes="(min-width: 1024px) 28vw, 320px"
+              className="aspect-square shadow-[0_40px_80px_-40px_rgba(63,46,58,0.45)]"
+            />
+          </Reveal>
+          <Reveal className="text-center lg:col-span-8 lg:text-left" delay={0.1}>
+            <h2 id="lema" className="text-h1">
+              {page.lema.lead} <span className="script-accent text-[1.3em] text-rosa-deep">{page.lema.script}</span>.
+            </h2>
+          </Reveal>
+        </div>
       </Section>
       <Cifras sealAlt={page.sello.alt} title={page.cifrasTitle} />
       <CtaBlock tone="salvia" />

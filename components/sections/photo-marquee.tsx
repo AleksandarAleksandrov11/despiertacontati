@@ -14,7 +14,7 @@ export function PhotoMarquee() {
               key={key}
               className={`relative mx-2.5 shrink-0 overflow-hidden ${tall ? "h-64 w-48 rounded-t-full rounded-b-3xl sm:h-80 sm:w-60" : "h-52 w-64 rounded-3xl sm:h-64 sm:w-80"}`}
             >
-              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 320px, 256px" quality={70} className="object-cover" />
+              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 320px, 256px" quality={80} className="object-cover" />
             </div>
           );
         })}

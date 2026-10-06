@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { ClientExtras } from "@/components/layout/client-extras";
+import { Intro } from "@/components/layout/intro";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -38,8 +39,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es-ES" className={`${cormorant.variable} ${manrope.variable} ${allura.variable}`}>
+    <html lang="es-ES" className={`${cormorant.variable} ${manrope.variable} ${allura.variable}`} suppressHydrationWarning>
       <body className="grain">
+        <Intro />
         <Providers>
           <SkipLink />
           <Header />

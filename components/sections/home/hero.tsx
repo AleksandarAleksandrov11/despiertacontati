@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { inicio } from "@/content/paginas";
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,7 @@ export function Hero() {
           <h1 className="font-serif text-ciruela">
             <span className="block text-[clamp(4.5rem,2.6rem+8.5vw,10rem)] leading-[0.88] tracking-[-0.025em]">
               <SplitText text={hero.title} delay={100} />
-              <span aria-hidden className="split-char text-rosa" style={{ animationDelay: "500ms" }}>
+              <span aria-hidden className="split-char text-rosa" style={{ "--d": "460ms" } as CSSProperties}>
                 .
               </span>
             </span>

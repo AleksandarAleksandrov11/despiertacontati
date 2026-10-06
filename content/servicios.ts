@@ -39,7 +39,7 @@ export const servicios: Servicio[] = [
     step: "Claridad",
     name: "Meditación",
     accent: "var(--color-chakra-tercer-ojo)",
-    image: "meditacionEspaldas",
+    image: "meditacionCojin",
     summary: "Con calma llega la claridad. Meditaciones grabadas y clases en grupo para practicar en tu día a día.",
     formats: ["Presencial en Valencia", "Online", "Grupal", "Grabada"],
     topic: "meditacion",
@@ -78,7 +78,7 @@ export const metodo = {
       step: "Claridad",
       tool: "Meditación",
       accent: "var(--color-chakra-tercer-ojo)",
-      image: "meditacionCasa" as ImageKey,
+      image: "meditacionMar" as ImageKey,
       text: "Con calma llega la claridad: aprendes a parar.",
       href: "/servicios/meditacion",
     },
@@ -141,14 +141,14 @@ export const destacados = [
   {
     title: "Meditaciones grabadas",
     text: "Para la ducha, la ansiedad o dormir.",
-    image: "teCama" as ImageKey,
+    image: "meditacionAuriculares" as ImageKey,
     href: "/servicios/meditacion#grabadas",
     cta: "Ver meditaciones",
   },
   {
     title: "Clases grupales",
     text: "Online y en Valencia. Abro grupo pronto.",
-    image: "grupoParque" as ImageKey,
+    image: "tatiGrupoMeditacion" as ImageKey,
     href: "/tablon",
     cta: "Ver el tablón",
   },
@@ -196,7 +196,7 @@ export const reikiPage = {
     {
       title: "Reiki + péndulo hebreo",
       text: "El péndulo señala dónde está el bloqueo y el Reiki ayuda a soltarlo.",
-      image: "pendulo" as ImageKey,
+      image: "tatiSesionPendulo" as ImageKey,
     },
   ],
   chakras: {
@@ -218,6 +218,7 @@ export const reikiPage = {
     title: "Enseño Reiki desde 2006.",
     text: "Formaciones de Reiki y de crecimiento personal, en Valencia y online. Para usarlo contigo y con los tuyos.",
     cta: "Pide información sobre las próximas fechas",
+    image: "tatiCursoGrupo" as ImageKey,
   },
 };
 
@@ -225,7 +226,7 @@ export const meditacionPage = {
   eyebrow: "Meditación",
   title: "Meditación en Valencia y online",
   subtitle: "Medita en lo cotidiano.",
-  image: "meditacionEspaldas" as ImageKey,
+  image: "meditacionSalaClara" as ImageKey,
   filosofia: {
     image: "tazaVapor" as ImageKey,
     title: "No necesitas cojín, silencio perfecto ni el mejor outfit.",
@@ -250,7 +251,7 @@ export const meditacionPage = {
     eyebrow: "Clases grupales",
     title: "Meditar en compañía.",
     text: "Estoy a punto de abrir grupo online y otro presencial en Valencia. Mira el tablón y apúntate.",
-    image: "grupoSala" as ImageKey,
+    image: "tatiGrupoMeditacion" as ImageKey,
     cta: "Quiero plaza",
     ctaWhatsapp: "Hola, Tati. Quiero plaza en un grupo de meditación. ¿Me cuentas cuándo empieza?",
     tablon: "Ver el tablón",

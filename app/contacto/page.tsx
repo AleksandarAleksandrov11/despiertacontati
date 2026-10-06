@@ -12,6 +12,7 @@ import { InstagramIcon, WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
@@ -44,6 +45,13 @@ export default function ContactoPage() {
           </Reveal>
           <Reveal className="lg:col-span-5" delay={0.1}>
             <aside aria-labelledby="contacto-directo">
+              <div className="mb-10 flex items-center gap-5">
+                <SiteImage name={page.aside.avatar} shape="circle" sizes="96px" className="size-20 shrink-0 sm:size-24" />
+                <div>
+                  <p className="font-serif text-[1.75rem] leading-tight">{page.aside.avatarTitle}</p>
+                  <p className="mt-1 text-ink-soft">{page.aside.avatarText}</p>
+                </div>
+              </div>
               <h2 id="contacto-directo" className="eyebrow mb-6">
                 {page.aside.title}
               </h2>

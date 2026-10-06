@@ -24,6 +24,17 @@ import naranjo from "@/public/images/valencia-naranjo.webp";
 import playaPalmera from "@/public/images/valencia-playa-palmera.webp";
 import velaMadera from "@/public/images/vela-madera.webp";
 import velasCalma from "@/public/images/velas-calma.webp";
+import meditacionCojin from "@/public/images/meditacion-cojin-luz.webp";
+import meditacionSalaClara from "@/public/images/meditacion-sala-clara.webp";
+import meditacionAuriculares from "@/public/images/meditacion-auriculares.webp";
+import meditacionMar from "@/public/images/meditacion-mar-amanecer.webp";
+import mudraAtardecer from "@/public/images/mudra-atardecer.webp";
+import tatiRetrato from "@/public/images/tati-retrato.webp";
+import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
+import tatiGrupoMeditacion from "@/public/images/tati-grupo-meditacion.webp";
+import tatiSesionPendulo from "@/public/images/tati-sesion-pendulo.webp";
+import tatiTrabajandoPendulo from "@/public/images/tati-trabajando-pendulo.webp";
+import tatiCursoGrupo from "@/public/images/tati-curso-grupo.webp";
 
 export type SiteImage = {
   src: StaticImageData;
@@ -137,6 +148,57 @@ export const imagenes = {
     src: velasCalma,
     alt: "Velas encendidas con luz cálida junto a una ventana",
   },
+  meditacionCojin: {
+    src: meditacionCojin,
+    alt: "Mujer meditando sentada en el suelo con un cojín, junto a una ventana con cortinas claras",
+    position: "40% 50%",
+  },
+  meditacionSalaClara: {
+    src: meditacionSalaClara,
+    alt: "Mujer meditando con las manos juntas en una sala clara y luminosa",
+    position: "60% 50%",
+  },
+  meditacionAuriculares: {
+    src: meditacionAuriculares,
+    alt: "Mujer escuchando una meditación guiada con auriculares y los ojos cerrados",
+    position: "50% 30%",
+  },
+  meditacionMar: {
+    src: meditacionMar,
+    alt: "Mujer sentada frente al mar al amanecer, en calma",
+    position: "65% 50%",
+  },
+  mudraAtardecer: {
+    src: mudraAtardecer,
+    alt: "Mano en postura de meditación con el sol del atardecer al fondo",
+  },
+  tatiRetrato: {
+    src: tatiRetrato,
+    alt: "Tatiana Guillem, Tati, terapeuta holística en Valencia",
+    position: "50% 35%",
+  },
+  tatiSonrisa: {
+    src: tatiSonrisa,
+    alt: "Tati sonriendo al aire libre",
+    position: "45% 40%",
+  },
+  tatiGrupoMeditacion: {
+    src: tatiGrupoMeditacion,
+    alt: "Grupo de meditación presencial en Valencia, sentado en círculo en una sala luminosa",
+  },
+  tatiSesionPendulo: {
+    src: tatiSesionPendulo,
+    alt: "Práctica de péndulo hebreo durante una formación de Despierta con Tati",
+  },
+  tatiTrabajandoPendulo: {
+    src: tatiTrabajandoPendulo,
+    alt: "Trabajo con el péndulo hebreo sobre el manual de la formación",
+    position: "50% 40%",
+  },
+  tatiCursoGrupo: {
+    src: tatiCursoGrupo,
+    alt: "Alumnas y alumnos practicando con el péndulo hebreo en un curso presencial en Valencia",
+  },
 } satisfies Record<string, SiteImage>;
 
 export type ImageKey = keyof typeof imagenes;
@@ -152,4 +214,5 @@ export const photoMarquee: ImageKey[] = [
   "pendulo",
   "tazaVapor",
   "lonja",
+  "mudraAtardecer",
 ];

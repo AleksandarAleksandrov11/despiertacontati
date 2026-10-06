@@ -64,7 +64,7 @@ export const sobreMi = {
   subtitle: "Terapeuta holística en Valencia. Práctica y al grano.",
   intro:
     "Acompaño a mujeres que viven con estrés o ansiedad, o que sienten que han perdido el rumbo. Lo hago con herramientas que a mí me han funcionado.",
-  image: "cuencoSalvia" as ImageKey,
+  image: "tatiRetrato" as ImageKey,
   manifiesto: ["Sin humo.", "Sin ir de blanco.", "Herramientas que funcionan."],
   recorrido: {
     eyebrow: "Mi recorrido",
@@ -84,7 +84,17 @@ export const sobreMi = {
   },
   cifrasTitle: "En cifras",
   manifiestoLabel: "Mi manera de trabajar",
-  lema: { lead: "Recuerda quién eres, toma tu poder y crea tu nueva", script: "vida" },
+  lema: { lead: "Recuerda quién eres, toma tu poder y crea tu nueva", script: "vida", image: "tatiSonrisa" as ImageKey },
+  galeria: {
+    eyebrow: "En consulta",
+    title: "Así trabajamos.",
+    items: [
+      { image: "tatiGrupoMeditacion" as ImageKey, caption: "Meditación en grupo en Valencia" },
+      { image: "tatiTrabajandoPendulo" as ImageKey, caption: "Péndulo hebreo" },
+      { image: "tatiSesionPendulo" as ImageKey, caption: "Práctica en la formación" },
+      { image: "tatiCursoGrupo" as ImageKey, caption: "Curso presencial" },
+    ],
+  },
   sello: {
     alt: "Sello de Despierta con Tati: flor de loto, péndulo con piedras de los chakras, velas y cuenco tibetano en acuarela",
   },
@@ -107,7 +117,7 @@ export const tablonPage = {
     title: "Ahora mismo no hay nada colgado.",
     text: "Escríbeme y te aviso en cuanto abra un grupo o un curso nuevo.",
   },
-  image: "velaMadera" as ImageKey,
+  image: "tatiTrabajandoPendulo" as ImageKey,
 };
 
 export const contactoPage = {
@@ -115,6 +125,9 @@ export const contactoPage = {
   title: "Hablemos.",
   subtitle: "Cuéntame en un minuto qué necesitas.",
   aside: {
+    avatar: "tatiSonrisa" as ImageKey,
+    avatarTitle: "Te contesto yo.",
+    avatarText: "Leo cada mensaje personalmente.",
     title: "Si lo prefieres",
     location: "Valencia y online",
     locationText: "Sesiones presenciales en Valencia y online desde donde estés.",

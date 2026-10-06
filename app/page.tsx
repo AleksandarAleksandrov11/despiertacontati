@@ -8,6 +8,7 @@ import { Destacados } from "@/components/sections/home/destacados";
 import { TablonPreview } from "@/components/sections/home/tablon-preview";
 import { TestimoniosHome } from "@/components/sections/home/testimonios-home";
 import { KeywordMarquee } from "@/components/sections/keyword-marquee";
+import { PhotoMarquee } from "@/components/sections/photo-marquee";
 import { FaqSection } from "@/components/sections/faq-section";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -31,6 +32,7 @@ export default function HomePage() {
       <TeSuena />
       <Metodo />
       <Destacados />
+      <PhotoMarquee />
       <TablonPreview />
       <TestimoniosHome />
       <FaqSection eyebrow={inicio.faq.eyebrow} title={inicio.faq.title} faqs={faqs.inicio} />
