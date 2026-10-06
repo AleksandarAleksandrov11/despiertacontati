@@ -44,7 +44,7 @@ export const avisoLegal: LegalDocument = {
             `Titular: ${holder}`,
             ...nifLine,
             `Nombre comercial: ${site.name}`,
-            `Domicilio: ${site.legal.city}, España`,
+            `Domicilio: ${site.legal.address}, España`,
             `Email: ${email}`,
             `Teléfono: ${phone}`,
             `Web: ${site.url.replace("https://", "")}`,
@@ -79,7 +79,7 @@ export const avisoLegal: LegalDocument = {
       title: "Propiedad intelectual e industrial",
       blocks: [
         "Los textos, el logotipo, el diseño y el resto de contenidos propios de esta web pertenecen a la titular o se usan con licencia. No se pueden reproducir, distribuir ni transformar sin autorización expresa.",
-        "Las fotografías proceden de bancos de imágenes con licencia de uso libre y se utilizan con fines ilustrativos.",
+        "Las fotografías de Tati y de sus sesiones y cursos son propias. El resto proceden de bancos de imágenes con licencia de uso libre y se utilizan con fines ilustrativos.",
       ],
     },
     {
@@ -123,7 +123,7 @@ export const politicaPrivacidad: LegalDocument = {
           list: [
             `Responsable: ${holder}`,
             ...nifLine,
-            `Domicilio: ${site.legal.city}, España`,
+            `Domicilio: ${site.legal.address}, España`,
             `Email: ${email}`,
             `Teléfono: ${phone}`,
           ],

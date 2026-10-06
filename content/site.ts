@@ -41,9 +41,9 @@ export const site = {
     reikiSince: 2006,
   },
   legal: {
-    holder: "Tatiana Guillem",
-    nif: "",
-    city: "Valencia",
+    holder: "Tatiana Guillem Rodriguez",
+    nif: "20437016K",
+    address: "Calle Nou, 20-1, 46270 Villanueva de Castellón (Valencia)",
   },
   disclaimer:
     "Las terapias naturales son complementarias y no sustituyen la atención médica ni psicológica.",
