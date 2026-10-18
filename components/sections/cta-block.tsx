@@ -12,6 +12,7 @@ type CtaBlockProps = {
   tone?: SectionTone;
   whatsappMessage?: string;
   direct?: boolean;
+  primary?: { label: string; href: string };
 };
 
 export function CtaBlock({
@@ -20,6 +21,7 @@ export function CtaBlock({
   tone = "rosa",
   whatsappMessage,
   direct = false,
+  primary = site.cta.primary,
 }: CtaBlockProps) {
   return (
     <Section tone={tone} labelledBy="cta-final" hideWhatsapp>
@@ -42,8 +44,8 @@ export function CtaBlock({
             </>
           ) : (
             <>
-              <Button href={site.cta.primary.href} magnetic>
-                {site.cta.primary.label}
+              <Button href={primary.href} magnetic>
+                {primary.label}
               </Button>
               <Button href={whatsappHref(whatsappMessage)} variant="secondary" icon={<WhatsappIcon size={18} />}>
                 {site.cta.whatsapp}

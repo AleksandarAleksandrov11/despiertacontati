@@ -6,7 +6,7 @@ export type Faq = {
 const disclaimerFaq: Faq = {
   question: "¿Esto sustituye a la atención médica o psicológica?",
   answer:
-    "No. Las terapias naturales son complementarias y no sustituyen la atención médica ni psicológica. Si estás en tratamiento, sigue con él; esto suma, no resta.",
+    "No. Son prácticas de bienestar, complementarias, y no sustituyen la atención médica ni psicológica. Si estás en tratamiento, sigue con él; esto suma, no resta.",
 };
 
 const dondeFaq: Faq = {
@@ -26,25 +26,41 @@ const reservarFaq: Faq = {
     "Escríbeme por el formulario o por WhatsApp, cuéntame qué necesitas y buscamos el día que mejor te venga.",
 };
 
+const lecturaFaq: Faq = {
+  question: "¿Cómo recibo una lectura?",
+  answer:
+    "Las lecturas son en diferido. Eliges la tuya en la tienda, me escribes por WhatsApp y, tras confirmar el pago, te envío el vídeo y el PDF por WhatsApp.",
+};
+
 export const faqs = {
   inicio: [
-    dondeFaq,
     {
-      question: "Tengo ansiedad. ¿Por dónde empiezo?",
-      answer: "Por el Reiki. Primero hay que bajar revoluciones; la meditación y el tarot llegan después.",
+      question: "¿Por dónde empiezo?",
+      answer:
+        "Si llegas con estrés o ansiedad, por el Reiki: primero hay que bajar revoluciones. Si prefieres empezar por tu cuenta, descarga la guía gratuita Tu primera pausa.",
     },
-    reikiOnlineFaq,
+    {
+      question: "¿Cómo compro una meditación o una lectura?",
+      answer:
+        "En la tienda. Eliges, me escribes por WhatsApp desde la ficha del producto, te paso cómo pagar y, tras confirmar el pago, te lo envío.",
+    },
+    dondeFaq,
     disclaimerFaq,
   ],
   servicios: [
     {
       question: "¿Puedo combinar terapias?",
       answer:
-        "Sí, y muchas veces es lo mejor: Reiki para calmar, meditación para mantener esa calma y tarot cuando toca decidir.",
+        "Sí, y muchas veces es lo mejor: Reiki para calmar, meditación para mantener esa calma y tarot o autoconocimiento cuando toca decidir.",
     },
     {
       question: "¿Tengo que creer en algo para que funcione?",
       answer: "No. Solo necesitas venir con ganas de dedicarte un rato. Yo te explico todo lo que hago y por qué.",
+    },
+    {
+      question: "¿Qué puedo hacer sin coincidir en agenda contigo?",
+      answer:
+        "Las meditaciones grabadas, las lecturas en diferido y el autoconocimiento. Los encuentras en la tienda y te llegan por enlace o por WhatsApp.",
     },
     reservarFaq,
     disclaimerFaq,
@@ -59,6 +75,11 @@ export const faqs = {
       answer:
         "Cada persona lo vive a su manera. Hay quien nota calor en las manos, hormigueo o simplemente una relajación muy profunda.",
     },
+    {
+      question: "¿Qué es la sanación akásica?",
+      answer:
+        "Un trabajo de sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar. No es una lectura de registros.",
+    },
     reikiOnlineFaq,
     {
       question: "¿Cómo son los cursos de Reiki?",
@@ -66,14 +87,31 @@ export const faqs = {
     },
     disclaimerFaq,
   ],
+  limpieza: [
+    {
+      question: "¿Dónde haces las limpiezas?",
+      answer: "En Valencia. Escríbeme, cuéntame dónde está el espacio y lo vemos.",
+    },
+    {
+      question: "¿Cuánto cuesta?",
+      answer: "Depende del espacio. Escríbeme y te paso presupuesto sin compromiso.",
+    },
+    {
+      question: "¿Sirve también para un espacio de trabajo?",
+      answer: "Sí. Trabajo en casas y en espacios de trabajo: oficinas, consultas o locales.",
+    },
+    disclaimerFaq,
+  ],
   meditacion: [
     {
       question: "Nunca he meditado. ¿Puedo empezar?",
-      answer: "Claro. Si nunca has meditado, mejor: empiezas sin ideas raras sobre cómo tiene que ser.",
+      answer:
+        "Claro. Si nunca has meditado, mejor: empiezas sin ideas raras sobre cómo tiene que ser. La guía gratuita Tu primera pausa es un buen primer paso.",
     },
     {
-      question: "¿Cómo recibo una meditación grabada?",
-      answer: "Escríbeme por WhatsApp diciendo cuál quieres y te la envío.",
+      question: "¿Cómo consigo las meditaciones grabadas?",
+      answer:
+        "En la tienda. Eliges el pack, me escribes por WhatsApp y, tras confirmar el pago, te envío un enlace privado para descargar los MP3.",
     },
     {
       question: "¿Puedo meditar si tengo ansiedad?",
@@ -92,14 +130,33 @@ export const faqs = {
       answer:
         "No lo uso así. El tarot terapéutico es un espejo: te ayuda a ver tu situación con claridad para que decidas tú.",
     },
+    lecturaFaq,
+    {
+      question: "¿Qué baraja usas?",
+      answer: "El tarot Rider-Waite.",
+    },
+    {
+      question: "¿Puedo hacer una sesión en directo?",
+      answer:
+        "Sí, de 30 o 50 minutos, online o presencial en Valencia. La reservas en la tienda y la agendamos por WhatsApp.",
+    },
     {
       question: "¿Por qué no hago tarot si llego con ansiedad?",
       answer: "Porque con la cabeza a mil todo se lee desde el miedo. Primero calma, después tarot.",
     },
+    disclaimerFaq,
+  ],
+  autoconocimiento: [
     {
-      question: "¿Puedo hacer la sesión online?",
-      answer: "Sí. Hacemos la tirada por videollamada y lo ves todo en directo.",
+      question: "¿Qué necesito?",
+      answer: "Solo tu fecha de nacimiento. Me la das por WhatsApp al hacer el pedido.",
     },
+    {
+      question: "¿La Matriz del Destino es tarot?",
+      answer:
+        "No. Usa la energía de los arcanos mayores, pero no se trabaja con cartas. El Código Personal y la Carta Personal sí utilizan cartas: es tarot numerológico.",
+    },
+    lecturaFaq,
     disclaimerFaq,
   ],
   contacto: [
@@ -113,6 +170,21 @@ export const faqs = {
     },
     dondeFaq,
     disclaimerFaq,
+  ],
+  guia: [
+    {
+      question: "¿Es gratis de verdad?",
+      answer: "Sí. Solo te pido tu nombre y tu email para enviártela.",
+    },
+    {
+      question: "¿Me vas a llenar el correo?",
+      answer:
+        "No. Solo te escribiré con novedades, meditaciones y clases si marcas la casilla. Y puedes darte de baja cuando quieras.",
+    },
+    {
+      question: "¿Necesito experiencia para meditar?",
+      answer: "No. La guía está pensada justo para empezar desde cero.",
+    },
   ],
 } satisfies Record<string, Faq[]>;
 

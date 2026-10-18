@@ -8,13 +8,12 @@ type SiteImageProps = {
   className?: string;
   imgClassName?: string;
   priority?: boolean;
-  shape?: "arch" | "rounded" | "circle" | "none";
+  shape?: "rounded" | "soft" | "none";
 };
 
 const shapes = {
-  arch: "mask-arch",
-  rounded: "rounded-[1.75rem]",
-  circle: "rounded-full",
+  rounded: "rounded-[1.25rem]",
+  soft: "rounded-xl",
   none: "",
 };
 

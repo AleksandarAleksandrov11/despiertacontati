@@ -1,13 +1,13 @@
 import { ogContentType, ogSize, renderOg } from "@/lib/og";
 
-export const alt = "Tarot terapéutico en Valencia y online Un espejo para ver claro y decidir mejor.";
+export const alt = "Tarot terapéutico. Crono Tarot, lecturas concretas y sesiones en directo, en Valencia y online.";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
   return renderOg({
-    eyebrow: "Tarot terapéutico",
-    title: "Tarot terapéutico en Valencia y online",
-    subtitle: "Un espejo para ver claro y decidir mejor.",
+    eyebrow: "Decisiones con claridad",
+    title: "Tarot terapéutico",
+    subtitle: "Crono Tarot, lecturas concretas y sesiones en directo, en Valencia y online.",
   });
 }

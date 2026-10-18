@@ -174,14 +174,6 @@
     background-size: 0% 1px;
   }
 
-  .mask-arch {
-    border-radius: 999px 999px 1.75rem 1.75rem;
-  }
-
-  .mask-arch-full {
-    border-radius: 999px 999px 999px 999px;
-  }
-
   .gold-rule {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--color-dorado) 20%, var(--color-dorado) 80%, transparent);
@@ -264,6 +256,10 @@
 }
 
 @layer utilities {
+  .nums {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -292,12 +288,10 @@
 
 @keyframes rise-in {
   from {
-    opacity: 0;
     transform: translate3d(0, 0.45em, 0);
     filter: blur(10px);
   }
   to {
-    opacity: 1;
     transform: none;
     filter: blur(0);
   }
@@ -305,24 +299,90 @@
 
 @keyframes fade-up {
   from {
-    opacity: 0;
     transform: translate3d(0, 18px, 0);
+    filter: blur(6px);
   }
   to {
-    opacity: 1;
     transform: none;
+    filter: blur(0);
   }
 }
 
 .split-char {
   display: inline-block;
   animation: rise-in 1.2s var(--ease-breath) both;
-  animation-delay: calc(var(--i, 0) * 42ms + var(--d, 0ms) + var(--intro, 0ms));
+  animation-delay: calc(min(var(--i, 0) * 42ms, 900ms) + var(--d, 0ms) + var(--intro, 0ms));
 }
 
 .fade-up {
   animation: fade-up 1.2s var(--ease-breath) both;
   animation-delay: calc(var(--d, 0ms) + var(--intro, 0ms));
+}
+
+html.js .reveal,
+html.js .reveal-group > .reveal-item {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 1.1s var(--ease-breath),
+    transform 1.1s var(--ease-breath),
+    filter 1.1s var(--ease-breath);
+}
+
+html.js .reveal {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+html.js .reveal.is-visible,
+html.js .reveal-group.is-visible > .reveal-item {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+html.js .reveal-group > .reveal-item:nth-child(2) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 1);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(3) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 2);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(4) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 3);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(5) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 4);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(6) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 5);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(7) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 6);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(8) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 7);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(9) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 8);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(10) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 9);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(11) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 10);
+}
+
+html.js .reveal-group > .reveal-item:nth-child(12) {
+  transition-delay: calc(var(--reveal-stagger, 120ms) * 11);
 }
 
 @keyframes scroll-cue {
@@ -411,6 +471,13 @@ html[data-intro="play"] .intro {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html.js .reveal,
+  html.js .reveal-group > .reveal-item {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
   html[data-intro="play"] .intro {
     display: none;
   }

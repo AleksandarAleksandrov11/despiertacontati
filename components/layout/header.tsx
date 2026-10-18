@@ -119,7 +119,7 @@ export function Header() {
                           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                           exit={{ opacity: 0, y: 8, filter: "blur(4px)" }}
                           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                          className="absolute left-1/2 top-full w-72 -translate-x-1/2 pt-3"
+                          className="absolute left-1/2 top-full w-80 -translate-x-1/2 pt-3"
                         >
                           <ul className="rounded-3xl border border-linea bg-crema/95 p-2 shadow-[0_24px_60px_-30px_rgba(63,46,58,0.4)] backdrop-blur-xl">
                             {item.children.map((child) => (
@@ -145,8 +145,8 @@ export function Header() {
           </nav>
           <div className="flex items-center gap-2">
             <div className="hidden lg:block">
-              <Button href={site.cta.primary.href} magnetic>
-                {site.cta.primary.label}
+              <Button href={site.cta.guide.href} magnetic>
+                {site.cta.guide.label}
               </Button>
             </div>
             <button

@@ -3,12 +3,13 @@ import { tablonPage } from "@/content/paginas";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
 import { AnuncioCard } from "@/components/sections/anuncio-card";
+import { InstagramFeed } from "@/components/sections/instagram-feed";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
-import { Section } from "@/components/ui/section";
+import { Section, SectionHeading } from "@/components/ui/section";
 import { eventJsonLd, getActiveAnuncios } from "@/lib/anuncios";
 import { breadcrumbJsonLd, businessId, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, whatsappHref } from "@/lib/utils";
@@ -16,9 +17,9 @@ import { absoluteUrl, whatsappHref } from "@/lib/utils";
 export const revalidate = 3600;
 
 export const metadata: Metadata = pageMetadata({
-  title: "Grupos de meditación y cursos de Reiki | Despierta con Tati",
+  title: "Grupos de meditación y novedades | Despierta con Tati",
   description:
-    "Próximos grupos de meditación online y en Valencia, cursos de Reiki y meditaciones grabadas de Despierta con Tati. Apúntate o pide información sin compromiso.",
+    "Próximos grupos de meditación online y en Valencia, la guía gratuita Tu primera pausa, novedades de la tienda y lo último de Despierta con Tati en Instagram.",
   path: "/tablon",
 });
 
@@ -27,6 +28,7 @@ export default function TablonPage() {
   const events = anuncios
     .filter((anuncio) => anuncio.date)
     .map((anuncio) => eventJsonLd(anuncio, absoluteUrl("/tablon"), businessId, site.location.locality));
+  const instagram = tablonPage.instagram;
 
   return (
     <>
@@ -34,7 +36,7 @@ export default function TablonPage() {
       <PageHeader eyebrow={tablonPage.eyebrow} title={tablonPage.title} subtitle={tablonPage.subtitle} image={tablonPage.image} tone="rosa" blobs="b" />
       <Section tone="crema" labelledBy="anuncios">
         <h2 id="anuncios" className="sr-only">
-          {tablonPage.subtitle}
+          {tablonPage.anunciosTitle}
         </h2>
         {anuncios.length > 0 ? (
           <RevealGroup as="ul" className="grid gap-5 md:grid-cols-2">
@@ -45,8 +47,7 @@ export default function TablonPage() {
             ))}
           </RevealGroup>
         ) : (
-          <Reveal className="mx-auto max-w-xl rounded-[2rem] border border-dashed border-ciruela/20 px-8 py-16 text-center">
-            <div aria-hidden className="mx-auto mb-8 size-16 rounded-full bg-[radial-gradient(circle_at_35%_30%,#fbf7f2,#f1ecf6_60%,#e4d6ee)] animate-drift" />
+          <Reveal className="mx-auto max-w-xl rounded-[1.25rem] border border-dashed border-ciruela/20 px-8 py-16 text-center">
             <p className="text-h3">{tablonPage.empty.title}</p>
             <p className="mt-3 text-ink-soft">{tablonPage.empty.text}</p>
             <div className="mt-8 flex justify-center">
@@ -57,7 +58,15 @@ export default function TablonPage() {
           </Reveal>
         )}
       </Section>
-      <CtaBlock tone="lavanda" />
+      <Section tone="lavanda" id="instagram" labelledBy="instagram-title">
+        <Reveal>
+          <SectionHeading eyebrow={instagram.eyebrow} title={instagram.title} text={instagram.text} id="instagram-title" />
+        </Reveal>
+        <Reveal className="mt-12">
+          <InstagramFeed />
+        </Reveal>
+      </Section>
+      <CtaBlock tone="rosa" primary={site.cta.services} />
     </>
   );
 }

@@ -1,11 +1,12 @@
 import { inicio } from "@/content/paginas";
-import { testimonios } from "@/content/testimonios";
+import { hayTestimonios, testimonios } from "@/content/testimonios";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { TestimonialsCarousel } from "@/components/sections/testimonials-carousel";
 
 export function TestimoniosHome() {
+  if (!hayTestimonios) return null;
   return (
     <Section tone="lavanda" labelledBy="testimonios-title" bare className="section-pad">
       <div className="container-page flex flex-col justify-between gap-8 sm:flex-row sm:items-end">

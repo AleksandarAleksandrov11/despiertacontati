@@ -1,4 +1,4 @@
-export type AnuncioTipo = "Grupo" | "Curso" | "Meditación" | "Novedad";
+export type AnuncioTipo = "Grupo" | "Guía" | "Tienda" | "Novedad";
 
 export type Anuncio = {
   id: string;
@@ -9,7 +9,7 @@ export type Anuncio = {
   text: string;
   cta:
     | { kind: "whatsapp"; label: string; message: string }
-    | { kind: "contacto"; label: string; topic: string };
+    | { kind: "enlace"; label: string; href: string };
   date?: string;
   endDate?: string;
   location?: "online" | "valencia";
@@ -45,25 +45,21 @@ export const anuncios: Anuncio[] = [
     location: "valencia",
   },
   {
-    id: "cursos-reiki",
-    type: "Curso",
-    title: "Cursos de Reiki",
-    status: "Próximas fechas",
-    modality: "Valencia y online",
-    text: "Pide información y te cuento las próximas fechas.",
-    cta: { kind: "contacto", label: "Pide información", topic: "curso-reiki" },
+    id: "guia-tu-primera-pausa",
+    type: "Guía",
+    title: "Guía gratuita «Tu primera pausa»",
+    status: "Ya disponible",
+    modality: "Descarga gratuita",
+    text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
+    cta: { kind: "enlace", label: "Descárgala", href: "/tu-primera-pausa" },
   },
   {
-    id: "meditacion-esponja-gratitud",
-    type: "Meditación",
-    title: "Meditación «La esponja de la gratitud»",
-    status: "Ya disponible",
-    modality: "Grabada",
-    text: "Para hacer en la ducha. Te la envío por WhatsApp.",
-    cta: {
-      kind: "whatsapp",
-      label: "Quiero esta meditación",
-      message: "Hola, Tati. Quiero la meditación «La esponja de la gratitud». ¿Cómo me la envías?",
-    },
+    id: "meditaciones-pausa-y-vuelve-a-ti",
+    type: "Tienda",
+    title: "Meditaciones «Pausa y vuelve a ti»",
+    status: "Ya disponible en la tienda",
+    modality: "Cinco audios en MP3",
+    text: "Cinco meditaciones guiadas para volver a la respiración y explorar el cuerpo y los sentidos a tu ritmo.",
+    cta: { kind: "enlace", label: "Ver en la tienda", href: "/tienda/pausa-y-vuelve-a-ti" },
   },
 ];

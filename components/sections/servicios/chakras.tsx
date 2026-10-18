@@ -3,9 +3,11 @@
 import { AnimatePresence, m } from "motion/react";
 import { useState } from "react";
 import { reikiPage } from "@/content/servicios";
+import { Button } from "@/components/ui/button";
+import { WhatsappIcon } from "@/components/ui/icons";
 import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
-import { cn } from "@/lib/utils";
+import { cn, whatsappHref } from "@/lib/utils";
 
 export function Chakras() {
   const { chakras } = reikiPage;
@@ -17,6 +19,15 @@ export function Chakras() {
       <div className="grid items-center gap-14 lg:grid-cols-2">
         <Reveal>
           <SectionHeading eyebrow={chakras.eyebrow} title={chakras.title} text={chakras.hint} id="chakras-title" />
+          <div className="mt-10 max-w-md border-t border-ciruela/15 pt-8">
+            <h3 className="text-h3">{chakras.analisis.title}</h3>
+            <p className="mt-2 text-ink-soft">{chakras.analisis.text}</p>
+            <div className="mt-5">
+              <Button href={whatsappHref(chakras.analisis.whatsapp)} variant="secondary" icon={<WhatsappIcon size={18} />}>
+                {reikiPage.info}
+              </Button>
+            </div>
+          </div>
         </Reveal>
         <Reveal delay={0.1} className="flex justify-center lg:justify-start">
           <div className="relative flex">

@@ -2,26 +2,32 @@
 
 import { AnimatePresence, m } from "motion/react";
 import { useState } from "react";
-import { testimonioFiltros, testimonios } from "@/content/testimonios";
+import { testimonios } from "@/content/testimonios";
 import { testimoniosPage } from "@/content/paginas";
 import { cn } from "@/lib/utils";
 
-type Filtro = (typeof testimonioFiltros)[number];
+const servicios = Array.from(new Set(testimonios.map((item) => item.service)));
+const filtros = [testimoniosPage.all, ...servicios];
+const palette = [
+  "var(--color-chakra-corazon)",
+  "var(--color-chakra-tercer-ojo)",
+  "var(--color-chakra-plexo)",
+  "var(--color-chakra-garganta)",
+  "var(--color-chakra-sacro)",
+];
 
-const accents: Record<string, string> = {
-  Reiki: "var(--color-chakra-corazon)",
-  Meditación: "var(--color-chakra-tercer-ojo)",
-  Tarot: "var(--color-chakra-plexo)",
-};
+function accentFor(service: string) {
+  return palette[servicios.indexOf(service) % palette.length];
+}
 
 export function TestimoniosGrid() {
-  const [filtro, setFiltro] = useState<Filtro>("Todos");
-  const items = filtro === "Todos" ? testimonios : testimonios.filter((item) => item.service === filtro);
+  const [filtro, setFiltro] = useState(testimoniosPage.all);
+  const items = filtro === testimoniosPage.all ? testimonios : testimonios.filter((item) => item.service === filtro);
 
   return (
     <>
       <div role="group" aria-label={testimoniosPage.filterLabel} className="flex flex-wrap gap-x-8 gap-y-2">
-        {testimonioFiltros.map((option) => (
+        {filtros.map((option) => (
           <button
             key={option}
             type="button"
@@ -49,9 +55,9 @@ export function TestimoniosGrid() {
               transition={{ duration: 0.8, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
               className="mb-5 break-inside-avoid"
             >
-              <figure className="rounded-[1.75rem] border border-ciruela/10 bg-crema p-7 sm:p-8">
+              <figure className="rounded-[1.25rem] border border-ciruela/10 bg-crema p-7 sm:p-8">
                 <p className="eyebrow flex items-center gap-2.5">
-                  <span aria-hidden className="size-2 rounded-full" style={{ backgroundColor: accents[item.service] }} />
+                  <span aria-hidden className="size-2 rounded-full" style={{ backgroundColor: accentFor(item.service) }} />
                   {item.service}
                 </p>
                 <blockquote className="mt-5 font-serif text-[clamp(1.3rem,1.15rem+0.5vw,1.6rem)] leading-snug">

@@ -17,7 +17,3 @@ export function useMediaQuery(query: string, serverFallback = false) {
 export function useFinePointer() {
   return useMediaQuery("(hover: hover) and (pointer: fine)");
 }
-
-export function usePrefersReducedMotion() {
-  return useMediaQuery("(prefers-reduced-motion: reduce)");
-}

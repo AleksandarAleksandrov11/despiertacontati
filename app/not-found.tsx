@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFoundPage } from "@/content/paginas";
+import { guia } from "@/content/guia";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: { absolute: "Página no encontrada | Despierta con Tati" },
@@ -27,6 +29,14 @@ export default function NotFound() {
             </li>
           ))}
         </ul>
+        <div className="mx-auto mt-14 max-w-md border-t border-ciruela/10 pt-10">
+          <p className="text-ink-soft">{notFoundPage.guide.text}</p>
+          <div className="mt-6 flex justify-center">
+            <Button href={guia.slug} variant="secondary">
+              {notFoundPage.guide.cta}
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );

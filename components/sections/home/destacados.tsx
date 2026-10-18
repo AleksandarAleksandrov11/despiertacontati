@@ -14,7 +14,7 @@ export function Destacados() {
       <Reveal>
         <SectionHeading eyebrow={inicio.destacados.eyebrow} title={inicio.destacados.title} id="destacados-title" />
       </Reveal>
-      <RevealGroup as="ul" className="mt-14 grid gap-5 md:grid-cols-3">
+      <RevealGroup as="ul" className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {destacados.map((item) => (
           <RevealItem as="li" key={item.title}>
             <TiltCard className="h-full" innerClassName="flex h-full flex-col">
@@ -22,11 +22,11 @@ export function Destacados() {
                 <SiteImage
                   name={item.image}
                   shape="none"
-                  sizes="(min-width: 768px) 30vw, 90vw"
+                  sizes="(min-width: 1280px) 300px, (min-width: 640px) 45vw, 90vw"
                   className="aspect-[4/3]"
                   imgClassName="transition-transform duration-[1.6s] ease-[var(--ease-breath)] group-hover:scale-105"
                 />
-                <div className="flex flex-1 flex-col p-7">
+                <div className="flex flex-1 flex-col p-6 sm:p-7">
                   <h3 className="text-h3">{item.title}</h3>
                   <p className="mt-3 flex-1 text-ink-soft">{item.text}</p>
                   <span className="mt-6 inline-flex items-center gap-2 font-medium">

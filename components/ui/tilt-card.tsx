@@ -14,12 +14,14 @@ type TiltCardProps = {
 };
 
 const spring = { stiffness: 140, damping: 18, mass: 0.7 };
+const frameClass =
+  "relative h-full rounded-[1.25rem] p-px transition-shadow duration-700 ease-[var(--ease-breath)] hover:shadow-[0_30px_60px_-30px_rgba(63,46,58,0.35)]";
+const borderClass =
+  "chakra-gradient absolute inset-0 rounded-[1.25rem] opacity-25 transition-opacity duration-700 group-hover/tilt:opacity-70";
+const innerBase = "relative h-full overflow-hidden rounded-[calc(1.25rem-1px)] bg-crema";
 
-export function TiltCard({ children, className, innerClassName, max = 7, as = "div" }: TiltCardProps) {
+function TiltEffect({ children, className, innerClassName, max, as }: Required<Omit<TiltCardProps, "className" | "innerClassName">> & Pick<TiltCardProps, "className" | "innerClassName">) {
   const ref = useRef<HTMLDivElement>(null);
-  const fine = useFinePointer();
-  const reduce = useReducedMotion();
-  const active = fine && !reduce;
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const mx = useMotionValue(50);
@@ -32,7 +34,7 @@ export function TiltCard({ children, className, innerClassName, max = 7, as = "d
   const Component = m[as];
 
   function onMove(event: PointerEvent<HTMLDivElement>) {
-    if (!active || !ref.current) return;
+    if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
@@ -50,33 +52,52 @@ export function TiltCard({ children, className, innerClassName, max = 7, as = "d
   }
 
   return (
-    <Component
-      className={cn("group/tilt relative [perspective:1100px]", className)}
-      whileTap={active ? undefined : { scale: 0.98 }}
-      transition={{ duration: 0.4 }}
-    >
+    <Component className={cn("group/tilt relative [perspective:1100px]", className)}>
       <m.div
         ref={ref}
         onPointerMove={onMove}
         onPointerLeave={onLeave}
-        style={active ? { rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" } : undefined}
-        className="relative h-full rounded-[1.75rem] p-px transition-shadow duration-700 ease-[var(--ease-breath)] hover:shadow-[0_30px_60px_-30px_rgba(63,46,58,0.35)]"
+        style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }}
+        className={frameClass}
       >
-        <span
-          aria-hidden
-          className="chakra-gradient absolute inset-0 rounded-[1.75rem] opacity-25 transition-opacity duration-700 group-hover/tilt:opacity-70"
-        />
-        <div className={cn("relative h-full overflow-hidden rounded-[calc(1.75rem-1px)] bg-crema", innerClassName)}>
+        <span aria-hidden className={borderClass} />
+        <div className={cn(innerBase, innerClassName)}>
           {children}
-          {active && (
-            <m.span
-              aria-hidden
-              style={{ backgroundImage: glare, opacity: sglow }}
-              className="pointer-events-none absolute inset-0 mix-blend-soft-light"
-            />
-          )}
+          <m.span
+            aria-hidden
+            style={{ backgroundImage: glare, opacity: sglow }}
+            className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+          />
         </div>
       </m.div>
+    </Component>
+  );
+}
+
+export function TiltCard({ children, className, innerClassName, max = 7, as = "div" }: TiltCardProps) {
+  const fine = useFinePointer();
+  const reduce = useReducedMotion();
+
+  if (fine && !reduce) {
+    return (
+      <TiltEffect className={className} innerClassName={innerClassName} max={max} as={as}>
+        {children}
+      </TiltEffect>
+    );
+  }
+
+  const Component = as;
+  return (
+    <Component
+      className={cn(
+        "group/tilt relative transition-transform duration-300 active:scale-[0.98] motion-reduce:active:scale-100",
+        className,
+      )}
+    >
+      <div className={frameClass}>
+        <span aria-hidden className={borderClass} />
+        <div className={cn(innerBase, innerClassName)}>{children}</div>
+      </div>
     </Component>
   );
 }

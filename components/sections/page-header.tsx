@@ -13,6 +13,7 @@ type PageHeaderProps = {
   tone?: SectionTone;
   children?: ReactNode;
   blobs?: "a" | "b" | "c";
+  imageSize?: "md" | "sm";
 };
 
 const tones: Partial<Record<SectionTone, string>> = {
@@ -22,7 +23,17 @@ const tones: Partial<Record<SectionTone, string>> = {
   salvia: "bg-salvia",
 };
 
-export function PageHeader({ eyebrow, title, subtitle, image, tone = "crema", children, blobs = "a" }: PageHeaderProps) {
+export function PageHeader({
+  eyebrow,
+  title,
+  subtitle,
+  image,
+  tone = "crema",
+  children,
+  blobs = "a",
+  imageSize = "md",
+}: PageHeaderProps) {
+  const small = imageSize === "sm";
   return (
     <section className={cn("relative overflow-hidden pb-16 pt-32 sm:pb-24 sm:pt-40", tones[tone])}>
       <Blobs variant={blobs} />
@@ -32,7 +43,7 @@ export function PageHeader({ eyebrow, title, subtitle, image, tone = "crema", ch
           image && "lg:grid-cols-12 lg:gap-16",
         )}
       >
-        <div className={cn(image ? "lg:col-span-7" : "max-w-4xl")}>
+        <div className={cn(image ? (small ? "lg:col-span-8" : "lg:col-span-7") : "max-w-4xl")}>
           <FadeUp as="p" className="eyebrow mb-6">
             {eyebrow}
           </FadeUp>
@@ -48,17 +59,21 @@ export function PageHeader({ eyebrow, title, subtitle, image, tone = "crema", ch
             </FadeUp>
           )}
         </div>
-        {image && (
-          <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
-            <SiteImage
-              name={image}
-              shape="arch"
-              priority
-              sizes="(min-width: 1024px) 34vw, (min-width: 640px) 384px, 90vw"
-              className="aspect-[4/5]"
-            />
-          </div>
-        )}
+        {image &&
+          (small ? (
+            <div className="w-full max-w-[15rem] sm:max-w-[17rem] lg:col-span-4 lg:max-w-[18rem] lg:justify-self-end">
+              <SiteImage name={image} priority sizes="(min-width: 640px) 288px, 240px" className="aspect-[4/5]" />
+            </div>
+          ) : (
+            <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+              <SiteImage
+                name={image}
+                priority
+                sizes="(min-width: 1024px) 34vw, (min-width: 640px) 384px, 90vw"
+                className="aspect-[4/5]"
+              />
+            </div>
+          ))}
       </div>
     </section>
   );

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { servicios, serviciosPage, sesionesIndividuales, clasesGrupales } from "@/content/servicios";
+import { bloques, serviciosPage } from "@/content/servicios";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
@@ -16,11 +16,11 @@ import type { SectionTone } from "@/components/ui/section";
 export const metadata: Metadata = pageMetadata({
   title: "Terapias holísticas en Valencia y online | Despierta con Tati",
   description:
-    "Reiki, meditación y tarot terapéutico en Valencia y online. Sesiones individuales, clases grupales, meditaciones grabadas y cursos de Reiki con Tati.",
+    "Reiki y terapias energéticas, limpieza energética de casas, meditación, tarot y autoconocimiento en Valencia y online. Primero calma, después claridad y decisión.",
   path: "/servicios",
 });
 
-const tones: SectionTone[] = ["rosa", "crema", "lavanda"];
+const tones: SectionTone[] = ["rosa", "crema", "lavanda", "crema", "rosa"];
 
 export default function ServiciosPage() {
   return (
@@ -33,17 +33,18 @@ export default function ServiciosPage() {
             description: site.description,
             path: "/servicios",
             serviceType: "Terapia holística",
-            offers: [...sesionesIndividuales, ...clasesGrupales, "Meditaciones grabadas", "Cursos de Reiki"],
+            offers: bloques.flatMap((bloque) => bloque.includes),
           }),
         ]}
       />
       <PageHeader eyebrow={serviciosPage.eyebrow} title={serviciosPage.title} subtitle={serviciosPage.subtitle} image="piedrasChakras">
-        <Button href={site.cta.primary.href} magnetic>
-          {site.cta.primary.label}
+        <p className="w-full max-w-lg text-lead text-ink-soft">{serviciosPage.orden}</p>
+        <Button href={`#${bloques[0].slug}`} variant="secondary">
+          {serviciosPage.headerCta}
         </Button>
       </PageHeader>
-      {servicios.map((servicio, index) => (
-        <ServiceBlock key={servicio.slug} servicio={servicio} reverse={index % 2 === 1} tone={tones[index]} />
+      {bloques.map((bloque, index) => (
+        <ServiceBlock key={bloque.slug} bloque={bloque} reverse={index % 2 === 1} tone={tones[index]} />
       ))}
       <PorDonde />
       <Formatos />

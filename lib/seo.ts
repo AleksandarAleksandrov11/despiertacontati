@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 import type { Faq } from "@/content/faqs";
+import { bloques } from "@/content/servicios";
 import { absoluteUrl } from "./utils";
 
 type PageMetaInput = {
@@ -73,12 +74,14 @@ export function serviceJsonLd({
   path,
   serviceType,
   offers,
+  online = true,
 }: {
   name: string;
   description: string;
   path: string;
   serviceType: string;
   offers?: string[];
+  online?: boolean;
 }) {
   return {
     "@context": "https://schema.org",
@@ -88,13 +91,10 @@ export function serviceJsonLd({
     serviceType,
     url: absoluteUrl(path),
     provider: { "@id": businessId },
-    areaServed: [
-      { "@type": "City", name: site.location.locality },
-      "Online",
-    ],
+    areaServed: online ? [{ "@type": "City", name: site.location.locality }, "Online"] : [{ "@type": "City", name: site.location.locality }],
     availableChannel: [
       { "@type": "ServiceChannel", name: "Presencial en Valencia" },
-      { "@type": "ServiceChannel", name: "Online", serviceUrl: absoluteUrl("/contacto") },
+      ...(online ? [{ "@type": "ServiceChannel", name: "Online", serviceUrl: absoluteUrl("/contacto") }] : []),
     ],
     ...(offers
       ? {
@@ -119,18 +119,22 @@ export function personJsonLd() {
     name: site.person.fullName,
     alternateName: site.person.shortName,
     jobTitle: site.person.jobTitle,
-    url: absoluteUrl("/sobre-mi"),
+    url: absoluteUrl("/quien-soy"),
     email: `mailto:${site.contact.email}`,
     telephone: site.contact.phoneE164,
     worksFor: { "@id": businessId },
     knowsAbout: [
       "Reiki",
+      "Péndulo hebreo",
+      "Análisis de chakras",
+      "Sanación akásica",
+      "Limpieza energética de casas y espacios",
       "Meditación",
       "Tarot terapéutico",
-      "Péndulo hebreo",
-      "Registros akáshicos",
+      "Crono Tarot",
       "Matriz del Destino",
-      "Chakras",
+      "Código Personal",
+      "Tarot numerológico",
     ],
     address: {
       "@type": "PostalAddress",
@@ -162,8 +166,8 @@ export function siteJsonLd() {
       name: site.name,
       description: site.description,
       url: site.url,
-      image: absoluteUrl("/brand/logo-despierta-con-tati.png"),
-      logo: absoluteUrl("/brand/logo-despierta-con-tati.png"),
+      image: absoluteUrl("/opengraph-image"),
+      logo: absoluteUrl("/icons/icon-512.png"),
       telephone: site.contact.phoneE164,
       email: site.contact.email,
       address: {
@@ -180,6 +184,20 @@ export function siteJsonLd() {
       employee: { "@id": personId },
       sameAs,
       knowsLanguage: "es",
+      slogan: site.tagline,
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicios de Despierta con Tati",
+        itemListElement: bloques.map((bloque) => ({
+          "@type": "OfferCatalog",
+          name: bloque.benefit,
+          url: absoluteUrl(bloque.href),
+          itemListElement: bloque.includes.map((item) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: item },
+          })),
+        })),
+      },
     },
   ];
 }

@@ -6,15 +6,14 @@ import { whatsappHref } from "@/lib/utils";
 
 const accents: Record<Anuncio["type"], string> = {
   Grupo: "var(--color-chakra-tercer-ojo)",
-  Curso: "var(--color-chakra-corazon)",
-  Meditación: "var(--color-chakra-garganta)",
+  Guía: "var(--color-chakra-corazon)",
+  Tienda: "var(--color-chakra-garganta)",
   Novedad: "var(--color-chakra-sacro)",
 };
 
 export function AnuncioCard({ anuncio, headingLevel = "h3" }: { anuncio: Anuncio; headingLevel?: "h2" | "h3" }) {
   const Heading = headingLevel;
-  const href =
-    anuncio.cta.kind === "whatsapp" ? whatsappHref(anuncio.cta.message) : `/contacto?servicio=${anuncio.cta.topic}`;
+  const href = anuncio.cta.kind === "whatsapp" ? whatsappHref(anuncio.cta.message) : anuncio.cta.href;
 
   return (
     <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col p-7 sm:p-8">

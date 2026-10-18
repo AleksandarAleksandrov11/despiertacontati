@@ -109,8 +109,8 @@ export function MobileMenu({ open, onClose, pathname }: MobileMenuProps) {
             transition={{ duration: 0.7, delay: 0.55, ease }}
             className="container-page relative flex flex-col gap-5 pb-[calc(2rem+env(safe-area-inset-bottom))]"
           >
-            <Button href={site.cta.primary.href} onClick={onClose} className="w-full">
-              {site.cta.primary.label}
+            <Button href={site.cta.guide.href} onClick={onClose} className="w-full">
+              {site.cta.guide.label}
             </Button>
             <div className="flex items-center justify-center gap-2 text-ciruela">
               <a

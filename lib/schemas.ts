@@ -1,6 +1,6 @@
 import * as z from "zod/mini";
 
-export const contactTopics = ["reiki", "meditacion", "tarot", "curso-reiki", "no-lo-se"] as const;
+export const contactTopics = ["reiki", "limpieza", "meditacion", "tarot", "autoconocimiento", "curso-reiki", "no-lo-se"] as const;
 export const contactModalities = ["presencial", "online", "indiferente"] as const;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -25,15 +25,13 @@ export const contactSchema = z.object({
   empresa: z.optional(z.string()),
 });
 
-export const subscribeSchema = z.object({
-  type: z.literal("suscripcion"),
-  email: z.string().check(z.trim(), z.maxLength(120), z.regex(emailPattern, "Escribe un email válido")),
+export const guideSchema = z.object({
+  nombre: z.string().check(z.trim(), z.minLength(2, "Dime tu nombre"), z.maxLength(80, "Nombre demasiado largo")),
+  email: z.string().check(z.trim(), z.maxLength(120, "Demasiado largo"), z.regex(emailPattern, "Escribe un email válido")),
   privacidad: z.literal(true, { error: privacyError }),
+  novedades: z.boolean(),
   empresa: z.optional(z.string()),
 });
 
-export const messageSchema = z.discriminatedUnion("type", [contactSchema, subscribeSchema]);
-
 export type ContactInput = z.infer<typeof contactSchema>;
-export type SubscribeInput = z.infer<typeof subscribeSchema>;
-export type MessageInput = z.infer<typeof messageSchema>;
+export type GuideInput = z.infer<typeof guideSchema>;

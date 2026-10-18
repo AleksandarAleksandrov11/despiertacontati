@@ -12,7 +12,7 @@ const chakras = [
   "var(--color-chakra-corona)",
 ];
 
-const script = `(function(){try{var d=document.documentElement;if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("dct-intro")){d.dataset.intro="seen";return}sessionStorage.setItem("dct-intro","1");d.dataset.intro="play";setTimeout(function(){d.dataset.intro="seen"},3600)}catch(e){document.documentElement.dataset.intro="seen"}})();`;
+const script = `(function(){var d=document.documentElement;d.classList.add("js");try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("dct-intro")){d.dataset.intro="seen";return}sessionStorage.setItem("dct-intro","1");d.dataset.intro="play";setTimeout(function(){d.dataset.intro="seen"},3600)}catch(e){d.dataset.intro="seen"}})();`;
 
 export function Intro() {
   return (
@@ -26,7 +26,7 @@ export function Intro() {
             <LotoIcon size={64} strokeWidth={1} />
           </span>
           <p className="intro-logo mt-6 flex items-baseline gap-2 leading-none">
-            <span className="script-accent text-[clamp(3.5rem,2.5rem+4vw,5.5rem)] text-rosa-deep">despierta</span>
+            <span className="script-accent text-[clamp(3.5rem,2.5rem+4vw,5.5rem)] text-rosa-deep">Despierta</span>
             <span className="font-serif text-xl italic text-ink-soft">con</span>
             <span className="script-accent text-[clamp(3.5rem,2.5rem+4vw,5.5rem)] text-malva-deep">Tati</span>
           </p>

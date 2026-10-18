@@ -19,7 +19,7 @@ import { whatsappHref } from "@/lib/utils";
 export const metadata: Metadata = pageMetadata({
   title: "Reserva tu sesión en Valencia u online | Despierta con Tati",
   description:
-    "Reserva tu sesión de Reiki, meditación o tarot terapéutico en Valencia u online. Cuéntame en un minuto qué necesitas o escríbeme por WhatsApp y te respondo yo.",
+    "Reserva tu sesión de Reiki, terapias energéticas, meditación, tarot o autoconocimiento en Valencia u online. Cuéntame qué necesitas y te respondo yo.",
   path: "/contacto",
 });
 
@@ -46,7 +46,7 @@ export default function ContactoPage() {
           <Reveal className="lg:col-span-5" delay={0.1}>
             <aside aria-labelledby="contacto-directo">
               <div className="mb-10 flex items-center gap-5">
-                <SiteImage name={page.aside.avatar} shape="circle" sizes="96px" className="size-20 shrink-0 sm:size-24" />
+                <SiteImage name={page.aside.avatar} shape="soft" sizes="96px" className="aspect-[4/5] w-20 shrink-0 sm:w-24" />
                 <div>
                   <p className="font-serif text-[1.75rem] leading-tight">{page.aside.avatarTitle}</p>
                   <p className="mt-1 text-ink-soft">{page.aside.avatarText}</p>

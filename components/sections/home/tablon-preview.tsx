@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { inicio } from "@/content/paginas";
 import { Button } from "@/components/ui/button";
@@ -25,13 +26,12 @@ export function TablonPreview() {
       </div>
       <RevealGroup as="ul" className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {anuncios.slice(0, 4).map((anuncio) => {
-          const href =
-            anuncio.cta.kind === "whatsapp" ? whatsappHref(anuncio.cta.message) : `/contacto?servicio=${anuncio.cta.topic}`;
+          const href = anuncio.cta.kind === "whatsapp" ? whatsappHref(anuncio.cta.message) : anuncio.cta.href;
           const external = anuncio.cta.kind === "whatsapp";
           return (
             <RevealItem as="li" key={anuncio.id}>
               <TiltCard className="h-full" innerClassName="h-full bg-crema/85">
-                <a
+                <Link
                   href={href}
                   {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                   className="group flex h-full min-h-56 flex-col justify-between p-7"
@@ -42,7 +42,7 @@ export function TablonPreview() {
                     <span className="link-underline-static">{anuncio.cta.label}</span>
                     <ArrowUpRight size={18} strokeWidth={1.25} aria-hidden className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </span>
-                </a>
+                </Link>
               </TiltCard>
             </RevealItem>
           );

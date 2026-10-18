@@ -1,3 +1,5 @@
+import { hayTestimonios } from "./testimonios";
+
 export const site = {
   name: "Despierta con Tati",
   url: "https://www.despiertacontati.com",
@@ -8,10 +10,10 @@ export const site = {
     jobTitle: "Terapeuta holística",
   },
   description:
-    "Tati, terapeuta holística en Valencia con más de 20 años de experiencia. Reiki, meditación y tarot terapéutico para recuperar la calma y decidir mejor.",
-  tagline: "Conócete, toma conciencia y elige mejor.",
-  taglineParts: { lead: "Conócete, toma conciencia y", accent: "elige mejor." },
-  motto: "Recuerda quién eres, toma tu poder y crea tu nueva vida.",
+    "Tati, terapeuta holística en Valencia con más de 20 años de experiencia. Reiki, meditación, tarot y autoconocimiento, en Valencia y online.",
+  tagline: "Recuerda quién eres, empodérate y crea tu nueva vida.",
+  taglineParts: { lead: "Recuerda quién eres, empodérate y crea tu", accent: "nueva vida." },
+  motto: "Recuerda quién eres, recupera tu poder de elegir y crea tu nueva vida.",
   location: {
     locality: "Valencia",
     region: "Comunidad Valenciana",
@@ -53,15 +55,22 @@ export const site = {
   cta: {
     primary: { label: "Reserva tu sesión", href: "/contacto" },
     services: { label: "Ver servicios", href: "/servicios" },
+    about: { label: "Conóceme", href: "/quien-soy" },
+    guide: { label: "Guía gratuita", href: "/tu-primera-pausa" },
+    shop: { label: "Ver la tienda", href: "/tienda" },
+    info: "Pide información",
     whatsapp: "Escríbeme por WhatsApp",
   },
   whatsappMessages: {
     general: "Hola, Tati. Te escribo desde la web y me gustaría información.",
   },
   footer: {
-    blurb: "Reiki, meditación y tarot terapéutico.",
-    courses: "Cursos de Reiki",
-    sealAlt: "Sello de Despierta con Tati, bienestar integral",
+    blurb: "Reiki, meditación, tarot y autoconocimiento.",
+    guide: {
+      title: "Tu primera pausa",
+      text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
+      cta: "Descarga la guía gratuita",
+    },
   },
   ui: {
     skipLink: "Saltar al contenido",
@@ -74,6 +83,7 @@ export const site = {
     footerNav: "Navegación",
     footerServices: "Servicios",
     footerContact: "Contacto",
+    footerGuide: "Guía gratuita",
     footerSocial: "Redes",
     legalNav: "Información legal",
     configureCookies: "Configurar cookies",
@@ -88,20 +98,21 @@ export type NavItem = {
   children?: { label: string; href: string; description: string }[];
 };
 
+export const serviceNav = [
+  { label: "Reiki y terapias energéticas", href: "/servicios/reiki", description: "Calma y equilibrio" },
+  { label: "Limpieza energética", href: "/servicios/limpieza-energetica", description: "Armonía en tu hogar" },
+  { label: "Meditación", href: "/servicios/meditacion", description: "Claridad en lo cotidiano" },
+  { label: "Tarot terapéutico", href: "/servicios/tarot-terapeutico", description: "Decisiones con claridad" },
+  { label: "Autoconocimiento", href: "/servicios/autoconocimiento", description: "Matriz del Destino y Código Personal" },
+];
+
 export const mainNav: NavItem[] = [
   { label: "Inicio", href: "/" },
-  {
-    label: "Servicios",
-    href: "/servicios",
-    children: [
-      { label: "Reiki", href: "/servicios/reiki", description: "Calma para bajar revoluciones" },
-      { label: "Meditación", href: "/servicios/meditacion", description: "Claridad en lo cotidiano" },
-      { label: "Tarot terapéutico", href: "/servicios/tarot-terapeutico", description: "Un espejo para decidir" },
-    ],
-  },
-  { label: "Sobre mí", href: "/sobre-mi" },
-  { label: "Testimonios", href: "/testimonios" },
+  { label: "Quién soy", href: "/quien-soy" },
+  { label: "Servicios", href: "/servicios", children: serviceNav },
+  { label: "Tienda", href: "/tienda" },
   { label: "Tablón", href: "/tablon" },
+  ...(hayTestimonios ? [{ label: "Testimonios", href: "/testimonios" }] : []),
   { label: "Contacto", href: "/contacto" },
 ];
 
@@ -109,14 +120,17 @@ export const legalNav = [
   { label: "Aviso legal", href: "/aviso-legal" },
   { label: "Política de privacidad", href: "/politica-de-privacidad" },
   { label: "Política de cookies", href: "/politica-de-cookies" },
+  { label: "Condiciones de compra", href: "/condiciones-de-compra" },
 ];
 
 export const keywordsMarquee = [
   { label: "Reiki", color: "var(--color-chakra-raiz)" },
   { label: "Meditación", color: "var(--color-chakra-sacro)" },
-  { label: "Tarot terapéutico", color: "var(--color-chakra-plexo)" },
-  { label: "Péndulo hebreo", color: "var(--color-chakra-corazon)" },
-  { label: "Chakras", color: "var(--color-chakra-garganta)" },
-  { label: "Registros akáshicos", color: "var(--color-chakra-tercer-ojo)" },
-  { label: "Matriz del Destino", color: "var(--color-chakra-corona)" },
+  { label: "Crono Tarot", color: "var(--color-chakra-plexo)" },
+  { label: "Sanación akásica", color: "var(--color-chakra-corazon)" },
+  { label: "Matriz del Destino", color: "var(--color-chakra-garganta)" },
+  { label: "Código Personal", color: "var(--color-chakra-tercer-ojo)" },
+  { label: "Limpieza energética", color: "var(--color-chakra-corona)" },
+  { label: "Chakras", color: "var(--color-chakra-raiz)" },
+  { label: "Péndulo hebreo", color: "var(--color-chakra-sacro)" },
 ];

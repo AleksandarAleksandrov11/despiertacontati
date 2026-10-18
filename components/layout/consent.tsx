@@ -13,7 +13,7 @@ export type ConsentState = {
 };
 
 const STORAGE_KEY = "dct-consent";
-const VERSION = 1;
+const VERSION = 2;
 const MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000;
 const listeners = new Set<() => void>();
 

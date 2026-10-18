@@ -1,6 +1,6 @@
-import type { MessageInput } from "./schemas";
+import type { ContactInput } from "./schemas";
 
-export async function sendMessage(payload: MessageInput) {
+export async function sendMessage(payload: ContactInput) {
   const response = await fetch("/api/mensajes", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

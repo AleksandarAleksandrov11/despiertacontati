@@ -20,14 +20,14 @@ export const recorrido: Hito[] = [
   },
   {
     when: "Con los años",
-    title: "Péndulo, registros y meditación",
-    text: "Sumo el péndulo hebreo, los registros akáshicos y la meditación.",
+    title: "Péndulo, sanación akásica y meditación",
+    text: "Sumo el péndulo hebreo, la sanación akásica y la meditación.",
     accent: "var(--color-chakra-corazon)",
   },
   {
     when: "Después",
-    title: "Tarot terapéutico y Matriz del Destino",
-    text: "Dos herramientas para mirar desde fuera y decidir mejor.",
+    title: "Tarot y autoconocimiento",
+    text: "El tarot, la Matriz del Destino y el Código Personal: herramientas para mirarte desde fuera y decidir mejor.",
     accent: "var(--color-chakra-tercer-ojo)",
   },
   {

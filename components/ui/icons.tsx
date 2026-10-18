@@ -79,3 +79,17 @@ export function TarotIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function ChakrasIcon(props: IconProps) {
+  return (
+    <svg {...base(props)}>
+      <path d="M12 2.5v19" />
+      <circle cx="12" cy="4" r="1.3" />
+      <circle cx="12" cy="8.3" r="1.3" />
+      <circle cx="12" cy="12.6" r="1.3" />
+      <circle cx="12" cy="16.9" r="1.3" />
+      <circle cx="12" cy="21" r="1.3" />
+      <path d="M7.5 10.5c-1.5 1-1.5 3.2 0 4.2M16.5 10.5c1.5 1 1.5 3.2 0 4.2" />
+    </svg>
+  );
+}

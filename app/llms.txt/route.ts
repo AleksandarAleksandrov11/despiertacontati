@@ -1,39 +1,73 @@
 import { site } from "@/content/site";
-import { metodo, servicios, sesionesIndividuales, clasesGrupales } from "@/content/servicios";
-import { meditaciones } from "@/content/meditaciones";
+import { bloques, metodo } from "@/content/servicios";
+import { categorias, productosDe } from "@/content/tienda";
+import { guia } from "@/content/guia";
+import { hayTestimonios } from "@/content/testimonios";
+import { formatPrice, productHref } from "@/lib/tienda";
 import { absoluteUrl } from "@/lib/utils";
 
 export const dynamic = "force-static";
 
+function tienda() {
+  return categorias
+    .map((categoria) => {
+      const lines = productosDe(categoria.id).map((producto) => {
+        const price =
+          producto.precio === null
+            ? "precio a consultar"
+            : `${formatPrice(producto.precio)}${producto.precioHabitual ? ` (precio habitual ${formatPrice(producto.precioHabitual)})` : ""}`;
+        const estado = producto.estado === "proximamente" ? ", próximamente" : "";
+        return `- [${producto.nombre}](${absoluteUrl(productHref(producto))}): ${price}${estado}. ${producto.frase}`;
+      });
+      return `### ${categoria.nav}\n${categoria.text}\n${lines.join("\n")}`;
+    })
+    .join("\n\n")
+    .replace(/ /g, " ");
+}
+
 export function GET() {
+  const pages = [
+    ["Inicio", "/"],
+    ["Quién soy", "/quien-soy"],
+    ["Servicios", "/servicios"],
+    ["Tienda", "/tienda"],
+    ["Guía gratuita Tu primera pausa", guia.slug],
+    ["Tablón", "/tablon"],
+    ...(hayTestimonios ? [["Testimonios", "/testimonios"]] : []),
+    ["Contacto", "/contacto"],
+    ["Condiciones de compra", "/condiciones-de-compra"],
+  ];
+
   const body = `# ${site.name}
 
-> ${site.person.fullName} (Tati) es terapeuta holística en ${site.location.locality} (${site.location.region}, España) con más de 20 años de experiencia y profesora de Reiki desde ${site.facts.reikiSince}. Acompaña, sobre todo a mujeres, en momentos de estrés y ansiedad con Reiki, meditación y tarot terapéutico, de forma presencial en ${site.location.locality} y online.
+> ${site.person.fullName} (Tati) es terapeuta holística en ${site.location.locality} (${site.location.region}, España) con más de 20 años de experiencia y profesora de Reiki desde ${site.facts.reikiSince}. Acompaña con Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, de forma presencial en ${site.location.locality} y online.
 
-Lema: ${site.tagline}
+Frase de marca: ${site.tagline}
 
 ## Quién es Tati
-- Hace más de 20 años abrió Antacarana, su primer centro de terapias naturales (Reiki, cuencoterapia, cromoterapia y masajes).
+- Hace más de 20 años abrió Antacarana, su primer centro de terapias naturales.
 - Enseña Reiki desde ${site.facts.reikiSince}: formaciones de Reiki y de crecimiento personal.
-- Trabaja también con péndulo hebreo, registros akáshicos, meditación, tarot terapéutico y Matriz del Destino.
-- Estilo práctico y directo, sin misticismo recargado.
+- Trabaja con Reiki, péndulo hebreo, chakras, sanación akásica, limpieza energética, meditación, tarot, Matriz del Destino, Código Personal y Carta Personal.
+- Estilo práctico y directo. Para ella, despertar es darte cuenta de que tienes el poder de tu vida.
 
 ## Método Despierta
 ${metodo.steps.map((step) => `${step.number}. ${step.step} (${step.tool}): ${step.text}`).join("\n")}
 
 ## Servicios
-${servicios.map((servicio) => `- [${servicio.name}](${absoluteUrl(servicio.href)}): ${servicio.summary}`).join("\n")}
+${bloques.map((bloque) => `- [${bloque.benefit} · ${bloque.area}](${absoluteUrl(bloque.href)}): ${bloque.includes.join(", ")}.`).join("\n")}
 
-Sesiones individuales (presencial en ${site.location.locality} u online): ${sesionesIndividuales.join(", ")}.
-Clases grupales: ${clasesGrupales.join(", ")}.
-Meditaciones grabadas (se piden por WhatsApp): ${meditaciones.map((item) => `${item.title} (${item.moment.toLowerCase()})`).join(", ")}.
-Cursos de Reiki en ${site.location.locality} y online; información de próximas fechas por formulario o WhatsApp.
+La sanación akásica es un trabajo de sanación energética, no una lectura de registros. La Matriz del Destino no utiliza cartas; el Código Personal y la Carta Personal son tarot numerológico. Los servicios sin precio publicado se informan por WhatsApp.
 
-Los precios no se publican en la web: se informan por formulario o WhatsApp.
+## Tienda
+Compra por WhatsApp desde la ficha de cada producto. Los datos de pago se facilitan de forma privada. Meditaciones en MP3 por enlace privado de descarga y lecturas en vídeo y PDF por WhatsApp, siempre tras confirmar el pago.
+
+${tienda()}
+
+## Guía gratuita
+[${guia.title}](${absoluteUrl(guia.slug)}): ${guia.subtitle} Incluye: ${guia.puntos.map((punto) => punto.title).join(", ")}.
 
 ## Contacto
 - Web: ${site.url}
-- Reservas: ${absoluteUrl("/contacto")}
 - Email: ${site.contact.email}
 - Teléfono y WhatsApp: ${site.contact.phoneDisplay}
 - Instagram: ${site.social.instagram.url}
@@ -41,15 +75,10 @@ Los precios no se publican en la web: se informan por formulario o WhatsApp.
 - Ubicación: ${site.location.locality}, sesiones presenciales y online
 
 ## Páginas
-- [Inicio](${absoluteUrl("/")})
-- [Servicios](${absoluteUrl("/servicios")})
-- [Sobre mí](${absoluteUrl("/sobre-mi")})
-- [Testimonios](${absoluteUrl("/testimonios")})
-- [Tablón](${absoluteUrl("/tablon")})
-- [Contacto](${absoluteUrl("/contacto")})
+${pages.map(([label, path]) => `- [${label}](${absoluteUrl(path)})`).join("\n")}
 
 ## Nota
-${site.disclaimer}
+Las prácticas de esta web son de bienestar y complementarias. No sustituyen la atención médica ni psicológica.
 `;
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }

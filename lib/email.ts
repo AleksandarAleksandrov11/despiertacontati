@@ -1,5 +1,7 @@
 import { contactoPage } from "@/content/paginas";
-import type { ContactInput, SubscribeInput } from "./schemas";
+import { guia } from "@/content/guia";
+import type { ContactInput, GuideInput } from "./schemas";
+import { absoluteUrl } from "./utils";
 
 function escape(value: string) {
   return value
@@ -42,12 +44,59 @@ export function contactEmail(data: ContactInput) {
   };
 }
 
-export function subscribeEmail(data: SubscribeInput) {
-  const rows: [string, string][] = [["Email", data.email]];
+export function guideNoticeEmail(data: GuideInput) {
+  const copy = guia.aviso;
+  const rows: [string, string][] = [
+    [copy.name, data.nombre],
+    [copy.email, data.email],
+    [copy.news, data.novedades ? copy.yes : copy.no],
+  ];
   return {
-    subject: "Nueva suscripción",
-    html: layout("Nueva suscripción a novedades", rows),
-    text: `Email: ${data.email}`,
+    subject: copy.subject,
+    html: layout(copy.title, rows),
+    text: rows.map(([label, value]) => `${label}: ${value}`).join("\n"),
     replyTo: data.email,
   };
+}
+
+function emailButton(href: string, label: string) {
+  return `<a href="${escape(href)}" style="display:inline-block;background:#3f2e3a;color:#fbf7f2;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;padding:14px 28px;border-radius:999px;margin:6px 8px 6px 0">${escape(label)}</a>`;
+}
+
+export function guideEmail(data: GuideInput, audioAvailable: boolean) {
+  const copy = guia.email;
+  const pdf = absoluteUrl(guia.pdf);
+  const audio = absoluteUrl(guia.audio);
+  const buttons = [emailButton(pdf, copy.pdf), ...(audioAvailable ? [emailButton(audio, copy.audio)] : [])].join("");
+  const html = `<div style="background:#f6e9e6;padding:32px 16px;font-family:Arial,sans-serif;color:#3f2e3a">
+<span style="display:none;max-height:0;overflow:hidden">${escape(copy.preheader)}</span>
+<div style="max-width:560px;margin:0 auto;background:#fbf7f2;border-radius:20px;padding:40px 32px">
+<p style="margin:0 0 28px;font-family:Georgia,serif;font-style:italic;font-size:22px;color:#9c5f6c">Despierta <span style="font-size:15px;color:#6e5a66">con</span> <span style="color:#8e5f80">Tati</span></p>
+<p style="margin:0 0 6px;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#6e5a66">${escape(guia.kicker)}</p>
+<h1 style="margin:0 0 24px;font-family:Georgia,serif;font-weight:400;font-style:italic;font-size:34px;line-height:1.1;color:#3f2e3a">${escape(guia.title)}</h1>
+<p style="margin:0 0 12px;font-size:16px;line-height:1.6">${escape(copy.greeting(data.nombre))}</p>
+<p style="margin:0 0 24px;font-size:16px;line-height:1.6">${escape(copy.intro)}</p>
+<p style="margin:0 0 24px">${buttons}</p>
+<p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#6e5a66">${escape(copy.tip)}</p>
+<p style="margin:0;font-size:16px;line-height:1.6">${escape(copy.signature)}<br><span style="font-family:Georgia,serif;font-style:italic;font-size:22px;color:#9c5f6c">${escape(copy.name)}</span></p>
+<hr style="border:none;border-top:1px solid #e7dcd3;margin:32px 0 16px">
+<p style="margin:0;font-size:12px;line-height:1.6;color:#6e5a66">${escape(copy.footer)}</p>
+</div>
+</div>`;
+  const text = [
+    copy.greeting(data.nombre),
+    "",
+    copy.intro,
+    "",
+    `${copy.pdf}: ${pdf}`,
+    ...(audioAvailable ? [`${copy.audio}: ${audio}`] : []),
+    "",
+    copy.tip,
+    "",
+    copy.signature,
+    copy.name,
+    "",
+    copy.footer,
+  ].join("\n");
+  return { subject: copy.subject, html, text };
 }

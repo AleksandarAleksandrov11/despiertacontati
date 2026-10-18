@@ -2,7 +2,7 @@ import type { ConsentCategory } from "@/components/layout/consent";
 
 export const cookieBanner = {
   title: "Cookies",
-  text: "Uso lo imprescindible para que la web funcione y, si aceptas, analítica anónima para mejorarla.",
+  text: "Uso lo imprescindible para que la web funcione y, si aceptas, analítica anónima y publicaciones de Instagram en el tablón.",
   accept: "Aceptar",
   reject: "Rechazar",
   configure: "Configurar",
@@ -65,8 +65,17 @@ export const cookieCategories: CookieCategoryInfo[] = [
   {
     id: "marketing",
     title: "Marketing",
-    description: "Ahora mismo no uso cookies de marketing. Si algún día las uso, te lo preguntaré aquí antes de activarlas.",
-    items: [],
+    description:
+      "Permiten mostrar publicaciones de Instagram integradas en el tablón. Si no las aceptas, verás un enlace para abrirlas directamente en Instagram.",
+    items: [
+      {
+        name: "Instagram (contenido integrado)",
+        provider: "Meta Platforms Ireland Ltd.",
+        purpose: "Mostrar publicaciones de Instagram en el tablón. Instagram puede instalar sus propias cookies y medir cómo interactúas con ellas.",
+        duration: "Según la política de cookies de Meta",
+        type: "Contenido de terceros",
+      },
+    ],
   },
 ];
 

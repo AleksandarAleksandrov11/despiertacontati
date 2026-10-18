@@ -12,11 +12,13 @@ import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
+import { TiltCard } from "@/components/ui/tilt-card";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Tarot terapéutico en Valencia y online: un espejo para ver tu situación con claridad y decidir mejor. También registros akáshicos y Matriz del Destino con Tati.";
+  "Tarot terapéutico en Valencia y online: Crono Tarot, lecturas concretas en vídeo y PDF y sesiones en directo de 30 o 50 minutos. Tarot Rider-Waite, para decidir tú.";
+
+const accents = ["var(--color-chakra-plexo)", "var(--color-chakra-corazon)", "var(--color-chakra-tercer-ojo)"];
 
 export const metadata: Metadata = pageMetadata({
   title: "Tarot terapéutico en Valencia y online | Despierta con Tati",
@@ -39,16 +41,16 @@ export default function TarotPage() {
             description,
             path: "/servicios/tarot-terapeutico",
             serviceType: "Tarot terapéutico",
-            offers: ["Tarot terapéutico", ...page.complementarios.items.map((item) => item.title)],
+            offers: page.formatos.items.map((item) => item.title),
           }),
         ]}
       />
       <PageHeader eyebrow={page.eyebrow} title={page.title} subtitle={page.subtitle} image={page.image} tone="crema">
-        <Button href="/contacto?servicio=tarot" magnetic>
-          {site.cta.primary.label}
+        <Button href="/tienda#crono-tarot" magnetic>
+          {page.shopCta}
         </Button>
-        <Button href={whatsappHref(page.ctaWhatsapp)} variant="link">
-          {site.cta.whatsapp}
+        <Button href={site.social.tarot.url} variant="link" icon={<InstagramIcon size={18} />}>
+          {site.social.tarot.label}
         </Button>
       </PageHeader>
 
@@ -69,7 +71,7 @@ export default function TarotPage() {
             </Reveal>
             <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2">
               {[page.dentroFuera.inside, page.dentroFuera.outside].map((item, index) => (
-                <RevealItem key={item.label} className="rounded-[1.75rem] bg-crema/80 p-7">
+                <RevealItem key={item.label} className="rounded-[1.25rem] bg-crema/80 p-7">
                   <div aria-hidden className="relative mb-6 size-14">
                     <span className="absolute inset-0 rounded-full border border-ciruela/20" />
                     {index === 0 ? (
@@ -96,27 +98,33 @@ export default function TarotPage() {
         </Reveal>
       </Section>
 
+      <Section tone="crema" labelledBy="formatos-tarot">
+        <Reveal>
+          <SectionHeading eyebrow={page.formatos.eyebrow} title={page.formatos.title} text={page.formatos.note} id="formatos-tarot" />
+        </Reveal>
+        <RevealGroup as="ul" className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {page.formatos.items.map((item, index) => (
+            <RevealItem as="li" key={item.title}>
+              <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col p-7 sm:p-8">
+                <span aria-hidden className="block h-1 w-12 rounded-full" style={{ backgroundColor: accents[index] }} />
+                <h3 className="mt-8 text-h2">{item.title}</h3>
+                <p className="mt-4 flex-1 text-ink-soft">{item.text}</p>
+                <div className="mt-8">
+                  <Button href={item.href} variant="link">
+                    {page.formatos.link}
+                  </Button>
+                </div>
+              </TiltCard>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
+
       <Section tone="lavanda" labelledBy="cartas-title">
         <Reveal>
           <SectionHeading eyebrow={page.cartas.eyebrow} title={page.cartas.title} id="cartas-title" align="center" />
         </Reveal>
         <TarotCards />
-      </Section>
-
-      <Section tone="crema" labelledBy="complementarios">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-4">
-            <SectionHeading eyebrow={page.complementarios.eyebrow} title={page.complementarios.title} id="complementarios" />
-          </Reveal>
-          <RevealGroup as="ul" className="grid gap-10 sm:grid-cols-2 lg:col-span-8">
-            {page.complementarios.items.map((item) => (
-              <RevealItem as="li" key={item.title} className="border-t border-ciruela/15 pt-8">
-                <h3 className="text-h2">{item.title}</h3>
-                <p className="mt-4 text-ink-soft">{item.text}</p>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
       </Section>
 
       <Section tone="salvia" labelledBy="tarot-instagram">
@@ -135,7 +143,7 @@ export default function TarotPage() {
       </Section>
 
       <FaqSection faqs={faqs.tarot} />
-      <CtaBlock whatsappMessage={page.ctaWhatsapp} />
+      <CtaBlock title={page.cta.title} text={page.cta.text} whatsappMessage={page.ctaWhatsapp} primary={{ label: page.shopCta, href: "/tienda#crono-tarot" }} />
     </>
   );
 }

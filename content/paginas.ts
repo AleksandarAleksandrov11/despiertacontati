@@ -5,10 +5,9 @@ export const inicio = {
   hero: {
     eyebrow: "Terapeuta holística en Valencia",
     title: "Despierta",
-    subtitle: "Conócete, toma conciencia y elige mejor.",
-    support: "Reiki, meditación y tarot terapéutico en Valencia y online.",
-    rotating: ["Calma", "Claridad", "Decisión"],
-    image: "amanecerPlaya" as ImageKey,
+    subtitle: site.tagline,
+    support: "Reiki, meditación, tarot y autoconocimiento en Valencia y online.",
+    image: "mujerBrazosAbiertos" as ImageKey,
   },
   teSuena: {
     eyebrow: "¿Te suena?",
@@ -24,7 +23,13 @@ export const inicio = {
   },
   destacados: {
     eyebrow: "Para empezar",
-    title: "Tres formas de cuidarte.",
+    title: "Cuatro formas de cuidarte.",
+  },
+  guia: {
+    eyebrow: "Guía gratuita",
+    title: "Tu primera pausa.",
+    text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada, gratis.",
+    cta: "Quiero la guía",
   },
   respira: {
     eyebrow: "Respira",
@@ -36,6 +41,20 @@ export const inicio = {
     reset: "Reiniciar",
     cycles: "ciclos",
     idle: "Pulsa y sigue el círculo",
+  },
+  quienSoy: {
+    eyebrow: "Quién soy",
+    title: "Soy Tati.",
+    quote: "Despertar es darte cuenta de que tienes el poder de tu vida.",
+    text: "Terapeuta holística en Valencia, con más de 20 años acompañando y enseñando Reiki desde 2006. Práctica, cercana y al grano.",
+    image: "tatiSonrisa" as ImageKey,
+    link: "Conóceme",
+  },
+  tienda: {
+    eyebrow: "Tienda",
+    title: "Para seguir a tu ritmo.",
+    text: "Meditaciones para descargar y lecturas que te llegan por WhatsApp, sin tener que coincidir en agenda.",
+    link: "Ver la tienda",
   },
   tablon: {
     eyebrow: "Tablón",
@@ -51,6 +70,10 @@ export const inicio = {
     eyebrow: "Preguntas",
     title: "Antes de empezar.",
   },
+  cta: {
+    title: "¿Empezamos?",
+    text: "Mira los servicios o escríbeme y vemos juntas por dónde empezar.",
+  },
 };
 
 export const ctaFinal = {
@@ -58,14 +81,16 @@ export const ctaFinal = {
   text: "Cuéntame qué te pasa y vemos juntas por dónde empezar.",
 };
 
-export const sobreMi = {
-  eyebrow: "Sobre mí",
+export const quienSoy = {
+  eyebrow: "Quién soy",
   title: "Soy Tati.",
   subtitle: "Terapeuta holística en Valencia. Práctica y al grano.",
   intro:
     "Acompaño a mujeres que viven con estrés o ansiedad, o que sienten que han perdido el rumbo. Lo hago con herramientas que a mí me han funcionado.",
+  idea: "Para mí, despertar es darte cuenta de que tienes el poder de tu vida. Sea cual sea la herramienta, el objetivo es ese: que vuelvas a elegir tú.",
   image: "tatiRetrato" as ImageKey,
   manifiesto: ["Sin humo.", "Sin ir de blanco.", "Herramientas que funcionan."],
+  manifiestoLabel: "Mi manera de trabajar",
   recorrido: {
     eyebrow: "Mi recorrido",
     title: "Más de veinte años aprendiendo y compartiendo.",
@@ -76,48 +101,64 @@ export const sobreMi = {
     items: [
       { name: "Reiki", icon: "reiki" },
       { name: "Péndulo hebreo", icon: "pendulo" },
-      { name: "Registros akáshicos", icon: "registros" },
+      { name: "Chakras", icon: "chakras" },
+      { name: "Sanación akásica", icon: "sanacion" },
+      { name: "Limpieza energética", icon: "limpieza" },
       { name: "Meditación", icon: "meditacion" },
-      { name: "Tarot terapéutico", icon: "tarot" },
+      { name: "Tarot", icon: "tarot" },
       { name: "Matriz del Destino", icon: "matriz" },
+      { name: "Código Personal", icon: "codigo" },
+      { name: "Carta Personal", icon: "carta" },
     ],
   },
+  lema: { lead: "Recuerda quién eres, recupera tu poder de elegir y crea tu nueva", script: "vida" },
   cifrasTitle: "En cifras",
-  manifiestoLabel: "Mi manera de trabajar",
-  lema: { lead: "Recuerda quién eres, toma tu poder y crea tu nueva", script: "vida", image: "tatiSonrisa" as ImageKey },
-  galeria: {
-    eyebrow: "En consulta",
-    title: "Así trabajamos.",
-    items: [
-      { image: "tatiGrupoMeditacion" as ImageKey, caption: "Meditación en grupo en Valencia" },
-      { image: "tatiTrabajandoPendulo" as ImageKey, caption: "Péndulo hebreo" },
-      { image: "tatiSesionPendulo" as ImageKey, caption: "Práctica en la formación" },
-      { image: "tatiCursoGrupo" as ImageKey, caption: "Curso presencial" },
-    ],
+  cta: {
+    title: "¿Seguimos?",
+    text: "Ahora que me conoces, mira cómo puedo acompañarte.",
   },
-  sello: {
-    alt: "Sello de Despierta con Tati: flor de loto, péndulo con piedras de los chakras, velas y cuenco tibetano en acuarela",
-  },
-  imagenValencia: "lonja" as ImageKey,
 };
 
 export const testimoniosPage = {
   eyebrow: "Testimonios",
   title: "Lo que cuentan.",
-  subtitle: "Experiencias de personas que han pasado por Reiki, meditación y tarot terapéutico.",
+  subtitle: "Experiencias de personas que han pasado por las sesiones, las clases y las lecturas.",
   filterLabel: "Filtrar por servicio",
-  empty: "Todavía no hay testimonios de este servicio.",
+  all: "Todos",
 };
 
 export const tablonPage = {
   eyebrow: "Tablón",
   title: "Tablón.",
-  subtitle: "Grupos, cursos y novedades.",
+  subtitle: "Grupos, novedades y lo último en Instagram.",
+  anunciosTitle: "Grupos y novedades",
   empty: {
     title: "Ahora mismo no hay nada colgado.",
-    text: "Escríbeme y te aviso en cuanto abra un grupo o un curso nuevo.",
+    text: "Escríbeme y te aviso en cuanto abra un grupo nuevo.",
   },
   image: "tatiTrabajandoPendulo" as ImageKey,
+  instagram: {
+    eyebrow: "En Instagram",
+    title: "Lo último.",
+    text: "Reflexiones, meditaciones y tiradas en las cuentas de Tati.",
+    view: "Ver en Instagram",
+    follow: "Seguir en Instagram",
+    embedLabel: "Publicación de Instagram de",
+    accounts: [
+      {
+        name: "Despierta con Tati",
+        handle: site.social.instagram.label,
+        url: site.social.instagram.url,
+        text: "Bienestar, meditación y novedades de los grupos.",
+      },
+      {
+        name: site.social.tarot.label,
+        handle: site.social.tarot.handle,
+        url: site.social.tarot.url,
+        text: "Tiradas, cartas del día y reflexiones con el tarot.",
+      },
+    ],
+  },
 };
 
 export const contactoPage = {
@@ -148,9 +189,11 @@ export const contactoPage = {
       { id: "datos", label: "Tus datos", question: "¿Cómo te llamo?", hint: "Al enviar se abre WhatsApp con tu mensaje listo para mandármelo." },
     ],
     topics: [
-      { value: "reiki", label: "Reiki" },
+      { value: "reiki", label: "Reiki y terapias energéticas" },
+      { value: "limpieza", label: "Limpieza energética" },
       { value: "meditacion", label: "Meditación" },
-      { value: "tarot", label: "Tarot terapéutico" },
+      { value: "tarot", label: "Tarot" },
+      { value: "autoconocimiento", label: "Autoconocimiento" },
       { value: "curso-reiki", label: "Curso de Reiki" },
       { value: "no-lo-se", label: "Aún no lo sé" },
     ],
@@ -193,18 +236,6 @@ export const contactoPage = {
   },
 };
 
-export const suscripcion = {
-  title: "Novedades",
-  text: "Grupos nuevos, cursos y meditaciones. Sin agobios.",
-  placeholder: "Tu email",
-  label: "Email",
-  privacyLabel: "Acepto la",
-  privacyLink: "política de privacidad",
-  submit: "Suscribirme",
-  success: "Hecho. Te escribiré cuando haya novedades.",
-  error: "No se ha podido enviar. Prueba de nuevo.",
-};
-
 export const notFoundPage = {
   eyebrow: "Error 404",
   title: "Esta página no existe.",
@@ -212,8 +243,13 @@ export const notFoundPage = {
   links: [
     { label: "Inicio", href: "/" },
     { label: "Servicios", href: "/servicios" },
+    { label: "Tienda", href: "/tienda" },
     { label: "Contacto", href: "/contacto" },
   ],
+  guide: {
+    text: "Y si te apetece una pausa de verdad, llévate la guía gratuita.",
+    cta: "Descargar Tu primera pausa",
+  },
 };
 
 export const loadingLabel = "Cargando";

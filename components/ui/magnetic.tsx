@@ -11,18 +11,15 @@ type MagneticProps = {
   className?: string;
 };
 
-export function Magnetic({ children, strength = 0.28, className }: MagneticProps) {
+function MagneticEffect({ children, strength, className }: Required<Omit<MagneticProps, "className">> & { className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const fine = useFinePointer();
-  const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 160, damping: 18, mass: 0.6 });
   const sy = useSpring(y, { stiffness: 160, damping: 18, mass: 0.6 });
-  const active = fine && !reduce;
 
   function onMove(event: PointerEvent<HTMLSpanElement>) {
-    if (!active || !ref.current) return;
+    if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     x.set((event.clientX - (rect.left + rect.width / 2)) * strength);
     y.set((event.clientY - (rect.top + rect.height / 2)) * strength);
@@ -34,14 +31,21 @@ export function Magnetic({ children, strength = 0.28, className }: MagneticProps
   }
 
   return (
-    <m.span
-      ref={ref}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      style={active ? { x: sx, y: sy } : undefined}
-      className={cn("inline-flex", className)}
-    >
+    <m.span ref={ref} onPointerMove={onMove} onPointerLeave={onLeave} style={{ x: sx, y: sy }} className={cn("inline-flex", className)}>
       {children}
     </m.span>
   );
+}
+
+export function Magnetic({ children, strength = 0.28, className }: MagneticProps) {
+  const fine = useFinePointer();
+  const reduce = useReducedMotion();
+  if (fine && !reduce) {
+    return (
+      <MagneticEffect strength={strength} className={className}>
+        {children}
+      </MagneticEffect>
+    );
+  }
+  return <span className={cn("inline-flex", className)}>{children}</span>;
 }

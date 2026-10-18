@@ -23,7 +23,7 @@ export function TestimonialsCarousel({ items, label, short = false }: { items: T
       <ul className="flex touch-pan-y">
         {items.map((item) => (
           <li key={item.name} className={`min-w-0 shrink-0 grow-0 pl-5 ${short ? "basis-[75%] sm:basis-[45%] lg:basis-[30%] xl:basis-[26%]" : "basis-[85%] sm:basis-[55%] lg:basis-[38%] xl:basis-[32%]"}`}>
-            <figure className="flex h-full flex-col justify-between rounded-[1.75rem] border border-ciruela/10 bg-crema/70 p-7 sm:p-9">
+            <figure className="flex h-full flex-col justify-between rounded-[1.25rem] border border-ciruela/10 bg-crema/70 p-7 sm:p-9">
               <blockquote className="font-serif text-[clamp(1.3rem,1.15rem+0.6vw,1.65rem)] leading-snug text-ciruela">
                 <p>{short ? item.short : item.text}</p>
               </blockquote>

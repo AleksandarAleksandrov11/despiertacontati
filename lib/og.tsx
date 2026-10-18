@@ -56,7 +56,7 @@ export async function renderOg({ eyebrow, title, subtitle }: { eyebrow: string; 
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 24 }}>
           <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-            <span style={{ fontFamily: "CormorantItalic", fontSize: 40, color: "#9c5f6c" }}>despierta</span>
+            <span style={{ fontFamily: "CormorantItalic", fontSize: 40, color: "#9c5f6c" }}>Despierta</span>
             <span style={{ fontFamily: "Cormorant", fontSize: 26, color: "#6e5a66" }}>con</span>
             <span style={{ fontFamily: "CormorantItalic", fontSize: 40, color: "#8e5f80" }}>Tati</span>
           </div>

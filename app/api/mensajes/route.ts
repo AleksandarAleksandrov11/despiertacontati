@@ -1,29 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { Resend } from "resend";
-import { messageSchema } from "@/lib/schemas";
-import { contactEmail, subscribeEmail } from "@/lib/email";
+import { contactSchema } from "@/lib/schemas";
+import { contactEmail } from "@/lib/email";
+import { clientIp, createRateLimiter, senderAddress } from "@/lib/rate-limit";
 import { site } from "@/content/site";
 
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_REQUESTS = 5;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((time) => now - time < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 5000) {
-    for (const [key, times] of hits) {
-      if (times.every((time) => now - time >= WINDOW_MS)) hits.delete(key);
-    }
-  }
-  return recent.length > MAX_REQUESTS;
-}
-
-function clientIp(request: NextRequest) {
-  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "anon";
-}
+const rateLimited = createRateLimiter(5, 10 * 60 * 1000);
 
 export async function POST(request: NextRequest) {
   if (rateLimited(clientIp(request))) {
@@ -37,7 +19,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
 
-  const parsed = messageSchema.safeParse(payload);
+  const parsed = contactSchema.safeParse(payload);
   if (!parsed.success) {
     return NextResponse.json({ ok: false, error: "invalid_data" }, { status: 400 });
   }
@@ -48,7 +30,6 @@ export async function POST(request: NextRequest) {
 
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL || site.contact.email;
-  const from = process.env.CONTACT_FROM_EMAIL || "Despierta con Tati <web@despiertacontati.com>";
 
   if (!apiKey) {
     if (process.env.NODE_ENV !== "production") {
@@ -57,12 +38,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
-  const email = parsed.data.type === "contacto" ? contactEmail(parsed.data) : subscribeEmail(parsed.data);
+  const email = contactEmail(parsed.data);
 
   try {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
-      from,
+      from: senderAddress(),
       to: [to],
       subject: email.subject,
       html: email.html,
