@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import QRCode from "qrcode";
 import { chromium } from "playwright";
-import { ebook } from "../content/ebook";
+import { ebook, type EbookBlock } from "../content/ebook";
 
 const root = process.cwd();
 const output = join(root, "public/descargas/tu-primera-pausa.pdf");
@@ -22,21 +22,56 @@ function dots() {
   return `<div class="dots">${chakras.map((color) => `<span style="background:${color}"></span>`).join("")}</div>`;
 }
 
-function logo(size: "sm" | "lg" = "sm") {
+function logo(size: "sm" | "lg") {
   return `<p class="logo logo-${size}"><span class="l1">Despierta</span> <span class="l2">con</span> <span class="l3">Tati</span></p>`;
 }
 
-function page(content: string, number: number) {
-  return `<section class="page">
-  <div class="blob blob-a"></div>
-  <div class="blob blob-b"></div>
-  <div class="inner">${content}</div>
-  <footer><span>${escape(ebook.footer)}</span><span>${number}</span></footer>
-</section>`;
+function link(url: string) {
+  return url
+    .replace("https://", "")
+    .split("/")
+    .map(escape)
+    .join("/<wbr>");
 }
 
-function paragraphs(items: string[]) {
-  return items.map((item) => `<p>${escape(item)}</p>`).join("");
+function block(item: EbookBlock, qr: string) {
+  switch (item.type) {
+    case "lead":
+      return `<p class="lead">${escape(item.text)}</p>`;
+    case "p":
+      return `<p>${escape(item.text)}</p>`;
+    case "h3":
+      return `<h3>${escape(item.text)}</h3>`;
+    case "list":
+      return `<ul class="list">${item.items
+        .map((entry) => `<li>${entry.lead ? `<strong>${escape(entry.lead)}</strong> ` : ""}${escape(entry.text)}</li>`)
+        .join("")}</ul>`;
+    case "highlight":
+      return `<div class="highlight"><p>${escape(item.text)}</p></div>`;
+    case "quote":
+      return `<p class="quote">${escape(item.text)}</p>`;
+    case "note":
+      return `<div class="note"><h4>${escape(item.title)}</h4><p>${escape(item.text)}</p></div>`;
+    case "keys":
+      return `<ol class="keys">${item.items
+        .map((entry, index) => `<li><span class="num">${index + 1}</span><div><h4>${escape(entry.title)}</h4><p>${escape(entry.text)}</p></div></li>`)
+        .join("")}</ol>`;
+    case "listen":
+      return `<div class="listen">
+  <div class="qr">${qr}</div>
+  <div>
+    <p class="eyebrow">${escape(item.eyebrow)}</p>
+    <p class="listen-title">${escape(item.title)}</p>
+    <p class="small">${escape(item.link)}</p>
+    <p><a href="${escape(ebook.audioUrl)}">${link(ebook.audioUrl)}</a></p>
+    <p class="small">${escape(item.qr)}</p>
+  </div>
+</div>`;
+    case "question":
+      return `<div class="question"><h4>${escape(item.title)}</h4><p>${escape(item.text)}</p></div>`;
+    case "lines":
+      return `<div class="lines">${"<span></span>".repeat(item.count)}</div>`;
+  }
 }
 
 async function html() {
@@ -49,71 +84,46 @@ async function html() {
     type: "svg",
     margin: 1,
     errorCorrectionLevel: "M",
-    color: { dark: "#3f2e3a", light: "#fbf7f2" },
+    color: { dark: "#3f2e3a", light: "#ffffff" },
   });
 
-  const cover = `<section class="page cover">
+  const cover = `<section class="cover">
   <div class="blob blob-a"></div>
   <div class="blob blob-b"></div>
   <div class="blob blob-c"></div>
   <div class="frame"></div>
   <div class="cover-inner">
-    <p class="kicker">${escape(ebook.kicker)}</p>
+    <p class="kicker">${escape(ebook.brand)}</p>
     <div>
       <h1>${escape(ebook.title)}</h1>
+      <p class="cover-sub">${escape(ebook.kicker)}</p>
       <span class="rule"></span>
-      <p class="cover-sub">${escape(ebook.subtitle)}</p>
+      <p class="cover-quote">${ebook.coverQuote.map(escape).join("<br>")}</p>
+      <p class="cover-text">${escape(ebook.coverText)}</p>
     </div>
     <div class="cover-foot">${logo("lg")}${dots()}</div>
   </div>
 </section>`;
 
-  const bienvenida = page(
-    `<p class="eyebrow">01</p><h2>${escape(ebook.bienvenida.title)}</h2>${paragraphs(ebook.bienvenida.paragraphs)}`,
-    2,
-  );
+  const chapters = ebook.chapters
+    .map(
+      (chapter) => `<section class="chapter">
+  <p class="eyebrow">${escape(chapter.number)}</p>
+  <h2>${escape(chapter.title)}</h2>
+  ${chapter.subtitle ? `<p class="subtitle">${escape(chapter.subtitle)}</p>` : ""}
+  ${chapter.blocks.map((item) => block(item, qr)).join("\n  ")}
+</section>`,
+    )
+    .join("\n");
 
-  const queEs = page(
-    `<p class="eyebrow">02</p><h2>${escape(ebook.queEs.title)}</h2>${paragraphs(ebook.queEs.paragraphs)}
-    <div class="card"><h3>${escape(ebook.queEs.noEs.title)}</h3><ul>${ebook.queEs.noEs.items.map((item) => `<li>${escape(item)}</li>`).join("")}</ul></div>
-    <p class="quote">${escape(ebook.queEs.cierre)}</p>`,
-    3,
-  );
-
-  const claves = page(
-    `<p class="eyebrow">03</p><h2>${escape(ebook.claves.title)}</h2>
-    <ol class="keys">${ebook.claves.items
-      .map((item, index) => `<li><span class="num">${index + 1}</span><div><h3>${escape(item.title)}</h3><p>${escape(item.text)}</p></div></li>`)
-      .join("")}</ol>`,
-    4,
-  );
-
-  const freno = page(
-    `<p class="eyebrow">04</p><h2>${escape(ebook.freno.title)}</h2><p class="lead">${escape(ebook.freno.intro)}</p>
-    <div class="card"><h3>${escape(ebook.freno.pasos.title)}</h3><ul>${ebook.freno.pasos.items.map((item) => `<li>${escape(item)}</li>`).join("")}</ul></div>
-    <div class="listen">
-      <div class="qr">${qr}</div>
-      <div>
-        <p class="listen-title">${escape(ebook.freno.listen)}</p>
-        <p><a href="${escape(ebook.audioUrl)}">${ebook.audioUrl
-          .replace("https://", "")
-          .split("/")
-          .map(escape)
-          .join("/<wbr>")}</a></p>
-        <p class="small">${escape(ebook.freno.qr)}</p>
-      </div>
-    </div>`,
-    5,
-  );
-
-  const despues = page(
-    `<p class="eyebrow">05</p><h2>${escape(ebook.despues.title)}</h2>${paragraphs(ebook.despues.paragraphs)}
-    <ul class="next">${ebook.despues.items.map((item) => `<li><h3>${escape(item.title)}</h3><p>${escape(item.text)}</p></li>`).join("")}</ul>
-    <p class="sign">${escape(ebook.despues.firma)}<br><span>${escape(ebook.despues.nombre)}</span></p>
-    <div class="end">${logo()}<p><a href="https://www.${escape(ebook.despues.web)}">${escape(ebook.despues.web)}</a> · ${escape(ebook.despues.instagram)}</p>${dots()}</div>
-    <p class="notice">${escape(ebook.aviso)}</p>`,
-    6,
-  );
+  const gracias = `<section class="thanks">
+  <span class="rule"></span>
+  <h2>${escape(ebook.gracias.title)}</h2>
+  ${ebook.gracias.paragraphs.map((text) => `<p>${escape(text)}</p>`).join("")}
+  <p class="sign">${escape(ebook.gracias.sign)}<br><span>${escape(ebook.gracias.name)}</span></p>
+  <div class="end">${logo("sm")}<p><a href="https://www.${escape(ebook.gracias.web)}">${escape(ebook.gracias.web)}</a> · ${escape(ebook.gracias.instagram)}</p>${dots()}</div>
+  <p class="notice">${escape(ebook.aviso)}</p>
+</section>`;
 
   return `<!doctype html>
 <html lang="es-ES">
@@ -124,48 +134,63 @@ async function html() {
 @font-face { font-family: "Cormorant"; src: url(${serif}); font-weight: 500; }
 @font-face { font-family: "CormorantItalic"; src: url(${serifItalic}); font-weight: 500; }
 @font-face { font-family: "Manrope"; src: url(${sans}); font-weight: 500; }
-@page { size: 148mm 210mm; margin: 0; }
+@page {
+  size: 148mm 210mm;
+  margin: 17mm 16mm 19mm;
+  background: #fbf7f2;
+  @bottom-left { content: "${escape(ebook.footer)}"; font-family: "Manrope"; font-size: 6.5pt; letter-spacing: 0.08em; color: #6e5a66; vertical-align: top; padding-top: 5mm; }
+  @bottom-right { content: counter(page); font-family: "CormorantItalic"; font-size: 10pt; color: #9c5f6c; vertical-align: top; padding-top: 4mm; }
+}
+@page :first {
+  margin: 0;
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #fbf7f2; color: #3f2e3a; font-family: "Manrope", sans-serif; font-size: 10pt; line-height: 1.65; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.page { position: relative; width: 148mm; height: 210mm; overflow: hidden; page-break-after: always; background: #fbf7f2; }
-.page:last-child { page-break-after: auto; }
-.blob { position: absolute; border-radius: 50%; }
-.blob-a { width: 90mm; height: 90mm; right: -38mm; top: -38mm; background: radial-gradient(circle, #f3dedb 0%, rgba(246, 233, 230, 0) 68%); }
-.blob-b { width: 86mm; height: 86mm; left: -40mm; bottom: -34mm; background: radial-gradient(circle, #e9e1f2 0%, rgba(241, 236, 246, 0) 68%); }
-.blob-c { width: 70mm; height: 70mm; right: -6mm; bottom: 26mm; background: radial-gradient(circle, #e3ece0 0%, rgba(238, 243, 236, 0) 68%); }
-.inner { position: relative; padding: 22mm 18mm 20mm; }
-footer { position: absolute; left: 18mm; right: 18mm; bottom: 9mm; display: flex; justify-content: space-between; font-size: 7pt; letter-spacing: 0.08em; color: #6e5a66; border-top: 0.3mm solid #e7dcd3; padding-top: 3mm; }
-.eyebrow { font-size: 7pt; letter-spacing: 0.24em; text-transform: uppercase; color: #6e5a66; margin-bottom: 4mm; }
-h1, h2, h3 { font-weight: 500; color: #3f2e3a; }
-h2 { font-family: "CormorantItalic", serif; font-size: 27pt; line-height: 1.05; margin-bottom: 7mm; }
-h3 { font-family: "Cormorant", serif; font-size: 14pt; line-height: 1.2; }
-p { margin-bottom: 3.5mm; }
-.lead { font-size: 10.5pt; }
-.quote { font-family: "CormorantItalic", serif; font-size: 15pt; line-height: 1.3; color: #9c5f6c; margin-top: 8mm; padding-left: 5mm; border-left: 0.4mm solid #c8a46a; }
-.card { margin-top: 7mm; padding: 6mm 7mm; border-radius: 4mm; background: rgba(241, 236, 246, 0.8); }
-.card h3 { margin-bottom: 2.5mm; }
-.card ul, .next { list-style: none; }
-.card li { position: relative; padding-left: 6mm; margin-bottom: 1.8mm; }
-.card li::before { content: ""; position: absolute; left: 0; top: 2.4mm; width: 3.5mm; height: 0.3mm; background: #c8a46a; }
+html { background: #fbf7f2; }
+body { color: #3f2e3a; font-family: "Manrope", sans-serif; font-size: 9pt; line-height: 1.55; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+h1, h2, h3, h4 { font-weight: 500; color: #3f2e3a; break-after: avoid; }
+p { margin-bottom: 2.6mm; orphans: 3; widows: 3; }
+strong { font-weight: 500; color: #3f2e3a; }
+a { color: #8e5f80; }
+.eyebrow { font-size: 6.8pt; letter-spacing: 0.26em; text-transform: uppercase; color: #6e5a66; margin-bottom: 3mm; }
+.chapter, .thanks { break-before: page; }
+.chapter h2, .thanks h2 { font-family: "CormorantItalic", serif; font-size: 24pt; line-height: 1.05; margin-bottom: 5mm; }
+.subtitle { font-family: "Cormorant", serif; font-size: 15pt; color: #9c5f6c; margin: -3.5mm 0 6mm; }
+h3 { font-family: "Cormorant", serif; font-size: 13pt; line-height: 1.2; margin: 4.5mm 0 2mm; }
+h4 { font-family: "Cormorant", serif; font-size: 12.5pt; line-height: 1.2; margin-bottom: 1.2mm; }
+.lead { font-family: "CormorantItalic", serif; font-size: 15pt; line-height: 1.3; color: #9c5f6c; margin-bottom: 4mm; }
+.list { list-style: none; margin-bottom: 3mm; }
+.list li { position: relative; padding-left: 6mm; margin-bottom: 1.8mm; break-inside: avoid; }
+.list li::before { content: ""; position: absolute; left: 0; top: 2.4mm; width: 3.4mm; height: 0.3mm; background: #c8a46a; }
+.highlight { margin: 4.5mm 0 3mm; padding: 4mm 5mm; border-radius: 3.5mm; background: #f1ecf6; break-inside: avoid; }
+.highlight p { margin: 0; font-family: "CormorantItalic", serif; font-size: 12.5pt; line-height: 1.32; color: #3f2e3a; }
+.quote { margin: 4mm 0; text-align: center; font-family: "CormorantItalic", serif; font-size: 15pt; line-height: 1.3; color: #9c5f6c; }
+.note { margin-top: 4.5mm; padding: 3.5mm 4.5mm; border-radius: 3.5mm; border: 0.3mm solid #e7dcd3; background: #fff; break-inside: avoid; }
+.note p { margin: 0; font-size: 8pt; color: #6e5a66; }
 .keys { list-style: none; }
-.keys li { display: flex; gap: 5mm; padding: 3.6mm 0; border-bottom: 0.3mm solid #e7dcd3; }
+.keys li { display: flex; gap: 4mm; padding: 2.2mm 0; border-bottom: 0.3mm solid #e7dcd3; break-inside: avoid; }
 .keys li:first-child { border-top: 0.3mm solid #e7dcd3; }
-.keys p { margin: 1mm 0 0; color: #6e5a66; }
-.num { flex: none; width: 8mm; height: 8mm; border-radius: 50%; border: 0.3mm solid rgba(63, 46, 58, 0.2); display: flex; align-items: center; justify-content: center; font-family: "CormorantItalic", serif; font-size: 12pt; color: #9c5f6c; }
-.listen { margin-top: 8mm; display: flex; gap: 6mm; align-items: center; padding: 6mm; border-radius: 4mm; border: 0.3mm solid #e7dcd3; background: #fff; }
-.qr { flex: none; width: 32mm; height: 32mm; }
+.keys p { margin: 0; color: #54404e; }
+.num { flex: none; width: 7.5mm; height: 7.5mm; border-radius: 50%; border: 0.3mm solid rgba(63, 46, 58, 0.22); display: flex; align-items: center; justify-content: center; font-family: "CormorantItalic", serif; font-size: 11.5pt; color: #9c5f6c; }
+.listen { margin: 4.5mm 0; display: flex; gap: 5mm; align-items: center; padding: 4.5mm; border-radius: 3.5mm; border: 0.3mm solid #e7dcd3; background: #fff; break-inside: avoid; }
+.qr { flex: none; width: 29mm; height: 29mm; }
 .qr svg { width: 100%; height: 100%; display: block; }
-.listen-title { font-family: "CormorantItalic", serif; font-size: 16pt; line-height: 1.1; margin-bottom: 2mm; }
-.listen a { color: #8e5f80; }
-.small { font-size: 7.6pt; color: #6e5a66; margin: 2mm 0 0; }
-.next li { padding: 3.2mm 0; border-bottom: 0.3mm solid #e7dcd3; }
-.next p { margin: 0.6mm 0 0; color: #6e5a66; }
-.sign { margin-top: 8mm; }
-.sign span { font-family: "CormorantItalic", serif; font-size: 20pt; color: #9c5f6c; }
-.end { margin-top: 7mm; display: flex; flex-direction: column; gap: 1.5mm; }
+.listen .eyebrow { margin-bottom: 1.5mm; }
+.listen-title { font-family: "CormorantItalic", serif; font-size: 17pt; line-height: 1.1; margin-bottom: 1.5mm; }
+.listen p { margin-bottom: 1.2mm; }
+.small { font-size: 7.4pt; color: #6e5a66; }
+.question { margin-top: 3.5mm; break-inside: avoid; }
+.question p { margin-bottom: 1mm; color: #6e5a66; }
+.lines { margin-bottom: 2mm; break-inside: avoid; }
+.lines span { display: block; height: 7mm; border-bottom: 0.3mm solid #d9cdc4; }
+.sign { margin-top: 7mm; }
+.sign span { font-family: "CormorantItalic", serif; font-size: 18pt; color: #9c5f6c; }
+.thanks .rule { margin: 0 0 6mm; }
+.end { margin-top: 9mm; display: flex; flex-direction: column; gap: 1.6mm; }
 .end p { margin: 0; color: #6e5a66; font-size: 8pt; }
-.end a { color: #8e5f80; text-decoration: none; }
-.notice { margin-top: 7mm; font-size: 7pt; line-height: 1.5; color: #6e5a66; }
+.end a { text-decoration: none; }
+.notice { margin-top: 9mm; padding-top: 4mm; border-top: 0.3mm solid #e7dcd3; font-size: 7pt; line-height: 1.5; color: #6e5a66; }
 .logo { margin: 0; display: flex; align-items: baseline; gap: 1.6mm; line-height: 1; }
 .logo .l1, .logo .l3 { font-family: "CormorantItalic", serif; }
 .logo .l1 { color: #9c5f6c; }
@@ -177,22 +202,27 @@ p { margin-bottom: 3.5mm; }
 .logo-lg .l2 { font-size: 11pt; }
 .dots { display: flex; gap: 1.6mm; }
 .dots span { width: 1.8mm; height: 1.8mm; border-radius: 50%; display: block; }
+.rule { display: block; width: 18mm; height: 0.35mm; background: #c8a46a; }
+.cover { position: relative; width: 148mm; height: 210mm; overflow: hidden; break-after: page; }
+.blob { position: absolute; border-radius: 50%; }
+.blob-a { width: 95mm; height: 95mm; right: -40mm; top: -40mm; background: radial-gradient(circle, #f3dedb 0%, rgba(246, 233, 230, 0) 68%); }
+.blob-b { width: 90mm; height: 90mm; left: -42mm; bottom: -36mm; background: radial-gradient(circle, #e9e1f2 0%, rgba(241, 236, 246, 0) 68%); }
+.blob-c { width: 72mm; height: 72mm; right: -8mm; bottom: 28mm; background: radial-gradient(circle, #e3ece0 0%, rgba(238, 243, 236, 0) 68%); }
 .cover .frame { position: absolute; inset: 8mm; border: 0.35mm solid rgba(200, 164, 106, 0.55); border-radius: 3mm; }
 .cover-inner { position: relative; height: 100%; padding: 24mm 18mm 20mm; display: flex; flex-direction: column; justify-content: space-between; }
-.kicker { font-size: 7.5pt; letter-spacing: 0.26em; text-transform: uppercase; color: #6e5a66; }
+.kicker { font-size: 7.5pt; letter-spacing: 0.3em; text-transform: uppercase; color: #6e5a66; }
 .cover h1 { font-family: "CormorantItalic", serif; font-size: 50pt; line-height: 0.95; }
-.rule { display: block; width: 18mm; height: 0.35mm; background: #c8a46a; margin: 8mm 0 6mm; }
-.cover-sub { font-family: "Cormorant", serif; font-size: 14pt; line-height: 1.35; color: #54404e; max-width: 95mm; }
+.cover-sub { font-family: "Cormorant", serif; font-size: 14pt; line-height: 1.35; color: #54404e; margin: 4mm 0 0; }
+.cover .rule { margin: 8mm 0 6mm; }
+.cover-quote { font-family: "CormorantItalic", serif; font-size: 14pt; line-height: 1.35; color: #9c5f6c; margin-bottom: 4mm; }
+.cover-text { font-size: 8.6pt; color: #6e5a66; max-width: 95mm; margin: 0; }
 .cover-foot { display: flex; align-items: flex-end; justify-content: space-between; }
 </style>
 </head>
 <body>
 ${cover}
-${bienvenida}
-${queEs}
-${claves}
-${freno}
-${despues}
+${chapters}
+${gracias}
 </body>
 </html>`;
 }
@@ -204,7 +234,7 @@ async function main() {
     const tab = await context.newPage();
     await tab.setContent(await html(), { waitUntil: "load" });
     await tab.evaluate(() => document.fonts.ready);
-    const pdf = await tab.pdf({ width: "148mm", height: "210mm", printBackground: true, preferCSSPageSize: true });
+    const pdf = await tab.pdf({ printBackground: true, preferCSSPageSize: true });
     await mkdir(join(root, "public/descargas"), { recursive: true });
     await writeFile(output, pdf);
   } finally {

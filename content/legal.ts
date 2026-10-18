@@ -354,6 +354,7 @@ export const condicionesCompra: LegalDocument = {
             "Sesiones en directo: online o presencial en Valencia, en la fecha y la hora que acordemos por WhatsApp.",
           ],
         },
+        "Los enlaces de descarga son privados y solo los recibe la persona que hace el pedido, junto con las instrucciones para descargar y guardar los archivos.",
         "Antes de que pagues te indico el plazo orientativo de entrega de tu pedido. Si por cualquier motivo no pudiera cumplirlo, te avisaré y podrás elegir entre esperar o recuperar tu dinero.",
       ],
     },
@@ -363,7 +364,7 @@ export const condicionesCompra: LegalDocument = {
       blocks: [
         {
           list: [
-            "Meditaciones: un dispositivo con reproductor de audio y espacio para guardar los archivos.",
+            "Meditaciones: un dispositivo con reproductor de audio, espacio para guardar los archivos y conexión a internet para descargarlos.",
             "Lecturas: WhatsApp y un dispositivo que pueda reproducir vídeo y abrir PDF.",
             "Sesiones online: conexión a internet y un dispositivo con cámara y micrófono.",
           ],

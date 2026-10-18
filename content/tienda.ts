@@ -102,7 +102,7 @@ export const productos: Producto[] = [
     frase:
       "Cinco meditaciones guiadas para dedicarte un espacio de atención, volver a la respiración y explorar el cuerpo y los sentidos a tu ritmo.",
     descripcion:
-      "Un pack de cinco audios guiados para empezar o retomar tu práctica. Puedes escucharlos en el orden que quieras y volver a ellos siempre que lo necesites.",
+      "Una colección para reservar un momento para ti, volver a la respiración y llevar la atención al cuerpo y a los sentidos.",
     incluye: [
       { titulo: "Respiración ancla", detalle: "23:03" },
       { titulo: "Respiración freno", detalle: "23:16" },
@@ -126,7 +126,7 @@ export const productos: Producto[] = [
     nombre: "Un espacio para tu mente",
     frase: "Una propuesta para observar los pensamientos y acercarte a tu experiencia interna con más atención.",
     descripcion:
-      "Tres meditaciones guiadas para mirar lo que piensas y lo que sientes con un poco más de distancia y de amabilidad.",
+      "Tres prácticas guiadas para observar los pensamientos y las emociones con más atención, a tu ritmo.",
     incluye: [
       { titulo: "Un cielo de pensamientos", detalle: "26:38" },
       { titulo: "Arroyo de pensamientos", detalle: "25:22" },
@@ -151,7 +151,8 @@ export const productos: Producto[] = [
     tipo: "meditacion",
     nombre: "Conecta contigo",
     frase: "Una colección para la introspección, la amabilidad y la gratitud.",
-    descripcion: "Cuatro meditaciones guiadas para mirar hacia dentro, tratarte con más cariño y agradecer lo que tienes.",
+    descripcion:
+      "Cuatro prácticas guiadas para la introspección, la amabilidad y la gratitud.",
     incluye: [
       { titulo: "Viaje a tu esencia", detalle: "27:30" },
       { titulo: "La sonrisa interior", detalle: "25:03" },
@@ -178,7 +179,7 @@ export const productos: Producto[] = [
     nombre: "Tu camino de 12 semanas de meditación",
     frase: "Doce meditaciones, una por semana, con orden de escucha y guía de uso.",
     descripcion:
-      "Un programa para crear el hábito poco a poco: cada semana, una meditación nueva. Incluye el orden de escucha y una guía de uso para acompañarte.",
+      "Un programa para recorrer a lo largo de doce semanas, con el orden de escucha recomendado, una propuesta semanal sencilla y una guía de uso para preparar la práctica.",
     incluye: [
       { titulo: "Semana 1. Respiración ancla", detalle: "23:03" },
       { titulo: "Semana 2. Respiración freno", detalle: "23:16" },
@@ -215,7 +216,7 @@ export const productos: Producto[] = [
     frase:
       "Tu nuevo ciclo personal: aprendizajes, oportunidades y retos para los próximos doce meses en las diferentes áreas de tu vida.",
     descripcion:
-      "Una lectura de Crono Tarot para mirar tu nuevo año personal, el que empieza con tu cumpleaños, área por área.",
+      "Una lectura para explorar tu nuevo ciclo personal y descubrir los aprendizajes, las oportunidades y los retos que pueden aparecer en las diferentes áreas de tu vida durante los próximos doce meses.",
     incluye: [{ titulo: "Lectura anual con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -235,7 +236,8 @@ export const productos: Producto[] = [
     nombre: "Tu Mapa Estacional",
     frase:
       "La energía de una estación (primavera, verano, otoño o invierno) y los temas, retos y aprendizajes de esa etapa.",
-    descripcion: "Una lectura de Crono Tarot para una estación concreta. Tú eliges cuál: primavera, verano, otoño o invierno.",
+    descripcion:
+      "Una lectura para explorar la energía de una estación del año (primavera, verano, otoño o invierno) y conectar con los temas, retos y aprendizajes de esa etapa.",
     incluye: [{ titulo: "Lectura estacional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -251,7 +253,8 @@ export const productos: Producto[] = [
     nombre: "Tu Mapa Mensual",
     frase:
       "Lectura amplia de un mes concreto: la energía del periodo, los temas más destacados y las áreas que pueden requerir atención.",
-    descripcion: "Una lectura de Crono Tarot amplia para el mes que tú elijas.",
+    descripcion:
+      "Una lectura centrada en un mes concreto. Explora la energía del periodo y descubre los temas más destacados y las áreas de tu vida que pueden requerir atención.",
     incluye: [{ titulo: "Lectura mensual amplia con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -267,7 +270,8 @@ export const productos: Producto[] = [
     nombre: "Lectura mensual",
     frase:
       "Lectura breve de un mes concreto para identificar los temas más relevantes y afrontar las próximas semanas con más conciencia.",
-    descripcion: "Una lectura de Crono Tarot breve para el mes que tú elijas.",
+    descripcion:
+      "Una lectura de un mes concreto para identificar los temas más relevantes, comprender los desafíos y afrontar las próximas semanas con mayor conciencia.",
     incluye: [{ titulo: "Lectura mensual breve con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -282,7 +286,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Lectura semanal",
     frase: "Tendencias de la semana, retos que puedes afrontar y oportunidades que conviene aprovechar.",
-    descripcion: "Una lectura de Crono Tarot para la semana que tú elijas.",
+    descripcion:
+      "Una visión de la semana para reconocer las tendencias, los retos que puedes afrontar y las oportunidades que conviene aprovechar.",
     incluye: [{ titulo: "Lectura semanal con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -297,7 +302,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Tu Mapa de Vida",
     frase: "Lectura de 22 cartas que explora siete ámbitos de tu vida a través del pasado, el presente y el futuro.",
-    descripcion: "Una lectura amplia de 22 cartas con tarot Rider-Waite para ver tu vida en conjunto.",
+    descripcion:
+      "Te ayuda a comprender tu situación, reconocer desafíos y descubrir nuevas perspectivas para avanzar con mayor claridad.",
     incluye: [
       { titulo: "Consultante" },
       { titulo: "A favor" },
@@ -324,7 +330,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Lectura de la Pareja",
     frase: "La dinámica de una relación: puntos de conexión, diferencias y aprendizajes compartidos.",
-    descripcion: "Una lectura con tarot Rider-Waite centrada en tu relación de pareja.",
+    descripcion:
+      "Explora la dinámica de una relación, sus puntos de conexión, sus diferencias y los aprendizajes que podéis compartir.",
     incluye: [{ titulo: "Lectura de la relación con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -343,7 +350,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Lectura del Trabajo",
     frase: "Tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento.",
-    descripcion: "Una lectura con tarot Rider-Waite centrada en tu momento profesional.",
+    descripcion:
+      "Analiza tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento para afrontar tu camino laboral con mayor claridad.",
     incluye: [{ titulo: "Lectura profesional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -362,7 +370,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Lectura de Compatibilidad",
     frase: "Afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
-    descripcion: "Una lectura con tarot Rider-Waite para mirar un vínculo entre dos personas.",
+    descripcion:
+      "Descubre las afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
     incluye: [{ titulo: "Lectura de compatibilidad con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -381,7 +390,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Lectura del Corazón",
     frase: "Tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
-    descripcion: "Una lectura con tarot Rider-Waite para mirar tu manera de querer y de relacionarte.",
+    descripcion:
+      "Una lectura centrada en tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
     incluye: [{ titulo: "Lectura afectiva con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
@@ -400,7 +410,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Tu Código Personal",
     frase: "Tarot numerológico basado en tu fecha de nacimiento.",
-    descripcion: "Una lectura de autoconocimiento con cartas a partir de tu fecha de nacimiento, con cinco claves sobre ti.",
+    descripcion:
+      "Una lectura personalizada de tarot numerológico basada en tu fecha de nacimiento, con cinco claves para profundizar en tu autoconocimiento.",
     incluye: [
       { titulo: "Quién eres" },
       { titulo: "Cómo te relacionas" },
@@ -425,7 +436,8 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Matriz del Destino",
     frase: "Herramienta de autoconocimiento que utiliza la energía de los arcanos mayores, sin cartas.",
-    descripcion: "Un mapa a partir de tu fecha de nacimiento, con cinco claves sobre ti. No se trabaja con cartas.",
+    descripcion:
+      "Una interpretación personalizada de tu matriz numerológica para explorar talentos, aprendizajes, desafíos y patrones personales, y comprender mejor tu camino vital. No se trabaja con cartas.",
     incluye: [
       { titulo: "Tu energía personal" },
       { titulo: "Tu fortaleza interior" },
@@ -548,7 +560,7 @@ export const fichaProducto = {
   forWhom: "Para quién puede encajar",
   requirements: "Qué necesitas",
   requirementsMeditation:
-    "Un móvil, tablet u ordenador con reproductor de audio y espacio para guardar los archivos.",
+    "Un móvil, tablet u ordenador con reproductor de audio, espacio para guardar los archivos y conexión a internet para descargarlos.",
   requirementsReading: "WhatsApp para recibir el vídeo y el PDF, y un dispositivo que pueda abrirlos.",
   requirementsSession: "Para la sesión online, conexión a internet y un dispositivo con cámara y micrófono.",
   requirementsBirthday: "Tu fecha de nacimiento, que me darás por WhatsApp al hacer el pedido.",
