@@ -1,8 +1,9 @@
 import { infoIndividualMessage, infoParejaMessage, rutasCalculadora } from "@/content/calculadora";
+import { site } from "@/content/site";
 import { getProducto } from "@/content/tienda";
 import { calcularMatriz, calcularPareja, fechaParam, fechaTexto, limpiarNombre, parsearFecha, type Fecha, type Matriz } from "@/lib/matriz";
 import { formatPrice } from "@/lib/tienda";
-import { absoluteUrl, whatsappHref } from "@/lib/utils";
+import { whatsappHref } from "@/lib/utils";
 
 export type Persona = { fecha: Fecha; texto: string; nombre: string; centro: number };
 
@@ -16,6 +17,13 @@ type Comun = {
 
 export type DatosPdf = (Comun & { tipo: "individual"; persona: Persona }) | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
 
+function baseUrl(origin: string) {
+  const propio = new URL(site.url).hostname.replace(/^www\./, "");
+  const hostname = URL.canParse(origin) ? new URL(origin).hostname : "";
+  const permitido = hostname === "localhost" || hostname.endsWith(".vercel.app") || hostname.replace(/^www\./, "") === propio;
+  return permitido ? origin : site.url;
+}
+
 function persona(fecha: Fecha, nombre: string): Persona {
   return { fecha, texto: fechaTexto(fecha), nombre, centro: calcularMatriz(fecha).puntos.e };
 }
@@ -24,8 +32,9 @@ function archivo(...fechas: Fecha[]) {
   return `matriz-del-destino-${fechas.map((fecha) => fechaTexto(fecha).replace(/\//g, "-")).join("-y-")}.pdf`;
 }
 
-export function datosDesdeParams(params: URLSearchParams): DatosPdf | null {
+export function datosDesdeParams(params: URLSearchParams, origin: string): DatosPdf | null {
   const tipo = params.get("tipo");
+  const base = baseUrl(origin);
   if (tipo === "individual") {
     const fecha = parsearFecha(params.get("fecha"));
     if (!fecha) return null;
@@ -38,7 +47,7 @@ export function datosDesdeParams(params: URLSearchParams): DatosPdf | null {
       persona: persona(fecha, nombre),
       matriz: calcularMatriz(fecha),
       precio: producto?.precio ? formatPrice(producto.precio) : null,
-      compraUrl: `${absoluteUrl(rutasCalculadora.individual)}?${query.toString()}#lectura-completa`,
+      compraUrl: `${base}${rutasCalculadora.individual}?${query.toString()}#lectura-completa`,
       infoUrl: whatsappHref(infoIndividualMessage(texto, nombre)),
       archivo: archivo(fecha),
     };
@@ -62,7 +71,7 @@ export function datosDesdeParams(params: URLSearchParams): DatosPdf | null {
       personas,
       matriz: calcularPareja(fecha1, fecha2),
       precio: producto?.precio ? formatPrice(producto.precio) : null,
-      compraUrl: `${absoluteUrl(rutasCalculadora.pareja)}?${query.toString()}#lectura-completa`,
+      compraUrl: `${base}${rutasCalculadora.pareja}?${query.toString()}#lectura-completa`,
       infoUrl: whatsappHref(infoParejaMessage(personas.map((item) => ({ fecha: item.texto, nombre: item.nombre })))),
       archivo: archivo(fecha1, fecha2),
     };

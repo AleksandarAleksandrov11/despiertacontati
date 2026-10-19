@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   if (rateLimited(clientIp(request))) {
     return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
   }
-  const datos = datosDesdeParams(request.nextUrl.searchParams);
+  const datos = datosDesdeParams(request.nextUrl.searchParams, request.nextUrl.origin);
   if (!datos) {
     return NextResponse.json({ ok: false, error: "invalid_data" }, { status: 400 });
   }
