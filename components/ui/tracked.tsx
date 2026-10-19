@@ -3,7 +3,14 @@
 import { track } from "@vercel/analytics";
 import { useEffect, type ComponentPropsWithoutRef } from "react";
 
-export type TrackEvent = "ver_producto" | "click_comprar_whatsapp" | "click_avisame" | "descarga_guia";
+export type TrackEvent =
+  | "ver_producto"
+  | "click_comprar_whatsapp"
+  | "click_avisame"
+  | "descarga_guia"
+  | "calcular_matriz"
+  | "descarga_pdf_matriz"
+  | "click_info_whatsapp";
 
 type TrackedAnchorProps = ComponentPropsWithoutRef<"a"> & {
   event: TrackEvent;

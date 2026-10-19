@@ -12,7 +12,7 @@ import { PriceTag } from "./price-tag";
 const buttonClass =
   "inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full px-7 py-3 text-center text-[0.95rem] font-medium transition-[background-color,opacity] duration-500";
 
-export function BuyBox({ producto }: { producto: Producto }) {
+export function BuyBox({ producto, detalle, origen }: { producto: Producto; detalle?: string; origen?: string }) {
   const copy = fichaProducto;
   const id = useId();
   const digital = isDigital(producto);
@@ -79,11 +79,11 @@ export function BuyBox({ producto }: { producto: Producto }) {
       <div className="mt-7">
         {ready ? (
           <TrackedAnchor
-            href={whatsappHref(buyMessage(producto))}
+            href={whatsappHref(buyMessage(producto, detalle))}
             target="_blank"
             rel="noopener noreferrer"
             event="click_comprar_whatsapp"
-            data={{ producto: producto.slug }}
+            data={origen ? { producto: producto.slug, origen } : { producto: producto.slug }}
             className={cn(buttonClass, "bg-ciruela text-crema shadow-[0_10px_30px_-12px_rgba(63,46,58,0.45)] hover:bg-malva-deep")}
           >
             <WhatsappIcon size={18} />

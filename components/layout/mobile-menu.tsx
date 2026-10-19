@@ -56,7 +56,7 @@ export function MobileMenu({ open, onClose, pathname }: MobileMenuProps) {
           animate={{ clipPath: "circle(150% at 92% 2.5rem)" }}
           exit={{ clipPath: "circle(0% at 92% 2.5rem)" }}
           transition={{ duration: 0.8, ease }}
-          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-rosa-polvo pt-[calc(4.5rem+env(safe-area-inset-top))] lg:hidden"
+          className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-rosa-polvo pt-[calc(4.5rem+env(safe-area-inset-top))] xl:hidden"
         >
           <div aria-hidden className="blob -right-24 top-24 size-72 bg-lavanda" />
           <div aria-hidden className="blob -left-20 bottom-24 size-64 bg-salvia" />

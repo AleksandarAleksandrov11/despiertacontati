@@ -5,6 +5,7 @@ import { ArrowLeft, Check } from "lucide-react";
 import { categorias, fichaProducto, getProducto, productos, type Producto } from "@/content/tienda";
 import { GuiaBlock } from "@/components/sections/guia-block";
 import { BuyBox } from "@/components/sections/tienda/buy-box";
+import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/sections/tienda/product-card";
 import { Blobs, Section } from "@/components/ui/section";
 import { FadeUp, SplitText } from "@/components/ui/split-text";
@@ -117,6 +118,17 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
         <div className="grid gap-12 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-16">
           <Reveal className="lg:col-span-7">
             <p className="max-w-2xl text-lead">{producto.descripcion}</p>
+            {producto.calculadora && (
+              <div className="mt-8 flex flex-col gap-4 rounded-[1.25rem] bg-ciruela p-6 text-crema sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div>
+                  <p className="font-serif text-[1.5rem] leading-tight">{copy.calculadora.title}</p>
+                  <p className="mt-1 text-crema/75">{copy.calculadora.text}</p>
+                </div>
+                <Button href={producto.calculadora} tone="dark" className="shrink-0">
+                  {copy.calculadora.cta}
+                </Button>
+              </div>
+            )}
           </Reveal>
 
           <div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">

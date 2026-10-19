@@ -7,8 +7,6 @@ import { ebook, type EbookBlock } from "../content/ebook";
 const root = process.cwd();
 const output = join(root, "public/descargas/tu-primera-pausa.pdf");
 
-const chakras = ["#d9776f", "#e9a66b", "#e8c96a", "#8fb996", "#7fb3d5", "#7c86c2", "#a88bc7"];
-
 function escape(value: string) {
   return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
@@ -18,12 +16,8 @@ async function font(file: string) {
   return `data:font/ttf;base64,${data.toString("base64")}`;
 }
 
-function dots() {
-  return `<div class="dots">${chakras.map((color) => `<span style="background:${color}"></span>`).join("")}</div>`;
-}
-
-function logo(size: "sm" | "lg") {
-  return `<p class="logo logo-${size}"><span class="l1">Despierta</span> <span class="l2">con</span> <span class="l3">Tati</span></p>`;
+function logo(size: "sm" | "lg", symbol: string) {
+  return `<div class="logo logo-${size}"><img src="${symbol}" alt=""><span class="words"><span class="l1">Despierta</span><span class="l3">con Tati</span></span></div>`;
 }
 
 function link(url: string) {
@@ -75,10 +69,12 @@ function block(item: EbookBlock, qr: string) {
 }
 
 async function html() {
-  const [serif, serifItalic, sans] = await Promise.all([
+  const [serif, serifItalic, sans, script, symbol] = await Promise.all([
     font("cormorant-garamond-500.ttf"),
     font("cormorant-garamond-500-italic.ttf"),
     font("manrope-500.ttf"),
+    font("allura-400.ttf"),
+    readFile(join(root, "public/brand/simbolo.png")).then((data) => `data:image/png;base64,${data.toString("base64")}`),
   ]);
   const qr = await QRCode.toString(ebook.audioUrl, {
     type: "svg",
@@ -101,7 +97,7 @@ async function html() {
       <p class="cover-quote">${ebook.coverQuote.map(escape).join("<br>")}</p>
       <p class="cover-text">${escape(ebook.coverText)}</p>
     </div>
-    <div class="cover-foot">${logo("lg")}${dots()}</div>
+    <div class="cover-foot">${logo("lg", symbol)}</div>
   </div>
 </section>`;
 
@@ -121,7 +117,7 @@ async function html() {
   <h2>${escape(ebook.gracias.title)}</h2>
   ${ebook.gracias.paragraphs.map((text) => `<p>${escape(text)}</p>`).join("")}
   <p class="sign">${escape(ebook.gracias.sign)}<br><span>${escape(ebook.gracias.name)}</span></p>
-  <div class="end">${logo("sm")}<p><a href="https://www.${escape(ebook.gracias.web)}">${escape(ebook.gracias.web)}</a> · ${escape(ebook.gracias.instagram)}</p>${dots()}</div>
+  <div class="end">${logo("sm", symbol)}<p><a href="https://www.${escape(ebook.gracias.web)}">${escape(ebook.gracias.web)}</a> · ${escape(ebook.gracias.instagram)}</p></div>
   <p class="notice">${escape(ebook.aviso)}</p>
 </section>`;
 
@@ -134,6 +130,7 @@ async function html() {
 @font-face { font-family: "Cormorant"; src: url(${serif}); font-weight: 500; }
 @font-face { font-family: "CormorantItalic"; src: url(${serifItalic}); font-weight: 500; }
 @font-face { font-family: "Manrope"; src: url(${sans}); font-weight: 500; }
+@font-face { font-family: "Allura"; src: url(${script}); font-weight: 400; }
 @page {
   size: 148mm 210mm;
   margin: 17mm 16mm 19mm;
@@ -191,17 +188,17 @@ h4 { font-family: "Cormorant", serif; font-size: 12.5pt; line-height: 1.2; margi
 .end p { margin: 0; color: #6e5a66; font-size: 8pt; }
 .end a { text-decoration: none; }
 .notice { margin-top: 9mm; padding-top: 4mm; border-top: 0.3mm solid #e7dcd3; font-size: 7pt; line-height: 1.5; color: #6e5a66; }
-.logo { margin: 0; display: flex; align-items: baseline; gap: 1.6mm; line-height: 1; }
-.logo .l1, .logo .l3 { font-family: "CormorantItalic", serif; }
-.logo .l1 { color: #9c5f6c; }
-.logo .l3 { color: #8e5f80; }
-.logo .l2 { font-family: "Cormorant", serif; color: #6e5a66; }
-.logo-sm .l1, .logo-sm .l3 { font-size: 15pt; }
-.logo-sm .l2 { font-size: 9pt; }
-.logo-lg .l1, .logo-lg .l3 { font-size: 21pt; }
-.logo-lg .l2 { font-size: 11pt; }
-.dots { display: flex; gap: 1.6mm; }
-.dots span { width: 1.8mm; height: 1.8mm; border-radius: 50%; display: block; }
+.logo { margin: 0; display: flex; align-items: center; gap: 2.4mm; line-height: 1; }
+.logo img { display: block; width: auto; }
+.logo .words { display: flex; flex-direction: column; align-items: center; }
+.logo .l1 { font-family: "Cormorant", serif; text-transform: uppercase; letter-spacing: 0.07em; color: #3f2e3a; }
+.logo .l3 { font-family: "Allura", cursive; color: #9c5f6c; }
+.logo-sm img { height: 10mm; }
+.logo-sm .l1 { font-size: 11pt; }
+.logo-sm .l3 { font-size: 12pt; }
+.logo-lg img { height: 14mm; }
+.logo-lg .l1 { font-size: 15pt; }
+.logo-lg .l3 { font-size: 16pt; }
 .rule { display: block; width: 18mm; height: 0.35mm; background: #c8a46a; }
 .cover { position: relative; width: 148mm; height: 210mm; overflow: hidden; break-after: page; }
 .blob { position: absolute; border-radius: 50%; }

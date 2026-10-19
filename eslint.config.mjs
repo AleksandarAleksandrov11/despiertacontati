@@ -10,5 +10,12 @@ export default defineConfig([
       "no-console": "error",
     },
   },
+  {
+    files: ["lib/og.tsx", "lib/pdf/**/*.tsx"],
+    rules: {
+      "@next/next/no-img-element": "off",
+      "jsx-a11y/alt-text": "off",
+    },
+  },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
 ]);

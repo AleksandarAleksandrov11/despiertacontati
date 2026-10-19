@@ -4,7 +4,7 @@ import { getProducto } from "@/content/tienda";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
-import { FechaNacimiento } from "@/components/sections/servicios/fecha-nacimiento";
+import { CalculadoraPromo } from "@/components/sections/calculadora/calculadora-promo";
 import { ProductCard } from "@/components/sections/tienda/product-card";
 import { FaqSection } from "@/components/sections/faq-section";
 import { CtaBlock } from "@/components/sections/cta-block";
@@ -113,17 +113,7 @@ export default function AutoconocimientoPage() {
         </RevealGroup>
       </Section>
 
-      <Section tone="lavanda" labelledBy="fecha-title">
-        <Reveal className="mx-auto mb-10 max-w-2xl text-center">
-          <p className="eyebrow mb-5">{page.fecha.eyebrow}</p>
-          <h2 id="fecha-title" className="text-h2">
-            {page.fecha.title}
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <FechaNacimiento />
-        </Reveal>
-      </Section>
+      <CalculadoraPromo tone="light" id="calcula-tu-matriz" />
 
       <FaqSection faqs={faqs.autoconocimiento} />
       <CtaBlock

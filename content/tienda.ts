@@ -22,6 +22,7 @@ export type Producto = {
   lanzamiento?: boolean;
   estado: "disponible" | "proximamente";
   destacado: boolean;
+  calculadora?: string;
 };
 
 export type Categoria = {
@@ -455,6 +456,24 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    calculadora: "/calculadora/matriz-del-destino",
+  },
+  {
+    slug: "matriz-del-destino-pareja",
+    categoria: "autoconocimiento",
+    tipo: "lectura",
+    nombre: "Matriz del Destino de pareja",
+    frase: "La energía de vuestra relación a partir de vuestras dos fechas de nacimiento. Calcula vuestra matriz gratis.",
+    descripcion:
+      "Una interpretación personalizada de la matriz de vuestra pareja, a partir de las dos fechas de nacimiento. No se trabaja con cartas.",
+    incluye: [{ titulo: "La energía de vuestra relación" }, { titulo: "Vuestros propósitos como pareja" }],
+    formato: "Vídeo y PDF",
+    entrega: entregaLectura,
+    paraQuien: ["Queréis conoceros mejor como pareja.", "Os interesa el autoconocimiento sin tiradas de cartas."],
+    precio: null,
+    estado: "disponible",
+    destacado: false,
+    calculadora: "/calculadora/compatibilidad-de-pareja",
   },
   {
     slug: "sesion-tarot-30-minutos",
@@ -528,6 +547,8 @@ export const tiendaPage = {
     usual: "Precio habitual",
     onRequest: "Precio a consultar",
     quote: "Pide presupuesto",
+    info: "Pide información",
+    calculate: "Calcular gratis",
   },
   compra: {
     eyebrow: "Cómo funciona la compra",
@@ -585,6 +606,11 @@ export const fichaProducto = {
     text: "El precio depende del espacio. Escríbeme y te paso presupuesto sin compromiso.",
   },
   related: "También te puede interesar",
+  calculadora: {
+    title: "¿Aún no conoces tu matriz?",
+    text: "Calcúlala gratis, mira cómo se construye y descarga tu lectura básica en PDF.",
+    cta: "Calcular mi matriz",
+  },
 };
 
 export const tiendaFaqs: Faq[] = [

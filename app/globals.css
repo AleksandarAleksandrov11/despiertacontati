@@ -411,13 +411,8 @@ html[data-intro="play"] .intro {
   animation: rise-in 1.2s var(--ease-breath) 0.15s both;
 }
 
-.intro-lotus {
-  animation: intro-lotus 1.4s var(--ease-breath) both;
-}
-
-.intro-dot {
-  animation: intro-dot 0.6s var(--ease-breath) both;
-  animation-delay: calc(0.6s + var(--i, 0) * 90ms);
+.intro-symbol {
+  animation: intro-symbol 1.6s var(--ease-breath) both;
 }
 
 .intro-line {
@@ -439,25 +434,14 @@ html[data-intro="play"] .intro {
   }
 }
 
-@keyframes intro-lotus {
+@keyframes intro-symbol {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.85);
+    transform: translateY(10px) scale(0.82) rotate(-28deg);
   }
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@keyframes intro-dot {
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -470,7 +454,165 @@ html[data-intro="play"] .intro {
   }
 }
 
+.mx .mx-line {
+  stroke-dashoffset: 1;
+  animation: mx-draw var(--dur, 0.9s) var(--ease-breath) var(--d, 0s) forwards;
+}
+
+.mx .mx-fade {
+  opacity: 0;
+  animation: mx-fade 0.9s ease var(--d, 0s) forwards;
+}
+
+.mx .mx-point {
+  opacity: 0;
+  transform: scale(0);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mx-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0s) forwards;
+}
+
+.mx .mx-burst {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mx-burst 1.6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) forwards;
+}
+
+.mx .mx-glow {
+  filter: drop-shadow(0 0 10px rgba(221, 191, 140, 0.75));
+}
+
+.mx .mx-star {
+  opacity: 0.15;
+  animation: mx-twinkle 3.6s ease-in-out var(--d, 0s) infinite alternate;
+}
+
+.mx .mx-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mx-spin 90s linear infinite;
+}
+
+.mx .mx-breathe {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    mx-fade 0.9s ease var(--d, 0s) forwards,
+    mx-breathe 5s ease-in-out calc(var(--d, 0s) + 1s) infinite alternate;
+}
+
+.mx.mx-paused * {
+  animation-play-state: paused;
+}
+
+.mx.mx-done .mx-line {
+  animation: none;
+  stroke-dashoffset: 0;
+}
+
+.mx.mx-done .mx-fade,
+.mx.mx-done .mx-point {
+  animation: none;
+  opacity: 1;
+  transform: none;
+}
+
+.mx.mx-done .mx-burst {
+  animation: none;
+  opacity: 0;
+}
+
+.mx.mx-done .mx-breathe {
+  opacity: 1;
+  animation: mx-breathe 5s ease-in-out infinite alternate;
+}
+
+@keyframes mx-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mx-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes mx-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes mx-burst {
+  0% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(5.5);
+  }
+}
+
+@keyframes mx-twinkle {
+  from {
+    opacity: 0.12;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+
+@keyframes mx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mx-breathe {
+  from {
+    transform: scale(0.92);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .mx .mx-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .mx .mx-fade,
+  .mx .mx-point,
+  .mx .mx-breathe {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mx .mx-burst,
+  .mx .mx-spin,
+  .mx .mx-star {
+    animation: none;
+  }
+
+  .mx .mx-burst {
+    opacity: 0;
+  }
+
   html.js .reveal,
   html.js .reveal-group > .reveal-item {
     opacity: 1;

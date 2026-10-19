@@ -59,7 +59,7 @@ export function Header() {
       >
         <div className="container-page flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
           <Logo />
-          <nav aria-label={site.ui.mainNav} className="hidden lg:block">
+          <nav aria-label={site.ui.mainNav} className="hidden xl:block">
             <ul className="flex items-center gap-7 xl:gap-9">
               {mainNav.map((item) => {
                 const active = isActivePath(pathname, item.href);
@@ -144,7 +144,7 @@ export function Header() {
             </ul>
           </nav>
           <div className="flex items-center gap-2">
-            <div className="hidden lg:block">
+            <div className="hidden xl:block">
               <Button href={site.cta.guide.href} magnetic>
                 {site.cta.guide.label}
               </Button>
@@ -156,7 +156,7 @@ export function Header() {
               aria-controls="menu-movil"
               aria-label={menuOpen ? site.ui.closeMenu : site.ui.openMenu}
               onClick={() => setMenuOpen((open) => !open)}
-              className="relative -mr-2 inline-flex size-12 items-center justify-center rounded-full lg:hidden"
+              className="relative -mr-2 inline-flex size-12 items-center justify-center rounded-full xl:hidden"
             >
               <span
                 aria-hidden

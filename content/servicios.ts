@@ -438,14 +438,6 @@ export const autoconocimientoPage = {
     text: "Lectura de autoconocimiento con cartas a partir de tu fecha de nacimiento.",
     whatsapp: "Hola, Tati. Me gustaría información sobre la Carta Personal.",
   },
-  fecha: {
-    eyebrow: "Para empezar",
-    title: "Solo necesitas tu fecha de nacimiento.",
-    label: "Tu fecha de nacimiento",
-    ready: "Con tu fecha de nacimiento ya podemos empezar.",
-    cta: "Elige tu lectura en la tienda",
-    note: "Esta fecha no se guarda ni se envía. Me la darás por WhatsApp al hacer tu pedido.",
-  },
   cta: {
     title: "¿Empezamos por ti?",
     text: "Elige tu lectura en la tienda o escríbeme y te cuento cuál encaja mejor contigo.",

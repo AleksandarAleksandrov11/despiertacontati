@@ -12,6 +12,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  serverExternalPackages: ["@react-pdf/renderer"],
+  outputFileTracingIncludes: {
+    "/api/matriz/pdf": ["./assets/fonts/*.ttf", "./assets/pdf/*", "./public/brand/*.png"],
+  },
   env: {
     NEXT_PUBLIC_GUIA_AUDIO: existsSync(join(process.cwd(), "public/descargas/meditacion-freno.mp3")) ? "1" : "0",
   },

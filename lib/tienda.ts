@@ -8,16 +8,18 @@ export function formatPrice(value: number) {
 }
 
 export function productHref(producto: Producto) {
-  return producto.tipo === "presupuesto" ? "/servicios/limpieza-energetica" : `/tienda/${producto.slug}`;
+  if (producto.tipo === "presupuesto") return "/servicios/limpieza-energetica";
+  if (producto.precio === null && producto.calculadora) return producto.calculadora;
+  return `/tienda/${producto.slug}`;
 }
 
 export function isDigital(producto: Producto) {
   return producto.tipo === "meditacion" || producto.tipo === "lectura";
 }
 
-export function buyMessage(producto: Producto) {
+export function buyMessage(producto: Producto, detalle?: string) {
   const price = producto.precio === null ? "" : ` (${formatPrice(producto.precio)})`;
-  const lead = `Hola Tati, quiero comprar ${producto.nombre}${price}.`;
+  const lead = `Hola Tati, quiero comprar ${producto.nombre}${price}.${detalle ? ` ${detalle}` : ""}`;
   if (isDigital(producto)) {
     return `${lead} He leído y acepto las condiciones de compra y solicito el inicio inmediato del suministro del contenido digital. ¿Me indicas cómo realizar el pago?`;
   }
@@ -26,6 +28,10 @@ export function buyMessage(producto: Producto) {
 
 export function notifyMessage(producto: Producto) {
   return `Hola Tati, avísame cuando esté disponible «${producto.nombre}».`;
+}
+
+export function infoMessage(producto: Producto) {
+  return `Hola Tati, me gustaría información sobre ${producto.nombre}.`;
 }
 
 export function quoteMessage(producto: Producto) {

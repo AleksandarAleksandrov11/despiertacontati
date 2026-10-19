@@ -11,12 +11,13 @@ const fonts = Promise.all([
   readFile(join(fontsDir, "cormorant-garamond-500.ttf")),
   readFile(join(fontsDir, "cormorant-garamond-500-italic.ttf")),
   readFile(join(fontsDir, "manrope-500.ttf")),
+  readFile(join(fontsDir, "allura-400.ttf")),
+  readFile(join(process.cwd(), "public/brand/simbolo.png")),
 ]);
 
-const chakras = ["#d9776f", "#e9a66b", "#e8c96a", "#8fb996", "#7fb3d5", "#7c86c2", "#a88bc7"];
-
 export async function renderOg({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
-  const [serif, serifItalic, sans] = await fonts;
+  const [serif, serifItalic, sans, script, symbol] = await fonts;
+  const symbolSrc = `data:image/png;base64,${symbol.toString("base64")}`;
   return new ImageResponse(
     (
       <div
@@ -38,11 +39,7 @@ export async function renderOg({ eyebrow, title, subtitle }: { eyebrow: string; 
           <div style={{ display: "flex", fontSize: 22, letterSpacing: 6, textTransform: "uppercase", color: "#6e5a66" }}>
             {eyebrow}
           </div>
-          <div style={{ display: "flex", gap: 10 }}>
-            {chakras.map((color) => (
-              <div key={color} style={{ width: 12, height: 12, borderRadius: 999, backgroundColor: color }} />
-            ))}
-          </div>
+          <img src={symbolSrc} alt="" width={118} height={111} />
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontFamily: "CormorantItalic", fontSize: title.length > 34 ? 84 : 104, lineHeight: 1.02, maxWidth: 1000 }}>
@@ -55,10 +52,9 @@ export async function renderOg({ eyebrow, title, subtitle }: { eyebrow: string; 
           )}
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 24 }}>
-          <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-            <span style={{ fontFamily: "CormorantItalic", fontSize: 40, color: "#9c5f6c" }}>Despierta</span>
-            <span style={{ fontFamily: "Cormorant", fontSize: 26, color: "#6e5a66" }}>con</span>
-            <span style={{ fontFamily: "CormorantItalic", fontSize: 40, color: "#8e5f80" }}>Tati</span>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
+            <span style={{ fontFamily: "Cormorant", fontSize: 38, letterSpacing: 3, color: "#3f2e3a" }}>DESPIERTA</span>
+            <span style={{ fontFamily: "Allura", fontSize: 44, color: "#9c5f6c" }}>con Tati</span>
           </div>
           <div style={{ display: "flex", color: "#6e5a66" }}>
             {site.location.label} · {site.url.replace("https://www.", "")}
@@ -72,6 +68,7 @@ export async function renderOg({ eyebrow, title, subtitle }: { eyebrow: string; 
         { name: "Cormorant", data: serif, style: "normal", weight: 500 },
         { name: "CormorantItalic", data: serifItalic, style: "normal", weight: 500 },
         { name: "Manrope", data: sans, style: "normal", weight: 500 },
+        { name: "Allura", data: script, style: "normal", weight: 400 },
       ],
     },
   );

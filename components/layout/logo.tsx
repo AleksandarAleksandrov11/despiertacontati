@@ -1,17 +1,30 @@
 import Link from "next/link";
-import { site } from "@/content/site";
+import { BrandSymbol } from "@/components/ui/brand-symbol";
 import { cn } from "@/lib/utils";
 
 export function Logo({ className, tone = "light" }: { className?: string; tone?: "light" | "dark" }) {
   return (
     <Link
       href="/"
-      aria-label={site.name}
-      className={cn("group inline-flex min-h-11 items-baseline gap-1.5 whitespace-nowrap leading-none", className)}
+      className={cn("group inline-flex min-h-11 items-center gap-2.5 whitespace-nowrap", className)}
     >
-      <span className={cn("script-accent text-[2.15rem]", tone === "light" ? "text-rosa-deep" : "text-rosa")}>Despierta</span>{" "}
-      <span className={cn("font-serif text-[0.95rem] italic", tone === "light" ? "text-ink-soft" : "text-crema/80")}>con</span>{" "}
-      <span className={cn("script-accent text-[2.15rem]", tone === "light" ? "text-malva-deep" : "text-crema")}>Tati</span>
+      <BrandSymbol
+        size={48}
+        className="h-11 w-auto transition-transform duration-700 ease-[var(--ease-breath)] group-hover:rotate-[8deg] lg:h-12"
+      />
+      <span className="flex flex-col items-center leading-none">
+        <span
+          className={cn(
+            "font-serif text-[1.4rem] font-medium uppercase tracking-[0.07em]",
+            tone === "light" ? "text-ciruela" : "text-crema",
+          )}
+        >
+          Despierta
+        </span>{" "}
+        <span className={cn("script-accent -mt-1 text-[1.6rem]", tone === "light" ? "text-rosa-deep" : "text-rosa")}>
+          con Tati
+        </span>
+      </span>
     </Link>
   );
 }

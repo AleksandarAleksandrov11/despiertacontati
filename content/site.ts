@@ -14,6 +14,7 @@ export const site = {
   tagline: "Recuerda quién eres, empodérate y crea tu nueva vida.",
   taglineParts: { lead: "Recuerda quién eres, empodérate y crea tu", accent: "nueva vida." },
   motto: "Recuerda quién eres, recupera tu poder de elegir y crea tu nueva vida.",
+  brandLine: "Calma · Conciencia · Bienestar",
   location: {
     locality: "Valencia",
     region: "Comunidad Valenciana",
@@ -111,6 +112,7 @@ export const mainNav: NavItem[] = [
   { label: "Quién soy", href: "/quien-soy" },
   { label: "Servicios", href: "/servicios", children: serviceNav },
   { label: "Tienda", href: "/tienda" },
+  { label: "Calculadora", href: "/calculadora" },
   { label: "Tablón", href: "/tablon" },
   ...(hayTestimonios ? [{ label: "Testimonios", href: "/testimonios" }] : []),
   { label: "Contacto", href: "/contacto" },
