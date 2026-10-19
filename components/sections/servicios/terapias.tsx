@@ -26,7 +26,7 @@ export function Terapias({
       <div>
         <SectionHeading eyebrow={eyebrow} title={title} text={text} id="terapias-title" />
       </div>
-      <ul className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
           <li key={item.title}>
             <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col">

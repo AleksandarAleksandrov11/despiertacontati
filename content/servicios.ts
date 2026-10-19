@@ -222,13 +222,13 @@ export const reikiPage = {
     {
       title: "Péndulo hebreo",
       text: "Trabajo energético con péndulo hebreo para explorar y trabajar aspectos relacionados con el equilibrio y el bienestar personal.",
-      image: "pendulo",
+      image: "tatiTrabajandoPendulo",
       whatsapp: "Hola, Tati. Me gustaría información sobre el péndulo hebreo.",
     },
     {
       title: "Análisis de chakras",
       text: "Exploración de los siete chakras principales para observar cómo están tus centros de energía y tomar conciencia de tu bienestar físico, emocional y espiritual.",
-      image: "piedrasChakras",
+      image: "pendulo",
       whatsapp: "Hola, Tati. Me gustaría información sobre el análisis de chakras.",
     },
     {
