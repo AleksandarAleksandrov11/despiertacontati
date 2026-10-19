@@ -20,8 +20,8 @@ export const recorrido: Hito[] = [
   },
   {
     when: "Con los años",
-    title: "Péndulo, sanación akásica y meditación",
-    text: "Sumo el péndulo hebreo, la sanación akásica y la meditación.",
+    title: "Péndulo, sanación akáshica y meditación",
+    text: "Sumo el péndulo hebreo, la sanación akáshica y la meditación.",
     accent: "var(--color-chakra-corazon)",
   },
   {

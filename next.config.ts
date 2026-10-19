@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@react-pdf/renderer"],
   outputFileTracingIncludes: {
     "/api/matriz/pdf": ["./assets/fonts/*.ttf", "./assets/pdf/*", "./public/brand/*.png"],
+    "/api/codigo-personal/pdf": ["./assets/fonts/*.ttf", "./assets/pdf/*", "./assets/tarot/**/*", "./public/brand/*.png"],
   },
   env: {
     NEXT_PUBLIC_GUIA_AUDIO: existsSync(join(process.cwd(), "public/descargas/meditacion-freno.mp3")) ? "1" : "0",

@@ -8,7 +8,6 @@ import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { eventJsonLd, getActiveAnuncios } from "@/lib/anuncios";
 import { breadcrumbJsonLd, businessId, pageMetadata } from "@/lib/seo";
@@ -39,15 +38,15 @@ export default function TablonPage() {
           {tablonPage.anunciosTitle}
         </h2>
         {anuncios.length > 0 ? (
-          <RevealGroup as="ul" className="grid gap-5 md:grid-cols-2">
+          <ul className="grid gap-5 md:grid-cols-2">
             {anuncios.map((anuncio) => (
-              <RevealItem as="li" key={anuncio.id}>
+              <li key={anuncio.id}>
                 <AnuncioCard anuncio={anuncio} />
-              </RevealItem>
+              </li>
             ))}
-          </RevealGroup>
+          </ul>
         ) : (
-          <Reveal className="mx-auto max-w-xl rounded-[1.25rem] border border-dashed border-ciruela/20 px-8 py-16 text-center">
+          <div className="mx-auto max-w-xl rounded-[1.25rem] border border-dashed border-ciruela/20 px-8 py-16 text-center">
             <p className="text-h3">{tablonPage.empty.title}</p>
             <p className="mt-3 text-ink-soft">{tablonPage.empty.text}</p>
             <div className="mt-8 flex justify-center">
@@ -55,16 +54,16 @@ export default function TablonPage() {
                 {site.cta.whatsapp}
               </Button>
             </div>
-          </Reveal>
+          </div>
         )}
       </Section>
       <Section tone="lavanda" id="instagram" labelledBy="instagram-title">
-        <Reveal>
+        <div>
           <SectionHeading eyebrow={instagram.eyebrow} title={instagram.title} text={instagram.text} id="instagram-title" />
-        </Reveal>
-        <Reveal className="mt-12">
+        </div>
+        <div className="mt-12">
           <InstagramFeed />
-        </Reveal>
+        </div>
       </Section>
       <CtaBlock tone="rosa" primary={site.cta.services} />
     </>

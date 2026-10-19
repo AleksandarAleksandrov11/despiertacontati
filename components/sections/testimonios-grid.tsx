@@ -50,9 +50,9 @@ export function TestimoniosGrid() {
           {items.map((item, index) => (
             <m.li
               key={item.name}
-              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.8, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
               className="mb-5 break-inside-avoid"
             >
               <figure className="rounded-[1.25rem] border border-ciruela/10 bg-crema p-7 sm:p-8">

@@ -3,14 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
 import { categorias, fichaProducto, getProducto, productos, type Producto } from "@/content/tienda";
-import { GuiaBlock } from "@/components/sections/guia-block";
 import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/sections/tienda/product-card";
 import { Blobs, Section } from "@/components/ui/section";
 import { FadeUp, SplitText } from "@/components/ui/split-text";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
+import { SiteImage } from "@/components/ui/site-image";
 import { TrackView } from "@/components/ui/tracked";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { formatPrice, productJsonLd } from "@/lib/tienda";
@@ -22,8 +21,9 @@ const seoSuffix: Record<Producto["categoria"], string> = {
   "crono-tarot": "Crono Tarot online",
   lecturas: "lectura de tarot online",
   autoconocimiento: "autoconocimiento online",
-  sesiones: "tarot en Valencia y online",
-  espacios: "Valencia",
+  sesiones: "tarot online",
+  terapias: "terapia energética online",
+  espacios: "limpieza energética a distancia",
 };
 
 const comprables = productos.filter((producto) => producto.precio !== null);
@@ -63,6 +63,7 @@ function requirements(producto: Producto) {
   const copy = fichaProducto;
   if (producto.tipo === "meditacion") return [copy.requirementsMeditation];
   if (producto.tipo === "sesion") return [copy.requirementsSession];
+  if (producto.tipo === "espacio") return [copy.requirementsSpace];
   if (producto.categoria === "autoconocimiento" || producto.slug === "lectura-del-cumpleanos") {
     return [copy.requirementsBirthday, copy.requirementsReading];
   }
@@ -77,6 +78,7 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
   const copy = fichaProducto;
   const categoria = categorias.find((item) => item.id === producto.categoria);
   const audios = producto.tipo === "meditacion";
+  const calculadora = producto.calculadora ? copy.calculadoras[producto.calculadora] : undefined;
   const schema = productJsonLd(producto);
 
   return (
@@ -94,42 +96,47 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
 
       <section className="relative overflow-hidden bg-rosa-polvo pb-14 pt-28 sm:pb-20 sm:pt-36">
         <Blobs variant="b" />
-        <div className="container-page relative">
-          <FadeUp>
-            <Link
-              href={`/tienda#${producto.categoria}`}
-              className="group inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft hover:text-ciruela"
-            >
-              <ArrowLeft size={16} strokeWidth={1.25} aria-hidden className="transition-transform duration-500 group-hover:-translate-x-1" />
-              {copy.back}
-            </Link>
-          </FadeUp>
-          <FadeUp as="p" delay={100} className="eyebrow mb-5 mt-6">
-            {categoria?.nav}
-          </FadeUp>
-          <SplitText as="h1" text={producto.nombre} className="max-w-4xl text-h1" delay={150} />
-          <FadeUp as="p" delay={450} className="mt-6 max-w-2xl font-serif text-[clamp(1.35rem,1.15rem+0.9vw,1.9rem)] italic leading-snug text-ink-soft">
-            {producto.frase}
-          </FadeUp>
+        <div className="container-page relative grid items-end gap-10 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-8">
+            <FadeUp>
+              <Link
+                href={`/tienda#${producto.categoria}`}
+                className="group inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-soft hover:text-ciruela"
+              >
+                <ArrowLeft size={16} strokeWidth={1.25} aria-hidden className="transition-transform duration-500 group-hover:-translate-x-1" />
+                {copy.back}
+              </Link>
+            </FadeUp>
+            <FadeUp as="p" delay={100} className="eyebrow mb-5 mt-6">
+              {categoria?.nav}
+            </FadeUp>
+            <SplitText as="h1" text={producto.nombre} className="max-w-4xl text-h1" delay={150} />
+            <FadeUp as="p" delay={450} className="mt-6 max-w-2xl font-serif text-[clamp(1.35rem,1.15rem+0.9vw,1.9rem)] italic leading-snug text-ink-soft">
+              {producto.frase}
+            </FadeUp>
+          </div>
+          <div className="w-full max-w-[22rem] lg:col-span-4 lg:max-w-none">
+            <SiteImage name={producto.imagen} priority sizes="(min-width: 1024px) 30vw, 22rem" className="aspect-[4/5] shadow-[0_30px_60px_-35px_rgba(63,46,58,0.45)]" />
+          </div>
         </div>
       </section>
 
       <Section tone="crema" className="!pt-14 sm:!pt-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-16">
-          <Reveal className="lg:col-span-7">
+          <div className="lg:col-span-7">
             <p className="max-w-2xl text-lead">{producto.descripcion}</p>
-            {producto.calculadora && (
+            {calculadora && producto.calculadora && (
               <div className="mt-8 flex flex-col gap-4 rounded-[1.25rem] bg-ciruela p-6 text-crema sm:flex-row sm:items-center sm:justify-between sm:p-7">
                 <div>
-                  <p className="font-serif text-[1.5rem] leading-tight">{copy.calculadora.title}</p>
-                  <p className="mt-1 text-crema/75">{copy.calculadora.text}</p>
+                  <p className="font-serif text-[1.5rem] leading-tight">{calculadora.title}</p>
+                  <p className="mt-1 text-crema/75">{calculadora.text}</p>
                 </div>
                 <Button href={producto.calculadora} tone="dark" className="shrink-0">
-                  {copy.calculadora.cta}
+                  {calculadora.cta}
                 </Button>
               </div>
             )}
-          </Reveal>
+          </div>
 
           <div className="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
             <div className="lg:sticky lg:top-28">
@@ -138,7 +145,7 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
           </div>
 
           <div className="space-y-12 lg:col-span-7">
-            <Reveal>
+            <div>
               <h2 className="text-h3">{audios ? copy.includesAudios : copy.includes}</h2>
               <ul className="mt-5 divide-y divide-ciruela/10 border-y border-ciruela/10">
                 {producto.incluye.map((item) => (
@@ -157,9 +164,9 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                   <span className="nums font-serif text-xl text-ciruela">{producto.duracionTotal}</span>
                 </p>
               )}
-            </Reveal>
+            </div>
 
-            <Reveal>
+            <div>
               <dl className="grid gap-6 sm:grid-cols-2">
                 <div className="rounded-[1.25rem] bg-lavanda/70 p-6">
                   <dt className="eyebrow">{copy.format}</dt>
@@ -170,10 +177,10 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                   <dd className="mt-3 text-ink">{producto.entrega}</dd>
                 </div>
               </dl>
-            </Reveal>
+            </div>
 
             {producto.paraQuien.length > 0 && (
-              <Reveal>
+              <div>
                 <h2 className="text-h3">{copy.forWhom}</h2>
                 <ul className="mt-5 space-y-3">
                   {producto.paraQuien.map((item) => (
@@ -183,10 +190,10 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                     </li>
                   ))}
                 </ul>
-              </Reveal>
+              </div>
             )}
 
-            <Reveal>
+            <div>
               <h2 className="text-h3">{copy.requirements}</h2>
               <ul className="mt-5 space-y-3">
                 {requirements(producto).map((item) => (
@@ -196,31 +203,29 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                   </li>
                 ))}
               </ul>
-            </Reveal>
+            </div>
 
-            <Reveal>
+            <div>
               <p className="rounded-[1.25rem] border border-ciruela/10 p-6 text-sm text-ink-soft">{copy.wellbeing}</p>
-            </Reveal>
+            </div>
           </div>
         </div>
       </Section>
 
       <Section tone="lavanda" labelledBy="relacionados">
-        <Reveal>
+        <div>
           <h2 id="relacionados" className="text-h2">
             {copy.related}
           </h2>
-        </Reveal>
-        <RevealGroup as="ul" className="mt-12 grid gap-5 md:grid-cols-3">
+        </div>
+        <ul className="mt-12 grid gap-5 md:grid-cols-3">
           {relacionados(producto).map((item) => (
-            <RevealItem as="li" key={item.slug}>
+            <li key={item.slug}>
               <ProductCard producto={item} />
-            </RevealItem>
+            </li>
           ))}
-        </RevealGroup>
+        </ul>
       </Section>
-
-      <GuiaBlock tone="salvia" id="guia-producto" />
     </>
   );
 }

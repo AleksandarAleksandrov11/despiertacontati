@@ -1,7 +1,6 @@
 import type { Terapia } from "@/content/servicios";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading, type SectionTone } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { TiltCard } from "@/components/ui/tilt-card";
@@ -24,12 +23,12 @@ export function Terapias({
 }) {
   return (
     <Section tone={tone} labelledBy="terapias-title">
-      <Reveal>
+      <div>
         <SectionHeading eyebrow={eyebrow} title={title} text={text} id="terapias-title" />
-      </Reveal>
-      <RevealGroup as="ul" className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      </div>
+      <ul className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <RevealItem as="li" key={item.title}>
+          <li key={item.title}>
             <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col">
               <SiteImage
                 name={item.image}
@@ -47,9 +46,9 @@ export function Terapias({
                 </div>
               </div>
             </TiltCard>
-          </RevealItem>
+          </li>
         ))}
-      </RevealGroup>
+      </ul>
     </Section>
   );
 }

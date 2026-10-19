@@ -1,5 +1,5 @@
 import Image from "next/image";
-import simbolo from "@/public/brand/simbolo.png";
+import simbolo from "@/public/brand/simbolo.webp";
 
 export function BrandSymbol({ size, className, eager = true }: { size: number; className?: string; eager?: boolean }) {
   return (

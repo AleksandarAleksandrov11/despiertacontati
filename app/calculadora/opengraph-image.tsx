@@ -1,13 +1,13 @@
 import { ogContentType, ogSize, renderOg } from "@/lib/og";
 
-export const alt = "Calculadora gratuita de la Matriz del Destino, individual y de pareja.";
+export const alt = "Calculadoras gratuitas: Matriz del Destino, compatibilidad de pareja y Código Personal.";
 export const size = ogSize;
 export const contentType = ogContentType;
 
 export default function Image() {
   return renderOg({
-    eyebrow: "Calculadora gratuita",
-    title: "Tu Matriz del Destino",
-    subtitle: "Calcula tu matriz o la de tu pareja y descarga tu lectura en PDF, gratis.",
+    eyebrow: "Calculadoras gratuitas",
+    title: "Lo que dice tu fecha de nacimiento",
+    subtitle: "Tu Matriz del Destino, la de tu pareja o tu Código Personal, con tu lectura en PDF.",
   });
 }

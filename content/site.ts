@@ -79,7 +79,7 @@ export const site = {
     mobileNav: "Menú",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
-    openSubmenu: "Mostrar los servicios",
+    openSubmenu: "Abrir el submenú de",
     whatsappFloat: "Escríbeme por WhatsApp",
     footerNav: "Navegación",
     footerServices: "Servicios",
@@ -107,12 +107,18 @@ export const serviceNav = [
   { label: "Autoconocimiento", href: "/servicios/autoconocimiento", description: "Matriz del Destino y Código Personal" },
 ];
 
+export const calculadorasNav = [
+  { label: "Matriz del Destino", href: "/calculadora/matriz-del-destino", description: "Tu matriz y tus energías por edades" },
+  { label: "Compatibilidad de pareja", href: "/calculadora/compatibilidad-de-pareja", description: "La matriz de vuestra relación" },
+  { label: "Código Personal", href: "/calculadora/codigo-personal", description: "Tu arcano personal y tus mapas de tarot" },
+];
+
 export const mainNav: NavItem[] = [
   { label: "Inicio", href: "/" },
   { label: "Quién soy", href: "/quien-soy" },
+  { label: "Calculadoras", href: "/calculadora", children: calculadorasNav },
   { label: "Servicios", href: "/servicios", children: serviceNav },
   { label: "Tienda", href: "/tienda" },
-  { label: "Calculadora", href: "/calculadora" },
   { label: "Tablón", href: "/tablon" },
   ...(hayTestimonios ? [{ label: "Testimonios", href: "/testimonios" }] : []),
   { label: "Contacto", href: "/contacto" },
@@ -129,7 +135,7 @@ export const keywordsMarquee = [
   { label: "Reiki", color: "var(--color-chakra-raiz)" },
   { label: "Meditación", color: "var(--color-chakra-sacro)" },
   { label: "Crono Tarot", color: "var(--color-chakra-plexo)" },
-  { label: "Sanación akásica", color: "var(--color-chakra-corazon)" },
+  { label: "Sanación akáshica", color: "var(--color-chakra-corazon)" },
   { label: "Matriz del Destino", color: "var(--color-chakra-garganta)" },
   { label: "Código Personal", color: "var(--color-chakra-tercer-ojo)" },
   { label: "Limpieza energética", color: "var(--color-chakra-corona)" },

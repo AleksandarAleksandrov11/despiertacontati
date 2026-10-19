@@ -51,6 +51,25 @@ export function LecturaCard({
   );
 }
 
+export function TrioCard({ label, intro, numeros, className }: { label: string; intro: string; numeros: number[]; className?: string }) {
+  return (
+    <article className={cn("rounded-[1.25rem] bg-rosa-polvo/60 p-7 sm:p-8", className)}>
+      <p className="eyebrow">{label}</p>
+      <p className="mt-2 text-sm text-ink-soft">{intro}</p>
+      <ol className="mt-6 grid gap-3 sm:grid-cols-3">
+        {numeros.map((numero, index) => (
+          <li key={index} className="flex items-center gap-3 rounded-2xl bg-crema px-4 py-3">
+            <span className="nums grid size-11 shrink-0 place-items-center rounded-full bg-crema font-serif text-[1.35rem] text-ciruela ring-1 ring-dorado/60">
+              {numero}
+            </span>
+            <span className="font-serif text-[1.15rem] leading-tight text-ciruela">{arcano(numero)?.nombre}</span>
+          </li>
+        ))}
+      </ol>
+    </article>
+  );
+}
+
 export function PropositoCard({
   label,
   etapa,

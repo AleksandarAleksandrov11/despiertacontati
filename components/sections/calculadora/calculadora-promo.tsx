@@ -1,6 +1,5 @@
 import { calculadoraPromo, rutasCalculadora } from "@/content/calculadora";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/ui/reveal";
 import { calcularMatriz } from "@/lib/matriz";
 import { cn } from "@/lib/utils";
 import { CalculadoraMini } from "./calculadora-mini";
@@ -19,7 +18,7 @@ export function CalculadoraPromo({ tone = "dark", id = "calculadora" }: { tone?:
       <div aria-hidden className={cn("blob -left-40 top-0 size-[30rem]", dark ? "bg-malva/35" : "bg-rosa-polvo")} />
       <div aria-hidden className={cn("blob -right-32 bottom-0 size-[26rem]", dark ? "bg-rosa/25" : "bg-salvia")} />
       <div className="container-page relative grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-6">
+        <div className="lg:col-span-6">
           <p className={cn("eyebrow mb-5", dark && "text-crema/70")}>{copy.eyebrow}</p>
           <h2 id={`${id}-title`} className="text-h2">
             {copy.title}
@@ -28,17 +27,20 @@ export function CalculadoraPromo({ tone = "dark", id = "calculadora" }: { tone?:
           <div className="mt-8 max-w-lg">
             <CalculadoraMini idPrefix={`${id}-fecha`} />
           </div>
-          <div className="mt-6">
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
             <Button href={rutasCalculadora.pareja} variant="link" tone={dark ? "dark" : "light"}>
               {copy.pareja}
             </Button>
+            <Button href={rutasCalculadora.codigo} variant="link" tone={dark ? "dark" : "light"}>
+              {copy.codigo}
+            </Button>
           </div>
-        </Reveal>
-        <Reveal className="lg:col-span-6" delay={0.1}>
+        </div>
+        <div className="lg:col-span-6">
           <div className={cn("mx-auto max-w-[30rem] rounded-full", !dark && "bg-ciruela p-4 sm:p-6")}>
             <MatrizSvg puntos={ejemplo} etiquetas={["", "", "", ""]} done label="" decorativa />
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

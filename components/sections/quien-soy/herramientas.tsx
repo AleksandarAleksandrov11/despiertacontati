@@ -1,7 +1,6 @@
 import { CalendarDays, Feather, Flower2, HandHeart, HouseHeart, Layers, type LucideIcon } from "lucide-react";
 import type { ComponentType } from "react";
 import { ChakrasIcon, MatrizIcon, PenduloIcon, TarotIcon } from "@/components/ui/icons";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 
 type IconComponent = LucideIcon | ComponentType<{ size?: number; strokeWidth?: number }>;
@@ -22,15 +21,14 @@ const icons: Record<string, IconComponent> = {
 export function Herramientas({ eyebrow, title, items }: { eyebrow: string; title: string; items: { name: string; icon: string }[] }) {
   return (
     <Section tone="lavanda" labelledBy="herramientas-title">
-      <Reveal>
+      <div>
         <SectionHeading eyebrow={eyebrow} title={title} id="herramientas-title" />
-      </Reveal>
-      <RevealGroup as="ul" className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5" stagger={0.06}>
+      </div>
+      <ul className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
         {items.map((item) => {
           const Icon = icons[item.icon];
           return (
-            <RevealItem
-              as="li"
+            <li
               key={item.name}
               className="flex flex-col gap-6 rounded-[1.25rem] bg-crema/70 p-5 transition-colors duration-500 hover:bg-crema sm:p-6"
             >
@@ -38,10 +36,10 @@ export function Herramientas({ eyebrow, title, items }: { eyebrow: string; title
                 <Icon size={22} strokeWidth={1.25} />
               </span>
               <span className="font-serif text-[1.35rem] leading-tight">{item.name}</span>
-            </RevealItem>
+            </li>
           );
         })}
-      </RevealGroup>
+      </ul>
     </Section>
   );
 }

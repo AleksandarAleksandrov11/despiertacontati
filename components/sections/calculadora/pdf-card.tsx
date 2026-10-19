@@ -1,12 +1,12 @@
 "use client";
 
 import { FileDown } from "lucide-react";
-import { TrackedAnchor } from "@/components/ui/tracked";
+import { TrackedAnchor, type TrackEvent } from "@/components/ui/tracked";
 import { cn } from "@/lib/utils";
 
 type PdfCopy = { title: string; text: string; button: string };
 
-export function PdfCard({ copy, href, tipo }: { copy: PdfCopy; href: string; tipo: "individual" | "pareja" }) {
+export function PdfCard({ copy, href, tipo, evento }: { copy: PdfCopy; href: string; tipo: string; evento?: TrackEvent }) {
   return (
     <div className="rounded-[1.25rem] bg-lavanda p-7 sm:p-8">
       <div className="flex items-start gap-5">
@@ -18,7 +18,7 @@ export function PdfCard({ copy, href, tipo }: { copy: PdfCopy; href: string; tip
           <p className="mt-1.5 text-ink-soft">{copy.text}</p>
         </div>
       </div>
-      <PdfButton href={href} tipo={tipo} label={copy.button} className="mt-6 w-full sm:w-auto" />
+      <PdfButton href={href} tipo={tipo} evento={evento} label={copy.button} className="mt-6 w-full sm:w-auto" />
     </div>
   );
 }
@@ -26,12 +26,14 @@ export function PdfCard({ copy, href, tipo }: { copy: PdfCopy; href: string; tip
 export function PdfButton({
   href,
   tipo,
+  evento = "descarga_pdf_matriz",
   label,
   tone = "light",
   className,
 }: {
   href: string;
-  tipo: "individual" | "pareja";
+  tipo: string;
+  evento?: TrackEvent;
   label: string;
   tone?: "light" | "dark";
   className?: string;
@@ -40,7 +42,7 @@ export function PdfButton({
     <TrackedAnchor
       href={href}
       download
-      event="descarga_pdf_matriz"
+      event={evento}
       data={{ tipo }}
       className={cn(
         "inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 py-3 text-center text-[0.95rem] font-medium transition-colors duration-500",

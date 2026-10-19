@@ -4,17 +4,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { arcano } from "@/content/arcanos";
-import { calculadoraForm, calculadoraPareja, infoParejaMessage } from "@/content/calculadora";
-import type { Producto } from "@/content/tienda";
+import { calculadoraForm, calculadoraPareja } from "@/content/calculadora";
 import { useLenis } from "@/components/layout/smooth-scroll";
 import { Button } from "@/components/ui/button";
-import { WhatsappIcon } from "@/components/ui/icons";
-import { TrackedAnchor } from "@/components/ui/tracked";
 import { calcularMatriz, calcularPareja, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha, type Fecha } from "@/lib/matriz";
-import { whatsappHref } from "@/lib/utils";
 import { FechaCampos, fechaVacia, type FechaForm } from "./fecha-campos";
 import { CalculadoraHero, ResultadosSection } from "./layout";
-import { ArcanoTitle, BloqueadaCard, LecturaCard, PropositoCard } from "./lectura";
+import { ArcanoTitle, LecturaCard, PropositoCard } from "./lectura";
 import { MatrizEscena } from "./matriz-escena";
 import { PdfButton, PdfCard } from "./pdf-card";
 
@@ -26,7 +22,7 @@ function toFecha(form: FechaForm): Fecha {
   return { dia: Number(form.dia), mes: Number(form.mes), anio: Number(form.anio) };
 }
 
-export function CalculadoraPareja({ producto, heading }: { producto: Producto; heading: ReactNode }) {
+export function CalculadoraPareja({ heading }: { heading: ReactNode }) {
   const copy = calculadoraPareja;
   const params = useSearchParams();
   const router = useRouter();
@@ -39,9 +35,8 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
   const [forms, setForms] = useState<[FechaForm, FechaForm]>(() => [toForm(fecha1, nombre1), toForm(fecha2, nombre2)]);
   const [invalid, setInvalid] = useState<[boolean, boolean]>([false, false]);
   const [run, setRun] = useState(0);
-  const [instant] = useState(() => typeof window !== "undefined" && window.location.hash === "#lectura-completa");
   const stage = useRef<HTMLElement>(null);
-  const scrollPending = useRef(Boolean(fecha1 && fecha2) && !instant);
+  const scrollPending = useRef(Boolean(fecha1 && fecha2));
 
   const ready = fecha1 && fecha2;
   const key = ready ? `${fechaParam(fecha1)}-${fechaParam(fecha2)}-${nombre1}-${nombre2}-${run}` : "";
@@ -52,17 +47,6 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
     if (lenis) lenis.scrollTo(stage.current, { offset: -72 });
     else stage.current.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [key, lenis]);
-
-  useEffect(() => {
-    if (!instant || !key) return;
-    const id = window.setTimeout(() => {
-      const target = document.getElementById("lectura-completa");
-      if (!target) return;
-      if (lenis) lenis.scrollTo(target, { offset: -72, immediate: true });
-      else target.scrollIntoView();
-    }, 60);
-    return () => window.clearTimeout(id);
-  }, [instant, key, lenis]);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -161,8 +145,8 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
                 subtitle={fechas}
                 resultsId="lectura"
                 resultsLabel={copy.verLectura}
-                instant={instant}
                 destacados={["e", "d", "dinero"]}
+                variante="pareja"
                 actions={<PdfButton href={pdfHref} tipo="pareja" label={copy.pdf.short} tone="dark" />}
               />
             </div>
@@ -201,7 +185,7 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
                   partes={copy.propositos.personal.partes}
                   valores={[matriz.propositos.cielo, matriz.propositos.tierra]}
                   resultado={matriz.propositos.personal}
-                  text={copy.propositos.locked}
+                  text={arcano(matriz.propositos.personal)?.proposito ?? ""}
                 />
               </li>
               <li>
@@ -211,7 +195,7 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
                   partes={copy.propositos.social.partes}
                   valores={[matriz.propositos.masculino, matriz.propositos.femenino]}
                   resultado={matriz.propositos.social}
-                  text={copy.propositos.locked}
+                  text={arcano(matriz.propositos.social)?.proposito ?? ""}
                 />
               </li>
               <li>
@@ -221,68 +205,22 @@ export function CalculadoraPareja({ producto, heading }: { producto: Producto; h
                   partes={copy.propositos.espiritual.partes}
                   valores={[matriz.propositos.personal, matriz.propositos.social]}
                   resultado={matriz.propositos.espiritual}
-                  text={copy.propositos.locked}
+                  text={arcano(matriz.propositos.espiritual)?.proposito ?? ""}
                 />
               </li>
             </ul>
           </ResultadosSection>
 
-          <ResultadosSection id="lo-que-guarda" eyebrow={copy.bloqueadas.eyebrow} title={copy.bloqueadas.title} text={copy.bloqueadas.text} tone="rosa">
-            <ul className="grid gap-5 md:grid-cols-2">
-              <li>
-                <BloqueadaCard
-                  label={copy.bloqueadas.aprendizajes.label}
-                  intro={copy.bloqueadas.aprendizajes.text}
-                  numero={matriz.puntos.d}
-                  text={arcano(matriz.puntos.d)?.sombra ?? ""}
-                  lock={copy.bloqueadas.lock}
-                />
-              </li>
-              <li>
-                <BloqueadaCard
-                  label={copy.bloqueadas.material.label}
-                  intro={copy.bloqueadas.material.text}
-                  numero={matriz.puntos.dinero}
-                  text={arcano(matriz.puntos.dinero)?.dinero ?? ""}
-                  lock={copy.bloqueadas.lock}
-                />
-              </li>
-            </ul>
-          </ResultadosSection>
-
-          <section id="lectura-completa" aria-labelledby="lectura-completa-title" className="section-pad relative overflow-hidden bg-crema">
-            <div className="container-page relative grid gap-10 lg:grid-cols-12 lg:gap-16">
-              <div className="lg:col-span-7">
-                <p className="eyebrow mb-5">{copy.completa.eyebrow}</p>
-                <h2 id="lectura-completa-title" className="text-h2">
-                  {copy.completa.title}
-                </h2>
-                <p className="mt-5 text-lead text-ink-soft">{copy.completa.text}</p>
-                <p className="mt-6 text-ink-soft">{copy.completa.formato}</p>
-                <div className="mt-10">
-                  <PdfCard copy={copy.pdf} href={pdfHref} tipo="pareja" />
-                </div>
-              </div>
-              <div className="lg:col-span-5">
-                <div className="rounded-[1.25rem] bg-ciruela p-7 text-crema shadow-[0_30px_70px_-45px_rgba(63,46,58,0.6)] sm:p-9 lg:sticky lg:top-28">
-                  <p className="eyebrow text-crema/70">{producto.nombre}</p>
-                  <p className="mt-4 font-serif text-[2rem] leading-tight">{copy.completa.precio}</p>
-                  <p className="mt-3 text-crema/75">{copy.completa.precioText}</p>
-                  <TrackedAnchor
-                    href={whatsappHref(infoParejaMessage(personas.map((persona) => ({ fecha: persona.texto, nombre: persona.nombre }))))}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    event="click_info_whatsapp"
-                    data={{ producto: producto.slug, origen: "calculadora" }}
-                    className="mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-crema px-7 py-3 text-center text-[0.95rem] font-medium text-ciruela transition-colors duration-500 hover:bg-rosa-polvo"
-                  >
-                    <WhatsappIcon size={18} />
-                    {copy.completa.button}
-                  </TrackedAnchor>
-                </div>
-              </div>
+          <ResultadosSection id="mas-de-vuestra-matriz" eyebrow={copy.mas.eyebrow} title={copy.mas.title} text={copy.mas.text} tone="rosa">
+            <div className="grid gap-5 lg:grid-cols-3">
+              <LecturaCard label={copy.mas.aprendizajes.label} intro={copy.mas.aprendizajes.text} numero={matriz.puntos.d} text={arcano(matriz.puntos.d)?.sombra ?? ""} />
+              <LecturaCard label={copy.mas.amor.label} intro={copy.mas.amor.text} numero={matriz.puntos.amor} text={arcano(matriz.puntos.amor)?.amor ?? ""} />
+              <LecturaCard label={copy.mas.material.label} intro={copy.mas.material.text} numero={matriz.puntos.dinero} text={arcano(matriz.puntos.dinero)?.dinero ?? ""} />
             </div>
-          </section>
+            <div className="mt-10 max-w-3xl">
+              <PdfCard copy={copy.pdf} href={pdfHref} tipo="pareja" />
+            </div>
+          </ResultadosSection>
         </div>
       )}
     </>

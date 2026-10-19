@@ -35,13 +35,13 @@ export default function HomePage() {
       <Hero />
       <KeywordMarquee />
       <TeSuena />
+      <QuienSoyResumen />
+      <CalculadoraPromo />
       <Metodo />
       <Destacados />
-      <CalculadoraPromo />
-      <GuiaBlock tone="rosa" />
       <Respira />
-      <QuienSoyResumen />
       <TiendaPreview />
+      <GuiaBlock tone="salvia" />
       <TablonPreview />
       <TestimoniosHome />
       <FaqSection eyebrow={inicio.faq.eyebrow} title={inicio.faq.title} faqs={faqs.inicio} />

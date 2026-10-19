@@ -75,6 +75,7 @@ export function serviceJsonLd({
   serviceType,
   offers,
   online = true,
+  presencial = true,
 }: {
   name: string;
   description: string;
@@ -82,6 +83,7 @@ export function serviceJsonLd({
   serviceType: string;
   offers?: string[];
   online?: boolean;
+  presencial?: boolean;
 }) {
   return {
     "@context": "https://schema.org",
@@ -91,9 +93,9 @@ export function serviceJsonLd({
     serviceType,
     url: absoluteUrl(path),
     provider: { "@id": businessId },
-    areaServed: online ? [{ "@type": "City", name: site.location.locality }, "Online"] : [{ "@type": "City", name: site.location.locality }],
+    areaServed: [...(presencial ? [{ "@type": "City", name: site.location.locality }] : []), ...(online ? ["Online"] : [])],
     availableChannel: [
-      { "@type": "ServiceChannel", name: "Presencial en Valencia" },
+      ...(presencial ? [{ "@type": "ServiceChannel", name: "Presencial en Valencia" }] : []),
       ...(online ? [{ "@type": "ServiceChannel", name: "Online", serviceUrl: absoluteUrl("/contacto") }] : []),
     ],
     ...(offers
@@ -127,7 +129,7 @@ export function personJsonLd() {
       "Reiki",
       "Péndulo hebreo",
       "Análisis de chakras",
-      "Sanación akásica",
+      "Sanación akáshica",
       "Limpieza energética de casas y espacios",
       "Meditación",
       "Tarot terapéutico",

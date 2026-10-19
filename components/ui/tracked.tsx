@@ -10,6 +10,7 @@ export type TrackEvent =
   | "descarga_guia"
   | "calcular_matriz"
   | "descarga_pdf_matriz"
+  | "descarga_pdf_codigo"
   | "click_info_whatsapp";
 
 type TrackedAnchorProps = ComponentPropsWithoutRef<"a"> & {

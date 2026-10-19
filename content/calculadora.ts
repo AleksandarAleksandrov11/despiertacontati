@@ -4,6 +4,7 @@ export const rutasCalculadora = {
   hub: "/calculadora",
   individual: "/calculadora/matriz-del-destino",
   pareja: "/calculadora/compatibilidad-de-pareja",
+  codigo: "/calculadora/codigo-personal",
 };
 
 export const meses = [
@@ -22,9 +23,9 @@ export const meses = [
 ];
 
 export const calculadoraHub = {
-  eyebrow: "Calculadora gratuita",
-  title: "Tu Matriz del Destino, a partir de tu fecha de nacimiento.",
-  subtitle: "Calcula gratis tu matriz o la de tu pareja, mira cómo se construye y descárgate tu lectura en PDF.",
+  eyebrow: "Calculadoras gratuitas",
+  title: "Lo que dice tu fecha de nacimiento.",
+  subtitle: "Calcula gratis tu Matriz del Destino, la de tu pareja o tu Código Personal, y descárgate tu lectura en PDF.",
   choose: "Elige tu calculadora",
   opciones: [
     {
@@ -43,13 +44,21 @@ export const calculadoraHub = {
       needs: "Las dos fechas de nacimiento",
       cta: "Calcular nuestra matriz",
     },
+    {
+      id: "codigo",
+      tag: "Tarot Pragmático",
+      title: "Tu Código Personal",
+      text: "Tu arcano personal, tus cinco cartas, tus mapas de tarot y tu ciclo vital.",
+      needs: "Tu fecha de nacimiento",
+      cta: "Calcular mi código",
+    },
   ],
   pasos: {
     eyebrow: "Cómo funciona",
     title: "Tres pasos y menos de un minuto.",
     items: [
       { title: "Escribe la fecha", text: "Solo necesitas el día, el mes y el año de nacimiento. No hace falta la hora." },
-      { title: "Mira cómo se construye", text: "Tu matriz se dibuja ante ti, energía a energía, hasta llegar a tu centro." },
+      { title: "Mira cómo se construye", text: "Tu matriz se dibuja ante ti, energía a energía, o tus cartas aparecen sobre la mesa." },
       { title: "Descarga tu PDF", text: "Con tu lectura gratuita, para leerla con calma y volver a ella cuando quieras." },
     ],
   },
@@ -58,7 +67,7 @@ export const calculadoraHub = {
     title: "Un mapa de quién eres.",
     paragraphs: [
       "La Matriz del Destino es una herramienta de autoconocimiento que traduce tu fecha de nacimiento en las 22 energías de los arcanos mayores, colocadas sobre un octograma.",
-      "Cada posición habla de un área de tu vida: cómo eres, tus talentos, tus aprendizajes, tu relación con lo material y tus propósitos. No se trabaja con cartas.",
+      "Cada posición habla de un área de tu vida: cómo eres, tus talentos, tus aprendizajes, tu relación con lo material, tu linaje y tus propósitos. Alrededor del octograma están las energías de cada edad, desde que naces hasta los 80 años.",
     ],
   },
   comparativa: {
@@ -66,7 +75,13 @@ export const calculadoraHub = {
     title: "Empieza gratis. Profundiza cuando quieras.",
     gratis: {
       title: "Calculadora gratuita",
-      items: ["Tu matriz completa dibujada", "Tu energía personal, tu centro y tu talento", "Tus tres propósitos", "Tu PDF con la lectura básica"],
+      items: [
+        "Tu matriz completa dibujada",
+        "Tu energía personal, tu centro y tu talento",
+        "Tus cuatro propósitos",
+        "Tus energías por edades y tu mapa de chakras",
+        "Tu PDF con la lectura básica",
+      ],
     },
     completa: {
       title: "Lectura completa",
@@ -109,6 +124,7 @@ export const calculadoraIndividual = {
     "Encontrando tu centro",
     "Trazando tu linaje",
     "Uniendo tus energías",
+    "Tus energías de cada edad",
     "Tu matriz está lista",
   ],
   skip: "Ver mi matriz ya",
@@ -133,14 +149,62 @@ export const calculadoraIndividual = {
     },
   },
   repetida: "Esta energía coincide con tu centro: está muy presente en tu vida y se expresa con fuerza.",
+  trios: {
+    cola: {
+      label: "Tu cola kármica",
+      text: "Las tres energías de la parte baja de tu matriz, de dentro hacia fuera. Hablan de lo que traes de antes y de lo que vienes a resolver.",
+    },
+    talentos: {
+      label: "Tus talentos",
+      text: "La línea de tu mes de nacimiento, de fuera hacia dentro. Los dones que llegan contigo y cómo se despliegan.",
+    },
+  },
   propositos: {
     eyebrow: "Tus propósitos",
     title: "Lo que has venido a vivir.",
-    text: "Tu matriz guarda tres propósitos que se activan en distintas etapas de la vida.",
+    text: "Tu matriz guarda cuatro propósitos que se activan en distintas etapas de la vida.",
     personal: { label: "Propósito personal", etapa: "De los 20 a los 40 años", partes: ["Cielo", "Tierra"] },
     social: { label: "Propósito social", etapa: "De los 40 a los 60 años", partes: ["Línea masculina", "Línea femenina"] },
     espiritual: { label: "Propósito espiritual", etapa: "Activo toda la vida", partes: ["Personal", "Social"] },
+    planetario: { label: "Propósito planetario", etapa: "Tu huella en el mundo", partes: ["Social", "Espiritual"] },
     locked: "Qué te pide este propósito lo vemos en tu lectura completa.",
+  },
+  edades: {
+    eyebrow: "Tus energías por edades",
+    title: "La energía de cada etapa de tu vida.",
+    text: "Alrededor de tu matriz está tu línea de vida. Cada punto es la energía que te acompaña en una edad, desde que naces hasta los 80 años, y empieza de nuevo con la energía de tu día de nacimiento.",
+    ahora: (edad: number) => `Ahora tienes ${edad} ${edad === 1 ? "año" : "años"}. Esta es la energía de tu etapa actual.`,
+    etapa: (etapa: { etiqueta: string; principal: boolean }) => `Tu etapa actual · ${etapa.principal ? "los" : "de"} ${etapa.etiqueta} años`,
+    tramo: (desde: number) => `De ${desde} a ${desde + 10} años`,
+    edad: "Edad",
+    nota: "Qué te pide cada etapa y cómo vivirla lo vemos en tu lectura completa.",
+  },
+  chakras: {
+    eyebrow: "Tu mapa de chakras",
+    title: "Cómo se reparte tu energía.",
+    text: "Cada fila es un chakra, del más alto al más bajo, con tres energías: la física, la energética y la emocional. La última fila es la suma de cada columna.",
+    columnas: { chakra: "Chakra", fisico: "Físico", energia: "Energía", emocion: "Emoción" },
+    filas: [
+      { nombre: "Sahasrara", es: "Corona", area: "Misión y conexión espiritual" },
+      { nombre: "Ajna", es: "Tercer ojo", area: "Intuición y visión" },
+      { nombre: "Vishuddha", es: "Garganta", area: "Expresión y comunicación" },
+      { nombre: "Anahata", es: "Corazón", area: "Relaciones y amor" },
+      { nombre: "Manipura", es: "Plexo solar", area: "Poder personal y estatus" },
+      { nombre: "Svadhisthana", es: "Sacro", area: "Placer, creatividad y alegría" },
+      { nombre: "Muladhara", es: "Raíz", area: "Cuerpo, materia y seguridad" },
+    ],
+    total: "Total",
+    aviso: "El mapa de chakras es una herramienta de autoconocimiento. No es un diagnóstico ni sustituye la atención médica.",
+  },
+  linaje: {
+    eyebrow: "Tu linaje",
+    title: "Lo que heredas de tu familia.",
+    text: "Las diagonales de tu matriz son las líneas de tu linaje. Guardan los programas que recibes de la familia de tu padre y de la de tu madre.",
+    paterna: { label: "Línea paterna", partes: ["Esquina superior", "Esquina inferior"] },
+    materna: { label: "Línea materna", partes: ["Esquina superior", "Esquina inferior"] },
+    centro: { label: "La energía de tu linaje", text: "La suma de las cuatro esquinas de tu matriz. Es la energía con la que se calculan tus líneas de linaje." },
+    union: { label: "Tu centro y tu linaje", text: "Tu centro unido a la energía de tu linaje." },
+    nota: "Cómo sanar lo que traes de tu linaje lo vemos en tu lectura completa.",
   },
   bloqueadas: {
     eyebrow: "Lo que guarda tu matriz",
@@ -162,6 +226,7 @@ export const calculadoraIndividual = {
     talento: "Talento",
     aprendizajes: "Aprendizajes",
     material: "Mundo material",
+    linaje: "Linaje",
   },
   pdf: {
     title: "Tu lectura gratuita en PDF",
@@ -172,7 +237,7 @@ export const calculadoraIndividual = {
   completa: {
     eyebrow: "Tu lectura completa",
     title: "Esto es solo el principio.",
-    text: "En tu lectura completa interpreto tu matriz entera, a fondo y de forma personal, y la ordeno en cinco claves para que sepas qué hacer con lo que descubres.",
+    text: "En tu lectura completa interpreto tu matriz entera, a fondo y de forma personal, con cinco cartas: una para cada una de las cinco claves de tu matriz, para que sepas qué hacer con lo que descubres.",
     claves: [
       "Tu energía personal",
       "Tu fortaleza interior",
@@ -224,25 +289,28 @@ export const calculadoraPareja = {
     personal: { label: "Propósito de la pareja", etapa: "Hacia dentro", partes: ["Cielo", "Tierra"] },
     social: { label: "Propósito social", etapa: "Hacia fuera", partes: ["Línea masculina", "Línea femenina"] },
     espiritual: { label: "Propósito espiritual", etapa: "Lo que os hace crecer", partes: ["Pareja", "Social"] },
-    locked: "Qué os pide cada propósito lo vemos en la lectura completa.",
   },
-  bloqueadas: {
-    eyebrow: "Lo que guarda vuestra matriz",
-    title: "Hay mucho más en vuestra relación.",
-    text: "Estas energías también forman parte de vuestra pareja. En la lectura completa os cuento cómo se viven en equilibrio y qué hacer cuando se desequilibran.",
+  mas: {
+    eyebrow: "Más de vuestra matriz",
+    title: "Lo que también guarda vuestra relación.",
+    text: "Estas energías también forman parte de vuestra pareja: lo que aprendéis juntos, cómo se vive el amor entre vosotros y cómo se mueve vuestra abundancia.",
     aprendizajes: {
       label: "Vuestros aprendizajes",
       text: "Lo que habéis venido a aprender juntos y los patrones que se repiten en la relación.",
     },
+    amor: {
+      label: "Vuestro amor",
+      text: "Cómo se expresa el amor en vuestra relación.",
+    },
     material: {
       label: "El dinero en pareja",
-      text: "Cómo se abre vuestra abundancia compartida y qué la frena.",
+      text: "Cómo se abre vuestra abundancia compartida.",
     },
-    lock: "En la lectura completa",
   },
   leyenda: {
     centro: "Centro de la pareja",
     aprendizajes: "Aprendizajes",
+    amor: "Amor",
     material: "Dinero en pareja",
   },
   pdf: {
@@ -250,15 +318,6 @@ export const calculadoraPareja = {
     text: "Descargad vuestra matriz de pareja con la lectura básica para leerla juntos con calma.",
     button: "Descargar nuestro PDF gratuito",
     short: "Descargar PDF",
-  },
-  completa: {
-    eyebrow: "Lectura completa de pareja",
-    title: "Lo que vuestra matriz aún no os ha contado.",
-    text: "En la lectura completa interpreto vuestra matriz de pareja a fondo y de forma personal: lo que os une, lo que os reta y hacia dónde podéis crecer juntos.",
-    formato: "Te la envío en vídeo y PDF por WhatsApp.",
-    precio: "Precio a consultar",
-    precioText: "Escríbeme por WhatsApp con vuestras fechas y te cuento cómo es la lectura y su precio.",
-    button: "Pedir información por WhatsApp",
   },
 };
 
@@ -268,11 +327,6 @@ export function detalleIndividual(fecha: string, nombre: string) {
 
 export function infoIndividualMessage(fecha: string, nombre: string) {
   return `Hola Tati, ${nombre ? `me llamo ${nombre}, ` : ""}nací el ${fecha} y me gustaría más información sobre la lectura completa de mi Matriz del Destino.`;
-}
-
-export function infoParejaMessage(personas: { fecha: string; nombre: string }[]) {
-  const lista = personas.map((persona) => (persona.nombre ? `${persona.nombre}, ${persona.fecha}` : persona.fecha)).join(" y ");
-  return `Hola Tati, hemos calculado nuestra Matriz del Destino de pareja (${lista}) y me gustaría información sobre la lectura completa.`;
 }
 
 export const calculadoraFaqs: Faq[] = [
@@ -291,7 +345,13 @@ export const calculadoraFaqs: Faq[] = [
   },
   {
     question: "¿La Matriz del Destino es tarot?",
-    answer: "No. Usa la energía de los arcanos mayores, pero no se trabaja con cartas.",
+    answer:
+      "Usa la energía de los 22 arcanos mayores, pero se calcula con tu fecha de nacimiento. En tu lectura completa la interpreto con cinco cartas, una para cada clave de tu matriz.",
+  },
+  {
+    question: "¿Qué son las energías por edades?",
+    answer:
+      "Son los números que rodean tu matriz. Cada uno es la energía que te acompaña en una etapa de tu vida, desde que naces hasta los 80 años. La calculadora te marca la de tu edad actual.",
   },
   {
     question: "¿Necesito mi hora de nacimiento?",
@@ -302,9 +362,10 @@ export const calculadoraFaqs: Faq[] = [
 export const calculadoraPromo = {
   eyebrow: "Calculadora gratuita",
   title: "Descubre tu Matriz del Destino.",
-  text: "Escribe tu fecha de nacimiento, mira cómo se construye tu matriz y descárgate gratis tu lectura en PDF. También puedes calcular la de tu pareja.",
+  text: "Escribe tu fecha de nacimiento, mira cómo se construye tu matriz y descárgate gratis tu lectura en PDF. También puedes calcular la de tu pareja o tu Código Personal.",
   individual: "Calcular mi matriz",
   pareja: "Compatibilidad de pareja",
+  codigo: "Tu Código Personal",
 };
 
 export const calculadoraPdf = {
@@ -322,9 +383,6 @@ export const calculadoraPdf = {
   arcano: "Arcano",
   leyenda: "Las posiciones clave",
   bloqueadoTitle: "Lo que todavía no te he contado",
-  bloqueadoParejaTitle: "Lo que todavía no os he contado",
-  tambienParejaTitle: "En la lectura completa:",
-  tambienPareja: ["Lo que os une y lo que os reta", "Qué os pide cada propósito", "Hacia dónde podéis crecer juntos"],
   contacto: "Escríbeme",
   web: "Web",
   whatsapp: "WhatsApp",
@@ -333,11 +391,10 @@ export const calculadoraPdf = {
   ctaBuy: "Quiero mi lectura completa",
   ctaInfo: "Pedir información por WhatsApp",
   ctaBuyShort: "Quiero mi lectura",
-  ctaInfoShort: "Pedir información",
   avance: "Lo descubres en tu lectura completa.",
-  avancePareja: "Lo descubrís en la lectura completa de pareja.",
   ctaQr: "O escanea este código y escríbeme por WhatsApp.",
   precio: "Precio",
+  precioConsulta: "Precio a consultar",
   sobreTitle: "Soy Tati.",
   sobre: [
     "Hace más de 20 años abrí mi primer centro de terapias naturales y desde entonces acompaño a personas en su camino con Reiki, meditación, tarot y herramientas de autoconocimiento como la Matriz del Destino.",

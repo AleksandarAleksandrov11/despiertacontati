@@ -1,6 +1,18 @@
 import type { CSSProperties } from "react";
-import type { Puntos } from "@/lib/matriz";
-import { lineasMatriz, lienzo, puntosMatriz, tiempos, verticesMatriz, type TipoPunto } from "@/lib/matriz-geometria";
+import type { Puntos, Tramo } from "@/lib/matriz";
+import {
+  lineasMatriz,
+  redondear,
+  lienzo,
+  marcasEdad,
+  puntosAnillo,
+  puntosMatriz,
+  puntosVariante,
+  tiempos,
+  verticesMatriz,
+  type TipoPunto,
+  type Variante,
+} from "@/lib/matriz-geometria";
 import { cn } from "@/lib/utils";
 
 const fills: Record<TipoPunto, { fill: string; text: string; stroke?: string }> = {
@@ -11,6 +23,7 @@ const fills: Record<TipoPunto, { fill: string; text: string; stroke?: string }> 
   interno: { fill: "#4a3845", text: "#fbf7f2", stroke: "rgba(221,191,140,0.45)" },
   corazon: { fill: "#f6e9e6", text: "#3f2e3a" },
   canal: { fill: "#ddbf8c", text: "#3f2e3a" },
+  linaje: { fill: "#5e4757", text: "#f3e2bd", stroke: "#c8a46a" },
 };
 
 const lineStyles = {
@@ -25,10 +38,10 @@ const estrellas = Array.from({ length: 46 }, (_, index) => {
   const angle = index * 2.39996;
   const radius = 120 + ((index * 37) % 110);
   return {
-    x: lienzo.centro + Math.cos(angle) * radius,
-    y: lienzo.centro + Math.sin(angle) * radius,
-    r: 0.6 + ((index * 13) % 10) / 12,
-    d: (index % 9) * 0.45,
+    x: redondear(lienzo.centro + Math.cos(angle) * radius),
+    y: redondear(lienzo.centro + Math.sin(angle) * radius),
+    r: redondear(0.6 + ((index * 13) % 10) / 12),
+    d: redondear((index % 9) * 0.45),
   };
 });
 
@@ -40,9 +53,24 @@ type Props = {
   label: string;
   destacados?: (keyof Puntos)[];
   decorativa?: boolean;
+  variante?: Variante;
+  edades?: Tramo[];
+  etapaActiva?: { tramo: number; etapa: number } | null;
 };
 
-export function MatrizSvg({ puntos, etiquetas, done, paused = false, label, destacados = [], decorativa = false }: Props) {
+export function MatrizSvg({
+  puntos,
+  etiquetas,
+  done,
+  paused = false,
+  label,
+  destacados = [],
+  decorativa = false,
+  variante = "individual",
+  edades = [],
+  etapaActiva = null,
+}: Props) {
+  const anillo = variante === "individual" && edades.length === 8;
   const v = verticesMatriz;
   const labelPos = [
     { x: v.a.x, y: v.a.y + 36 },
@@ -51,6 +79,7 @@ export function MatrizSvg({ puntos, etiquetas, done, paused = false, label, dest
     { x: v.d.x + 40, y: v.d.y + 5 },
   ];
   const puntosCanal = puntosMatriz.filter((punto) => punto.key === "dinero" || punto.key === "amor");
+  const visibles = puntosVariante(variante);
 
   return (
     <svg
@@ -84,16 +113,18 @@ export function MatrizSvg({ puntos, etiquetas, done, paused = false, label, dest
             style={{ "--d": `${estrella.d}s` } as CSSProperties}
           />
         ))}
-        <circle cx={lienzo.centro} cy={lienzo.centro} r={186} fill="none" stroke="#c8a46a" strokeOpacity="0.3" strokeWidth="0.8" className="mx-fade" style={{ "--d": "0s" } as CSSProperties} />
+        {!anillo && (
+          <circle cx={lienzo.centro} cy={lienzo.centro} r={186} fill="none" stroke="#c8a46a" strokeOpacity="0.3" strokeWidth="0.8" className="mx-fade" style={{ "--d": "0s" } as CSSProperties} />
+        )}
         <circle
           cx={lienzo.centro}
           cy={lienzo.centro}
-          r={198}
+          r={anillo ? lienzo.anillo : 198}
           fill="none"
           stroke="#c8a46a"
-          strokeOpacity="0.35"
+          strokeOpacity={anillo ? 0.5 : 0.35}
           strokeWidth="0.8"
-          strokeDasharray="1 7"
+          strokeDasharray={anillo ? "1 4" : "1 7"}
           className="mx-spin"
         />
         <circle cx={lienzo.centro} cy={lienzo.centro} r={102} fill="none" stroke="#fbf7f2" strokeOpacity="0.1" strokeWidth="0.8" className="mx-fade" style={{ "--d": `${tiempos.cuadrado}s` } as CSSProperties} />
@@ -160,7 +191,54 @@ export function MatrizSvg({ puntos, etiquetas, done, paused = false, label, dest
         </text>
       ))}
 
-      {puntosMatriz.map((punto) => {
+      {anillo &&
+        marcasEdad.map((marca) => (
+          <text
+            key={`edad-${marca.edad}`}
+            x={marca.x}
+            y={marca.y}
+            dy="0.35em"
+            textAnchor="middle"
+            className={cn("mx-fade nums font-sans", marca.principal ? "fill-dorado-soft text-[8.5px] font-medium" : "fill-crema/55 text-[7px]")}
+            style={{ "--d": `${tiempos.anillo}s` } as CSSProperties}
+            aria-hidden
+          >
+            {marca.edad}
+          </text>
+        ))}
+
+      {anillo &&
+        puntosAnillo.map((punto) => {
+          const valor = edades[punto.tramo]?.etapas[punto.etapa]?.valor;
+          const medio = punto.etapa === 4;
+          const activa = etapaActiva?.tramo === punto.tramo && etapaActiva.etapa === punto.etapa;
+          return (
+            <g key={`anillo-${punto.tramo}-${punto.etapa}`} className="mx-point" style={{ "--d": `${punto.delay}s` } as CSSProperties} aria-hidden>
+              {activa && <circle cx={punto.x} cy={punto.y} r={11} fill="none" stroke="#f3e2bd" strokeWidth="1.1" />}
+              <circle
+                cx={punto.x}
+                cy={punto.y}
+                r={medio ? 7.6 : 6.6}
+                fill={activa ? "#ddbf8c" : medio ? "#6a4f62" : "#4a3845"}
+                stroke={activa ? undefined : "rgba(221,191,140,0.55)"}
+                strokeWidth={0.8}
+              />
+              <text
+                x={punto.x}
+                y={punto.y}
+                dy="0.36em"
+                textAnchor="middle"
+                fill={activa ? "#3f2e3a" : "#fbf7f2"}
+                className="nums font-sans font-medium"
+                fontSize={medio ? 7.4 : 6.8}
+              >
+                {valor}
+              </text>
+            </g>
+          );
+        })}
+
+      {visibles.map((punto) => {
         const color = fills[punto.tipo];
         const valor = puntos[punto.key];
         const destacado = destacados.includes(punto.key);

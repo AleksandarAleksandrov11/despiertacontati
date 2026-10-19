@@ -16,7 +16,7 @@ export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [submenu, setSubmenu] = useState<string | null>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const submenuId = useId();
 
@@ -33,7 +33,7 @@ export function Header() {
   if (prevPath !== pathname) {
     setPrevPath(pathname);
     setMenuOpen(false);
-    setSubmenuOpen(false);
+    setSubmenu(null);
   }
 
   function closeMenu() {
@@ -42,7 +42,7 @@ export function Header() {
   }
 
   function onSubmenuBlur(event: FocusEvent<HTMLLIElement>) {
-    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setSubmenuOpen(false);
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setSubmenu(null);
   }
 
   const solid = scrolled && !menuOpen;
@@ -76,15 +76,17 @@ export function Header() {
                     </li>
                   );
                 }
+                const open = submenu === item.href;
+                const id = `${submenuId}-${item.href.replace(/\W/g, "")}`;
                 return (
                   <li
                     key={item.href}
                     className="relative"
-                    onMouseEnter={() => setSubmenuOpen(true)}
-                    onMouseLeave={() => setSubmenuOpen(false)}
+                    onMouseEnter={() => setSubmenu(item.href)}
+                    onMouseLeave={() => setSubmenu(null)}
                     onBlur={onSubmenuBlur}
                     onKeyDown={(event) => {
-                      if (event.key === "Escape") setSubmenuOpen(false);
+                      if (event.key === "Escape") setSubmenu(null);
                     }}
                   >
                     <span className="flex items-center gap-1">
@@ -97,24 +99,24 @@ export function Header() {
                       </Link>
                       <button
                         type="button"
-                        aria-expanded={submenuOpen}
-                        aria-controls={submenuId}
-                        aria-label={site.ui.openSubmenu}
-                        onClick={() => setSubmenuOpen((open) => !open)}
+                        aria-expanded={open}
+                        aria-controls={id}
+                        aria-label={`${site.ui.openSubmenu} ${item.label}`}
+                        onClick={() => setSubmenu(open ? null : item.href)}
                         className="-mr-2 inline-flex size-9 items-center justify-center rounded-full text-ink-soft hover:text-ciruela"
                       >
                         <ChevronDown
                           size={16}
                           strokeWidth={1.25}
                           aria-hidden
-                          className={cn("transition-transform duration-500", submenuOpen && "rotate-180")}
+                          className={cn("transition-transform duration-500", open && "rotate-180")}
                         />
                       </button>
                     </span>
                     <AnimatePresence>
-                      {submenuOpen && (
+                      {open && (
                         <m.div
-                          id={submenuId}
+                          id={id}
                           initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
                           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                           exit={{ opacity: 0, y: 8, filter: "blur(4px)" }}

@@ -11,7 +11,7 @@ const disclaimerFaq: Faq = {
 
 const dondeFaq: Faq = {
   question: "¿Dónde son las sesiones?",
-  answer: "En Valencia, de forma presencial, y online desde donde estés. Al reservar te paso todos los detalles.",
+  answer: "Online, desde donde estés. Al reservar te paso todos los detalles.",
 };
 
 const reikiOnlineFaq: Faq = {
@@ -76,25 +76,25 @@ export const faqs = {
         "Cada persona lo vive a su manera. Hay quien nota calor en las manos, hormigueo o simplemente una relajación muy profunda.",
     },
     {
-      question: "¿Qué es la sanación akásica?",
+      question: "¿Qué es la sanación akáshica?",
       answer:
         "Un trabajo de sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar. No es una lectura de registros.",
     },
     reikiOnlineFaq,
     {
       question: "¿Cómo son los cursos de Reiki?",
-      answer: "Los imparto en Valencia y online. Escríbeme y te cuento las próximas fechas y cómo los organizo.",
+      answer: "Escríbeme y te cuento las próximas fechas y cómo los organizo.",
     },
     disclaimerFaq,
   ],
   limpieza: [
     {
-      question: "¿Dónde haces las limpiezas?",
-      answer: "En Valencia. Escríbeme, cuéntame dónde está el espacio y lo vemos.",
+      question: "¿Tienes que venir a mi casa?",
+      answer: "No. La limpieza la hago a distancia. Solo necesito la dirección del espacio y no hace falta que acordemos una hora.",
     },
     {
       question: "¿Cuánto cuesta?",
-      answer: "Depende del espacio. Escríbeme y te paso presupuesto sin compromiso.",
+      answer: "30 € por espacio. Cuando termino, te envío el informe por WhatsApp.",
     },
     {
       question: "¿Sirve también para un espacio de trabajo?",
@@ -138,7 +138,7 @@ export const faqs = {
     {
       question: "¿Puedo hacer una sesión en directo?",
       answer:
-        "Sí, de 30 o 50 minutos, online o presencial en Valencia. La reservas en la tienda y la agendamos por WhatsApp.",
+        "Sí, de 30 o 50 minutos, online. La reservas en la tienda y la agendamos por WhatsApp.",
     },
     {
       question: "¿Por qué no hago tarot si llego con ansiedad?",
@@ -154,7 +154,7 @@ export const faqs = {
     {
       question: "¿La Matriz del Destino es tarot?",
       answer:
-        "No. Usa la energía de los arcanos mayores, pero no se trabaja con cartas. El Código Personal y la Carta Personal sí utilizan cartas: es tarot numerológico.",
+        "Se calcula con tu fecha de nacimiento y la energía de los 22 arcanos mayores. En la lectura la interpreto con cinco cartas, una para cada clave. El Código Personal y la Carta Personal son tarot numerológico.",
     },
     lecturaFaq,
     disclaimerFaq,

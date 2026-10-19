@@ -7,7 +7,6 @@ import { Footer } from "@/components/layout/footer";
 import { SkipLink } from "@/components/layout/skip-link";
 import { ClientExtras } from "@/components/layout/client-extras";
 import { Intro } from "@/components/layout/intro";
-import { RevealObserver } from "@/components/layout/reveal-observer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -52,7 +51,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <Footer />
           <ClientExtras />
         </Providers>
-        <RevealObserver />
       </body>
     </html>
   );

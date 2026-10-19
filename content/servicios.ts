@@ -24,8 +24,8 @@ export const bloques: Bloque[] = [
     accent: "var(--color-chakra-corazon)",
     image: "reikiSesion",
     summary: "Para bajar revoluciones, soltar tensiones y dedicarte un tiempo solo para ti.",
-    includes: ["Reiki", "Reiki + péndulo hebreo", "Péndulo hebreo", "Análisis de chakras", "Sanación akásica"],
-    modality: ["Presencial en Valencia", "Online"],
+    includes: ["Reiki + péndulo hebreo", "Péndulo hebreo", "Análisis de chakras", "Sanación akáshica"],
+    modality: ["Online", "A distancia"],
     more: "Ver terapias energéticas",
   },
   {
@@ -37,8 +37,8 @@ export const bloques: Bloque[] = [
     accent: "var(--color-chakra-plexo)",
     image: "hogarLuminoso",
     summary: "Para que tu casa o tu espacio de trabajo vuelva a sentirse ligero, en calma y tuyo.",
-    includes: ["Limpieza energética de casas y espacios"],
-    modality: ["En Valencia", "Casas y espacios de trabajo"],
+    includes: ["Limpieza energética de casas y espacios", "Informe por WhatsApp"],
+    modality: ["A distancia", "Casas y espacios de trabajo"],
     more: "Ver limpieza energética",
   },
   {
@@ -63,8 +63,8 @@ export const bloques: Bloque[] = [
     accent: "var(--color-chakra-sacro)",
     image: "tarotFlores",
     summary: "Un espejo para ver tu situación desde fuera y elegir tú, con más información y menos miedo.",
-    includes: ["Crono Tarot", "Lecturas concretas", "Sesiones de tarot en directo"],
-    modality: ["Lecturas en vídeo y PDF", "Online", "Presencial en Valencia"],
+    includes: ["Crono Tarot", "Lecturas concretas", "Sesiones de tarot en directo", "Tu carta del día"],
+    modality: ["Lecturas en vídeo y PDF", "Sesiones online"],
     more: "Ver tarot",
   },
   {
@@ -143,7 +143,7 @@ export const formatos: Formato[] = [
   },
   {
     title: "Sesión individual",
-    text: "Reiki, terapias energéticas y tarot en directo. Para ti sola, en Valencia u online.",
+    text: "Reiki, terapias energéticas y tarot en directo. Para ti sola, online desde donde estés.",
     cta: { label: "Reserva tu sesión", href: "/contacto" },
   },
 ];
@@ -188,7 +188,7 @@ export type Terapia = {
 
 export const reikiPage = {
   eyebrow: "Terapias energéticas",
-  title: "Reiki y terapias energéticas en Valencia y online",
+  title: "Reiki y terapias energéticas",
   subtitle: "Primero, bajar revoluciones.",
   image: "reikiRostro" as ImageKey,
   queEs: {
@@ -208,20 +208,14 @@ export const reikiPage = {
   terapiasHeading: {
     eyebrow: "Terapias",
     title: "Elige cómo.",
-    text: "Sesiones presenciales en Valencia u online. Cuéntame qué necesitas y te recomiendo por dónde empezar.",
+    text: "Sesiones online, a distancia, desde tu casa. Cuéntame qué necesitas y te recomiendo por dónde empezar.",
   },
   info: "Pide información",
   ctaWhatsapp: "Hola, Tati. Me gustaría información sobre el Reiki y las terapias energéticas.",
   terapias: [
     {
-      title: "Sesiones de Reiki",
-      text: "Acompañamiento energético orientado a la relajación, la calma y el bienestar interior. Un espacio para desconectar, soltar tensiones y dedicarte tiempo.",
-      image: "reikiSesion",
-      whatsapp: "Hola, Tati. Me gustaría información sobre las sesiones de Reiki.",
-    },
-    {
       title: "Reiki + péndulo hebreo",
-      text: "Sesión combinada de Reiki y trabajo con péndulo hebreo.",
+      text: "Mi sesión de Reiki, con el péndulo hebreo. Acompañamiento energético orientado a la relajación, la calma y el bienestar interior: un espacio para desconectar, soltar tensiones y dedicarte tiempo.",
       image: "tatiTrabajandoPendulo",
       whatsapp: "Hola, Tati. Me gustaría información sobre la sesión de Reiki con péndulo hebreo.",
     },
@@ -238,10 +232,10 @@ export const reikiPage = {
       whatsapp: "Hola, Tati. Me gustaría información sobre el análisis de chakras.",
     },
     {
-      title: "Sanación akásica",
+      title: "Sanación akáshica",
       text: "Trabajo de sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar. No es una lectura de registros.",
       image: "velasCalma",
-      whatsapp: "Hola, Tati. Me gustaría información sobre la sanación akásica.",
+      whatsapp: "Hola, Tati. Me gustaría información sobre la sanación akáshica.",
     },
   ] satisfies Terapia[],
   chakras: {
@@ -266,7 +260,7 @@ export const reikiPage = {
   cursos: {
     eyebrow: "Cursos de Reiki",
     title: "Enseño Reiki desde 2006.",
-    text: "Formaciones de Reiki y de crecimiento personal, en Valencia y online. Para usarlo contigo y con los tuyos.",
+    text: "Formaciones de Reiki y de crecimiento personal. Para usarlo contigo y con los tuyos.",
     cta: "Pide información sobre las próximas fechas",
     image: "cuencoSalvia" as ImageKey,
   },
@@ -274,13 +268,13 @@ export const reikiPage = {
 
 export const limpiezaPage = {
   eyebrow: "Armonía en tu hogar",
-  title: "Limpieza energética de casas y espacios en Valencia",
+  title: "Limpieza energética de casas y espacios a distancia",
   subtitle: "Un espacio ligero para una etapa nueva.",
   image: "hogarLuminoso" as ImageKey,
   ctaWhatsapp: "Hola, Tati. Me gustaría información sobre la limpieza energética de mi casa o espacio.",
   queEs: {
     title: "Qué es",
-    text: "Renovar y armonizar la energía de tu hogar o espacio de trabajo para favorecer un ambiente de calma, ligereza y bienestar.",
+    text: "Renovar y armonizar la energía de tu hogar o espacio de trabajo para favorecer un ambiente de calma, ligereza y bienestar. La hago a distancia: no hace falta que vaya ni que estés en casa.",
     image: "ventanaLuz" as ImageKey,
   },
   paraQuien: {
@@ -297,14 +291,15 @@ export const limpiezaPage = {
     eyebrow: "Cómo trabajamos",
     title: "Tres pasos.",
     items: [
-      { title: "Me escribes", text: "Me cuentas cómo es el espacio y qué notas en él." },
-      { title: "Lo preparamos", text: "Te paso presupuesto y acordamos el día que mejor te venga." },
-      { title: "Limpieza", text: "Hago la limpieza energética del espacio, con calma y sin prisas." },
+      { title: "Me pasas la dirección", text: "Solo necesito la dirección del espacio. No hace falta que me cuentes cómo es." },
+      { title: "Hago la limpieza", text: "La hago a distancia. No tienes que estar en casa ni acordar una hora conmigo." },
+      { title: "Te envío el informe", text: "Te mando por WhatsApp el informe de la limpieza." },
     ],
   },
+  precio: { label: "Precio", text: "Por espacio, casa o espacio de trabajo. Con informe por WhatsApp.", cta: "Pedir mi limpieza" },
   cta: {
-    title: "¿Hablamos de tu espacio?",
-    text: "Escríbeme y te paso presupuesto sin compromiso.",
+    title: "¿Limpiamos tu espacio?",
+    text: "Escríbeme con la dirección y me pongo con ello.",
   },
 };
 
@@ -350,7 +345,7 @@ export const meditacionPage = {
 
 export const tarotPage = {
   eyebrow: "Tarot terapéutico",
-  title: "Tarot terapéutico en Valencia y online",
+  title: "Tarot terapéutico online",
   subtitle: "Un espejo para ver claro.",
   image: "tarotFlores" as ImageKey,
   shopCta: "Ver lecturas en la tienda",
@@ -384,7 +379,7 @@ export const tarotPage = {
       },
       {
         title: "Sesiones en directo",
-        text: "De 30 o 50 minutos, online o en Valencia. Las agendamos por WhatsApp.",
+        text: "De 30 o 50 minutos, online. Las agendamos por WhatsApp.",
         href: "/tienda#sesiones",
       },
     ],
@@ -398,6 +393,40 @@ export const tarotPage = {
       { title: "Claridad", text: "Ves la situación tal como es, sin el ruido de la preocupación." },
       { title: "Autoconocimiento", text: "Entiendes desde dónde estás eligiendo y qué te frena." },
       { title: "Decisión", text: "Eliges con más información y menos miedo." },
+    ],
+  },
+  cartaDelDia: {
+    eyebrow: "Tu carta del día",
+    title: "Elige tu carta.",
+    text: "Respira, piensa en tu día y elige la carta que te llame. Es un mensaje para acompañarte hoy.",
+    elegir: (numero: number) => `Elegir la carta ${numero}`,
+    resultado: "Tu carta de hoy",
+    manana: "Mañana puedes volver a elegir.",
+    lectura: "Quiero una lectura",
+    mazo: "Tarot Rider-Waite, edición original de 1909.",
+    cartas: [
+      { nombre: "El Loco", mensaje: "Hoy toca confiar y dar el primer paso aunque no veas todo el camino. Deja espacio a lo nuevo." },
+      { nombre: "El Mago", mensaje: "Tienes lo que necesitas para empezar. Elige una cosa y ponte manos a la obra." },
+      { nombre: "La Sacerdotisa", mensaje: "Escucha lo que sabes por dentro antes de buscar respuestas fuera. Hoy, menos ruido y más intuición." },
+      { nombre: "La Emperatriz", mensaje: "Cuida lo que estás haciendo crecer y disfruta de lo que ya florece en tu vida." },
+      { nombre: "El Emperador", mensaje: "Pon orden y estructura. Un límite claro hoy te da tranquilidad mañana." },
+      { nombre: "El Hierofante", mensaje: "Apóyate en lo que te funciona y en quien sabe. Aprender de otros también es elegir." },
+      { nombre: "Los Enamorados", mensaje: "Hoy toca elegir con el corazón y ser coherente con lo que sientes." },
+      { nombre: "El Carro", mensaje: "Avanza con decisión. Tienes las riendas: marca el rumbo y no te disperses." },
+      { nombre: "La Fuerza", mensaje: "La verdadera fuerza es la calma. Trátate con paciencia y suavidad." },
+      { nombre: "El Ermitaño", mensaje: "Regálate un rato a solas. En el silencio encuentras tu propia luz." },
+      { nombre: "La Rueda de la Fortuna", mensaje: "Algo se mueve. Acompaña el cambio en lugar de pelearte con él." },
+      { nombre: "La Justicia", mensaje: "Mira la situación con honestidad y decide con equilibrio. Lo que siembras, vuelve." },
+      { nombre: "El Colgado", mensaje: "Cambia el punto de vista. A veces parar un momento es lo que desbloquea." },
+      { nombre: "La Muerte", mensaje: "Algo termina para dejar sitio a lo nuevo. Suelta lo que ya no es para ti." },
+      { nombre: "La Templanza", mensaje: "Busca el término medio. Paso a paso y con calma, todo se va colocando." },
+      { nombre: "El Diablo", mensaje: "Observa qué te ata: un hábito, un miedo, una costumbre. Darte cuenta es el primer paso para soltar." },
+      { nombre: "La Torre", mensaje: "Lo que se mueve hoy te ayuda a construir sobre algo más real. Respira y suelta el control." },
+      { nombre: "La Estrella", mensaje: "Vuelve la esperanza. Confía en tu camino y deja que tu luz se vea." },
+      { nombre: "La Luna", mensaje: "No todo está claro todavía. Escucha tus emociones sin dejar que el miedo decida por ti." },
+      { nombre: "El Sol", mensaje: "Día para brillar y disfrutar. Comparte tu alegría y date permiso para estar bien." },
+      { nombre: "El Juicio", mensaje: "Es momento de escuchar tu llamada. Deja atrás lo que pesa y empieza de nuevo." },
+      { nombre: "El Mundo", mensaje: "Cierras un ciclo. Celebra lo que has logrado y prepárate para lo siguiente." },
     ],
   },
   instagram: {
@@ -423,16 +452,17 @@ export const autoconocimientoPage = {
     title: "Qué son",
     text: "Son herramientas de autoconocimiento a partir de tu fecha de nacimiento, basadas en la numerología y en la energía de los arcanos mayores.",
     diferencias: [
-      { title: "Sin cartas", text: "La Matriz del Destino no es tarot: no se trabaja con cartas." },
-      { title: "Con cartas", text: "El Código Personal y la Carta Personal sí utilizan cartas: es tarot numerológico." },
+      {
+        title: "Matriz del Destino",
+        text: "Se calcula con tu fecha de nacimiento y la energía de los 22 arcanos mayores. En la lectura la interpreto con cinco cartas, una para cada clave.",
+      },
+      { title: "Código Personal y Carta Personal", text: "Tarot numerológico: tus cartas salen de tu fecha de nacimiento." },
     ],
   },
   herramientasHeading: { eyebrow: "Herramientas", title: "Elige por dónde empezar." },
-  herramientas: [
-    { slug: "matriz-del-destino", tag: "Sin cartas" },
-    { slug: "tu-codigo-personal", tag: "Tarot numerológico" },
-  ],
+  herramientas: ["matriz-del-destino", "analisis-matriz-del-destino", "tu-codigo-personal"],
   carta: {
+    image: "tarotFlores" as ImageKey,
     tag: "Tarot numerológico",
     title: "Carta Personal",
     text: "Lectura de autoconocimiento con cartas a partir de tu fecha de nacimiento.",

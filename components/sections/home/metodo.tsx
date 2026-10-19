@@ -5,7 +5,6 @@ import { m, useInView, useScroll, useSpring } from "motion/react";
 import { useRef, useState, useEffect } from "react";
 import { metodo } from "@/content/servicios";
 import { SiteImage } from "@/components/ui/site-image";
-import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/utils";
 
 type Step = (typeof metodo.steps)[number];
@@ -58,7 +57,7 @@ export function Metodo() {
     <section aria-labelledby="metodo-title" className="section-pad relative bg-crema">
       <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-5">
-          <Reveal className="lg:sticky lg:top-32">
+          <div className="lg:sticky lg:top-32">
             <p className="eyebrow mb-5">{metodo.eyebrow}</p>
             <h2 id="metodo-title" className="text-h2">
               {metodo.title}
@@ -75,7 +74,7 @@ export function Metodo() {
                 />
               ))}
             </ol>
-          </Reveal>
+          </div>
         </div>
         <div className="relative lg:col-span-7">
           <span aria-hidden className="absolute bottom-0 left-0 top-3 w-px bg-ciruela/10" />

@@ -14,6 +14,7 @@ type PageHeaderProps = {
   children?: ReactNode;
   blobs?: "a" | "b" | "c";
   imageSize?: "md" | "sm";
+  circle?: boolean;
 };
 
 const tones: Partial<Record<SectionTone, string>> = {
@@ -32,6 +33,7 @@ export function PageHeader({
   children,
   blobs = "a",
   imageSize = "md",
+  circle = false,
 }: PageHeaderProps) {
   const small = imageSize === "sm";
   return (
@@ -62,7 +64,13 @@ export function PageHeader({
         {image &&
           (small ? (
             <div className="w-full max-w-[15rem] sm:max-w-[17rem] lg:col-span-4 lg:max-w-[18rem] lg:justify-self-end">
-              <SiteImage name={image} priority sizes="(min-width: 640px) 288px, 240px" className="aspect-[4/5]" />
+              <SiteImage
+                name={image}
+                priority
+                shape={circle ? "circle" : "rounded"}
+                sizes="(min-width: 640px) 288px, 240px"
+                className={cn(circle ? "aspect-square ring-1 ring-dorado/60 ring-offset-8 ring-offset-rosa-polvo" : "aspect-[4/5]")}
+              />
             </div>
           ) : (
             <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">

@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowDown } from "lucide-react";
-import type { Puntos } from "@/lib/matriz";
-import { pasosEnTiempo } from "@/lib/matriz-geometria";
+import type { Puntos, Tramo } from "@/lib/matriz";
+import { pasosEnTiempo, type Variante } from "@/lib/matriz-geometria";
 import { cn } from "@/lib/utils";
 import { MatrizSvg } from "./matriz-svg";
 
@@ -21,6 +21,9 @@ type Props = {
   instant?: boolean;
   destacados?: (keyof Puntos)[];
   actions?: ReactNode;
+  variante?: Variante;
+  edades?: Tramo[];
+  etapaActiva?: { tramo: number; etapa: number } | null;
 };
 
 export function MatrizEscena({
@@ -37,6 +40,9 @@ export function MatrizEscena({
   instant = false,
   destacados,
   actions,
+  variante = "individual",
+  edades,
+  etapaActiva,
 }: Props) {
   const final = pasos.length - 1;
   const [step, setStep] = useState(instant ? final : 0);
@@ -66,9 +72,9 @@ export function MatrizEscena({
       const id = window.setTimeout(() => setStep(final), 0);
       return () => window.clearTimeout(id);
     }
-    timers.current = pasosEnTiempo.slice(1).map((seconds, index) => window.setTimeout(() => setStep(index + 1), seconds * 1000));
+    timers.current = pasosEnTiempo[variante].slice(1).map((seconds, index) => window.setTimeout(() => setStep(index + 1), seconds * 1000));
     return () => timers.current.forEach((id) => window.clearTimeout(id));
-  }, [final, instant, visible]);
+  }, [final, instant, variante, visible]);
 
   function finish() {
     timers.current.forEach((id) => window.clearTimeout(id));
@@ -87,6 +93,9 @@ export function MatrizEscena({
           paused={!visible}
           label={label}
           destacados={done ? destacados : []}
+          variante={variante}
+          edades={edades}
+          etapaActiva={done ? etapaActiva : null}
         />
       </div>
       <div className="mx-auto mt-6 flex min-h-[9.5rem] max-w-xl flex-col items-center text-center">

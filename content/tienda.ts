@@ -1,9 +1,10 @@
 import type { Faq } from "./faqs";
+import type { ImageKey } from "./imagenes";
 import { site } from "./site";
 
-export type CategoriaId = "meditaciones" | "crono-tarot" | "lecturas" | "autoconocimiento" | "sesiones" | "espacios";
+export type CategoriaId = "meditaciones" | "crono-tarot" | "lecturas" | "autoconocimiento" | "sesiones" | "terapias" | "espacios";
 
-export type TipoProducto = "meditacion" | "lectura" | "sesion" | "presupuesto";
+export type TipoProducto = "meditacion" | "lectura" | "sesion" | "terapia" | "espacio";
 
 export type Producto = {
   slug: string;
@@ -22,7 +23,9 @@ export type Producto = {
   lanzamiento?: boolean;
   estado: "disponible" | "proximamente";
   destacado: boolean;
+  imagen: ImageKey;
   calculadora?: string;
+  enlace?: string;
 };
 
 export type Categoria = {
@@ -67,20 +70,28 @@ export const categorias: Categoria[] = [
     nav: "Sesiones en directo",
     eyebrow: "Sesiones en directo",
     title: "Tarot en directo.",
-    text: "Una sesión individual contigo, online o presencial en Valencia. La agendamos por WhatsApp.",
+    text: "Una sesión individual contigo, online. La agendamos por WhatsApp.",
+  },
+  {
+    id: "terapias",
+    nav: "Terapias",
+    eyebrow: "Terapias y bienestar energético",
+    title: "Calma y equilibrio.",
+    text: "Reiki con péndulo hebreo, péndulo hebreo, análisis de chakras y sanación akáshica, online y a distancia.",
   },
   {
     id: "espacios",
     nav: "Espacios",
-    eyebrow: "Espacios",
+    eyebrow: "Armonización de espacios",
     title: "Tu casa, en calma.",
-    text: "Limpieza energética de casas y espacios en Valencia. El precio depende del espacio.",
+    text: "Limpieza energética de casas y espacios a distancia. Solo necesito la dirección.",
   },
 ];
 
 const entregaMeditacion = "Archivos MP3 por enlace privado de descarga, tras confirmar el pago.";
 const entregaLectura = "Vídeo y PDF por WhatsApp, tras confirmar el pago.";
-const entregaSesion = "Online o presencial en Valencia. La fecha y la hora se agendan por WhatsApp.";
+const entregaSesion = "Online. La fecha y la hora se agendan por WhatsApp.";
+const entregaTerapia = "Online, a distancia. La fecha y la hora se agendan por WhatsApp.";
 
 const paraMeditar = [
   "Quieres dedicarte un rato al día y te ayuda que una voz te guíe.",
@@ -119,6 +130,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "disponible",
     destacado: true,
+    imagen: "relajacionSillon",
   },
   {
     slug: "un-espacio-para-tu-mente",
@@ -145,6 +157,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
+    imagen: "meditacionAuriculares",
   },
   {
     slug: "conecta-contigo",
@@ -172,6 +185,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
+    imagen: "relajacionTaza",
   },
   {
     slug: "camino-12-semanas-meditacion",
@@ -208,6 +222,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
+    imagen: "tazaVapor",
   },
   {
     slug: "lectura-del-cumpleanos",
@@ -229,6 +244,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: true,
+    imagen: "tarotFlores",
   },
   {
     slug: "mapa-estacional",
@@ -246,6 +262,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
+    imagen: "ventanaLuz",
   },
   {
     slug: "mapa-mensual",
@@ -263,6 +280,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
+    imagen: "tarotBaraja",
   },
   {
     slug: "lectura-mensual",
@@ -280,6 +298,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "libretaEscribir",
   },
   {
     slug: "lectura-semanal",
@@ -296,6 +315,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "duchaLuminosa",
   },
   {
     slug: "mapa-de-vida",
@@ -324,6 +344,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
+    imagen: "mujerBrazosAbiertos",
   },
   {
     slug: "lectura-de-la-pareja",
@@ -344,6 +365,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "piedrasChakras",
   },
   {
     slug: "lectura-del-trabajo",
@@ -364,6 +386,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "claseOnline",
   },
   {
     slug: "lectura-de-compatibilidad",
@@ -384,6 +407,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "cuencoSalvia",
   },
   {
     slug: "lectura-del-corazon",
@@ -404,6 +428,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "reikiSesion",
   },
   {
     slug: "tu-codigo-personal",
@@ -430,15 +455,17 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: true,
+    imagen: "tarotBaraja",
+    calculadora: "/calculadora/codigo-personal",
   },
   {
     slug: "matriz-del-destino",
-    categoria: "autoconocimiento",
+    categoria: "lecturas",
     tipo: "lectura",
-    nombre: "Matriz del Destino",
-    frase: "Herramienta de autoconocimiento que utiliza la energía de los arcanos mayores, sin cartas.",
+    nombre: "Lectura de la Matriz del Destino",
+    frase: "Tu Matriz del Destino leída con cinco cartas: una para cada una de las cinco claves de tu matriz.",
     descripcion:
-      "Una interpretación personalizada de tu matriz numerológica para explorar talentos, aprendizajes, desafíos y patrones personales, y comprender mejor tu camino vital. No se trabaja con cartas.",
+      "Calculo tu Matriz del Destino con tu fecha de nacimiento y la leo con cinco cartas, una para cada clave, para que veas tus talentos, tus aprendizajes y tu poder personal y sepas qué hacer con ello.",
     incluye: [
       { titulo: "Tu energía personal" },
       { titulo: "Tu fortaleza interior" },
@@ -450,30 +477,31 @@ export const productos: Producto[] = [
     entrega: entregaLectura,
     paraQuien: [
       "Quieres conocer tus talentos y tus retos.",
-      "Te interesa el autoconocimiento sin tiradas de cartas.",
+      "Te apetece mirar tu matriz con cartas.",
       "Buscas recordar tu poder personal.",
     ],
     precio: 8,
     estado: "disponible",
     destacado: false,
+    imagen: "tarotBaraja",
     calculadora: "/calculadora/matriz-del-destino",
   },
   {
-    slug: "matriz-del-destino-pareja",
+    slug: "analisis-matriz-del-destino",
     categoria: "autoconocimiento",
     tipo: "lectura",
-    nombre: "Matriz del Destino de pareja",
-    frase: "La energía de vuestra relación a partir de vuestras dos fechas de nacimiento. Calcula vuestra matriz gratis.",
-    descripcion:
-      "Una interpretación personalizada de la matriz de vuestra pareja, a partir de las dos fechas de nacimiento. No se trabaja con cartas.",
-    incluye: [{ titulo: "La energía de vuestra relación" }, { titulo: "Vuestros propósitos como pareja" }],
+    nombre: "Análisis de la Matriz del Destino",
+    frase: "Un análisis a fondo de tu matriz completa: tus energías, tus propósitos, tu linaje y tus etapas.",
+    descripcion: "Un análisis personalizado de tu Matriz del Destino completa a partir de tu fecha de nacimiento.",
+    incluye: [{ titulo: "Tu matriz completa" }],
     formato: "Vídeo y PDF",
     entrega: entregaLectura,
-    paraQuien: ["Queréis conoceros mejor como pareja.", "Os interesa el autoconocimiento sin tiradas de cartas."],
+    paraQuien: [],
     precio: null,
     estado: "disponible",
     destacado: false,
-    calculadora: "/calculadora/compatibilidad-de-pareja",
+    imagen: "libretaEscribir",
+    calculadora: "/calculadora/matriz-del-destino",
   },
   {
     slug: "sesion-tarot-30-minutos",
@@ -481,8 +509,8 @@ export const productos: Producto[] = [
     tipo: "sesion",
     nombre: "Sesión individual de Tarot · 30 minutos",
     frase: "Un espacio personalizado para abordar una pregunta concreta, comprender una situación y explorar nuevas perspectivas.",
-    descripcion: "Una sesión de tarot en directo contigo, online o en Valencia, para trabajar una pregunta concreta.",
-    incluye: [{ titulo: "Sesión en directo de 30 minutos" }, { titulo: "Online o presencial en Valencia" }],
+    descripcion: "Una sesión de tarot en directo contigo, online, para trabajar una pregunta concreta.",
+    incluye: [{ titulo: "Sesión en directo de 30 minutos" }, { titulo: "Online, desde donde estés" }],
     formato: "Sesión en directo de 30 minutos",
     entrega: entregaSesion,
     paraQuien: [
@@ -493,6 +521,7 @@ export const productos: Producto[] = [
     precio: 25,
     estado: "disponible",
     destacado: false,
+    imagen: "tarotFlores",
   },
   {
     slug: "sesion-tarot-50-minutos",
@@ -501,8 +530,8 @@ export const productos: Producto[] = [
     nombre: "Sesión individual de Tarot · 50 minutos",
     frase:
       "Para profundizar en tu situación, explorar diferentes áreas de tu vida e identificar posibles caminos de actuación.",
-    descripcion: "Una sesión de tarot en directo más larga, online o en Valencia, para ir a fondo.",
-    incluye: [{ titulo: "Sesión en directo de 50 minutos" }, { titulo: "Online o presencial en Valencia" }],
+    descripcion: "Una sesión de tarot en directo más larga, online, para ir a fondo.",
+    incluye: [{ titulo: "Sesión en directo de 50 minutos" }, { titulo: "Online, desde donde estés" }],
     formato: "Sesión en directo de 50 minutos",
     entrega: entregaSesion,
     paraQuien: [
@@ -513,22 +542,97 @@ export const productos: Producto[] = [
     precio: 35,
     estado: "disponible",
     destacado: false,
+    imagen: "tarotBaraja",
   },
   {
-    slug: "limpieza-energetica-espacios",
-    categoria: "espacios",
-    tipo: "presupuesto",
-    nombre: "Limpieza energética de casas y espacios",
-    frase:
-      "Renovar y armonizar la energía de tu hogar o espacio de trabajo para favorecer un ambiente de calma, ligereza y bienestar.",
-    descripcion: "Limpieza energética de casas y espacios de trabajo en Valencia.",
-    incluye: [{ titulo: "Casas y espacios de trabajo" }],
-    formato: "Presencial en Valencia",
-    entrega: "Se agenda por WhatsApp.",
+    slug: "reiki-pendulo-hebreo",
+    categoria: "terapias",
+    tipo: "terapia",
+    nombre: "Reiki + péndulo hebreo",
+    frase: "Mi sesión de Reiki, con el péndulo hebreo, para bajar revoluciones, soltar tensiones y dedicarte un tiempo solo para ti.",
+    descripcion: "Acompañamiento energético orientado a la relajación, la calma y el bienestar interior.",
+    incluye: [{ titulo: "Sesión de Reiki con péndulo hebreo" }],
+    formato: "Online, a distancia",
+    entrega: entregaTerapia,
     paraQuien: [],
     precio: null,
     estado: "disponible",
     destacado: false,
+    imagen: "reikiRostro",
+    enlace: "/servicios/reiki#terapias-title",
+  },
+  {
+    slug: "pendulo-hebreo",
+    categoria: "terapias",
+    tipo: "terapia",
+    nombre: "Péndulo hebreo",
+    frase: "Trabajo energético con péndulo hebreo para explorar y trabajar aspectos relacionados con el equilibrio y el bienestar personal.",
+    descripcion: "Trabajo energético con péndulo hebreo.",
+    incluye: [{ titulo: "Sesión de péndulo hebreo" }],
+    formato: "Online, a distancia",
+    entrega: entregaTerapia,
+    paraQuien: [],
+    precio: null,
+    estado: "disponible",
+    destacado: false,
+    imagen: "tatiTrabajandoPendulo",
+    enlace: "/servicios/reiki#terapias-title",
+  },
+  {
+    slug: "analisis-de-chakras",
+    categoria: "terapias",
+    tipo: "terapia",
+    nombre: "Análisis de chakras",
+    frase: "Exploración de los siete chakras principales para observar cómo están tus centros de energía.",
+    descripcion: "Exploración de los siete chakras principales.",
+    incluye: [{ titulo: "Análisis de los siete chakras" }],
+    formato: "Online, a distancia",
+    entrega: entregaTerapia,
+    paraQuien: [],
+    precio: null,
+    estado: "disponible",
+    destacado: false,
+    imagen: "pendulo",
+    enlace: "/servicios/reiki#terapias-title",
+  },
+  {
+    slug: "sanacion-akashica",
+    categoria: "terapias",
+    tipo: "terapia",
+    nombre: "Sanación akáshica",
+    frase: "Sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar.",
+    descripcion: "Trabajo de sanación energética y acompañamiento. No es una lectura de registros.",
+    incluye: [{ titulo: "Sesión de sanación akáshica" }],
+    formato: "Online, a distancia",
+    entrega: entregaTerapia,
+    paraQuien: [],
+    precio: null,
+    estado: "disponible",
+    destacado: false,
+    imagen: "velasCalma",
+    enlace: "/servicios/reiki#terapias-title",
+  },
+  {
+    slug: "limpieza-energetica-espacios",
+    categoria: "espacios",
+    tipo: "espacio",
+    nombre: "Limpieza energética de casas y espacios",
+    frase: "Renovar y armonizar la energía de tu hogar o espacio de trabajo, a distancia. Solo necesito la dirección.",
+    descripcion:
+      "Limpieza energética a distancia de casas y espacios de trabajo, para favorecer un ambiente de calma, ligereza y bienestar. No hace falta que vaya, ni que estés en casa, ni que acordemos una hora.",
+    incluye: [{ titulo: "Limpieza energética a distancia" }, { titulo: "Informe por WhatsApp" }],
+    formato: "A distancia",
+    entrega: "Te envío el informe por WhatsApp cuando termino la limpieza, tras confirmar el pago.",
+    paraQuien: [
+      "Llegas a una casa nueva y quieres empezar con buen pie.",
+      "Empiezas una etapa nueva y quieres que tu casa la acompañe.",
+      "Notas el ambiente cargado y no terminas de estar a gusto.",
+    ],
+    precio: 30,
+    estado: "disponible",
+    destacado: false,
+    imagen: "hogarLuminoso",
+    enlace: "/servicios/limpieza-energetica",
   },
 ];
 
@@ -546,7 +650,6 @@ export const tiendaPage = {
     launch: "Precio de lanzamiento",
     usual: "Precio habitual",
     onRequest: "Precio a consultar",
-    quote: "Pide presupuesto",
     info: "Pide información",
     calculate: "Calcular gratis",
   },
@@ -585,6 +688,7 @@ export const fichaProducto = {
   requirementsReading: "WhatsApp para recibir el vídeo y el PDF, y un dispositivo que pueda abrirlos.",
   requirementsSession: "Para la sesión online, conexión a internet y un dispositivo con cámara y micrófono.",
   requirementsBirthday: "Tu fecha de nacimiento, que me darás por WhatsApp al hacer el pedido.",
+  requirementsSpace: "La dirección del espacio, que me darás por WhatsApp al hacer el pedido.",
   wellbeing:
     "Las meditaciones, las lecturas y las sesiones son prácticas de bienestar y autoconocimiento. Son complementarias y no sustituyen la atención médica ni psicológica.",
   buy: {
@@ -601,16 +705,19 @@ export const fichaProducto = {
     title: "Muy pronto",
     text: "Este producto todavía no está disponible. Si quieres, te aviso en cuanto lo esté.",
   },
-  quote: {
-    title: "Pide presupuesto",
-    text: "El precio depende del espacio. Escríbeme y te paso presupuesto sin compromiso.",
-  },
   related: "También te puede interesar",
-  calculadora: {
-    title: "¿Aún no conoces tu matriz?",
-    text: "Calcúlala gratis, mira cómo se construye y descarga tu lectura básica en PDF.",
-    cta: "Calcular mi matriz",
-  },
+  calculadoras: {
+    "/calculadora/matriz-del-destino": {
+      title: "¿Aún no conoces tu matriz?",
+      text: "Calcúlala gratis, mira cómo se construye y descarga tu lectura básica en PDF.",
+      cta: "Calcular mi matriz",
+    },
+    "/calculadora/codigo-personal": {
+      title: "¿Aún no conoces tus cartas?",
+      text: "Calcula gratis tu Código Personal, mira tus cinco cartas y descarga tu PDF.",
+      cta: "Calcular mi Código Personal",
+    },
+  } as Record<string, { title: string; text: string; cta: string }>,
 };
 
 export const tiendaFaqs: Faq[] = [
@@ -627,7 +734,7 @@ export const tiendaFaqs: Faq[] = [
   {
     question: "¿En qué formato llega?",
     answer:
-      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas, en vídeo y PDF por WhatsApp. Las sesiones en directo son online o presenciales en Valencia.",
+      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas, en vídeo y PDF por WhatsApp. Las sesiones en directo son online y la limpieza de espacios, a distancia, con su informe por WhatsApp.",
   },
   {
     question: "¿Qué necesito para escuchar las meditaciones?",

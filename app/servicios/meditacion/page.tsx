@@ -12,7 +12,6 @@ import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
@@ -58,32 +57,32 @@ export default function MeditacionPage() {
 
       <Section tone="crema" labelledBy="filosofia">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:max-w-none">
+          <div className="mx-auto w-full max-w-sm lg:order-2 lg:col-span-5 lg:max-w-none">
             <SiteImage
               name={page.filosofia.image}
               sizes="(min-width: 1024px) 38vw, (min-width: 640px) 384px, 90vw"
               className="aspect-[4/5]"
             />
-          </Reveal>
-          <Reveal className="lg:col-span-7" delay={0.1}>
+          </div>
+          <div className="lg:col-span-7">
             <h2 id="filosofia" className="text-h2">
               {page.filosofia.title}
             </h2>
             <p className="mt-6 max-w-xl text-lead text-ink-soft">{page.filosofia.text}</p>
-          </Reveal>
+          </div>
         </div>
       </Section>
 
       <Section tone="rosa" labelledBy="esponja">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+          <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
             <SiteImage
               name={page.esponja.image}
               sizes="(min-width: 1024px) 40vw, (min-width: 640px) 384px, 90vw"
               className="aspect-[4/5]"
             />
-          </Reveal>
-          <Reveal className="lg:col-span-7" delay={0.1}>
+          </div>
+          <div className="lg:col-span-7">
             <p className="eyebrow mb-5">{page.esponja.eyebrow}</p>
             <h2 id="esponja" className="text-h1 italic">
               {page.esponja.title}
@@ -97,23 +96,23 @@ export default function MeditacionPage() {
                 </li>
               ))}
             </ol>
-          </Reveal>
+          </div>
         </div>
       </Section>
 
       <Section tone="lavanda" id="grabadas" labelledBy="grabadas-title">
         <div className="grid gap-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
+          <div className="lg:col-span-5">
             <SectionHeading eyebrow={page.grabadas.eyebrow} title={page.grabadas.title} text={page.grabadas.text} id="grabadas-title" />
             <div className="mt-10">
               <Button href="/tienda#meditaciones" magnetic>
                 {page.grabadas.cta}
               </Button>
             </div>
-          </Reveal>
-          <RevealGroup as="ul" className="divide-y divide-ciruela/10 border-y border-ciruela/10 lg:col-span-7">
+          </div>
+          <ul className="divide-y divide-ciruela/10 border-y border-ciruela/10 lg:col-span-7">
             {packs.map((pack) => (
-              <RevealItem as="li" key={pack.slug} className="flex flex-col justify-between gap-4 py-6 sm:flex-row sm:items-center">
+              <li key={pack.slug} className="flex flex-col justify-between gap-4 py-6 sm:flex-row sm:items-center">
                 <div className="min-w-0">
                   <h3 className="font-serif text-[1.6rem] leading-tight">{pack.nombre}</h3>
                   <p className="mt-1 text-sm text-ink-soft">
@@ -123,18 +122,18 @@ export default function MeditacionPage() {
                   </p>
                 </div>
                 <PriceTag producto={pack} className="shrink-0 sm:text-right" />
-              </RevealItem>
+              </li>
             ))}
-          </RevealGroup>
+          </ul>
         </div>
       </Section>
 
       <Section tone="crema" id="grupales" labelledBy="grupales-title" className="scroll-mt-20">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="lg:order-2 lg:col-span-6">
+          <div className="lg:order-2 lg:col-span-6">
             <SiteImage name={page.grupales.image} sizes="(min-width: 1024px) 48vw, 90vw" className="aspect-[4/3]" />
-          </Reveal>
-          <Reveal className="lg:col-span-6" delay={0.1}>
+          </div>
+          <div className="lg:col-span-6">
             <SectionHeading eyebrow={page.grupales.eyebrow} title={page.grupales.title} text={page.grupales.text} id="grupales-title" />
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button href={whatsappHref(page.grupales.ctaWhatsapp)} icon={<WhatsappIcon size={18} />}>
@@ -144,7 +143,7 @@ export default function MeditacionPage() {
                 {page.grupales.tablon}
               </Button>
             </div>
-          </Reveal>
+          </div>
         </div>
       </Section>
 

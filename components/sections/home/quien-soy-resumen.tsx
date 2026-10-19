@@ -1,7 +1,6 @@
 import { inicio } from "@/content/paginas";
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 
@@ -10,14 +9,15 @@ export function QuienSoyResumen() {
   return (
     <Section tone="crema" labelledBy="quien-soy-title">
       <div className="grid items-center gap-10 md:grid-cols-12 md:gap-12 lg:gap-20">
-        <Reveal className="md:col-span-4 lg:col-span-3 lg:col-start-2">
+        <div className="md:col-span-4 lg:col-span-3 lg:col-start-2">
           <SiteImage
             name={quienSoy.image}
+            shape="circle"
             sizes="(min-width: 1024px) 280px, (min-width: 768px) 30vw, 260px"
-            className="aspect-[4/5] w-full max-w-[16rem] shadow-[0_30px_60px_-35px_rgba(63,46,58,0.45)] md:max-w-none"
+            className="aspect-square w-full max-w-[16rem] shadow-[0_30px_60px_-35px_rgba(63,46,58,0.45)] md:max-w-none"
           />
-        </Reveal>
-        <Reveal className="md:col-span-8 lg:col-span-7" delay={0.1}>
+        </div>
+        <div className="md:col-span-8 lg:col-span-7">
           <p className="eyebrow mb-5">{quienSoy.eyebrow}</p>
           <h2 id="quien-soy-title" className="text-h2">
             {quienSoy.title}
@@ -31,7 +31,7 @@ export function QuienSoyResumen() {
               {quienSoy.link}
             </Button>
           </div>
-        </Reveal>
+        </div>
       </div>
     </Section>
   );

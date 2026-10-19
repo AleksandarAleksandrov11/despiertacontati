@@ -1,106 +1,21 @@
-import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, StyleSheet, Svg, Text, View } from "@react-pdf/renderer";
-import type { ReactNode } from "react";
+import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, Svg, Text, View } from "@react-pdf/renderer";
 import { arcano, teaser } from "@/content/arcanos";
 import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/content/calculadora";
 import { site } from "@/content/site";
-import type { Puntos } from "@/lib/matriz";
-import { lineasMatriz, lienzo, puntosMatriz, verticesMatriz, type TipoPunto } from "@/lib/matriz-geometria";
+import { etapaActual, type Etapa, type Puntos, type Tramo } from "@/lib/matriz";
+import {
+  lineasMatriz,
+  lienzo,
+  marcasEdad,
+  puntosAnillo,
+  puntosMatriz,
+  puntosVariante,
+  verticesMatriz,
+  type TipoPunto,
+  type Variante,
+} from "@/lib/matriz-geometria";
+import { Boton, c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
 import type { DatosPdf, Persona } from "./datos";
-
-export type Recursos = { logo: string; simbolo: string; foto: string; qr: string };
-
-const c = {
-  crema: "#fbf7f2",
-  rosaPolvo: "#f6e9e6",
-  lavanda: "#f1ecf6",
-  salvia: "#eef3ec",
-  ciruela: "#3f2e3a",
-  ciruelaSoft: "#54404e",
-  inkSoft: "#6e5a66",
-  rosa: "#c98b93",
-  rosaDeep: "#9c5f6c",
-  malva: "#a9799b",
-  malvaDeep: "#8e5f80",
-  dorado: "#c8a46a",
-  doradoSoft: "#ddbf8c",
-  linea: "#e7dcd3",
-};
-
-const A5 = { width: 419.53, height: 595.28 };
-
-const s = StyleSheet.create({
-  page: {
-    backgroundColor: c.crema,
-    paddingTop: 42,
-    paddingBottom: 54,
-    paddingHorizontal: 42,
-    fontFamily: "Manrope",
-    fontSize: 9.5,
-    lineHeight: 1.6,
-    color: c.ciruela,
-  },
-  eyebrow: { fontFamily: "Manrope", fontWeight: 500, fontSize: 6.8, letterSpacing: 1.7, textTransform: "uppercase", color: c.inkSoft },
-  h1: { fontFamily: "Cormorant", fontWeight: 500, fontSize: 30, lineHeight: 1.05, color: c.ciruela },
-  h2: { fontFamily: "Cormorant", fontWeight: 500, fontSize: 25, lineHeight: 1.08, color: c.ciruela, marginTop: 6 },
-  lead: { fontSize: 10, lineHeight: 1.65, color: c.inkSoft },
-  card: { backgroundColor: "#ffffff", borderRadius: 12, padding: 15 },
-  small: { fontSize: 8, lineHeight: 1.5, color: c.inkSoft },
-  footer: {
-    position: "absolute",
-    bottom: 26,
-    left: 42,
-    right: 42,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    fontSize: 6.8,
-    letterSpacing: 0.6,
-    color: c.inkSoft,
-  },
-});
-
-function Fondo({ tono }: { tono: "rosa" | "lavanda" | "salvia" | "oscuro" }) {
-  const colores = {
-    rosa: [c.rosaPolvo, c.lavanda],
-    lavanda: [c.lavanda, c.rosaPolvo],
-    salvia: [c.salvia, c.lavanda],
-    oscuro: ["#6b4f63", "#7a4f5c"],
-  }[tono];
-  return (
-    <Svg fixed width={A5.width} height={A5.height} style={{ position: "absolute", top: 0, left: 0 }}>
-      <Defs>
-        <RadialGradient id="fondo-a" cx="0.5" cy="0.5" r="0.5">
-          <Stop offset="0" stopColor={colores[0]} stopOpacity={tono === "oscuro" ? 0.55 : 1} />
-          <Stop offset="1" stopColor={colores[0]} stopOpacity={0} />
-        </RadialGradient>
-        <RadialGradient id="fondo-b" cx="0.5" cy="0.5" r="0.5">
-          <Stop offset="0" stopColor={colores[1]} stopOpacity={tono === "oscuro" ? 0.45 : 1} />
-          <Stop offset="1" stopColor={colores[1]} stopOpacity={0} />
-        </RadialGradient>
-      </Defs>
-      <Circle cx={A5.width - 30} cy={40} r={190} fill="url(#fondo-a)" />
-      <Circle cx={20} cy={A5.height - 40} r={170} fill="url(#fondo-b)" />
-    </Svg>
-  );
-}
-
-function Pie({ oscuro = false }: { oscuro?: boolean }) {
-  return (
-    <View fixed style={[s.footer, oscuro ? { color: "#d9cdd4" } : {}]}>
-      <Text>{`${site.name} · ${site.url.replace("https://www.", "")}`}</Text>
-      <Text render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
-    </View>
-  );
-}
-
-function Encabezado({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
-  return (
-    <View>
-      <Text style={s.eyebrow}>{eyebrow}</Text>
-      <Text style={[s.h2, title.length > 36 ? { fontSize: 18 } : {}]}>{title}</Text>
-      {text ? <Text style={[s.lead, { marginTop: 8 }]}>{text}</Text> : null}
-    </View>
-  );
-}
 
 function Numero({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
   return (
@@ -128,7 +43,7 @@ function Arcano({ numero, size = 40, oro = false }: { numero: number; size?: num
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Numero numero={numero} size={size} oro={oro} />
-      <View style={{ marginLeft: 12 }}>
+      <View style={{ marginLeft: 12, flexShrink: 1 }}>
         <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: size > 44 ? 22 : 17, lineHeight: 1.1 }}>{datos?.nombre}</Text>
         <Text style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 10.5, color: c.inkSoft, marginTop: 2 }}>
           {`${calculadoraPdf.arcano} ${numero} · ${datos?.clave ?? ""}`}
@@ -180,6 +95,7 @@ const pdfFills: Record<TipoPunto, { fill: string; text: string; stroke?: string 
   interno: { fill: "#4a3845", text: c.crema, stroke: "#8a7268" },
   corazon: { fill: c.rosaPolvo, text: c.ciruela },
   canal: { fill: c.doradoSoft, text: c.ciruela },
+  linaje: { fill: "#5e4757", text: "#f3e2bd", stroke: c.dorado },
 };
 
 const lineas = {
@@ -190,7 +106,25 @@ const lineas = {
   canal: { stroke: c.doradoSoft, width: 1.1, opacity: 0.85 },
 };
 
-function Diagrama({ puntos, etiquetas, size }: { puntos: Puntos; etiquetas: string[]; size: number }) {
+type Activa = { tramo: number; etapa: number } | null;
+
+function Diagrama({
+  puntos,
+  etiquetas,
+  size,
+  variante,
+  edades,
+  activa,
+}: {
+  puntos: Puntos;
+  etiquetas: string[];
+  size: number;
+  variante: Variante;
+  edades: Tramo[];
+  activa: Activa;
+}) {
+  const anillo = variante === "individual" && edades.length === 8;
+  const visibles = puntosVariante(variante);
   const min = -24;
   const span = 448;
   const scale = size / span;
@@ -212,8 +146,14 @@ function Diagrama({ puntos, etiquetas, size }: { puntos: Puntos; etiquetas: stri
             <Stop offset="1" stopColor={c.doradoSoft} stopOpacity={0} />
           </RadialGradient>
         </Defs>
-        <Circle cx={lienzo.centro} cy={lienzo.centro} r={186} fill="none" stroke={c.dorado} strokeOpacity={0.35} strokeWidth={0.9} />
-        <Circle cx={lienzo.centro} cy={lienzo.centro} r={198} fill="none" stroke={c.dorado} strokeOpacity={0.4} strokeWidth={0.9} strokeDasharray="1 7" />
+        {anillo ? (
+          <Circle cx={lienzo.centro} cy={lienzo.centro} r={lienzo.anillo} fill="none" stroke={c.dorado} strokeOpacity={0.5} strokeWidth={0.9} strokeDasharray="1 4" />
+        ) : (
+          <>
+            <Circle cx={lienzo.centro} cy={lienzo.centro} r={186} fill="none" stroke={c.dorado} strokeOpacity={0.35} strokeWidth={0.9} />
+            <Circle cx={lienzo.centro} cy={lienzo.centro} r={198} fill="none" stroke={c.dorado} strokeOpacity={0.4} strokeWidth={0.9} strokeDasharray="1 7" />
+          </>
+        )}
         <Circle cx={lienzo.centro} cy={lienzo.centro} r={102} fill="none" stroke={c.crema} strokeOpacity={0.12} strokeWidth={0.9} />
         <Circle cx={lienzo.centro} cy={lienzo.centro} r={90} fill="url(#halo)" />
         {lineasMatriz.map((linea) => {
@@ -230,7 +170,22 @@ function Diagrama({ puntos, etiquetas, size }: { puntos: Puntos; etiquetas: stri
             />
           );
         })}
-        {puntosMatriz.map((punto) => {
+        {anillo &&
+          puntosAnillo.map((punto) => {
+            const marcada = activa?.tramo === punto.tramo && activa.etapa === punto.etapa;
+            return (
+              <Circle
+                key={`a-${punto.tramo}-${punto.etapa}`}
+                cx={punto.x}
+                cy={punto.y}
+                r={punto.etapa === 4 ? 7.6 : 6.6}
+                fill={marcada ? c.doradoSoft : punto.etapa === 4 ? "#6a4f62" : "#4a3845"}
+                stroke={marcada ? "#f3e2bd" : "#8a7268"}
+                strokeWidth={marcada ? 2 : 0.8}
+              />
+            );
+          })}
+        {visibles.map((punto) => {
           const color = pdfFills[punto.tipo];
           return (
             <Circle
@@ -245,7 +200,33 @@ function Diagrama({ puntos, etiquetas, size }: { puntos: Puntos; etiquetas: stri
           );
         })}
       </Svg>
-      {puntosMatriz.map((punto) => {
+      {anillo &&
+        puntosAnillo.map((punto) => {
+          const box = 16 * scale;
+          const marcada = activa?.tramo === punto.tramo && activa.etapa === punto.etapa;
+          return (
+            <View
+              key={`an-${punto.tramo}-${punto.etapa}`}
+              style={{ position: "absolute", left: px(punto.x) - box / 2, top: px(punto.y) - box / 2, width: box, height: box, alignItems: "center", justifyContent: "center" }}
+            >
+              <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 7.2 * scale, lineHeight: 1, color: marcada ? c.ciruela : c.crema }}>
+                {edades[punto.tramo]?.etapas[punto.etapa]?.valor}
+              </Text>
+            </View>
+          );
+        })}
+      {anillo &&
+        marcasEdad.map((marca) => (
+          <View
+            key={`m-${marca.edad}`}
+            style={{ position: "absolute", left: px(marca.x) - 10, top: px(marca.y) - 5, width: 20, height: 10, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text style={{ fontFamily: "Manrope", fontWeight: marca.principal ? 600 : 400, fontSize: (marca.principal ? 8.5 : 7) * scale, lineHeight: 1, color: marca.principal ? c.doradoSoft : "#bfaeb8" }}>
+              {marca.edad}
+            </Text>
+          </View>
+        ))}
+      {visibles.map((punto) => {
         const box = punto.r * 2 * scale;
         const fontSize = (punto.tipo === "centro" ? 17 : punto.r >= 14 ? 13 : punto.r >= 10 ? 9.5 : 8.5) * scale;
         return (
@@ -345,41 +326,57 @@ function Portada({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
   );
 }
 
+function activaDe(edades: Tramo[], actual: Etapa | null): Activa {
+  if (!actual) return null;
+  const tramo = edades.findIndex((item) => item.etapas.includes(actual));
+  return tramo >= 0 ? { tramo, etapa: edades[tramo]!.etapas.indexOf(actual) } : null;
+}
+
 function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   const individual = datos.tipo === "individual";
   const p = datos.matriz.puntos;
-  const copy = individual ? calculadoraIndividual : calculadoraPareja;
-  const leyenda: [string, number][] = [
-    [copy.leyenda.centro, p.e],
-    ...(individual
-      ? ([
-          [calculadoraIndividual.leyenda.energia, p.a],
-          [calculadoraIndividual.leyenda.talento, p.b],
-        ] as [string, number][])
-      : []),
-    [copy.leyenda.aprendizajes, p.d],
-    [copy.leyenda.material, p.dinero],
-  ];
+  const leyenda: [string, number][] = individual
+    ? [
+        [calculadoraIndividual.leyenda.centro, p.e],
+        [calculadoraIndividual.leyenda.energia, p.a],
+        [calculadoraIndividual.leyenda.talento, p.b],
+        [calculadoraIndividual.leyenda.aprendizajes, p.d],
+        [calculadoraIndividual.leyenda.material, p.dinero],
+        [calculadoraIndividual.leyenda.linaje, p.k],
+      ]
+    : [
+        [calculadoraPareja.leyenda.centro, p.e],
+        [calculadoraPareja.leyenda.aprendizajes, p.d],
+        [calculadoraPareja.leyenda.amor, p.amor],
+        [calculadoraPareja.leyenda.material, p.dinero],
+      ];
   const titulo = individual
     ? calculadoraIndividual.stageTitle(datos.persona.nombre)
     : calculadoraPareja.stageTitle(datos.personas.every((persona) => persona.nombre) ? `${datos.personas[0].nombre} y ${datos.personas[1].nombre}` : "");
+  const activa = individual ? activaDe(datos.matriz.edades, etapaActual(datos.matriz.edades, datos.edad)) : null;
   return (
     <Page size="A5" style={s.page}>
       <Fondo tono="lavanda" />
       <Encabezado eyebrow={individual ? calculadoraPdf.matrizTitle : calculadoraPdf.matrizParejaTitle} title={titulo} />
-      <View style={{ marginTop: 12, backgroundColor: c.ciruela, borderRadius: 16, paddingVertical: 8, alignItems: "center" }}>
-        <Diagrama puntos={p} etiquetas={individual ? calculadoraIndividual.etiquetas : calculadoraPareja.etiquetas} size={titulo.length > 36 ? 250 : 268} />
+      <View style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 16, paddingVertical: 6, alignItems: "center" }}>
+        <Diagrama
+          puntos={p}
+          etiquetas={individual ? calculadoraIndividual.etiquetas : calculadoraPareja.etiquetas}
+          size={titulo.length > 36 ? 278 : 296}
+          variante={datos.tipo}
+          edades={datos.matriz.edades}
+          activa={activa}
+        />
       </View>
-      <Text style={[s.small, { marginTop: 10, fontSize: 8.4 }]}>{individual ? calculadoraPdf.matrizText : calculadoraPdf.matrizParejaText}</Text>
-      <Text style={[s.eyebrow, { marginTop: 10 }]}>{calculadoraPdf.leyenda}</Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 8 }}>
+      <Text style={[s.small, { marginTop: 8, fontSize: 8 }]}>{individual ? calculadoraPdf.matrizText : calculadoraPdf.matrizParejaText}</Text>
+      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 7 }}>
         {leyenda.map(([label, numero]) => (
           <View
             key={label}
             style={{ flexDirection: "row", alignItems: "center", backgroundColor: "#ffffff", borderRadius: 20, paddingVertical: 3, paddingLeft: 3, paddingRight: 9, marginRight: 5, marginBottom: 5 }}
           >
-            <Numero numero={numero} size={18} />
-            <Text style={{ marginLeft: 6, fontSize: 7.8 }}>{label}</Text>
+            <Numero numero={numero} size={17} />
+            <Text style={{ marginLeft: 6, fontSize: 7.6 }}>{label}</Text>
           </View>
         ))}
       </View>
@@ -388,9 +385,9 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   );
 }
 
-type FilaProposito = { label: string; etapa: string; partes: string[]; valores: number[]; resultado: number };
+type FilaProposito = { label: string; etapa: string; partes: string[]; valores: number[]; resultado: number; texto?: string };
 
-function Propositos({ filas, nota }: { filas: FilaProposito[]; nota: string }) {
+function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) {
   return (
     <View wrap={false} style={[s.card, { marginTop: 12, paddingVertical: 6 }]}>
       {filas.map((fila, index) => (
@@ -399,7 +396,7 @@ function Propositos({ filas, nota }: { filas: FilaProposito[]; nota: string }) {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            paddingVertical: 9,
+            paddingVertical: 6,
             borderTopWidth: index === 0 ? 0 : 0.6,
             borderTopColor: c.linea,
           }}
@@ -412,30 +409,125 @@ function Propositos({ filas, nota }: { filas: FilaProposito[]; nota: string }) {
             </Text>
           </View>
           <View style={{ flex: 1 }}>
-            <Arcano numero={fila.resultado} size={30} />
+            <Arcano numero={fila.resultado} size={28} />
+            {fila.texto ? <Text style={{ marginTop: 5, fontSize: 8, lineHeight: 1.45, color: c.inkSoft }}>{fila.texto}</Text> : null}
           </View>
         </View>
       ))}
-      <Text style={[s.small, { borderTopWidth: 0.6, borderTopColor: c.linea, paddingTop: 8, paddingBottom: 4 }]}>{nota}</Text>
+      {nota ? <Text style={[s.small, { borderTopWidth: 0.6, borderTopColor: c.linea, paddingTop: 8, paddingBottom: 4 }]}>{nota}</Text> : null}
     </View>
   );
 }
 
-
-function Avance({ datos }: { datos: DatosPdf }) {
-  const individual = datos.tipo === "individual";
-  const boton = individual ? calculadoraPdf.ctaBuyShort : calculadoraPdf.ctaInfoShort;
+function Avance({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
   return (
     <View wrap={false} style={{ marginTop: 12, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 13, flexDirection: "row", alignItems: "center" }}>
-      <Text style={{ flex: 1, paddingRight: 10, fontFamily: "Cormorant", fontWeight: 500, fontSize: 12.5, color: c.crema, lineHeight: 1.15 }}>
-        {individual ? calculadoraPdf.avance : calculadoraPdf.avancePareja}
-      </Text>
-      <Link src={individual ? datos.compraUrl : datos.infoUrl} style={{ textDecoration: "none" }}>
+      <Text style={{ flex: 1, paddingRight: 10, fontFamily: "Cormorant", fontWeight: 500, fontSize: 12.5, color: c.crema, lineHeight: 1.15 }}>{calculadoraPdf.avance}</Text>
+      <Link src={datos.compraUrl} style={{ textDecoration: "none" }}>
         <View style={{ backgroundColor: c.crema, borderRadius: 16, paddingVertical: 6, paddingHorizontal: 11 }}>
-          <Text style={{ fontSize: 8, fontWeight: 600, color: c.ciruela }}>{datos.precio ? `${boton} · ${datos.precio}` : boton}</Text>
+          <Text style={{ fontSize: 8, fontWeight: 600, color: c.ciruela }}>{datos.precio ? `${calculadoraPdf.ctaBuyShort} · ${datos.precio}` : calculadoraPdf.ctaBuyShort}</Text>
         </View>
       </Link>
     </View>
+  );
+}
+
+function PaginaEdades({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+  const copy = calculadoraIndividual.edades;
+  const tramos = datos.matriz.edades;
+  const actual = etapaActual(tramos, datos.edad);
+  return (
+    <Page size="A5" style={s.page}>
+      <Fondo tono="salvia" />
+      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
+      {actual ? (
+        <View wrap={false} style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 12, flexDirection: "row", alignItems: "center" }}>
+          <View style={{ flex: 1, paddingRight: 8 }}>
+            <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.etapa(actual)}</Text>
+            <Text style={{ marginTop: 2, fontSize: 8.2, lineHeight: 1.35, color: c.crema }}>{copy.ahora(Math.floor(datos.edad))}</Text>
+          </View>
+          <Numero numero={actual.valor} size={26} />
+          <Text style={{ marginLeft: 7, fontFamily: "Cormorant", fontWeight: 500, fontSize: 13, color: c.crema }}>{arcano(actual.valor)?.nombre}</Text>
+        </View>
+      ) : null}
+      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10, marginHorizontal: -3 }}>
+        {tramos.map((tramo) => (
+          <View key={tramo.desde} wrap={false} style={{ width: "25%", paddingHorizontal: 3, marginBottom: 6 }}>
+            <View style={[s.card, { padding: 7, borderRadius: 9 }]}>
+              <Text style={[s.eyebrow, { fontSize: 5.6, letterSpacing: 1 }]}>{copy.tramo(tramo.desde)}</Text>
+              {tramo.etapas.map((etapa) => {
+                const marcada = etapa === actual;
+                return (
+                  <View
+                    key={etapa.etiqueta}
+                    style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 1.5, paddingVertical: 1, paddingHorizontal: 3, borderRadius: 5, backgroundColor: marcada ? "#efe0c4" : etapa.principal ? c.lavanda : "transparent" }}
+                  >
+                    <Text style={{ fontSize: 6.4, lineHeight: 1.25, color: c.inkSoft }}>{etapa.etiqueta}</Text>
+                    <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 7.6, lineHeight: 1.25, color: c.ciruela }}>{etapa.valor}</Text>
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        ))}
+      </View>
+      <Text style={[s.small, { marginTop: 2 }]}>{copy.nota}</Text>
+      <Pie />
+    </Page>
+  );
+}
+
+function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+  const copy = calculadoraIndividual.chakras;
+  const linaje = calculadoraIndividual.linaje;
+  const { chakras, totalChakras, puntos: p, propositos } = datos.matriz;
+  const columna = { width: 46, textAlign: "center" as const };
+  const filas = [...chakras.map((fila, index) => ({ fila, nombre: `${copy.filas[index]!.es} · ${copy.filas[index]!.nombre}`, total: false })), { fila: totalChakras, nombre: copy.total, total: true }];
+  return (
+    <Page size="A5" style={s.page}>
+      <Fondo tono="rosa" />
+      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
+      <View wrap={false} style={[s.card, { marginTop: 10, paddingVertical: 6 }]}>
+        <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 0.6, borderBottomColor: c.linea }}>
+          <Text style={[s.eyebrow, { flex: 1, fontSize: 5.8 }]}>{copy.columnas.chakra}</Text>
+          {[copy.columnas.fisico, copy.columnas.energia, copy.columnas.emocion].map((label) => (
+            <Text key={label} style={[s.eyebrow, columna, { fontSize: 5.8 }]}>
+              {label}
+            </Text>
+          ))}
+        </View>
+        {filas.map(({ fila, nombre, total }) => (
+          <View key={nombre} style={{ flexDirection: "row", alignItems: "center", paddingVertical: 2.4, borderTopWidth: total ? 0.6 : 0, borderTopColor: c.linea }}>
+            <Text style={{ flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: total ? 11.5 : 10.5, lineHeight: 1.1 }}>{nombre}</Text>
+            {[fila.fisico, fila.energia, fila.emocion].map((valor, index) => (
+              <Text key={index} style={[columna, { fontFamily: "Manrope", fontWeight: 600, fontSize: 9 }]}>
+                {valor}
+              </Text>
+            ))}
+          </View>
+        ))}
+      </View>
+      <Text style={[s.small, { marginTop: 6, fontSize: 7 }]}>{copy.aviso}</Text>
+      <View style={{ marginTop: 10 }}>
+        <Encabezado eyebrow={linaje.eyebrow} title={linaje.title} />
+      </View>
+      <View style={{ flexDirection: "row", marginTop: 10 }}>
+        {[
+          { label: linaje.paterna.label, valores: [p.f, p.h], resultado: propositos.masculino },
+          { label: linaje.materna.label, valores: [p.g, p.i], resultado: propositos.femenino },
+        ].map((linea, index) => (
+          <View key={linea.label} wrap={false} style={[s.card, { flex: 1, marginLeft: index === 0 ? 0 : 10, padding: 10 }]}>
+            <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 13.5, lineHeight: 1.1 }}>{linea.label}</Text>
+            <Text style={[s.small, { fontSize: 7.2, marginTop: 2 }]}>{`${linea.valores[0]} + ${linea.valores[1]}`}</Text>
+            <View style={{ marginTop: 7 }}>
+              <Arcano numero={linea.resultado} size={24} />
+            </View>
+          </View>
+        ))}
+      </View>
+      <Text style={[s.small, { marginTop: 6, fontSize: 7.4 }]}>{`${linaje.centro.label}: ${p.k} · ${linaje.union.label}: ${p.k1}`}</Text>
+      <Pie />
+    </Page>
   );
 }
 
@@ -447,6 +539,7 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
     { ...copy.propositos.personal, valores: [prop.cielo, prop.tierra], resultado: prop.personal },
     { ...copy.propositos.social, valores: [prop.masculino, prop.femenino], resultado: prop.social },
     { ...copy.propositos.espiritual, valores: [prop.personal, prop.social], resultado: prop.espiritual },
+    { ...copy.propositos.planetario, valores: [prop.social, prop.espiritual], resultado: prop.planetario },
   ];
   return (
     <>
@@ -465,12 +558,14 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
       <Page size="A5" style={s.page}>
         <Fondo tono="salvia" />
         <Lectura label={copy.posiciones.talento.label} intro={copy.posiciones.talento.text} numero={p.b} text={arcano(p.b)?.talento ?? ""} />
-        <View style={{ marginTop: 18 }}>
+        <View style={{ marginTop: 12 }}>
           <Encabezado eyebrow={copy.propositos.eyebrow} title={copy.propositos.title} />
         </View>
-        <Propositos filas={filas} nota={`${copy.propositos.espiritual.label}: ${arcano(prop.espiritual)?.proposito ?? ""} ${copy.propositos.locked}`} />
+        <Propositos filas={filas} nota={copy.propositos.locked} />
         <Pie />
       </Page>
+      <PaginaEdades datos={datos} />
+      <PaginaChakras datos={datos} />
       <Page size="A5" style={s.page}>
         <Fondo tono="rosa" />
         <Encabezado eyebrow={copy.bloqueadas.eyebrow} title={calculadoraPdf.bloqueadoTitle} text={copy.bloqueadas.text} />
@@ -495,14 +590,26 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
   );
 }
 
+function Compacta({ label, numero, text }: { label: string; numero: number; text: string }) {
+  return (
+    <View wrap={false} style={[s.card, { marginTop: 10, padding: 13 }]}>
+      <Text style={s.eyebrow}>{label}</Text>
+      <View style={{ marginTop: 8 }}>
+        <Arcano numero={numero} size={30} />
+      </View>
+      <Text style={{ marginTop: 7, fontSize: 8.8, lineHeight: 1.5 }}>{text}</Text>
+    </View>
+  );
+}
+
 function PaginasPareja({ datos }: { datos: Extract<DatosPdf, { tipo: "pareja" }> }) {
   const copy = calculadoraPareja;
   const p = datos.matriz.puntos;
   const prop = datos.matriz.propositos;
   const filas: FilaProposito[] = [
-    { ...copy.propositos.personal, valores: [prop.cielo, prop.tierra], resultado: prop.personal },
-    { ...copy.propositos.social, valores: [prop.masculino, prop.femenino], resultado: prop.social },
-    { ...copy.propositos.espiritual, valores: [prop.personal, prop.social], resultado: prop.espiritual },
+    { ...copy.propositos.personal, valores: [prop.cielo, prop.tierra], resultado: prop.personal, texto: arcano(prop.personal)?.proposito },
+    { ...copy.propositos.social, valores: [prop.masculino, prop.femenino], resultado: prop.social, texto: arcano(prop.social)?.proposito },
+    { ...copy.propositos.espiritual, valores: [prop.personal, prop.social], resultado: prop.espiritual, texto: arcano(prop.espiritual)?.proposito },
   ];
   return (
     <>
@@ -530,95 +637,44 @@ function PaginasPareja({ datos }: { datos: Extract<DatosPdf, { tipo: "pareja" }>
       <Page size="A5" style={s.page}>
         <Fondo tono="salvia" />
         <Encabezado eyebrow={copy.propositos.eyebrow} title={copy.propositos.title} text={copy.propositos.text} />
-        <Propositos filas={filas} nota={copy.propositos.locked} />
+        <Propositos filas={filas} />
         <Pie />
       </Page>
       <Page size="A5" style={s.page}>
         <Fondo tono="rosa" />
-        <Encabezado eyebrow={copy.bloqueadas.eyebrow} title={calculadoraPdf.bloqueadoParejaTitle} text={copy.bloqueadas.text} />
-        <Bloqueada
-          label={copy.bloqueadas.aprendizajes.label}
-          intro={copy.bloqueadas.aprendizajes.text}
-          numero={p.d}
-          text={arcano(p.d)?.sombra ?? ""}
-          lock={copy.bloqueadas.lock}
-        />
-        <Bloqueada
-          label={copy.bloqueadas.material.label}
-          intro={copy.bloqueadas.material.text}
-          numero={p.dinero}
-          text={arcano(p.dinero)?.dinero ?? ""}
-          lock={copy.bloqueadas.lock}
-        />
-        <Avance datos={datos} />
+        <Encabezado eyebrow={copy.mas.eyebrow} title={copy.mas.title} />
+        <Compacta label={copy.mas.aprendizajes.label} numero={p.d} text={arcano(p.d)?.sombra ?? ""} />
+        <Compacta label={copy.mas.amor.label} numero={p.amor} text={arcano(p.amor)?.amor ?? ""} />
+        <Compacta label={copy.mas.material.label} numero={p.dinero} text={arcano(p.dinero)?.dinero ?? ""} />
         <Pie />
       </Page>
     </>
   );
 }
 
-function Tambien({ title, items, oscuro = false }: { title: string; items: string[]; oscuro?: boolean }) {
-  return (
-    <View wrap={false} style={{ marginTop: 14 }}>
-      <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 14, color: oscuro ? c.crema : c.ciruela }}>{title}</Text>
-      {items.map((item) => (
-        <View key={item} style={{ flexDirection: "row", marginTop: 4 }}>
-          <View style={{ width: 4, height: 4, borderRadius: 2, backgroundColor: c.dorado, marginTop: 5, marginRight: 8 }} />
-          <Text style={{ flex: 1, fontSize: 9.2, color: oscuro ? c.crema : c.ciruela }}>{item}</Text>
-        </View>
-      ))}
-    </View>
-  );
-}
-
-function Boton({ src, children, claro = true }: { src: string; children: ReactNode; claro?: boolean }) {
-  return (
-    <Link src={src} style={{ textDecoration: "none" }}>
-      <View
-        style={{
-          backgroundColor: claro ? c.crema : "transparent",
-          borderWidth: claro ? 0 : 0.8,
-          borderColor: "#cbbcc5",
-          borderRadius: 22,
-          paddingVertical: 10,
-          paddingHorizontal: 18,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontSize: 9.5, fontWeight: 600, color: claro ? c.ciruela : c.crema }}>{children}</Text>
-      </View>
-    </Link>
-  );
-}
-
-function PaginaVenta({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
-  const individual = datos.tipo === "individual";
-  const copy = individual ? calculadoraIndividual.completa : calculadoraPareja.completa;
+function PaginaVenta({ datos, recursos }: { datos: Extract<DatosPdf, { tipo: "individual" }>; recursos: Recursos }) {
+  const copy = calculadoraIndividual.completa;
   return (
     <Page size="A5" style={[s.page, { backgroundColor: c.ciruela, color: c.crema }]}>
       <Fondo tono="oscuro" />
       <Text style={[s.eyebrow, { color: "#cbbcc5" }]}>{copy.eyebrow}</Text>
-      <Text style={[s.h2, { color: c.crema, fontSize: 27 }]}>{individual ? calculadoraPdf.ctaTitle : calculadoraPareja.completa.title}</Text>
+      <Text style={[s.h2, { color: c.crema, fontSize: 27 }]}>{calculadoraPdf.ctaTitle}</Text>
       <Text style={[s.lead, { color: "#e3d8de", marginTop: 8, fontSize: 9.6 }]}>{copy.text}</Text>
-      {individual ? (
-        <View style={{ marginTop: 10 }}>
-          {calculadoraIndividual.completa.claves.map((clave, index) => (
-            <View key={clave} style={{ flexDirection: "row", alignItems: "center", marginTop: 3 }}>
-              <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 9, color: c.doradoSoft, width: 16 }}>{index + 1}</Text>
-              <Text style={{ fontSize: 9.4, color: c.crema }}>{clave}</Text>
-            </View>
-          ))}
-        </View>
-      ) : (
-        <Tambien title={calculadoraPdf.tambienParejaTitle} items={calculadoraPdf.tambienPareja} oscuro />
-      )}
+      <View style={{ marginTop: 10 }}>
+        {copy.claves.map((clave, index) => (
+          <View key={clave} style={{ flexDirection: "row", alignItems: "center", marginTop: 3 }}>
+            <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 9, color: c.doradoSoft, width: 16 }}>{index + 1}</Text>
+            <Text style={{ fontSize: 9.4, color: c.crema }}>{clave}</Text>
+          </View>
+        ))}
+      </View>
       <Text style={{ marginTop: 10, fontSize: 8.8, color: "#d9cdd4" }}>{copy.formato}</Text>
 
       <View style={{ marginTop: 14, borderTopWidth: 0.6, borderTopColor: "#6e5a66", paddingTop: 12, flexDirection: "row", alignItems: "center" }}>
         <View style={{ flex: 1 }}>
           <Text style={[s.eyebrow, { color: "#cbbcc5" }]}>{calculadoraPdf.precio}</Text>
           <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: datos.precio ? 38 : 22, color: c.doradoSoft, lineHeight: 1.1, marginTop: 2 }}>
-            {datos.precio ?? calculadoraPareja.completa.precio}
+            {datos.precio ?? calculadoraPdf.precioConsulta}
           </Text>
         </View>
         <View style={{ alignItems: "center", width: 96 }}>
@@ -628,52 +684,14 @@ function PaginaVenta({ datos, recursos }: { datos: DatosPdf; recursos: Recursos 
       </View>
 
       <View style={{ marginTop: 14 }}>
-        {individual ? <Boton src={datos.compraUrl}>{calculadoraPdf.ctaBuy}</Boton> : null}
-        <View style={{ marginTop: individual ? 7 : 0 }}>
-          <Boton src={datos.infoUrl} claro={!individual}>
+        <Boton src={datos.compraUrl}>{calculadoraPdf.ctaBuy}</Boton>
+        <View style={{ marginTop: 7 }}>
+          <Boton src={datos.infoUrl} claro={false}>
             {calculadoraPdf.ctaInfo}
           </Boton>
         </View>
       </View>
       <Pie oscuro />
-    </Page>
-  );
-}
-
-function PaginaTati({ recursos }: { recursos: Recursos }) {
-  const contactos: [string, string, string][] = [
-    [calculadoraPdf.web, site.url.replace("https://www.", ""), site.url],
-    [calculadoraPdf.whatsapp, site.contact.phoneDisplay, `https://wa.me/${site.contact.whatsappNumber}`],
-    [calculadoraPdf.instagram, site.social.instagram.label, site.social.instagram.url],
-    [site.social.tarot.label, site.social.tarot.handle, site.social.tarot.url],
-  ];
-  return (
-    <Page size="A5" style={s.page}>
-      <Fondo tono="lavanda" />
-      <View style={{ alignItems: "center" }}>
-        <Image src={recursos.foto} style={{ width: 104, height: 104, borderRadius: 52 }} />
-        <Text style={[s.h1, { marginTop: 14, textAlign: "center", fontSize: 28 }]}>{calculadoraPdf.sobreTitle}</Text>
-      </View>
-      {calculadoraPdf.sobre.map((paragraph) => (
-        <Text key={paragraph} style={{ marginTop: 10, fontSize: 9.4, lineHeight: 1.65, textAlign: "center" }}>
-          {paragraph}
-        </Text>
-      ))}
-      <Text style={[s.eyebrow, { marginTop: 18, textAlign: "center" }]}>{calculadoraPdf.contacto}</Text>
-      <View style={{ marginTop: 8, flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }}>
-        {contactos.map(([label, texto, src]) => (
-          <Link key={label} src={src} style={{ width: "50%", paddingVertical: 4, textDecoration: "none", textAlign: "center" }}>
-            <Text style={{ fontSize: 6.6, letterSpacing: 1, textTransform: "uppercase", color: c.inkSoft }}>{label}</Text>
-            <Text style={{ fontSize: 9.2, color: c.rosaDeep }}>{texto}</Text>
-          </Link>
-        ))}
-      </View>
-      <View style={{ flexGrow: 1 }} />
-      <View style={{ alignItems: "center" }}>
-        <Image src={recursos.simbolo} style={{ width: 40, height: 38 }} />
-        <Text style={[s.small, { marginTop: 8, textAlign: "center", fontSize: 7 }]}>{calculadoraPdf.aviso}</Text>
-      </View>
-      <Pie />
     </Page>
   );
 }
@@ -684,8 +702,14 @@ export function MatrizPdf({ datos, recursos }: { datos: DatosPdf; recursos: Recu
     <Document title={`${titulo} · ${site.name}`} author={site.person.fullName} creator={site.name} producer={site.name} language="es-ES">
       <Portada datos={datos} recursos={recursos} />
       <PaginaMatriz datos={datos} />
-      {datos.tipo === "individual" ? <PaginasIndividual datos={datos} /> : <PaginasPareja datos={datos} />}
-      <PaginaVenta datos={datos} recursos={recursos} />
+      {datos.tipo === "individual" ? (
+        <>
+          <PaginasIndividual datos={datos} />
+          <PaginaVenta datos={datos} recursos={recursos} />
+        </>
+      ) : (
+        <PaginasPareja datos={datos} />
+      )}
       <PaginaTati recursos={recursos} />
     </Document>
   );

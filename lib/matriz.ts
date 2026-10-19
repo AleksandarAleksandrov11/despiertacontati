@@ -28,6 +28,8 @@ export type Puntos = {
   h2: number;
   i1: number;
   i2: number;
+  k: number;
+  k1: number;
   x: number;
   dinero: number;
   amor: number;
@@ -41,9 +43,22 @@ export type Propositos = {
   femenino: number;
   social: number;
   espiritual: number;
+  planetario: number;
 };
 
-export type Matriz = { puntos: Puntos; propositos: Propositos };
+export type FilaChakra = { fisico: number; energia: number; emocion: number };
+
+export type Etapa = { desde: number; hasta: number; etiqueta: string; valor: number; principal: boolean };
+
+export type Tramo = { desde: number; etapas: Etapa[] };
+
+export type Matriz = {
+  puntos: Puntos;
+  propositos: Propositos;
+  chakras: FilaChakra[];
+  totalChakras: FilaChakra;
+  edades: Tramo[];
+};
 
 export function reducir(n: number) {
   let value = Math.abs(Math.trunc(n));
@@ -55,16 +70,56 @@ export function reducir(n: number) {
   return value === 0 ? 22 : value;
 }
 
-function completar(base: Pick<Puntos, "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i">): Matriz {
+type Base = Pick<Puntos, "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i">;
+
+const decimal = (n: number) => String(n).replace(".", ",");
+
+function tramo(desde: number, inicio: number, fin: number): Tramo {
+  const m5 = reducir(inicio + fin);
+  const m25 = reducir(inicio + m5);
+  const m1 = reducir(inicio + m25);
+  const m35 = reducir(m5 + m25);
+  const m75 = reducir(m5 + fin);
+  const m6 = reducir(m5 + m75);
+  const m85 = reducir(fin + m75);
+  const rango = (inicioRango: number, finRango: number, valor: number, etiqueta?: string): Etapa => ({
+    desde: desde + inicioRango,
+    hasta: desde + finRango,
+    etiqueta: etiqueta ?? `${decimal(desde + inicioRango)}-${decimal(desde + finRango)}`,
+    valor,
+    principal: false,
+  });
+  return {
+    desde,
+    etapas: [
+      { desde: Math.max(0, desde - 1), hasta: desde + 1, etiqueta: String(desde), valor: inicio, principal: true },
+      rango(1, 2.5, m1),
+      rango(2.5, 3.5, m25),
+      rango(3.5, 4, m35),
+      { ...rango(4, 6, m5, String(desde + 5)), principal: true },
+      rango(6, 7.5, m6),
+      rango(7.5, 8.5, m75),
+      rango(8.5, 9, m85),
+    ],
+  };
+}
+
+function edades({ a, b, c, d, f, g, h, i }: Base): Tramo[] {
+  const orden = [a, f, b, g, c, h, d, i, a];
+  return orden.slice(0, 8).map((inicio, index) => tramo(index * 10, inicio, orden[index + 1]!));
+}
+
+function completar(base: Base, pareja = false): Matriz {
   const { a, b, c, d, e, f, g, h, i } = base;
+  const k = reducir(f + g + h + i);
   const a1 = reducir(a + e);
   const b1 = reducir(b + e);
   const c1 = reducir(c + e);
   const d1 = reducir(d + e);
-  const f1 = reducir(f + e);
-  const g1 = reducir(g + e);
-  const h1 = reducir(h + e);
-  const i1 = reducir(i + e);
+  const f1 = reducir(f + k);
+  const g1 = reducir(g + k);
+  const h1 = reducir(h + k);
+  const i1 = reducir(i + k);
   const x = reducir(c1 + d1);
   const puntos: Puntos = {
     ...base,
@@ -86,6 +141,8 @@ function completar(base: Pick<Puntos, "a" | "b" | "c" | "d" | "e" | "f" | "g" | 
     h2: reducir(h + h1),
     i1,
     i2: reducir(i + i1),
+    k,
+    k1: reducir(e + k),
     x,
     dinero: reducir(x + c1),
     amor: reducir(x + d1),
@@ -96,13 +153,28 @@ function completar(base: Pick<Puntos, "a" | "b" | "c" | "d" | "e" | "f" | "g" | 
   const masculino = reducir(f + h);
   const femenino = reducir(g + i);
   const social = reducir(masculino + femenino);
+  const espiritual = reducir(personal + social);
+  const fila = (fisico: number, energia: number): FilaChakra => ({ fisico, energia, emocion: reducir(fisico + energia) });
+  const chakras = [
+    fila(a, b),
+    fila(puntos.a2, puntos.b2),
+    fila(a1, b1),
+    fila(puntos.a3, puntos.b3),
+    fila(e, e),
+    fila(c1, d1),
+    fila(c, d),
+  ];
+  const suma = (key: keyof FilaChakra) => reducir(chakras.reduce((total, item) => total + item[key], 0));
   return {
     puntos,
-    propositos: { cielo, tierra, personal, masculino, femenino, social, espiritual: reducir(personal + social) },
+    propositos: { cielo, tierra, personal, masculino, femenino, social, espiritual, planetario: reducir(social + espiritual) },
+    chakras,
+    totalChakras: { fisico: suma("fisico"), energia: suma("energia"), emocion: suma("emocion") },
+    edades: pareja ? [] : edades(base),
   };
 }
 
-function base({ dia, mes, anio }: Fecha) {
+function base({ dia, mes, anio }: Fecha): Base {
   const a = reducir(dia);
   const b = reducir(mes);
   const c = reducir(anio);
@@ -118,18 +190,36 @@ export function calcularMatriz(fecha: Fecha): Matriz {
 export function calcularPareja(primera: Fecha, segunda: Fecha): Matriz {
   const uno = base(primera);
   const dos = base(segunda);
-  const suma = (key: keyof typeof uno) => reducir(uno[key] + dos[key]);
-  return completar({
-    a: suma("a"),
-    b: suma("b"),
-    c: suma("c"),
-    d: suma("d"),
-    e: suma("e"),
-    f: suma("f"),
-    g: suma("g"),
-    h: suma("h"),
-    i: suma("i"),
-  });
+  const suma = (key: keyof Base) => reducir(uno[key] + dos[key]);
+  return completar(
+    {
+      a: suma("a"),
+      b: suma("b"),
+      c: suma("c"),
+      d: suma("d"),
+      e: suma("e"),
+      f: suma("f"),
+      g: suma("g"),
+      h: suma("h"),
+      i: suma("i"),
+    },
+    true,
+  );
+}
+
+export function edadEnAnios(fecha: Fecha, hoy = new Date()) {
+  const nacimiento = Date.UTC(fecha.anio, fecha.mes - 1, fecha.dia);
+  const ahora = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+  return (ahora - nacimiento) / (365.2425 * 24 * 60 * 60 * 1000);
+}
+
+export function etapaActual(tramos: Tramo[], edad: number) {
+  for (const item of tramos) {
+    for (const etapa of item.etapas) {
+      if (edad >= etapa.desde && edad < etapa.hasta) return etapa;
+    }
+  }
+  return null;
 }
 
 export function fechaValida(fecha: Fecha) {

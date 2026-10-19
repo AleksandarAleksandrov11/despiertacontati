@@ -4,7 +4,6 @@ import { m, useReducedMotion } from "motion/react";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { inicio } from "@/content/paginas";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 
 const PHASE_SECONDS = 4;
@@ -48,7 +47,7 @@ export function Respira({ headingLevel = "h2" }: { headingLevel?: "h2" | "h3" })
     <Section tone="salvia" labelledBy="respira-title">
       <div aria-hidden className="blob -right-24 -top-24 size-[22rem] bg-crema/70 animate-drift-slow" />
       <div className="grid items-center gap-14 lg:grid-cols-2">
-        <Reveal>
+        <div>
           <p className="eyebrow mb-5">{copy.eyebrow}</p>
           <Heading id="respira-title" className="text-h2">
             {copy.title}
@@ -78,9 +77,9 @@ export function Respira({ headingLevel = "h2" }: { headingLevel?: "h2" | "h3" })
               <span className="font-serif text-2xl text-ciruela">{cycles}</span> {copy.cycles}
             </p>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal delay={0.1} className="flex justify-center">
+        <div className="flex justify-center">
           <div className="relative flex aspect-square w-full max-w-[22rem] items-center justify-center sm:max-w-[26rem]">
             <span aria-hidden className="absolute inset-0 rounded-full border border-ciruela/10" />
             <span aria-hidden className="absolute inset-[19%] rounded-full border border-dashed border-ciruela/15" />
@@ -105,7 +104,7 @@ export function Respira({ headingLevel = "h2" }: { headingLevel?: "h2" | "h3" })
               )}
             </div>
           </div>
-        </Reveal>
+        </div>
       </div>
     </Section>
   );

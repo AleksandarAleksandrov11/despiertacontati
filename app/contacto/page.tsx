@@ -10,7 +10,6 @@ import { FaqSection } from "@/components/sections/faq-section";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { InstagramIcon, WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -38,15 +37,15 @@ export default function ContactoPage() {
       <PageHeader eyebrow={page.eyebrow} title={page.title} subtitle={page.subtitle} tone="rosa" blobs="b" />
       <Section tone="rosa" className="!pt-0" hideWhatsapp>
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <Reveal className="lg:col-span-7">
+          <div className="lg:col-span-7">
             <Suspense fallback={<div className="min-h-[34rem] rounded-[2rem] bg-crema" />}>
               <ContactForm />
             </Suspense>
-          </Reveal>
-          <Reveal className="lg:col-span-5" delay={0.1}>
+          </div>
+          <div className="lg:col-span-5">
             <aside aria-labelledby="contacto-directo">
               <div className="mb-10 flex items-center gap-5">
-                <SiteImage name={page.aside.avatar} shape="soft" sizes="96px" className="aspect-[4/5] w-20 shrink-0 sm:w-24" />
+                <SiteImage name={page.aside.avatar} shape="circle" sizes="96px" className="aspect-square w-20 shrink-0 sm:w-24" />
                 <div>
                   <p className="font-serif text-[1.75rem] leading-tight">{page.aside.avatarTitle}</p>
                   <p className="mt-1 text-ink-soft">{page.aside.avatarText}</p>
@@ -87,7 +86,7 @@ export default function ContactoPage() {
                 </li>
               </ul>
             </aside>
-          </Reveal>
+          </div>
         </div>
       </Section>
       <FaqSection faqs={faqs.contacto} />

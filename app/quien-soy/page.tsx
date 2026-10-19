@@ -8,7 +8,6 @@ import { Herramientas } from "@/components/sections/quien-soy/herramientas";
 import { Cifras } from "@/components/sections/quien-soy/cifras";
 import { CtaBlock } from "@/components/sections/cta-block";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { breadcrumbJsonLd, pageMetadata, personJsonLd } from "@/lib/seo";
 
@@ -35,6 +34,7 @@ export default function QuienSoyPage() {
         subtitle={page.subtitle}
         image={page.image}
         imageSize="sm"
+        circle
         tone="rosa"
         blobs="b"
       >
@@ -45,12 +45,12 @@ export default function QuienSoyPage() {
       </PageHeader>
       <Manifiesto lines={page.manifiesto} label={page.manifiestoLabel} />
       <Section tone="rosa" labelledBy="lema">
-        <Reveal className="mx-auto max-w-4xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
           <span aria-hidden className="mx-auto mb-10 block h-16 w-px bg-gradient-to-b from-transparent to-dorado" />
           <h2 id="lema" className="text-h1">
             {page.lema.lead} <span className="script-accent text-[1.3em] text-rosa-deep">{page.lema.script}</span>.
           </h2>
-        </Reveal>
+        </div>
       </Section>
       <Recorrido eyebrow={page.recorrido.eyebrow} title={page.recorrido.title} />
       <Herramientas eyebrow={page.herramientas.eyebrow} title={page.herramientas.title} items={page.herramientas.items} />

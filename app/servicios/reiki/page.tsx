@@ -11,17 +11,16 @@ import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Reiki y terapias energéticas en Valencia y online: sesiones de Reiki, péndulo hebreo, análisis de chakras y sanación akásica con Tati, profesora de Reiki desde 2006.";
+  "Reiki y terapias energéticas online: Reiki con péndulo hebreo, péndulo hebreo, análisis de chakras y sanación akáshica con Tati, profesora de Reiki desde 2006.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Reiki y terapias energéticas en Valencia | Despierta con Tati",
+  title: "Reiki y terapias energéticas online | Despierta con Tati",
   description,
   path: "/servicios/reiki",
 });
@@ -37,11 +36,12 @@ export default function ReikiPage() {
             { name: "Reiki y terapias energéticas", path: "/servicios/reiki" },
           ]),
           serviceJsonLd({
-            name: "Reiki y terapias energéticas en Valencia y online",
+            name: "Reiki y terapias energéticas online",
             description,
             path: "/servicios/reiki",
             serviceType: "Reiki y terapias energéticas",
             offers: [...page.terapias.map((terapia) => terapia.title), "Cursos de Reiki"],
+            presencial: false,
           }),
         ]}
       />
@@ -56,14 +56,14 @@ export default function ReikiPage() {
 
       <Section tone="crema" labelledBy="que-es">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+          <div className="mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
             <SiteImage
               name={page.queEs.image}
               sizes="(min-width: 1024px) 38vw, (min-width: 640px) 384px, 90vw"
               className="aspect-[4/5]"
             />
-          </Reveal>
-          <Reveal className="lg:col-span-7" delay={0.1}>
+          </div>
+          <div className="lg:col-span-7">
             <h2 id="que-es" className="text-h2">
               {page.queEs.title}
             </h2>
@@ -78,7 +78,7 @@ export default function ReikiPage() {
               ))}
             </ol>
             <p className="mt-6 text-ink-soft">{page.notaras.online}</p>
-          </Reveal>
+          </div>
         </div>
       </Section>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { arcano } from "@/content/arcanos";
 import { calculadoraForm, calculadoraIndividual, detalleIndividual, infoIndividualMessage } from "@/content/calculadora";
@@ -11,13 +11,18 @@ import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/tracked";
-import { calcularMatriz, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
+import { calcularMatriz, edadEnAnios, etapaActual, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
 import { whatsappHref } from "@/lib/utils";
 import { FechaCampos, fechaVacia, type FechaForm } from "./fecha-campos";
+import { EnergiasEdades, Linaje, MapaChakras } from "./energias";
 import { CalculadoraHero, ResultadosSection } from "./layout";
-import { BloqueadaCard, LecturaCard, PropositoCard } from "./lectura";
+import { BloqueadaCard, LecturaCard, PropositoCard, TrioCard } from "./lectura";
 import { MatrizEscena } from "./matriz-escena";
 import { PdfButton, PdfCard } from "./pdf-card";
+
+const sinSuscripcion = () => () => {};
+const hoyCliente = () => new Date().toDateString();
+const hoyServidor = () => null;
 
 function toForm(fecha: { dia: number; mes: number; anio: number } | null, nombre: string): FechaForm {
   return fecha ? { dia: String(fecha.dia), mes: String(fecha.mes), anio: String(fecha.anio), nombre } : { ...fechaVacia, nombre };
@@ -31,6 +36,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
   const lenis = useLenis();
   const fecha = parsearFecha(params.get("fecha"));
   const nombre = limpiarNombre(params.get("nombre"));
+  const hoy = useSyncExternalStore(sinSuscripcion, hoyCliente, hoyServidor);
   const [form, setForm] = useState<FechaForm>(() => toForm(fecha, nombre));
   const [invalid, setInvalid] = useState(false);
   const [run, setRun] = useState(0);
@@ -77,6 +83,10 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
 
   const matriz = fecha ? calcularMatriz(fecha) : null;
   const texto = fecha ? fechaTexto(fecha) : "";
+  const edad = fecha && hoy ? edadEnAnios(fecha, new Date(hoy)) : null;
+  const actual = matriz && edad !== null ? etapaActual(matriz.edades, edad) : null;
+  const tramoActual = matriz && actual ? matriz.edades.findIndex((tramo) => tramo.etapas.includes(actual)) : -1;
+  const etapaActiva = matriz && actual && tramoActual >= 0 ? { tramo: tramoActual, etapa: matriz.edades[tramoActual]!.etapas.indexOf(actual) } : null;
   const pdfHref = fecha
     ? `/api/matriz/pdf?${new URLSearchParams({ tipo: "individual", fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}) }).toString()}`
     : "";
@@ -116,6 +126,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                   null,
                   null,
                   null,
+                  null,
                 ]}
                 skip={copy.skip}
                 label={copy.stageLabel(texto)}
@@ -125,6 +136,8 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                 resultsLabel={copy.verLectura}
                 instant={instant}
                 destacados={["e", "a", "b", "d", "dinero"]}
+                edades={matriz.edades}
+                etapaActiva={etapaActiva}
                 actions={<PdfButton href={pdfHref} tipo="individual" label={copy.pdf.short} tone="dark" />}
               />
             </div>
@@ -154,11 +167,23 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                 numero={matriz.puntos.b}
                 text={arcano(matriz.puntos.b)?.talento ?? ""}
               />
+              <TrioCard
+                className="lg:col-span-6"
+                label={copy.trios.talentos.label}
+                intro={copy.trios.talentos.text}
+                numeros={[matriz.puntos.b, matriz.puntos.b2, matriz.puntos.b1]}
+              />
+              <TrioCard
+                className="lg:col-span-6"
+                label={copy.trios.cola.label}
+                intro={copy.trios.cola.text}
+                numeros={[matriz.puntos.d1, matriz.puntos.d2, matriz.puntos.d]}
+              />
             </div>
           </ResultadosSection>
 
           <ResultadosSection id="propositos" eyebrow={copy.propositos.eyebrow} title={copy.propositos.title} text={copy.propositos.text} tone="lavanda">
-            <ul className="grid gap-5 md:grid-cols-3">
+            <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
               <li>
                 <PropositoCard
                   label={copy.propositos.personal.label}
@@ -189,10 +214,32 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                   text={arcano(matriz.propositos.espiritual)?.proposito ?? ""}
                 />
               </li>
+              <li>
+                <PropositoCard
+                  label={copy.propositos.planetario.label}
+                  etapa={copy.propositos.planetario.etapa}
+                  partes={copy.propositos.planetario.partes}
+                  valores={[matriz.propositos.social, matriz.propositos.espiritual]}
+                  resultado={matriz.propositos.planetario}
+                  text={copy.propositos.locked}
+                />
+              </li>
             </ul>
           </ResultadosSection>
 
-          <ResultadosSection id="lo-que-guarda" eyebrow={copy.bloqueadas.eyebrow} title={copy.bloqueadas.title} text={copy.bloqueadas.text} tone="rosa">
+          <ResultadosSection id="energias-por-edades" eyebrow={copy.edades.eyebrow} title={copy.edades.title} text={copy.edades.text} tone="salvia">
+            <EnergiasEdades tramos={matriz.edades} actual={actual} edad={edad === null ? null : Math.floor(edad)} />
+          </ResultadosSection>
+
+          <ResultadosSection id="mapa-de-chakras" eyebrow={copy.chakras.eyebrow} title={copy.chakras.title} text={copy.chakras.text} tone="rosa">
+            <MapaChakras filas={matriz.chakras} total={matriz.totalChakras} />
+          </ResultadosSection>
+
+          <ResultadosSection id="linaje" eyebrow={copy.linaje.eyebrow} title={copy.linaje.title} text={copy.linaje.text} tone="lavanda">
+            <Linaje puntos={matriz.puntos} masculino={matriz.propositos.masculino} femenino={matriz.propositos.femenino} />
+          </ResultadosSection>
+
+          <ResultadosSection id="lo-que-guarda" eyebrow={copy.bloqueadas.eyebrow} title={copy.bloqueadas.title} text={copy.bloqueadas.text} tone="salvia">
             <ul className="grid gap-5 md:grid-cols-2">
               <li>
                 <BloqueadaCard

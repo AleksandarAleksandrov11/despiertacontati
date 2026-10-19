@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { destacados } from "@/content/servicios";
 import { inicio } from "@/content/paginas";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { SiteImage } from "@/components/ui/site-image";
 import { TiltCard } from "@/components/ui/tilt-card";
@@ -11,12 +10,12 @@ export function Destacados() {
   return (
     <Section tone="lavanda" labelledBy="destacados-title">
       <div aria-hidden className="blob -left-32 top-1/4 size-[24rem] bg-rosa-polvo animate-drift" />
-      <Reveal>
+      <div>
         <SectionHeading eyebrow={inicio.destacados.eyebrow} title={inicio.destacados.title} id="destacados-title" />
-      </Reveal>
-      <RevealGroup as="ul" className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      </div>
+      <ul className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {destacados.map((item) => (
-          <RevealItem as="li" key={item.title}>
+          <li key={item.title}>
             <TiltCard className="h-full" innerClassName="flex h-full flex-col">
               <Link href={item.href} className="group flex h-full flex-col">
                 <SiteImage
@@ -36,9 +35,9 @@ export function Destacados() {
                 </div>
               </Link>
             </TiltCard>
-          </RevealItem>
+          </li>
         ))}
-      </RevealGroup>
+      </ul>
     </Section>
   );
 }

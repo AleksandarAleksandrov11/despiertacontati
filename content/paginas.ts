@@ -102,7 +102,7 @@ export const quienSoy = {
       { name: "Reiki", icon: "reiki" },
       { name: "Péndulo hebreo", icon: "pendulo" },
       { name: "Chakras", icon: "chakras" },
-      { name: "Sanación akásica", icon: "sanacion" },
+      { name: "Sanación akáshica", icon: "sanacion" },
       { name: "Limpieza energética", icon: "limpieza" },
       { name: "Meditación", icon: "meditacion" },
       { name: "Tarot", icon: "tarot" },
@@ -171,7 +171,7 @@ export const contactoPage = {
     avatarText: "Leo cada mensaje personalmente.",
     title: "Si lo prefieres",
     location: "Valencia y online",
-    locationText: "Sesiones presenciales en Valencia y online desde donde estés.",
+    locationText: "Sesiones online desde donde estés. Las clases de meditación en grupo, también en Valencia.",
     whatsapp: "WhatsApp",
     phone: "Teléfono",
     email: "Email",
@@ -184,7 +184,7 @@ export const contactoPage = {
   form: {
     steps: [
       { id: "servicio", label: "Servicio", question: "¿Qué te trae por aquí?", hint: "Elige una opción. Si dudas, marca «Aún no lo sé»." },
-      { id: "modalidad", label: "Modalidad", question: "¿Cómo lo prefieres?", hint: "Sesiones presenciales en Valencia u online desde donde estés." },
+      { id: "modalidad", label: "Modalidad", question: "¿Cómo lo prefieres?", hint: "Las sesiones son online. Las clases de meditación en grupo, también en Valencia." },
       { id: "mensaje", label: "Mensaje", question: "Cuéntame un poco", hint: "Opcional. Lo que te apetezca contarme sobre lo que necesitas." },
       { id: "datos", label: "Tus datos", question: "¿Cómo te llamo?", hint: "Al enviar se abre WhatsApp con tu mensaje listo para mandármelo." },
     ],

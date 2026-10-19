@@ -5,7 +5,6 @@ import { useState } from "react";
 import { reikiPage } from "@/content/servicios";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
-import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { cn, whatsappHref } from "@/lib/utils";
 
@@ -17,7 +16,7 @@ export function Chakras() {
     <Section tone="salvia" labelledBy="chakras-title">
       <div aria-hidden className="blob -left-32 top-10 size-[24rem] bg-lavanda/70 animate-drift-slow" />
       <div className="grid items-center gap-14 lg:grid-cols-2">
-        <Reveal>
+        <div>
           <SectionHeading eyebrow={chakras.eyebrow} title={chakras.title} text={chakras.hint} id="chakras-title" />
           <div className="mt-10 max-w-md border-t border-ciruela/15 pt-8">
             <h3 className="text-h3">{chakras.analisis.title}</h3>
@@ -28,8 +27,8 @@ export function Chakras() {
               </Button>
             </div>
           </div>
-        </Reveal>
-        <Reveal delay={0.1} className="flex justify-center lg:justify-start">
+        </div>
+        <div className="flex justify-center lg:justify-start">
           <div className="relative flex">
             <span aria-hidden className="absolute bottom-6 left-[1.375rem] top-6 w-px bg-gradient-to-b from-chakra-corona via-chakra-corazon to-chakra-raiz opacity-50" />
             <ol aria-label={chakras.eyebrow} className="relative flex flex-col gap-2 sm:gap-3">
@@ -88,7 +87,7 @@ export function Chakras() {
             </ol>
             <span aria-hidden className="block w-52 sm:w-80" />
           </div>
-        </Reveal>
+        </div>
       </div>
     </Section>
   );

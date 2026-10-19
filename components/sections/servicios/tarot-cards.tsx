@@ -4,7 +4,6 @@ import { m } from "motion/react";
 import { useState } from "react";
 import { tarotPage } from "@/content/servicios";
 import { LotoIcon } from "@/components/ui/icons";
-import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 
 const accents = ["var(--color-chakra-tercer-ojo)", "var(--color-chakra-corona)", "var(--color-chakra-plexo)"];
 
@@ -13,11 +12,11 @@ export function TarotCards() {
   const [flipped, setFlipped] = useState<boolean[]>(cartas.items.map(() => false));
 
   return (
-    <RevealGroup as="ul" className="mt-14 grid justify-items-center gap-8 md:grid-cols-3 md:gap-6 lg:gap-10">
+    <ul className="mt-14 grid justify-items-center gap-8 md:grid-cols-3 md:gap-6 lg:gap-10">
       {cartas.items.map((card, index) => {
         const isFlipped = flipped[index];
         return (
-          <RevealItem as="li" key={card.title} className="w-full max-w-[17rem]">
+          <li key={card.title} className="w-full max-w-[17rem]">
             <m.button
               type="button"
               aria-pressed={isFlipped}
@@ -61,9 +60,9 @@ export function TarotCards() {
                 </span>
               </m.span>
             </m.button>
-          </RevealItem>
+          </li>
         );
       })}
-    </RevealGroup>
+    </ul>
   );
 }

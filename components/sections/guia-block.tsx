@@ -2,7 +2,6 @@ import { Check } from "lucide-react";
 import { guia } from "@/content/guia";
 import { Button } from "@/components/ui/button";
 import { EbookCover } from "@/components/ui/ebook-cover";
-import { Reveal } from "@/components/ui/reveal";
 import { Section, type SectionTone } from "@/components/ui/section";
 
 export function GuiaBlock({ tone = "salvia", id = "guia" }: { tone?: SectionTone; id?: string }) {
@@ -11,10 +10,10 @@ export function GuiaBlock({ tone = "salvia", id = "guia" }: { tone?: SectionTone
     <Section tone={tone} labelledBy={`${id}-title`}>
       <div aria-hidden className="blob -right-24 top-0 size-[22rem] bg-crema/80 animate-drift-slow" />
       <div className="grid items-center gap-14 md:grid-cols-12 md:gap-10 lg:gap-16">
-        <Reveal className="md:col-span-5">
+        <div className="md:col-span-5">
           <EbookCover />
-        </Reveal>
-        <Reveal className="md:col-span-7" delay={0.1}>
+        </div>
+        <div className="md:col-span-7">
           <p className="eyebrow mb-5">{bloque.eyebrow}</p>
           <h2 id={`${id}-title`} className="text-h2 italic">
             {bloque.title}
@@ -33,7 +32,7 @@ export function GuiaBlock({ tone = "salvia", id = "guia" }: { tone?: SectionTone
               {bloque.cta}
             </Button>
           </div>
-        </Reveal>
+        </div>
       </div>
     </Section>
   );

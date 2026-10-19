@@ -1,7 +1,6 @@
 import { inicio } from "@/content/paginas";
 import { hayTestimonios, testimonios } from "@/content/testimonios";
 import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { TestimonialsCarousel } from "@/components/sections/testimonials-carousel";
 
@@ -10,18 +9,18 @@ export function TestimoniosHome() {
   return (
     <Section tone="lavanda" labelledBy="testimonios-title" bare className="section-pad">
       <div className="container-page flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
-        <Reveal>
+        <div>
           <SectionHeading eyebrow={inicio.testimonios.eyebrow} title={inicio.testimonios.title} id="testimonios-title" />
-        </Reveal>
-        <Reveal>
+        </div>
+        <div>
           <Button href="/testimonios" variant="link">
             {inicio.testimonios.link}
           </Button>
-        </Reveal>
+        </div>
       </div>
-      <Reveal className="mt-12">
+      <div className="mt-12">
         <TestimonialsCarousel items={testimonios} label={inicio.testimonios.title} short />
-      </Reveal>
+      </div>
     </Section>
   );
 }

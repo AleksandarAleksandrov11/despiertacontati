@@ -11,8 +11,8 @@ import { CtaBlock } from "@/components/sections/cta-block";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal, RevealGroup, RevealItem } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
+import { SiteImage } from "@/components/ui/site-image";
 import { TiltCard } from "@/components/ui/tilt-card";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
@@ -28,9 +28,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function AutoconocimientoPage() {
   const page = autoconocimientoPage;
-  const herramientas = page.herramientas
-    .map((item) => getProducto(item.slug))
-    .filter((producto) => producto !== undefined);
+  const herramientas = page.herramientas.map((slug) => getProducto(slug)).filter((producto) => producto !== undefined);
 
   return (
     <>
@@ -45,7 +43,7 @@ export default function AutoconocimientoPage() {
             description,
             path: "/servicios/autoconocimiento",
             serviceType: "Autoconocimiento",
-            offers: ["Matriz del Destino", "Tu Código Personal", "Carta Personal"],
+            offers: ["Lectura de la Matriz del Destino", "Análisis de la Matriz del Destino", "Tu Código Personal", "Carta Personal"],
           }),
         ]}
       />
@@ -57,15 +55,15 @@ export default function AutoconocimientoPage() {
 
       <Section tone="crema" labelledBy="que-son">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="lg:col-span-5">
+          <div className="lg:col-span-5">
             <h2 id="que-son" className="text-h2">
               {page.queSon.title}
             </h2>
             <p className="mt-6 text-lead text-ink-soft">{page.queSon.text}</p>
-          </Reveal>
-          <RevealGroup as="ul" className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
             {page.queSon.diferencias.map((item, index) => (
-              <RevealItem as="li" key={item.title} className="rounded-[1.25rem] bg-lavanda/70 p-7">
+              <li key={item.title} className="rounded-[1.25rem] bg-lavanda/70 p-7">
                 <div aria-hidden className="mb-6 flex gap-1.5">
                   {index === 0 ? (
                     <span className="size-10 rotate-45 rounded-md border border-ciruela/25" />
@@ -78,39 +76,42 @@ export default function AutoconocimientoPage() {
                 </div>
                 <h3 className="text-h3">{item.title}</h3>
                 <p className="mt-3 text-ink-soft">{item.text}</p>
-              </RevealItem>
+              </li>
             ))}
-          </RevealGroup>
+          </ul>
         </div>
       </Section>
 
       <Section tone="rosa" labelledBy="herramientas-autoconocimiento">
-        <Reveal>
+        <div>
           <SectionHeading
             eyebrow={page.herramientasHeading.eyebrow}
             title={page.herramientasHeading.title}
             id="herramientas-autoconocimiento"
           />
-        </Reveal>
-        <RevealGroup as="ul" className="mt-12 grid gap-5 md:grid-cols-3">
+        </div>
+        <ul className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {herramientas.map((producto) => (
-            <RevealItem as="li" key={producto.slug}>
+            <li key={producto.slug}>
               <ProductCard producto={producto} />
-            </RevealItem>
+            </li>
           ))}
-          <RevealItem as="li">
-            <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col p-7 sm:p-8">
-              <p className="eyebrow">{page.carta.tag}</p>
-              <h3 className="mt-5 text-h3">{page.carta.title}</h3>
-              <p className="mt-3 flex-1 text-ink-soft">{page.carta.text}</p>
-              <div className="mt-7 border-t border-ciruela/10 pt-6">
-                <Button href={whatsappHref(page.carta.whatsapp)} variant="link" icon={<WhatsappIcon size={18} />}>
-                  {site.cta.info}
-                </Button>
+          <li>
+            <TiltCard as="article" className="h-full" innerClassName="flex h-full flex-col overflow-hidden">
+              <SiteImage name={page.carta.image} shape="none" sizes="(min-width: 1280px) 300px, (min-width: 768px) 45vw, 90vw" className="aspect-[16/10] w-full" />
+              <div className="flex flex-1 flex-col p-7 sm:p-8">
+                <p className="eyebrow">{page.carta.tag}</p>
+                <h3 className="mt-5 text-h3">{page.carta.title}</h3>
+                <p className="mt-3 flex-1 text-ink-soft">{page.carta.text}</p>
+                <div className="mt-7 border-t border-ciruela/10 pt-6">
+                  <Button href={whatsappHref(page.carta.whatsapp)} variant="link" icon={<WhatsappIcon size={18} />}>
+                    {site.cta.info}
+                  </Button>
+                </div>
               </div>
             </TiltCard>
-          </RevealItem>
-        </RevealGroup>
+          </li>
+        </ul>
       </Section>
 
       <CalculadoraPromo tone="light" id="calcula-tu-matriz" />

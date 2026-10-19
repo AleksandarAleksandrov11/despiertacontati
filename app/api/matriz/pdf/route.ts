@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${datos.archivo}"`,
-      "Cache-Control": "public, max-age=3600, s-maxage=86400",
+      "Cache-Control": "public, max-age=3600, s-maxage=3600",
       "X-Robots-Tag": "noindex, nofollow",
     },
   });

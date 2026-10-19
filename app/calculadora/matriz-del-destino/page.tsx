@@ -9,7 +9,6 @@ import { Octograma } from "@/components/sections/calculadora/octograma";
 import { FaqSection } from "@/components/sections/faq-section";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal } from "@/components/ui/reveal";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
@@ -33,7 +32,7 @@ export default function MatrizIndividualPage() {
     <>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: "Calculadora", path: rutasCalculadora.hub },
+          { name: "Calculadoras", path: rutasCalculadora.hub },
           { name: "Matriz del Destino", path: rutasCalculadora.individual },
         ])}
       />
@@ -43,15 +42,15 @@ export default function MatrizIndividualPage() {
 
       <Section tone="salvia" labelledBy="que-es-matriz">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-20">
-          <Reveal className="lg:col-span-7">
+          <div className="lg:col-span-7">
             <SectionHeading eyebrow={calculadoraHub.queEs.eyebrow} title={calculadoraHub.queEs.title} id="que-es-matriz" />
             {calculadoraHub.queEs.paragraphs.map((paragraph) => (
               <p key={paragraph} className="mt-5 max-w-2xl text-lead text-ink-soft">
                 {paragraph}
               </p>
             ))}
-          </Reveal>
-          <Reveal className="lg:col-span-5" delay={0.1}>
+          </div>
+          <div className="lg:col-span-5">
             <div className="rounded-[1.5rem] bg-malva-deep p-8 text-crema sm:p-10">
               <Octograma pareja className="w-40 text-crema" />
               <p className="eyebrow mt-6 text-crema">{pareja.tag}</p>
@@ -63,7 +62,7 @@ export default function MatrizIndividualPage() {
                 </Button>
               </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </Section>
 

@@ -8,8 +8,7 @@ export function formatPrice(value: number) {
 }
 
 export function productHref(producto: Producto) {
-  if (producto.tipo === "presupuesto") return "/servicios/limpieza-energetica";
-  if (producto.precio === null && producto.calculadora) return producto.calculadora;
+  if (producto.precio === null) return producto.calculadora ?? producto.enlace ?? "/contacto";
   return `/tienda/${producto.slug}`;
 }
 
@@ -23,6 +22,7 @@ export function buyMessage(producto: Producto, detalle?: string) {
   if (isDigital(producto)) {
     return `${lead} He leído y acepto las condiciones de compra y solicito el inicio inmediato del suministro del contenido digital. ¿Me indicas cómo realizar el pago?`;
   }
+  if (producto.tipo === "espacio") return `${lead} He leído y acepto las condiciones de compra. Te paso la dirección del espacio. ¿Me indicas cómo realizar el pago?`;
   return `${lead} He leído y acepto las condiciones de compra. ¿Qué disponibilidad tienes?`;
 }
 
@@ -32,10 +32,6 @@ export function notifyMessage(producto: Producto) {
 
 export function infoMessage(producto: Producto) {
   return `Hola Tati, me gustaría información sobre ${producto.nombre}.`;
-}
-
-export function quoteMessage(producto: Producto) {
-  return `Hola Tati, me gustaría pedir presupuesto para una ${producto.nombre.charAt(0).toLowerCase()}${producto.nombre.slice(1)}.`;
 }
 
 export function productJsonLd(producto: Producto) {

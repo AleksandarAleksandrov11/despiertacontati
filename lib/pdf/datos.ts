@@ -1,21 +1,20 @@
-import { infoIndividualMessage, infoParejaMessage, rutasCalculadora } from "@/content/calculadora";
+import { infoIndividualMessage, rutasCalculadora } from "@/content/calculadora";
+import { infoCodigoMessage, type Mazo } from "@/content/codigo-personal";
 import { site } from "@/content/site";
 import { getProducto } from "@/content/tienda";
-import { calcularMatriz, calcularPareja, fechaParam, fechaTexto, limpiarNombre, parsearFecha, type Fecha, type Matriz } from "@/lib/matriz";
+import { calcularMatriz, calcularPareja, edadEnAnios, fechaParam, fechaTexto, limpiarNombre, parsearFecha, type Fecha, type Matriz } from "@/lib/matriz";
+import { calcularCodigo, hoyEnEspana } from "@/lib/codigo-personal";
 import { formatPrice } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
+import type { DatosCodigo } from "./codigo-pdf";
 
 export type Persona = { fecha: Fecha; texto: string; nombre: string; centro: number };
 
-type Comun = {
-  matriz: Matriz;
-  precio: string | null;
-  compraUrl: string;
-  infoUrl: string;
-  archivo: string;
-};
+type Comun = { matriz: Matriz; archivo: string };
 
-export type DatosPdf = (Comun & { tipo: "individual"; persona: Persona }) | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
+export type DatosPdf =
+  | (Comun & { tipo: "individual"; persona: Persona; edad: number; precio: string | null; compraUrl: string; infoUrl: string })
+  | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
 
 function baseUrl(origin: string) {
   const propio = new URL(site.url).hostname.replace(/^www\./, "");
@@ -50,6 +49,7 @@ export function datosDesdeParams(params: URLSearchParams, origin: string): Datos
       compraUrl: `${base}${rutasCalculadora.individual}?${query.toString()}#lectura-completa`,
       infoUrl: whatsappHref(infoIndividualMessage(texto, nombre)),
       archivo: archivo(fecha),
+      edad: edadEnAnios(fecha),
     };
   }
   if (tipo === "pareja") {
@@ -58,23 +58,33 @@ export function datosDesdeParams(params: URLSearchParams, origin: string): Datos
     if (!fecha1 || !fecha2) return null;
     const nombre1 = limpiarNombre(params.get("nombre1"));
     const nombre2 = limpiarNombre(params.get("nombre2"));
-    const personas: [Persona, Persona] = [persona(fecha1, nombre1), persona(fecha2, nombre2)];
-    const query = new URLSearchParams({
-      fecha1: fechaParam(fecha1),
-      fecha2: fechaParam(fecha2),
-      ...(nombre1 ? { nombre1 } : {}),
-      ...(nombre2 ? { nombre2 } : {}),
-    });
-    const producto = getProducto("matriz-del-destino-pareja");
     return {
       tipo,
-      personas,
+      personas: [persona(fecha1, nombre1), persona(fecha2, nombre2)],
       matriz: calcularPareja(fecha1, fecha2),
-      precio: producto?.precio ? formatPrice(producto.precio) : null,
-      compraUrl: `${base}${rutasCalculadora.pareja}?${query.toString()}#lectura-completa`,
-      infoUrl: whatsappHref(infoParejaMessage(personas.map((item) => ({ fecha: item.texto, nombre: item.nombre })))),
       archivo: archivo(fecha1, fecha2),
     };
   }
   return null;
+}
+
+export function datosCodigo(params: URLSearchParams, origin: string): DatosCodigo | null {
+  const fecha = parsearFecha(params.get("fecha"));
+  if (!fecha) return null;
+  const nombre = limpiarNombre(params.get("nombre"));
+  const mazo: Mazo = params.get("mazo") === "sopraffino" ? "sopraffino" : "rider";
+  const producto = getProducto("tu-codigo-personal");
+  const texto = fechaTexto(fecha);
+  const query = new URLSearchParams({ fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}), ...(mazo !== "rider" ? { mazo } : {}) });
+  return {
+    resultado: calcularCodigo(fecha, hoyEnEspana()),
+    mazo,
+    nombre,
+    texto,
+    cumple: texto.slice(0, 5),
+    precio: producto?.precio ? formatPrice(producto.precio) : null,
+    compraUrl: `${baseUrl(origin)}${rutasCalculadora.codigo}?${query.toString()}#lectura-completa`,
+    infoUrl: whatsappHref(infoCodigoMessage(texto, nombre)),
+    archivo: `codigo-personal-${texto.replace(/\//g, "-")}.pdf`,
+  };
 }

@@ -6,7 +6,6 @@ import { FaqSection } from "@/components/sections/faq-section";
 import { Button } from "@/components/ui/button";
 import { EbookCover } from "@/components/ui/ebook-cover";
 import { JsonLd } from "@/components/ui/json-ld";
-import { Reveal } from "@/components/ui/reveal";
 import { Blobs, Section } from "@/components/ui/section";
 import { FadeUp, SplitText } from "@/components/ui/split-text";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -57,9 +56,9 @@ export default function GuiaPage() {
         </div>
       </section>
       <Section tone="crema" id="formulario" className="scroll-mt-4">
-        <Reveal className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-3xl">
           <GuiaForm />
-        </Reveal>
+        </div>
       </Section>
       <FaqSection faqs={faqs.guia} title={guia.faqTitle} tone="lavanda" />
     </>
