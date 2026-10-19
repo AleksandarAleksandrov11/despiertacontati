@@ -93,7 +93,7 @@ export function TableroMapa({ mazo, mapa, claves = [], compacto = false }: { maz
                 const clave = claves.includes(posicion);
                 return (
                   <li key={posicion} className="flex flex-col items-center gap-1">
-                    <span className={cn("nums text-[0.65rem] leading-none sm:text-xs", clave ? "font-semibold text-dorado-soft" : "text-crema/50")}>
+                    <span className={cn("nums text-[0.65rem] leading-none sm:text-xs", clave ? "font-semibold text-dorado-soft" : "text-crema/70")}>
                       <span className="sr-only">{codigoPersonal.posicion(posicion)}</span>
                       <span aria-hidden>{posicion}</span>
                     </span>

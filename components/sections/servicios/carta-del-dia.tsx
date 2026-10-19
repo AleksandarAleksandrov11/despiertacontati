@@ -120,7 +120,7 @@ export function CartaDelDia() {
             <p className="eyebrow text-crema/70">{copy.resultado}</p>
             <p className="mt-4 font-serif text-[clamp(2.4rem,1.9rem+2vw,3.6rem)] leading-none text-crema">{datos.nombre}</p>
             <p className="mt-6 max-w-md font-serif text-[clamp(1.35rem,1.15rem+0.8vw,1.8rem)] italic leading-snug text-crema/90 md:max-w-none">{datos.mensaje}</p>
-            <p className="mt-6 text-sm text-crema/60">{copy.manana}</p>
+            <p className="mt-6 text-sm text-crema/70">{copy.manana}</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:justify-start">
               <Button href="/tienda#crono-tarot" tone="dark">
                 {copy.lectura}
@@ -132,7 +132,7 @@ export function CartaDelDia() {
           </div>
         </div>
       )}
-      <p className="mt-10 text-center text-xs text-crema/50">{copy.mazo}</p>
+      <p className="mt-10 text-center text-xs text-crema/70">{copy.mazo}</p>
     </div>
   );
 }

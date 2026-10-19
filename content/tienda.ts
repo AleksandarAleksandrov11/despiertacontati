@@ -130,7 +130,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "disponible",
     destacado: true,
-    imagen: "relajacionSillon",
+    imagen: "pausaCojin",
   },
   {
     slug: "un-espacio-para-tu-mente",
@@ -157,7 +157,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
-    imagen: "meditacionAuriculares",
+    imagen: "meditacionSalaBlanca",
   },
   {
     slug: "conecta-contigo",
@@ -185,7 +185,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
-    imagen: "relajacionTaza",
+    imagen: "manoMudra",
   },
   {
     slug: "camino-12-semanas-meditacion",
@@ -222,7 +222,7 @@ export const productos: Producto[] = [
     lanzamiento: true,
     estado: "proximamente",
     destacado: false,
-    imagen: "tazaVapor",
+    imagen: "meditacionPorche",
   },
   {
     slug: "lectura-del-cumpleanos",
@@ -244,7 +244,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: true,
-    imagen: "tarotFlores",
+    imagen: "tarotSol",
   },
   {
     slug: "mapa-estacional",
@@ -262,7 +262,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
-    imagen: "ventanaLuz",
+    imagen: "hojasEstaciones",
   },
   {
     slug: "mapa-mensual",
@@ -280,7 +280,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
-    imagen: "tarotBaraja",
+    imagen: "cartasLunas",
   },
   {
     slug: "lectura-mensual",
@@ -298,7 +298,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "libretaEscribir",
+    imagen: "tarotLuna",
   },
   {
     slug: "lectura-semanal",
@@ -315,7 +315,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "duchaLuminosa",
+    imagen: "agendaFlores",
   },
   {
     slug: "mapa-de-vida",
@@ -344,7 +344,7 @@ export const productos: Producto[] = [
     precio: 17,
     estado: "disponible",
     destacado: false,
-    imagen: "mujerBrazosAbiertos",
+    imagen: "tiradaCristales",
   },
   {
     slug: "lectura-de-la-pareja",
@@ -365,7 +365,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "piedrasChakras",
+    imagen: "tarotEnamorados",
   },
   {
     slug: "lectura-del-trabajo",
@@ -386,7 +386,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "claseOnline",
+    imagen: "tarotAsOros",
   },
   {
     slug: "lectura-de-compatibilidad",
@@ -407,7 +407,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "cuencoSalvia",
+    imagen: "cartasDoradas",
   },
   {
     slug: "lectura-del-corazon",
@@ -428,7 +428,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "reikiSesion",
+    imagen: "tarotCuarzoRosa",
   },
   {
     slug: "tu-codigo-personal",
@@ -455,7 +455,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: true,
-    imagen: "tarotBaraja",
+    imagen: "tarotErmitano",
     calculadora: "/calculadora/codigo-personal",
   },
   {
@@ -483,7 +483,7 @@ export const productos: Producto[] = [
     precio: 8,
     estado: "disponible",
     destacado: false,
-    imagen: "tarotBaraja",
+    imagen: "diagramaCeleste",
     calculadora: "/calculadora/matriz-del-destino",
   },
   {
@@ -500,7 +500,7 @@ export const productos: Producto[] = [
     precio: null,
     estado: "disponible",
     destacado: false,
-    imagen: "libretaEscribir",
+    imagen: "cartaCircular",
     calculadora: "/calculadora/matriz-del-destino",
   },
   {
@@ -521,7 +521,7 @@ export const productos: Producto[] = [
     precio: 25,
     estado: "disponible",
     destacado: false,
-    imagen: "tarotFlores",
+    imagen: "tiradaSuelo",
   },
   {
     slug: "sesion-tarot-50-minutos",
@@ -542,7 +542,7 @@ export const productos: Producto[] = [
     precio: 35,
     estado: "disponible",
     destacado: false,
-    imagen: "tarotBaraja",
+    imagen: "escritorioVela",
   },
   {
     slug: "reiki-pendulo-hebreo",
@@ -558,7 +558,7 @@ export const productos: Producto[] = [
     precio: null,
     estado: "disponible",
     destacado: false,
-    imagen: "reikiRostro",
+    imagen: "reikiManosLuz",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
@@ -592,7 +592,7 @@ export const productos: Producto[] = [
     precio: null,
     estado: "disponible",
     destacado: false,
-    imagen: "pendulo",
+    imagen: "chakrasLino",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
@@ -609,7 +609,7 @@ export const productos: Producto[] = [
     precio: null,
     estado: "disponible",
     destacado: false,
-    imagen: "velasCalma",
+    imagen: "libroPaginasLuz",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
@@ -631,7 +631,7 @@ export const productos: Producto[] = [
     precio: 30,
     estado: "disponible",
     destacado: false,
-    imagen: "hogarLuminoso",
+    imagen: "habitacionCortinas",
     enlace: "/servicios/limpieza-energetica",
   },
 ];

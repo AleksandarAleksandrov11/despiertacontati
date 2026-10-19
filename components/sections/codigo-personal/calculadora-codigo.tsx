@@ -222,7 +222,7 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
                     <span className="mt-2 block">
                       {copy.anual.arcano}: <strong className="nums text-dorado-soft">{carta(resultado.anual)}</strong>
                     </span>
-                    <span className="block text-sm text-crema/60">{copy.anual.cambia(cumple)}</span>
+                    <span className="block text-sm text-crema/75">{copy.anual.cambia(cumple)}</span>
                   </p>
                 }
               >
