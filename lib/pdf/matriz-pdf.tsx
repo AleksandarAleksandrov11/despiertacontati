@@ -399,11 +399,11 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   const p = datos.matriz.puntos;
   const leyenda: [string, number][] = individual
     ? [
-        [calculadoraIndividual.leyenda.centro, p.e],
         [calculadoraIndividual.leyenda.energia, p.a],
         [calculadoraIndividual.leyenda.talento, p.b],
-        [calculadoraIndividual.leyenda.aprendizajes, p.d],
-        [calculadoraIndividual.leyenda.material, p.dinero],
+        [calculadoraIndividual.leyenda.material, p.c],
+        [calculadoraIndividual.leyenda.karma, p.d],
+        [calculadoraIndividual.leyenda.poder, p.e],
       ]
     : [
         [calculadoraPareja.leyenda.centro, p.e],

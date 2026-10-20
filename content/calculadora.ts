@@ -230,11 +230,11 @@ export const calculadoraIndividual = {
     lock: "En tu lectura completa",
   },
   leyenda: {
-    centro: "Centro",
-    energia: "Energía personal",
+    energia: "Tu energía personal",
     talento: "Talento",
-    aprendizajes: "Aprendizajes",
-    material: "Mundo material",
+    material: "Dificultades en el mundo material",
+    karma: "Bagaje kármico",
+    poder: "Tu poder personal",
   },
   pdf: {
     title: "Tu lectura gratuita en PDF",
