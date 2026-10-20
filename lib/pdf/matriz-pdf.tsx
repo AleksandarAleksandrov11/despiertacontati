@@ -423,7 +423,7 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
         <Diagrama
           puntos={p}
           etiquetas={individual ? calculadoraIndividual.etiquetas : calculadoraPareja.etiquetas}
-          size={titulo.length > 36 ? 278 : 296}
+          size={individual ? (titulo.length > 36 ? 248 : 264) : titulo.length > 36 ? 278 : 296}
           variante={datos.tipo}
           edades={datos.matriz.edades}
           activas={activas}
