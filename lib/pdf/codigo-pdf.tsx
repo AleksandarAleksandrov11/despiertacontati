@@ -65,11 +65,12 @@ function Portada({ datos, recursos }: { datos: DatosCodigo; recursos: RecursosCo
 function PaginaPerfil({ datos, recursos }: { datos: DatosCodigo; recursos: RecursosCodigo }) {
   const copy = codigoPersonal;
   const r = datos.resultado;
-  const pills: [string, string][] = [
-    [copy.pills.personal, String(r.personal)],
-    [copy.pills.secundario, String(r.secundario)],
-    [copy.pills.desafio, String(r.desafio)],
-    [copy.pills.complementos, `${r.complementos[0]} · ${r.complementos[1]}`],
+  const pills: [string, number][] = [
+    [copy.perfil.personal, r.personal],
+    [copy.perfil.secundario, r.secundario],
+    [copy.perfil.complemento1, r.complementos[0]],
+    [copy.perfil.complemento2, r.complementos[1]],
+    [copy.perfil.desafio, r.desafio],
   ];
   const filas: { id: number | string; label: string; destacada?: boolean }[][] = [
     [

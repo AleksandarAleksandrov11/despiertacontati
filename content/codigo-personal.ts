@@ -71,12 +71,6 @@ export const codigoPersonal = {
   privacidad: "Tu fecha no se guarda en ninguna base de datos. Solo se usa para calcular tus cartas.",
   resultadosLabel: (fecha: string) => `Tu Código Personal, ${fecha}`,
   resultadosTitle: (nombre: string) => (nombre ? `El Código Personal de ${nombre}` : "Tu Código Personal"),
-  pills: {
-    personal: "Arcano personal",
-    secundario: "Arcano secundario",
-    desafio: "Desafío",
-    complementos: "Complementos",
-  },
   arcano: {
     title: "Tu Arcano Personal",
     text: "Tu carta personal: la carta que sale de sumar tu fecha de nacimiento. Expresa la base de tu identidad y tu forma de estar en el mundo.",
@@ -84,12 +78,12 @@ export const codigoPersonal = {
   },
   perfil: {
     title: "Tu Código Personal",
-    text: "Tus cinco cartas: tu arcano personal, tu arcano secundario, tus dos complementos y tu desafío, entre los cuatro ases.",
-    personal: "Arcano Personal",
-    secundario: "Arcano Secundario",
-    complemento1: "Primer Complemento",
-    complemento2: "Segundo Complemento",
-    desafio: "Desafío",
+    text: "Tus cinco cartas, entre los cuatro ases: quién eres, cómo te relacionas, qué necesitas materializar, tu potencial y qué necesitas integrar.",
+    personal: "Quién eres",
+    secundario: "Cómo te relacionas",
+    complemento1: "Qué necesitas materializar",
+    complemento2: "Tu potencial",
+    desafio: "Qué necesitas integrar",
   },
   pdf: {
     title: "Tu Código Personal en PDF",
@@ -104,7 +98,7 @@ export const codigoPersonal = {
   lectura: {
     eyebrow: "Tu lectura del Código Personal",
     title: "Lo que dicen tus cinco cartas.",
-    text: "Las cartas ya están sobre la mesa. En tu lectura te explico qué significa cada una para ti, con cinco claves: quién eres, cómo te relacionas, cuál es tu reto, cuál es tu potencial y qué necesitas integrar.",
+    text: "Las cartas ya están sobre la mesa. En tu lectura te explico qué significa cada una para ti, con cinco claves: quién eres, cómo te relacionas, qué necesitas materializar, tu potencial y qué necesitas integrar.",
     cta: "Quiero mi lectura",
   },
 };

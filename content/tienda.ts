@@ -441,8 +441,8 @@ export const productos: Producto[] = [
     incluye: [
       { titulo: "Quién eres" },
       { titulo: "Cómo te relacionas" },
-      { titulo: "Cuál es tu reto" },
-      { titulo: "Cuál es tu potencial" },
+      { titulo: "Qué necesitas materializar" },
+      { titulo: "Tu potencial" },
       { titulo: "Qué necesitas integrar" },
     ],
     formato: "Vídeo y PDF",

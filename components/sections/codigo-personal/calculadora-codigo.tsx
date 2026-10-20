@@ -178,10 +178,11 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
                 <p className="mt-4 font-serif text-[clamp(2.4rem,1.8rem+2.4vw,4rem)] italic leading-tight">{copy.resultadosTitle(nombre)}</p>
                 <ul className="mt-8 flex flex-wrap justify-center gap-2.5">
                   {[
-                    [copy.pills.personal, String(resultado.personal)],
-                    [copy.pills.secundario, String(resultado.secundario)],
-                    [copy.pills.desafio, String(resultado.desafio)],
-                    [copy.pills.complementos, `${resultado.complementos[0]} · ${resultado.complementos[1]}`],
+                    [copy.perfil.personal, resultado.personal],
+                    [copy.perfil.secundario, resultado.secundario],
+                    [copy.perfil.complemento1, resultado.complementos[0]],
+                    [copy.perfil.complemento2, resultado.complementos[1]],
+                    [copy.perfil.desafio, resultado.desafio],
                   ].map(([label, valor]) => (
                     <li key={label} className="rounded-full border border-crema/20 bg-crema/5 px-4 py-2 text-sm">
                       {label}: <strong className="nums font-semibold text-dorado-soft">{valor}</strong>
