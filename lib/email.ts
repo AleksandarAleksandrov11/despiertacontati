@@ -28,12 +28,10 @@ function layout(title: string, rows: [string, string][]) {
 
 export function contactEmail(data: ContactInput) {
   const servicio = labelFor(contactoPage.form.topics, data.servicio);
-  const modalidad = labelFor(contactoPage.form.modalities, data.modalidad);
   const rows: [string, string][] = [
     ["Nombre", data.nombre],
     ["Contacto", data.contacto],
     ["Le interesa", servicio],
-    ["Modalidad", modalidad],
     ["Mensaje", data.mensaje?.trim() || "Sin mensaje"],
   ];
   return {

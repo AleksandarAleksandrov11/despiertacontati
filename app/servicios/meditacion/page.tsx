@@ -18,10 +18,10 @@ import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Clases de meditación en grupo en Valencia y online, meditaciones guiadas para descargar y una guía gratuita para empezar a meditar. Medita en lo cotidiano.";
+  "Clases de meditación en grupo online, meditaciones guiadas para descargar y una guía gratuita para empezar a meditar. Medita en lo cotidiano.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Clases de meditación en Valencia y online | Despierta con Tati",
+  title: "Clases de meditación online | Despierta con Tati",
   description,
   path: "/servicios/meditacion",
 });
@@ -38,11 +38,11 @@ export default function MeditacionPage() {
             { name: "Meditación", path: "/servicios/meditacion" },
           ]),
           serviceJsonLd({
-            name: "Meditación en Valencia y online",
+            name: "Meditación online",
             description,
             path: "/servicios/meditacion",
             serviceType: "Meditación guiada",
-            offers: ["Meditación grupal online", "Meditación grupal presencial en Valencia", "Meditaciones guiadas para descargar"],
+            offers: ["Meditación grupal online", "Meditaciones guiadas para descargar"],
           }),
         ]}
       />

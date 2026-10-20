@@ -14,9 +14,9 @@ import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import type { SectionTone } from "@/components/ui/section";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Terapias holísticas en Valencia y online | Despierta con Tati",
+  title: "Terapias holísticas online | Despierta con Tati",
   description:
-    "Reiki y terapias energéticas, limpieza energética de casas, meditación, tarot y autoconocimiento en Valencia y online. Primero calma, después claridad y decisión.",
+    "Reiki y terapias energéticas, limpieza energética de casas, meditación, tarot y autoconocimiento online. Primero calma, después claridad y decisión.",
   path: "/servicios",
 });
 
@@ -29,7 +29,7 @@ export default function ServiciosPage() {
         data={[
           breadcrumbJsonLd([{ name: "Servicios", path: "/servicios" }]),
           serviceJsonLd({
-            name: "Terapias holísticas en Valencia y online",
+            name: "Terapias holísticas online",
             description: site.description,
             path: "/servicios",
             serviceType: "Terapia holística",

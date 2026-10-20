@@ -9,7 +9,7 @@ import { MatrizSvg } from "./matriz-svg";
 
 type Props = {
   puntos: Puntos;
-  etiquetas: [string, string, string, string];
+  etiquetas: [string, string, string];
   pasos: string[];
   valores: (string | null)[];
   skip: string;

@@ -16,7 +16,7 @@ import { formatPrice, productHref } from "@/lib/tienda";
 import { cn } from "@/lib/utils";
 
 const description =
-  "Calculadoras gratuitas: tu Matriz del Destino con tus energías por edades, la compatibilidad de pareja y tu Código Personal con tus mapas de tarot, a partir de la fecha de nacimiento y con tu lectura en PDF.";
+  "Calculadoras gratuitas: tu Matriz del Destino con tus energías por edades, la compatibilidad de pareja y tu arcano personal y Código Personal de tarot numerológico, a partir de la fecha de nacimiento y con tu lectura en PDF.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Calculadoras gratis: Matriz del Destino y Código Personal | Despierta con Tati",

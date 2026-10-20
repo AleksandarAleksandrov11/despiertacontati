@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 import { BrandSymbol } from "@/components/ui/brand-symbol";
 
-const script = `(function(){var d=document.documentElement;d.classList.add("js");try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("dct-intro")){d.dataset.intro="seen";return}sessionStorage.setItem("dct-intro","1");d.dataset.intro="play";setTimeout(function(){d.dataset.intro="seen"},1500)}catch(e){d.dataset.intro="seen"}})();`;
+const script = `(function(){var d=document.documentElement;d.classList.add("js");try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches||sessionStorage.getItem("dct-intro")){d.dataset.intro="seen";return}sessionStorage.setItem("dct-intro","1");d.dataset.intro="play";setTimeout(function(){d.dataset.intro="seen"},1850)}catch(e){d.dataset.intro="seen"}})();`;
 
 export function Intro() {
   return (

@@ -74,16 +74,12 @@ export function serviceJsonLd({
   path,
   serviceType,
   offers,
-  online = true,
-  presencial = true,
 }: {
   name: string;
   description: string;
   path: string;
   serviceType: string;
   offers?: string[];
-  online?: boolean;
-  presencial?: boolean;
 }) {
   return {
     "@context": "https://schema.org",
@@ -93,11 +89,8 @@ export function serviceJsonLd({
     serviceType,
     url: absoluteUrl(path),
     provider: { "@id": businessId },
-    areaServed: [...(presencial ? [{ "@type": "City", name: site.location.locality }] : []), ...(online ? ["Online"] : [])],
-    availableChannel: [
-      ...(presencial ? [{ "@type": "ServiceChannel", name: "Presencial en Valencia" }] : []),
-      ...(online ? [{ "@type": "ServiceChannel", name: "Online", serviceUrl: absoluteUrl("/contacto") }] : []),
-    ],
+    areaServed: "Online",
+    availableChannel: [{ "@type": "ServiceChannel", name: "Online", serviceUrl: absoluteUrl("/contacto") }],
     ...(offers
       ? {
           hasOfferCatalog: {
@@ -178,10 +171,7 @@ export function siteJsonLd() {
         addressRegion: site.location.region,
         addressCountry: site.location.country,
       },
-      areaServed: [
-        { "@type": "City", name: site.location.locality },
-        "Online",
-      ],
+      areaServed: "Online",
       founder: { "@id": personId },
       employee: { "@id": personId },
       sameAs,

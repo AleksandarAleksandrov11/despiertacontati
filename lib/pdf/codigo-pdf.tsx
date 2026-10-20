@@ -2,9 +2,9 @@ import { join } from "node:path";
 import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
 import { calculadoraPdf } from "@/content/calculadora";
-import { codigoPersonal, creditos, mazos, type Mazo } from "@/content/codigo-personal";
+import { codigoPersonal, creditos, mazos, nombreCarta, type Mazo } from "@/content/codigo-personal";
 import { site } from "@/content/site";
-import { carta, romano, type CodigoPersonal, type Mapa } from "@/lib/codigo-personal";
+import { carta, type CodigoPersonal } from "@/lib/codigo-personal";
 import { Boton, c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
 
 export type DatosCodigo = {
@@ -12,7 +12,6 @@ export type DatosCodigo = {
   mazo: Mazo;
   nombre: string;
   texto: string;
-  cumple: string;
   precio: string | null;
   compraUrl: string;
   infoUrl: string;
@@ -39,40 +38,13 @@ function Tablero({ children }: { children: ReactNode }) {
   return <View style={{ marginTop: 12, backgroundColor: c.ciruela, borderRadius: 14, paddingVertical: 14, paddingHorizontal: 10 }}>{children}</View>;
 }
 
-function MapaPdf({ recursos, mazo, mapa }: { recursos: RecursosCodigo; mazo: Mazo; mapa: Mapa }) {
-  return (
-    <Tablero>
-      <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-        <View>
-          {mapa.filas.map((fila, filaIndex) => (
-            <View key={filaIndex} style={{ flexDirection: "row", marginTop: filaIndex === 0 ? 0 : 8 }}>
-              {fila.map((numero, index) => {
-                const posicion = filaIndex * 7 + index + 1;
-                return (
-                  <View key={posicion} style={{ marginLeft: index === 0 ? 0 : 4, alignItems: "center" }}>
-                    <Text style={{ fontSize: 5.4, color: "#bfaeb8", marginBottom: 2 }}>{posicion}</Text>
-                    <CartaPdf recursos={recursos} mazo={mazo} id={numero} width={36} destacada={posicion === 1} />
-                  </View>
-                );
-              })}
-            </View>
-          ))}
-        </View>
-        <View style={{ marginLeft: 12 }}>
-          <CartaPdf recursos={recursos} mazo={mazo} id={mapa.desafio} width={44} label={codigoPersonal.desafio} destacada />
-        </View>
-      </View>
-    </Tablero>
-  );
-}
-
 function Portada({ datos, recursos }: { datos: DatosCodigo; recursos: RecursosCodigo }) {
   return (
     <Page size="A5" style={[s.page, { paddingTop: 54, alignItems: "center" }]}>
       <Fondo tono="rosa" />
       <Image src={recursos.logo} style={{ width: 150, height: 198 }} />
-      <Text style={[s.eyebrow, { marginTop: 36, letterSpacing: 2.4 }]}>{codigoPersonal.perfil.title}</Text>
-      <Text style={[s.h1, { marginTop: 10, textAlign: "center", fontSize: 34 }]}>{codigoPersonal.eyebrow}</Text>
+      <Text style={[s.eyebrow, { marginTop: 36, letterSpacing: 2.4 }]}>{codigoPersonal.eyebrow}</Text>
+      <Text style={[s.h1, { marginTop: 10, textAlign: "center", fontSize: 34 }]}>{codigoPersonal.perfil.title}</Text>
       {datos.nombre ? (
         <Text style={{ fontFamily: "Allura", fontSize: datos.nombre.length <= 14 ? 38 : datos.nombre.length <= 24 ? 30 : 24, color: c.rosaDeep, marginTop: 8, lineHeight: 1.2, textAlign: "center" }}>
           {datos.nombre}
@@ -98,7 +70,6 @@ function PaginaPerfil({ datos, recursos }: { datos: DatosCodigo; recursos: Recur
     [copy.pills.secundario, String(r.secundario)],
     [copy.pills.desafio, String(r.desafio)],
     [copy.pills.complementos, `${r.complementos[0]} · ${r.complementos[1]}`],
-    [copy.pills.anual, String(carta(r.anual))],
   ];
   const filas: { id: number | string; label: string; destacada?: boolean }[][] = [
     [
@@ -151,37 +122,20 @@ function PaginaPerfil({ datos, recursos }: { datos: DatosCodigo; recursos: Recur
   );
 }
 
-function PaginaMapa({ datos, recursos, eyebrow, title, text, mapa, tono }: { datos: DatosCodigo; recursos: RecursosCodigo; eyebrow: string; title: string; text: string; mapa: Mapa; tono: "rosa" | "salvia" | "lavanda" }) {
+function PaginaArcano({ datos, recursos }: { datos: DatosCodigo; recursos: RecursosCodigo }) {
+  const copy = codigoPersonal.arcano;
+  const numero = carta(datos.resultado.personal);
   return (
     <Page size="A5" style={s.page}>
-      <Fondo tono={tono} />
-      <Encabezado eyebrow={eyebrow} title={title} />
-      <Text style={[s.small, { marginTop: 8, fontSize: 8.2, lineHeight: 1.55 }]}>{text}</Text>
-      <MapaPdf recursos={recursos} mazo={datos.mazo} mapa={mapa} />
-      <Pie />
-    </Page>
-  );
-}
-
-function PaginaCiclo({ datos }: { datos: DatosCodigo }) {
-  const copy = codigoPersonal.ciclo;
-  const ciclo = datos.resultado.ciclo;
-  return (
-    <Page size="A5" style={s.page}>
-      <Fondo tono="salvia" />
-      <Encabezado eyebrow={codigoPersonal.eyebrow} title={copy.title} />
-      <Text style={[s.small, { marginTop: 8, fontSize: 8.2, lineHeight: 1.55 }]}>{copy.text}</Text>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 12, marginHorizontal: -2 }}>
-        {ciclo.map((item, index) => (
-          <View key={item.anio} wrap={false} style={{ width: "12.5%", paddingHorizontal: 2, marginBottom: 6 }}>
-            <View style={{ alignItems: "center", backgroundColor: item.carta ? c.ciruela : "#ffffff", borderRadius: 8, paddingVertical: 5 }}>
-              <Text style={{ fontSize: 6.6, color: item.carta ? c.doradoSoft : c.inkSoft }}>{item.anio}</Text>
-              <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 12, lineHeight: 1.2, color: item.carta ? c.crema : c.ciruela }}>{romano(item.arcano)}</Text>
-              {item.carta ? <Text style={{ fontSize: 5.2, color: "#cbbcc5" }}>{index === 0 ? copy.nacimiento : copy.ahora}</Text> : null}
-            </View>
-          </View>
-        ))}
-      </View>
+      <Fondo tono="rosa" />
+      <Encabezado eyebrow={codigoPersonal.resultadosTitle(datos.nombre)} title={copy.title} text={copy.text} />
+      <Tablero>
+        <View style={{ alignItems: "center", paddingVertical: 6 }}>
+          <CartaPdf recursos={recursos} mazo={datos.mazo} id={numero} width={128} destacada />
+          <Text style={[s.eyebrow, { marginTop: 12, color: "#cbbcc5" }]}>{copy.numero(numero)}</Text>
+          <Text style={{ marginTop: 4, fontFamily: "Cormorant", fontWeight: 500, fontSize: 24, color: c.crema }}>{nombreCarta(numero, datos.mazo)}</Text>
+        </View>
+      </Tablero>
       <Pie />
     </Page>
   );
@@ -239,32 +193,11 @@ function PaginaLectura({ datos, recursos, claves }: { datos: DatosCodigo; recurs
 }
 
 export function CodigoPdf({ datos, recursos, claves }: { datos: DatosCodigo; recursos: RecursosCodigo; claves: string[] }) {
-  const copy = codigoPersonal;
-  const r = datos.resultado;
   return (
-    <Document title={`${copy.eyebrow} · ${site.name}`} author={site.person.fullName} creator={site.name} producer={site.name} language="es-ES">
+    <Document title={`${codigoPersonal.perfil.title} · ${site.name}`} author={site.person.fullName} creator={site.name} producer={site.name} language="es-ES">
       <Portada datos={datos} recursos={recursos} />
+      <PaginaArcano datos={datos} recursos={recursos} />
       <PaginaPerfil datos={datos} recursos={recursos} />
-      <PaginaMapa datos={datos} recursos={recursos} eyebrow={copy.eyebrow} title={copy.natal.title} text={copy.natal.text} mapa={r.mapaNatal} tono="rosa" />
-      <PaginaMapa
-        datos={datos}
-        recursos={recursos}
-        eyebrow={`${r.anioVigente} · ${copy.anual.arcano} ${carta(r.anual)} · ${copy.anual.cambia(datos.cumple)}`}
-        title={copy.anual.title}
-        text={copy.anual.text}
-        mapa={r.mapaAnual}
-        tono="salvia"
-      />
-      <PaginaMapa
-        datos={datos}
-        recursos={recursos}
-        eyebrow={`${r.anioActual} · ${copy.delAnio.arcano} ${carta(r.arcanoDelAnio)}`}
-        title={copy.delAnio.title}
-        text={copy.delAnio.text}
-        mapa={r.mapaDelAnio}
-        tono="lavanda"
-      />
-      <PaginaCiclo datos={datos} />
       <PaginaLectura datos={datos} recursos={recursos} claves={claves} />
       <PaginaTati recursos={recursos} />
     </Document>

@@ -10,7 +10,7 @@ export function Logo({ className, tone = "light" }: { className?: string; tone?:
     >
       <BrandSymbol
         size={48}
-        className="h-11 w-auto transition-transform duration-700 ease-[var(--ease-breath)] group-hover:rotate-[8deg] lg:h-12"
+        className="h-11 w-auto transition-transform duration-1000 ease-[var(--ease-breath)] group-hover:rotate-[360deg] lg:h-12"
       />
       <span className="flex flex-col items-center leading-none">
         <span

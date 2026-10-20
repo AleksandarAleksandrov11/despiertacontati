@@ -16,9 +16,9 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Reserva tu sesión en Valencia u online | Despierta con Tati",
+  title: "Reserva tu sesión online | Despierta con Tati",
   description:
-    "Reserva tu sesión de Reiki, terapias energéticas, meditación, tarot o autoconocimiento en Valencia u online. Cuéntame qué necesitas y te respondo yo.",
+    "Reserva tu sesión de Reiki, terapias energéticas, meditación, tarot o autoconocimiento online. Cuéntame qué necesitas y te respondo yo.",
   path: "/contacto",
 });
 

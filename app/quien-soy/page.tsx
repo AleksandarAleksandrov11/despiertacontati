@@ -12,9 +12,9 @@ import { Section } from "@/components/ui/section";
 import { breadcrumbJsonLd, pageMetadata, personJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Quién soy: Tati, terapeuta holística en Valencia | Despierta con Tati",
+  title: "Quién soy: Tati, terapeuta holística | Despierta con Tati",
   description:
-    "Soy Tati, terapeuta holística en Valencia con más de 20 años de experiencia y profesora de Reiki desde 2006. Práctica y al grano, para que vuelvas a elegir tú.",
+    "Soy Tati, terapeuta holística con más de 20 años de experiencia y profesora de Reiki desde 2006. Práctica y al grano, para que vuelvas a elegir tú.",
   path: "/quien-soy",
 });
 

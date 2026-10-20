@@ -325,7 +325,7 @@
 }
 
 html[data-intro="play"] {
-  --intro: 800ms;
+  --intro: 1100ms;
 }
 
 .intro {
@@ -334,7 +334,7 @@ html[data-intro="play"] {
 
 html[data-intro="play"] .intro {
   display: flex;
-  animation: intro-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) 0.85s forwards;
+  animation: intro-out 0.55s cubic-bezier(0.76, 0, 0.24, 1) 1.2s forwards;
 }
 
 .intro-logo {
@@ -342,7 +342,7 @@ html[data-intro="play"] .intro {
 }
 
 .intro-symbol {
-  animation: intro-symbol 0.8s var(--ease-breath) both;
+  animation: intro-symbol 1.15s var(--ease-breath) both;
 }
 
 .intro-line {
@@ -367,7 +367,7 @@ html[data-intro="play"] .intro {
 @keyframes intro-symbol {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.82) rotate(-28deg);
+    transform: scale(0.7) rotate(-360deg);
   }
   to {
     opacity: 1;

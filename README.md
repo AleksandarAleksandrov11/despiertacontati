@@ -1,6 +1,6 @@
 # Despierta con Tati
 
-Web de Despierta con Tati, terapia holística en Valencia y online: Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, con tienda, calculadora de la Matriz del Destino y guía gratuita.
+Web de Despierta con Tati, terapia holística online: Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, con tienda, calculadora de la Matriz del Destino y guía gratuita.
 
 ## Stack
 

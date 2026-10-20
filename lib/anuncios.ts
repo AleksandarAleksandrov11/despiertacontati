@@ -21,8 +21,7 @@ export function formatAnuncioDate(date: string) {
   return new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric" }).format(new Date(date));
 }
 
-export function eventJsonLd(anuncio: Anuncio, url: string, organizerId: string, locality: string) {
-  const online = anuncio.location === "online";
+export function eventJsonLd(anuncio: Anuncio, url: string, organizerId: string) {
   return {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -31,12 +30,8 @@ export function eventJsonLd(anuncio: Anuncio, url: string, organizerId: string, 
     startDate: anuncio.date,
     ...(anuncio.endDate ? { endDate: anuncio.endDate } : {}),
     eventStatus: "https://schema.org/EventScheduled",
-    eventAttendanceMode: online
-      ? "https://schema.org/OnlineEventAttendanceMode"
-      : "https://schema.org/OfflineEventAttendanceMode",
-    location: online
-      ? { "@type": "VirtualLocation", url }
-      : { "@type": "Place", name: locality, address: { "@type": "PostalAddress", addressLocality: locality, addressCountry: "ES" } },
+    eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+    location: { "@type": "VirtualLocation", url },
     organizer: { "@id": organizerId },
     url,
   };

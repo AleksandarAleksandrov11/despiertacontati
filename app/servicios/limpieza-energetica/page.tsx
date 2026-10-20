@@ -50,7 +50,6 @@ export default function LimpiezaPage() {
             path: "/servicios/limpieza-energetica",
             serviceType: "Limpieza energética de espacios",
             offers: ["Limpieza energética de casas", "Limpieza energética de espacios de trabajo"],
-            presencial: false,
           }),
         ]}
       />

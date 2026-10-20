@@ -16,7 +16,7 @@ import { sendMessage } from "@/lib/send-message";
 import { cn } from "@/lib/utils";
 
 const copy = contactoPage.form;
-const stepFields: (keyof ContactInput)[][] = [["servicio"], ["modalidad"], ["mensaje"], ["nombre", "contacto", "privacidad"]];
+const stepFields: (keyof ContactInput)[][] = [["servicio"], ["mensaje"], ["nombre", "contacto", "privacidad"]];
 const lastStep = stepFields.length - 1;
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -76,8 +76,8 @@ export function ContactForm() {
     if (valid) goTo(step + 1);
   }
 
-  function choose(field: "servicio" | "modalidad", value: string) {
-    setValue(field, value as never, { shouldValidate: true });
+  function choose(value: string) {
+    setValue("servicio", value as ContactInput["servicio"], { shouldValidate: true });
     window.setTimeout(() => goTo(step + 1), 260);
   }
 
@@ -173,7 +173,7 @@ export function ContactForm() {
         <p className="sr-only" aria-live="polite">
           {copy.stepLabel} {step + 1} {copy.of} {copy.steps.length}: {current.label}
         </p>
-        <ol aria-hidden className="grid grid-cols-4 gap-2">
+        <ol aria-hidden className="grid grid-cols-3 gap-2">
           {copy.steps.map((item, index) => {
             const done = index < step;
             const active = index === step;
@@ -225,7 +225,7 @@ export function ContactForm() {
                     key={option.value}
                     label={option.label}
                     selected={values.servicio === option.value}
-                    onSelect={() => choose("servicio", option.value)}
+                    onSelect={() => choose(option.value)}
                   />
                 ))}
                 {errors.servicio && <FieldError id={`${id}-servicio`}>{errors.servicio.message}</FieldError>}
@@ -233,20 +233,6 @@ export function ContactForm() {
             )}
 
             {step === 1 && (
-              <div role="radiogroup" aria-labelledby={`${id}-question`} className="mt-8 grid gap-3 sm:grid-cols-2">
-                {copy.modalities.map((option) => (
-                  <OptionCard
-                    key={option.value}
-                    label={option.label}
-                    selected={values.modalidad === option.value}
-                    onSelect={() => choose("modalidad", option.value)}
-                  />
-                ))}
-                {errors.modalidad && <FieldError id={`${id}-modalidad`}>{errors.modalidad.message}</FieldError>}
-              </div>
-            )}
-
-            {step === 2 && (
               <div className="mt-8">
                 <label htmlFor={`${id}-mensaje`} className="mb-2 block text-sm font-medium">
                   {copy.messageLabel}
@@ -263,14 +249,11 @@ export function ContactForm() {
               </div>
             )}
 
-            {step === 3 && (
+            {step === 2 && (
               <div className="mt-8 space-y-6">
                 <div className="flex flex-wrap items-center gap-2 text-sm">
                   <span className="text-ink-soft">{copy.summary}:</span>
-                  {[
-                    { label: copy.topics.find((t) => t.value === values.servicio)?.label, step: 0 },
-                    { label: copy.modalities.find((t) => t.value === values.modalidad)?.label, step: 1 },
-                  ]
+                  {[{ label: copy.topics.find((t) => t.value === values.servicio)?.label, step: 0 }]
                     .filter((item) => item.label)
                     .map((item) => (
                       <button

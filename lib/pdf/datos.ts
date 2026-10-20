@@ -3,7 +3,7 @@ import { infoCodigoMessage, type Mazo } from "@/content/codigo-personal";
 import { site } from "@/content/site";
 import { getProducto } from "@/content/tienda";
 import { calcularMatriz, calcularPareja, edadEnAnios, fechaParam, fechaTexto, limpiarNombre, parsearFecha, type Fecha, type Matriz } from "@/lib/matriz";
-import { calcularCodigo, hoyEnEspana } from "@/lib/codigo-personal";
+import { calcularCodigo } from "@/lib/codigo-personal";
 import { formatPrice } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
 import type { DatosCodigo } from "./codigo-pdf";
@@ -77,11 +77,10 @@ export function datosCodigo(params: URLSearchParams, origin: string): DatosCodig
   const texto = fechaTexto(fecha);
   const query = new URLSearchParams({ fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}), ...(mazo !== "rider" ? { mazo } : {}) });
   return {
-    resultado: calcularCodigo(fecha, hoyEnEspana()),
+    resultado: calcularCodigo(fecha),
     mazo,
     nombre,
     texto,
-    cumple: texto.slice(0, 5),
     precio: producto?.precio ? formatPrice(producto.precio) : null,
     compraUrl: `${baseUrl(origin)}${rutasCalculadora.codigo}?${query.toString()}#lectura-completa`,
     infoUrl: whatsappHref(infoCodigoMessage(texto, nombre)),

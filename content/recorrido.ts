@@ -33,7 +33,7 @@ export const recorrido: Hito[] = [
   {
     when: "Hoy",
     title: "Despierta con Tati",
-    text: "Acompaño en Valencia y online con todo lo que a mí me ha funcionado.",
+    text: "Acompaño online con todo lo que a mí me ha funcionado.",
     accent: "var(--color-chakra-corona)",
   },
 ];

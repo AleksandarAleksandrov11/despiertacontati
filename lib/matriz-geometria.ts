@@ -2,7 +2,19 @@ import type { Puntos } from "./matriz";
 
 export const lienzo = { size: 400, centro: 200, radio: 164, anillo: 192 };
 
-export type TipoPunto = "centro" | "personal" | "material" | "esquina" | "interno" | "corazon" | "canal" | "linaje";
+export type TipoPunto = "centro" | "vertice" | "esquina" | "interno" | "canal" | "linaje";
+
+export type Chakra = "corona" | "tercerOjo" | "garganta" | "corazon" | "plexo" | "sacro" | "raiz";
+
+export const coloresChakra: Record<Chakra, string> = {
+  corona: "#a88bc7",
+  tercerOjo: "#7c86c2",
+  garganta: "#7fb3d5",
+  corazon: "#8fb996",
+  plexo: "#e8c96a",
+  sacro: "#e9a66b",
+  raiz: "#d9776f",
+};
 
 export type PuntoMatriz = {
   key: keyof Puntos;
@@ -10,6 +22,7 @@ export type PuntoMatriz = {
   y: number;
   r: number;
   tipo: TipoPunto;
+  chakra?: Chakra;
   delay: number;
   soloIndividual?: boolean;
 };
@@ -63,23 +76,31 @@ const esquinas = {
 function buildPuntos(): PuntoMatriz[] {
   const list: PuntoMatriz[] = [];
   (["a", "b", "c", "d"] as const).forEach((key, index) => {
-    list.push({ key, ...vertices[key], r: 17, tipo: key === "a" || key === "b" ? "personal" : "material", delay: tiempos.vertices[index]! });
+    list.push({ key, ...vertices[key], r: 17, tipo: "vertice", chakra: key === "a" || key === "b" ? "corona" : "raiz", delay: tiempos.vertices[index]! });
   });
-  list.push({ key: "e", x: c, y: c, r: 23, tipo: "centro", delay: tiempos.centro });
+  list.push({ key: "e", x: c, y: c, r: 23, tipo: "centro", chakra: "plexo", delay: tiempos.centro });
   (["f", "g", "h", "i"] as const).forEach((key, index) => {
     list.push({ key, ...esquinas[key], r: 14, tipo: "esquina", delay: tiempos.esquinas[index]! });
   });
-  const internos: { key: keyof Puntos; desde: { x: number; y: number }; t: number; tipo: TipoPunto; r: number; soloIndividual?: boolean }[] = [
-    { key: "a2", desde: vertices.a, t: 0.2, tipo: "interno", r: 10 },
-    { key: "a1", desde: vertices.a, t: 0.38, tipo: "interno", r: 10 },
-    { key: "a3", desde: vertices.a, t: 0.6, tipo: "corazon", r: 9, soloIndividual: true },
-    { key: "b2", desde: vertices.b, t: 0.2, tipo: "interno", r: 10 },
-    { key: "b1", desde: vertices.b, t: 0.38, tipo: "interno", r: 10 },
-    { key: "b3", desde: vertices.b, t: 0.6, tipo: "corazon", r: 9, soloIndividual: true },
+  const internos: {
+    key: keyof Puntos;
+    desde: { x: number; y: number };
+    t: number;
+    tipo: TipoPunto;
+    chakra?: Chakra;
+    r: number;
+    soloIndividual?: boolean;
+  }[] = [
+    { key: "a2", desde: vertices.a, t: 0.2, tipo: "interno", chakra: "tercerOjo", r: 10 },
+    { key: "a1", desde: vertices.a, t: 0.38, tipo: "interno", chakra: "garganta", r: 10 },
+    { key: "a3", desde: vertices.a, t: 0.6, tipo: "interno", chakra: "corazon", r: 9, soloIndividual: true },
+    { key: "b2", desde: vertices.b, t: 0.2, tipo: "interno", chakra: "tercerOjo", r: 10 },
+    { key: "b1", desde: vertices.b, t: 0.38, tipo: "interno", chakra: "garganta", r: 10 },
+    { key: "b3", desde: vertices.b, t: 0.6, tipo: "interno", chakra: "corazon", r: 9, soloIndividual: true },
     { key: "c2", desde: vertices.c, t: 0.2, tipo: "interno", r: 10 },
-    { key: "c1", desde: vertices.c, t: 0.38, tipo: "interno", r: 10 },
+    { key: "c1", desde: vertices.c, t: 0.38, tipo: "interno", chakra: "sacro", r: 10 },
     { key: "d2", desde: vertices.d, t: 0.2, tipo: "interno", r: 10 },
-    { key: "d1", desde: vertices.d, t: 0.38, tipo: "interno", r: 10 },
+    { key: "d1", desde: vertices.d, t: 0.38, tipo: "interno", chakra: "sacro", r: 10 },
     { key: "k1", desde: vertices.c, t: 0.62, tipo: "linaje", r: 9, soloIndividual: true },
     { key: "k", desde: vertices.c, t: 0.77, tipo: "linaje", r: 9, soloIndividual: true },
     { key: "f2", desde: esquinas.f, t: 0.22, tipo: "interno", r: 9, soloIndividual: true },
@@ -97,6 +118,7 @@ function buildPuntos(): PuntoMatriz[] {
       ...haciaCentro(item.desde.x, item.desde.y, item.t),
       r: item.r,
       tipo: item.tipo,
+      chakra: item.chakra,
       delay: redondear(tiempos.internos + index * 0.045),
       soloIndividual: item.soloIndividual,
     });
@@ -167,3 +189,14 @@ export const lineasMatriz: LineaMatriz[] = [
 ];
 
 export const verticesMatriz = vertices;
+
+export const simbolosCanal = {
+  dinero: { x: redondear(p("dinero").x + 16), y: redondear(p("dinero").y + 15) },
+  amor: { x: redondear(p("amor").x + 15), y: redondear(p("amor").y + 16) },
+};
+
+export function corazon({ x, y }: { x: number; y: number }, size: number) {
+  const k = size / 12;
+  const pt = (dx: number, dy: number) => `${redondear(x + dx * k)} ${redondear(y + dy * k)}`;
+  return `M${pt(0, 5)}C${pt(-1.5, 3.6)} ${pt(-6, 0.8)} ${pt(-6, -2)}C${pt(-6, -4.8)} ${pt(-2.6, -6.2)} ${pt(0, -3.4)}C${pt(2.6, -6.2)} ${pt(6, -4.8)} ${pt(6, -2)}C${pt(6, 0.8)} ${pt(1.5, 3.6)} ${pt(0, 5)}Z`;
+}

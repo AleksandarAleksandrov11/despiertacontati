@@ -10,7 +10,7 @@ export const site = {
     jobTitle: "Terapeuta holística",
   },
   description:
-    "Tati, terapeuta holística en Valencia con más de 20 años de experiencia. Reiki, meditación, tarot y autoconocimiento, en Valencia y online.",
+    "Tati, terapeuta holística con más de 20 años de experiencia. Reiki, meditación, tarot y autoconocimiento, online.",
   tagline: "Recuerda quién eres, empodérate y crea tu nueva vida.",
   taglineParts: { lead: "Recuerda quién eres, empodérate y crea tu", accent: "nueva vida." },
   motto: "Recuerda quién eres, recupera tu poder de elegir y crea tu nueva vida.",
@@ -19,7 +19,7 @@ export const site = {
     locality: "Valencia",
     region: "Comunidad Valenciana",
     country: "ES",
-    label: "Valencia y online",
+    label: "Online",
   },
   contact: {
     email: "tatiana.guillem@gmail.com",
@@ -110,7 +110,7 @@ export const serviceNav = [
 export const calculadorasNav = [
   { label: "Matriz del Destino", href: "/calculadora/matriz-del-destino", description: "Tu matriz y tus energías por edades" },
   { label: "Compatibilidad de pareja", href: "/calculadora/compatibilidad-de-pareja", description: "La matriz de vuestra relación" },
-  { label: "Código Personal", href: "/calculadora/codigo-personal", description: "Tu arcano personal y tus mapas de tarot" },
+  { label: "Arcano y Código Personal", href: "/calculadora/codigo-personal", description: "Tu arcano personal y tu Código Personal" },
 ];
 
 export const mainNav: NavItem[] = [

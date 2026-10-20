@@ -50,8 +50,8 @@ export const bloques: Bloque[] = [
     accent: "var(--color-chakra-tercer-ojo)",
     image: "relajacionSillon",
     summary: "Con calma llega la claridad. Aprendes a parar en tu día a día, sin cojín ni silencio perfecto.",
-    includes: ["Clases grupales online y presenciales", "Meditaciones grabadas en la tienda", "Guía gratuita"],
-    modality: ["Presencial en Valencia", "Online", "Grabada"],
+    includes: ["Clases grupales online", "Meditaciones grabadas en la tienda", "Guía gratuita"],
+    modality: ["Online", "Grabada"],
     more: "Ver meditación",
   },
   {
@@ -135,7 +135,7 @@ export const formatos: Formato[] = [
   },
   {
     title: "Clase grupal",
-    text: "Meditación en grupo, online y en Valencia. Parar en compañía también ayuda.",
+    text: "Meditación en grupo, online. Parar en compañía también ayuda.",
     cta: {
       label: "Quiero plaza",
       whatsapp: "Hola, Tati. Me interesan las clases grupales de meditación. ¿Me guardas plaza?",
@@ -158,7 +158,7 @@ export const destacados = [
   },
   {
     title: "Clases online",
-    text: "Meditamos en grupo desde casa. También en Valencia.",
+    text: "Meditamos en grupo, cada una desde su casa.",
     image: "claseOnline" as ImageKey,
     href: "/servicios/meditacion#grupales",
     cta: "Ver las clases",
@@ -305,7 +305,7 @@ export const limpiezaPage = {
 
 export const meditacionPage = {
   eyebrow: "Meditación",
-  title: "Meditación en Valencia y online",
+  title: "Meditación online",
   subtitle: "Medita en lo cotidiano.",
   image: "relajacionSillon" as ImageKey,
   filosofia: {
@@ -333,7 +333,7 @@ export const meditacionPage = {
   grupales: {
     eyebrow: "Clases grupales",
     title: "Meditar en compañía.",
-    text: "Estoy a punto de abrir grupo online y otro presencial en Valencia. Mira el tablón y apúntate.",
+    text: "Estoy a punto de abrir un grupo online. Mira el tablón y apúntate.",
     image: "salaLuminosa" as ImageKey,
     cta: "Quiero plaza",
     ctaWhatsapp: "Hola, Tati. Quiero plaza en un grupo de meditación. ¿Me cuentas cuándo empieza?",
@@ -454,7 +454,7 @@ export const autoconocimientoPage = {
     diferencias: [
       {
         title: "Matriz del Destino",
-        text: "Se calcula con tu fecha de nacimiento y la energía de los 22 arcanos mayores. En la lectura la interpreto con cinco cartas, una para cada clave.",
+        text: "Se calcula con tu fecha de nacimiento y la energía de los 22 arcanos mayores. No es tarot: cada posición habla de un área de tu vida.",
       },
       { title: "Código Personal y Carta Personal", text: "Tarot numerológico: tus cartas salen de tu fecha de nacimiento." },
     ],
@@ -478,7 +478,7 @@ export const autoconocimientoPage = {
 export const serviciosPage = {
   eyebrow: "Servicios",
   title: "Calma, claridad y decisión.",
-  subtitle: "Reiki, meditación, tarot y autoconocimiento en Valencia y online.",
+  subtitle: "Reiki, meditación, tarot y autoconocimiento online.",
   orden: "Primero, calma. Después, claridad. Y con claridad, decisiones y autoconocimiento.",
   headerCta: "Ver los servicios",
   includesLabel: "Incluye",

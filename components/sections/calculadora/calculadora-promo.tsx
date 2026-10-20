@@ -38,7 +38,7 @@ export function CalculadoraPromo({ tone = "dark", id = "calculadora" }: { tone?:
         </div>
         <div className="lg:col-span-6">
           <div className={cn("mx-auto max-w-[30rem] rounded-full", !dark && "bg-ciruela p-4 sm:p-6")}>
-            <MatrizSvg puntos={ejemplo} etiquetas={["", "", "", ""]} done label="" decorativa />
+            <MatrizSvg puntos={ejemplo} etiquetas={["", "", ""]} done label="" decorativa />
           </div>
         </div>
       </div>

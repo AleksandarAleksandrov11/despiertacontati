@@ -120,7 +120,7 @@ export const faqs = {
     },
     {
       question: "¿Cuándo empiezan los grupos?",
-      answer: "Estoy a punto de abrir grupo online y en Valencia. Escríbeme y te aviso de las fechas.",
+      answer: "Estoy a punto de abrir un grupo online. Escríbeme y te aviso de las fechas.",
     },
     disclaimerFaq,
   ],
@@ -154,7 +154,7 @@ export const faqs = {
     {
       question: "¿La Matriz del Destino es tarot?",
       answer:
-        "Se calcula con tu fecha de nacimiento y la energía de los 22 arcanos mayores. En la lectura la interpreto con cinco cartas, una para cada clave. El Código Personal y la Carta Personal son tarot numerológico.",
+        "No. Se calcula con tu fecha de nacimiento y usa la energía de los 22 arcanos mayores, pero no es una tirada de cartas. El Código Personal y la Carta Personal sí son tarot numerológico.",
     },
     lecturaFaq,
     disclaimerFaq,

@@ -42,7 +42,7 @@ export function GET() {
 
   const body = `# ${site.name}
 
-> ${site.person.fullName} (Tati) es terapeuta holística en ${site.location.locality} (${site.location.region}, España) con más de 20 años de experiencia y profesora de Reiki desde ${site.facts.reikiSince}. Acompaña con Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, online y a distancia, con clases de meditación en grupo también en ${site.location.locality}.
+> ${site.person.fullName} (Tati) es terapeuta holística con más de 20 años de experiencia y profesora de Reiki desde ${site.facts.reikiSince}. Acompaña con Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, online y a distancia, también las clases de meditación en grupo.
 
 Frase de marca: ${site.tagline}
 
@@ -58,7 +58,7 @@ ${metodo.steps.map((step) => `${step.number}. ${step.step} (${step.tool}): ${ste
 ## Servicios
 ${bloques.map((bloque) => `- [${bloque.benefit} · ${bloque.area}](${absoluteUrl(bloque.href)}): ${bloque.includes.join(", ")}.`).join("\n")}
 
-La sanación akáshica es un trabajo de sanación energética, no una lectura de registros. La Matriz del Destino se calcula con la fecha de nacimiento y su lectura se interpreta con cinco cartas; el Código Personal y la Carta Personal son tarot numerológico. Reiki, terapias energéticas, limpieza energética y tarot son online o a distancia; las clases de meditación en grupo son online y en Valencia. Los servicios sin precio publicado se informan por WhatsApp.
+La sanación akáshica es un trabajo de sanación energética, no una lectura de registros. La Matriz del Destino se calcula con la fecha de nacimiento y no es tarot; el Código Personal y la Carta Personal son tarot numerológico. Todos los servicios son online o a distancia, también las clases de meditación en grupo. Los servicios sin precio publicado se informan por WhatsApp.
 
 ## Tienda
 Compra por WhatsApp desde la ficha de cada producto. Los datos de pago se facilitan de forma privada. Meditaciones en MP3 por enlace privado de descarga y lecturas en vídeo y PDF por WhatsApp, siempre tras confirmar el pago.
@@ -69,7 +69,7 @@ ${tienda()}
 ${calculadoraHub.subtitle}
 - [Matriz del Destino](${absoluteUrl(rutasCalculadora.individual)}): con la fecha de nacimiento muestra la matriz completa, las energías por edades, la energía personal, el centro, el talento, el mapa de chakras, el linaje y los cuatro propósitos, con un PDF gratuito.
 - [Compatibilidad de pareja](${absoluteUrl(rutasCalculadora.pareja)}): con las dos fechas de nacimiento muestra la matriz de la pareja, la energía de la relación y sus propósitos, con un PDF gratuito.
-- [Código Personal](${absoluteUrl(rutasCalculadora.codigo)}): con la fecha de nacimiento muestra el arcano personal, el perfil de cinco cartas, el mapa natal de tarot, el mapa personal anual, el mapa del año y el ciclo vital, con el método Tarot Pragmático de Raúl Muñoz Jara y un PDF gratuito.
+- [Arcano Personal y Código Personal](${absoluteUrl(rutasCalculadora.codigo)}): tarot numerológico. Con la fecha de nacimiento muestra el arcano personal (la carta personal) y las cinco cartas del Código Personal, con el método Tarot Pragmático de Raúl Muñoz Jara y un PDF gratuito.
 La lectura completa, interpretada por Tati, se pide por WhatsApp desde la propia calculadora.
 
 ## Guía gratuita
@@ -81,7 +81,7 @@ La lectura completa, interpretada por Tati, se pide por WhatsApp desde la propia
 - Teléfono y WhatsApp: ${site.contact.phoneDisplay}
 - Instagram: ${site.social.instagram.url}
 - Instagram de tarot (${site.social.tarot.label}): ${site.social.tarot.url}
-- Ubicación: ${site.location.locality}, sesiones presenciales y online
+- Sesiones: online
 
 ## Páginas
 ${pages.map(([label, path]) => `- [${label}](${absoluteUrl(path)})`).join("\n")}

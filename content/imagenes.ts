@@ -123,7 +123,7 @@ export const imagenes = {
   },
   tatiRetrato: {
     src: tatiRetrato,
-    alt: "Tatiana Guillem, Tati, terapeuta holística en Valencia",
+    alt: "Tatiana Guillem, Tati, terapeuta holística",
     position: "50% 35%",
   },
   tatiSonrisa: {

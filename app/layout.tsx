@@ -12,7 +12,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Reiki, meditación y tarot terapéutico en Valencia | Despierta con Tati",
+    default: "Reiki, meditación y tarot terapéutico online | Despierta con Tati",
     template: "%s | Despierta con Tati",
   },
   description: site.description,

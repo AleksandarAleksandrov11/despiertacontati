@@ -42,7 +42,6 @@ export default function TarotPage() {
             path: "/servicios/tarot-terapeutico",
             serviceType: "Tarot terapéutico",
             offers: page.formatos.items.map((item) => item.title),
-            presencial: false,
           }),
         ]}
       />

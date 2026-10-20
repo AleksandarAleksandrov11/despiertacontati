@@ -1,11 +1,11 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Check, Share2 } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { calculadoraForm } from "@/content/calculadora";
-import { codigoPersonal, infoCodigoMessage, mazos, type Mazo } from "@/content/codigo-personal";
+import { codigoPersonal, infoCodigoMessage, mazos, nombreCarta, type Mazo } from "@/content/codigo-personal";
 import type { Producto } from "@/content/tienda";
 import { useLenis } from "@/components/layout/smooth-scroll";
 import { FechaCampos, fechaVacia, type FechaForm } from "@/components/sections/calculadora/fecha-campos";
@@ -18,12 +18,7 @@ import { TrackedAnchor } from "@/components/ui/tracked";
 import { calcularCodigo, carta } from "@/lib/codigo-personal";
 import { fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha, type Fecha } from "@/lib/matriz";
 import { cn, whatsappHref } from "@/lib/utils";
-import { CicloVital, TableroMapa, TableroPerfil } from "./tableros";
-import { Vinculo } from "./vinculo";
-
-const sinSuscripcion = () => () => {};
-const hoyCliente = () => new Date().toDateString();
-const hoyServidor = () => null;
+import { Carta, TableroPerfil } from "./tableros";
 
 function toForm(fecha: Fecha | null, nombre: string): FechaForm {
   return fecha ? { dia: String(fecha.dia), mes: String(fecha.mes), anio: String(fecha.anio), nombre } : { ...fechaVacia, nombre };
@@ -74,7 +69,6 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
   const router = useRouter();
   const pathname = usePathname();
   const lenis = useLenis();
-  const hoy = useSyncExternalStore(sinSuscripcion, hoyCliente, hoyServidor);
   const fecha = parsearFecha(params.get("fecha"));
   const nombre = limpiarNombre(params.get("nombre"));
   const mazo: Mazo = params.get("mazo") === "sopraffino" ? "sopraffino" : "rider";
@@ -85,8 +79,7 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
   const stage = useRef<HTMLElement>(null);
   const scrollPending = useRef(Boolean(fecha));
 
-  const fechaHoy = hoy ? new Date(hoy) : null;
-  const resultado = fecha && fechaHoy ? calcularCodigo(fecha, fechaHoy) : null;
+  const resultado = fecha ? calcularCodigo(fecha) : null;
   const key = resultado && fecha ? `${fechaParam(fecha)}-${run}` : "";
 
   useEffect(() => {
@@ -127,7 +120,7 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
 
   async function compartir() {
     if (!resultado) return;
-    const datos = { title: copy.perfil.title, text: copy.compartir.texto(resultado.personal, carta(resultado.anual)), url: window.location.href };
+    const datos = { title: copy.perfil.title, text: copy.compartir.texto(resultado.personal), url: window.location.href };
     track("compartir_codigo_personal");
     if (navigator.share) {
       try {
@@ -147,7 +140,6 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
   }
 
   const texto = fecha ? fechaTexto(fecha) : "";
-  const cumple = fecha ? `${String(fecha.dia).padStart(2, "0")}/${String(fecha.mes).padStart(2, "0")}` : "";
   const pdfHref = fecha
     ? `/api/codigo-personal/pdf?${new URLSearchParams({ fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}), ...(mazo !== "rider" ? { mazo } : {}) }).toString()}`
     : "";
@@ -170,7 +162,7 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
         </form>
       </CalculadoraHero>
 
-      {resultado && fecha && fechaHoy && (
+      {resultado && fecha && (
         <div key={key}>
           <section
             ref={stage}
@@ -190,7 +182,6 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
                     [copy.pills.secundario, String(resultado.secundario)],
                     [copy.pills.desafio, String(resultado.desafio)],
                     [copy.pills.complementos, `${resultado.complementos[0]} · ${resultado.complementos[1]}`],
-                    [copy.pills.anual, String(carta(resultado.anual))],
                   ].map(([label, valor]) => (
                     <li key={label} className="rounded-full border border-crema/20 bg-crema/5 px-4 py-2 text-sm">
                       {label}: <strong className="nums font-semibold text-dorado-soft">{valor}</strong>
@@ -198,6 +189,24 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
                   ))}
                 </ul>
               </header>
+
+              <Bloque id="arcano" title={copy.arcano.title} aside={<p className="max-w-md text-crema/70">{copy.arcano.text}</p>}>
+                <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-center sm:gap-14">
+                  <Carta
+                    mazo={mazo}
+                    numero={carta(resultado.personal)}
+                    destacada
+                    sizes="(min-width: 640px) 208px, 50vw"
+                    className="w-1/2 max-w-[13rem]"
+                  />
+                  <div className="text-center sm:text-left">
+                    <p className="eyebrow text-crema/70">{copy.arcano.numero(carta(resultado.personal))}</p>
+                    <p className="mt-3 font-serif text-[clamp(2.4rem,1.9rem+2vw,3.6rem)] leading-tight text-crema">
+                      {nombreCarta(carta(resultado.personal), mazo)}
+                    </p>
+                  </div>
+                </div>
+              </Bloque>
 
               <Bloque id="perfil" title={copy.perfil.title} aside={<p className="max-w-md text-crema/70">{copy.perfil.text}</p>}>
                 <TableroPerfil
@@ -208,59 +217,6 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
                   desafio={carta(resultado.desafio)}
                 />
               </Bloque>
-
-              <Bloque id="mapa-natal" title={copy.natal.title} aside={<p className="max-w-md text-crema/70">{copy.natal.text}</p>}>
-                <TableroMapa mazo={mazo} mapa={resultado.mapaNatal} />
-              </Bloque>
-
-              <Bloque
-                id="mapa-anual"
-                title={copy.anual.title}
-                aside={
-                  <p className="text-crema/80 lg:text-right">
-                    <span className="nums block font-serif text-[2.6rem] leading-none text-dorado-soft">{resultado.anioVigente}</span>
-                    <span className="mt-2 block">
-                      {copy.anual.arcano}: <strong className="nums text-dorado-soft">{carta(resultado.anual)}</strong>
-                    </span>
-                    <span className="block text-sm text-crema/75">{copy.anual.cambia(cumple)}</span>
-                  </p>
-                }
-              >
-                <p className="mb-8 max-w-3xl text-crema/75">{copy.anual.text}</p>
-                <TableroMapa mazo={mazo} mapa={resultado.mapaAnual} />
-              </Bloque>
-
-              <Bloque
-                id="mapa-del-anio"
-                title={copy.delAnio.title}
-                aside={
-                  <p className="text-crema/80 lg:text-right">
-                    <span className="nums block font-serif text-[2.6rem] leading-none text-dorado-soft">{resultado.anioActual}</span>
-                    <span className="mt-2 block">
-                      {copy.delAnio.arcano}: <strong className="nums text-dorado-soft">{carta(resultado.arcanoDelAnio)}</strong>
-                    </span>
-                  </p>
-                }
-              >
-                <p className="mb-8 max-w-3xl text-crema/75">{copy.delAnio.text}</p>
-                <TableroMapa mazo={mazo} mapa={resultado.mapaDelAnio} />
-              </Bloque>
-
-              <section aria-labelledby="ciclo-title" className="border-t border-crema/10 pt-12 sm:pt-16">
-                <details className="group">
-                  <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
-                    <h2 id="ciclo-title" className="font-serif text-[clamp(2rem,1.6rem+1.6vw,3rem)] leading-tight text-crema">
-                      {copy.ciclo.title}
-                    </h2>
-                    <span className="rounded-full border border-crema/30 px-5 py-2.5 text-sm text-crema transition-colors group-open:bg-crema group-open:text-ciruela">
-                      <span className="group-open:hidden">{copy.ciclo.summary}</span>
-                      <span className="hidden group-open:inline">{copy.ciclo.ocultar}</span>
-                    </span>
-                  </summary>
-                  <p className="mb-10 mt-6 max-w-3xl text-crema/75">{copy.ciclo.text}</p>
-                  <CicloVital mazo={mazo} ciclo={resultado.ciclo} />
-                </details>
-              </section>
 
               <div className="flex flex-wrap justify-center gap-3 border-t border-crema/10 pt-12">
                 <PdfButton href={pdfHref} tipo={mazo} evento="descarga_pdf_codigo" label={copy.pdf.button} tone="dark" />
@@ -275,8 +231,6 @@ export function CalculadoraCodigo({ producto, heading }: { producto: Producto; h
               </div>
             </div>
           </section>
-
-          <Vinculo mazo={mazo} fecha={fecha} personal={resultado.personal} hoy={fechaHoy} />
 
           <section id="lectura-completa" aria-labelledby="lectura-codigo-title" className="section-pad relative overflow-hidden bg-crema">
             <div className="container-page relative grid gap-10 lg:grid-cols-12 lg:gap-16">

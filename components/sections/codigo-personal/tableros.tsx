@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { ases, codigoPersonal, mazos, nombreCarta, type Mazo } from "@/content/codigo-personal";
-import { romano, type CicloAnio, type Mapa } from "@/lib/codigo-personal";
 import { cn } from "@/lib/utils";
 
 type As = (typeof ases)[number]["id"];
@@ -76,67 +75,5 @@ export function TableroPerfil({
       </div>
       <Carta mazo={mazo} numero={desafio} label={copy.desafio} destacada sizes={sizes} delay={520} className="w-[24%] max-w-[9.5rem] lg:w-[9.5rem]" />
     </div>
-  );
-}
-
-export function TableroMapa({ mazo, mapa, claves = [], compacto = false }: { mazo: Mazo; mapa: Mapa; claves?: number[]; compacto?: boolean }) {
-  const sizes = compacto ? "(min-width: 1024px) 60px, 12vw" : "(min-width: 1024px) 110px, 13vw";
-  return (
-    <div className={cn("grid gap-y-4", !compacto && "lg:grid-cols-[1fr_auto] lg:items-center lg:gap-x-10")}>
-      <ol className="grid gap-y-3">
-        {mapa.filas.map((fila, filaIndex) => (
-          <li key={filaIndex}>
-            <span className="sr-only">{codigoPersonal.septenario(filaIndex + 1)}</span>
-            <ol className={cn("grid grid-cols-7", compacto ? "gap-1" : "gap-1.5 sm:gap-3")}>
-              {fila.map((numero, index) => {
-                const posicion = filaIndex * 7 + index + 1;
-                const clave = claves.includes(posicion);
-                return (
-                  <li key={posicion} className="flex flex-col items-center gap-1">
-                    <span className={cn("nums text-[0.65rem] leading-none sm:text-xs", clave ? "font-semibold text-dorado-soft" : "text-crema/70")}>
-                      <span className="sr-only">{codigoPersonal.posicion(posicion)}</span>
-                      <span aria-hidden>{posicion}</span>
-                    </span>
-                    <Carta
-                      mazo={mazo}
-                      numero={numero}
-                      destacada={posicion === 1 || clave}
-                      sizes={sizes}
-                      delay={compacto ? 0 : posicion * 25}
-                      className="w-full"
-                    />
-                  </li>
-                );
-              })}
-            </ol>
-          </li>
-        ))}
-      </ol>
-      {!compacto && (
-        <div className="mx-auto w-[22%] max-w-[8.5rem] lg:w-[8.5rem]">
-          <Carta mazo={mazo} numero={mapa.desafio} label={codigoPersonal.desafio} destacada sizes="(min-width: 1024px) 136px, 22vw" delay={560} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-export function CicloVital({ mazo, ciclo }: { mazo: Mazo; ciclo: CicloAnio[] }) {
-  const copy = codigoPersonal.ciclo;
-  return (
-    <ol className="grid grid-cols-4 gap-x-3 gap-y-6 sm:grid-cols-6 lg:grid-cols-8">
-      {ciclo.map((item, index) => (
-        <li key={item.anio} className="flex flex-col items-center gap-2 text-center">
-          <span className="nums text-sm font-medium text-dorado-soft">{item.anio}</span>
-          {item.carta ? (
-            <Carta mazo={mazo} numero={item.arcano} destacada sizes="80px" className="w-16" label={index === 0 ? copy.nacimiento : copy.ahora} />
-          ) : (
-            <span className="nums grid size-16 place-items-center rounded-full bg-crema/10 font-serif text-[1.35rem] text-dorado-soft ring-1 ring-crema/15">
-              {romano(item.arcano)}
-            </span>
-          )}
-        </li>
-      ))}
-    </ol>
   );
 }

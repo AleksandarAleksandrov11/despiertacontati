@@ -3,10 +3,10 @@ import type { ImageKey } from "./imagenes";
 
 export const inicio = {
   hero: {
-    eyebrow: "Terapeuta holística en Valencia",
+    eyebrow: "Terapeuta holística",
     title: "Despierta",
     subtitle: site.tagline,
-    support: "Reiki, meditación, tarot y autoconocimiento en Valencia y online.",
+    support: "Reiki, meditación, tarot y autoconocimiento online.",
     image: "mujerBrazosAbiertos" as ImageKey,
   },
   teSuena: {
@@ -46,7 +46,7 @@ export const inicio = {
     eyebrow: "Quién soy",
     title: "Soy Tati.",
     quote: "Despertar es darte cuenta de que tienes el poder de tu vida.",
-    text: "Terapeuta holística en Valencia, con más de 20 años acompañando y enseñando Reiki desde 2006. Práctica, cercana y al grano.",
+    text: "Terapeuta holística, con más de 20 años acompañando y enseñando Reiki desde 2006. Práctica, cercana y al grano.",
     image: "tatiSonrisa" as ImageKey,
     link: "Conóceme",
   },
@@ -84,7 +84,7 @@ export const ctaFinal = {
 export const quienSoy = {
   eyebrow: "Quién soy",
   title: "Soy Tati.",
-  subtitle: "Terapeuta holística en Valencia. Práctica y al grano.",
+  subtitle: "Terapeuta holística. Práctica y al grano.",
   intro:
     "Acompaño a mujeres que viven con estrés o ansiedad, o que sienten que han perdido el rumbo. Lo hago con herramientas que a mí me han funcionado.",
   idea: "Para mí, despertar es darte cuenta de que tienes el poder de tu vida. Sea cual sea la herramienta, el objetivo es ese: que vuelvas a elegir tú.",
@@ -170,8 +170,8 @@ export const contactoPage = {
     avatarTitle: "Te contesto yo.",
     avatarText: "Leo cada mensaje personalmente.",
     title: "Si lo prefieres",
-    location: "Valencia y online",
-    locationText: "Sesiones online desde donde estés. Las clases de meditación en grupo, también en Valencia.",
+    location: "Online",
+    locationText: "Sesiones online, desde donde estés.",
     whatsapp: "WhatsApp",
     phone: "Teléfono",
     email: "Email",
@@ -184,7 +184,6 @@ export const contactoPage = {
   form: {
     steps: [
       { id: "servicio", label: "Servicio", question: "¿Qué te trae por aquí?", hint: "Elige una opción. Si dudas, marca «Aún no lo sé»." },
-      { id: "modalidad", label: "Modalidad", question: "¿Cómo lo prefieres?", hint: "Las sesiones son online. Las clases de meditación en grupo, también en Valencia." },
       { id: "mensaje", label: "Mensaje", question: "Cuéntame un poco", hint: "Opcional. Lo que te apetezca contarme sobre lo que necesitas." },
       { id: "datos", label: "Tus datos", question: "¿Cómo te llamo?", hint: "Al enviar se abre WhatsApp con tu mensaje listo para mandármelo." },
     ],
@@ -196,11 +195,6 @@ export const contactoPage = {
       { value: "autoconocimiento", label: "Autoconocimiento" },
       { value: "curso-reiki", label: "Curso de Reiki" },
       { value: "no-lo-se", label: "Aún no lo sé" },
-    ],
-    modalities: [
-      { value: "presencial", label: "Presencial en Valencia" },
-      { value: "online", label: "Online" },
-      { value: "indiferente", label: "Me da igual" },
     ],
     messagePlaceholder: "Por ejemplo: llevo unas semanas con mucho estrés y me gustaría probar el Reiki.",
     messageLabel: "Tu mensaje",
@@ -224,7 +218,6 @@ export const contactoPage = {
       name: "Nombre",
       contact: "Contacto",
       topic: "Me interesa",
-      modality: "Modalidad",
       message: "Mensaje",
     },
     success: {

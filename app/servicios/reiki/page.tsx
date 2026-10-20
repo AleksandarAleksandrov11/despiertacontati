@@ -41,7 +41,6 @@ export default function ReikiPage() {
             path: "/servicios/reiki",
             serviceType: "Reiki y terapias energéticas",
             offers: [...page.terapias.map((terapia) => terapia.title), "Cursos de Reiki"],
-            presencial: false,
           }),
         ]}
       />

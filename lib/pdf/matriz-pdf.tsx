@@ -4,13 +4,16 @@ import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/cont
 import { site } from "@/content/site";
 import { etapaActual, type Etapa, type Puntos, type Tramo } from "@/lib/matriz";
 import {
+  coloresChakra,
+  corazon,
   lineasMatriz,
   lienzo,
   marcasEdad,
   puntosAnillo,
-  puntosMatriz,
   puntosVariante,
+  simbolosCanal,
   verticesMatriz,
+  type PuntoMatriz,
   type TipoPunto,
   type Variante,
 } from "@/lib/matriz-geometria";
@@ -66,9 +69,23 @@ function Lectura({ label, intro, numero, text, destacada = false }: { label: str
   );
 }
 
-function Bloqueada({ label, intro, numero, text, lock }: { label: string; intro: string; numero: number; text: string; lock: string }) {
+function Bloqueada({
+  label,
+  intro,
+  numero,
+  text,
+  lock,
+  compacta = false,
+}: {
+  label: string;
+  intro: string;
+  numero: number;
+  text: string;
+  lock: string;
+  compacta?: boolean;
+}) {
   return (
-    <View wrap={false} style={[s.card, { marginTop: 11 }]}>
+    <View wrap={false} style={[s.card, compacta ? { marginTop: 8, paddingVertical: 8 } : { marginTop: 11 }]}>
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" }}>
         <Text style={[s.eyebrow, { maxWidth: 190 }]}>{label}</Text>
         <View style={{ backgroundColor: c.ciruela, borderRadius: 20, paddingTop: 4, paddingBottom: 3, paddingHorizontal: 8 }}>
@@ -76,11 +93,11 @@ function Bloqueada({ label, intro, numero, text, lock }: { label: string; intro:
         </View>
       </View>
       <Text style={[s.small, { marginTop: 2 }]}>{intro}</Text>
-      <View style={{ marginTop: 9 }}>
-        <Arcano numero={numero} size={34} />
+      <View style={{ marginTop: compacta ? 4 : 9 }}>
+        <Arcano numero={numero} size={compacta ? 24 : 34} />
       </View>
-      <Text style={{ marginTop: 9, fontSize: 9.2 }}>{teaser(text)}</Text>
-      {[1, 0.86].map((width, index) => (
+      <Text style={{ marginTop: compacta ? 4 : 9, fontSize: compacta ? 8.4 : 9.2 }}>{teaser(text)}</Text>
+      {(compacta ? [1] : [1, 0.86]).map((width, index) => (
         <View key={index} style={{ marginTop: 6, height: 6, width: `${width * 100}%`, borderRadius: 3, backgroundColor: c.ciruela, opacity: 0.1 }} />
       ))}
     </View>
@@ -88,15 +105,19 @@ function Bloqueada({ label, intro, numero, text, lock }: { label: string; intro:
 }
 
 const pdfFills: Record<TipoPunto, { fill: string; text: string; stroke?: string }> = {
-  centro: { fill: c.dorado, text: c.ciruela, stroke: "#e7cf9f" },
-  personal: { fill: c.malva, text: c.crema },
-  material: { fill: c.rosaDeep, text: c.crema },
+  centro: { fill: coloresChakra.plexo, text: c.ciruela, stroke: "#f3e2bd" },
+  vertice: { fill: c.ciruelaSoft, text: c.crema },
   esquina: { fill: c.ciruelaSoft, text: c.crema, stroke: c.dorado },
   interno: { fill: "#4a3845", text: c.crema, stroke: "#8a7268" },
-  corazon: { fill: c.rosaPolvo, text: c.ciruela },
   canal: { fill: c.doradoSoft, text: c.ciruela },
   linaje: { fill: "#5e4757", text: "#f3e2bd", stroke: c.dorado },
 };
+
+function estiloPunto(punto: PuntoMatriz) {
+  const base = pdfFills[punto.tipo];
+  if (!punto.chakra || punto.tipo === "centro") return base;
+  return { fill: coloresChakra[punto.chakra], text: c.ciruela, stroke: undefined };
+}
 
 const lineas = {
   rombo: { stroke: c.dorado, width: 1.6, opacity: 0.95 },
@@ -134,9 +155,7 @@ function Diagrama({
     { x: v.a.x, y: v.a.y + 34 },
     { x: v.b.x + 44, y: v.b.y },
     { x: v.c.x, y: v.c.y + 34 },
-    { x: v.d.x + 44, y: v.d.y },
   ];
-  const canal = puntosMatriz.filter((punto) => punto.key === "dinero" || punto.key === "amor");
   return (
     <View style={{ width: size, height: size, position: "relative" }}>
       <Svg width={size} height={size} viewBox={`${min} ${min} ${span} ${span}`}>
@@ -186,7 +205,7 @@ function Diagrama({
             );
           })}
         {visibles.map((punto) => {
-          const color = pdfFills[punto.tipo];
+          const color = estiloPunto(punto);
           return (
             <Circle
               key={punto.key}
@@ -199,6 +218,7 @@ function Diagrama({
             />
           );
         })}
+        <Path d={corazon(simbolosCanal.amor, 12)} fill={coloresChakra.raiz} />
       </Svg>
       {anillo &&
         puntosAnillo.map((punto) => {
@@ -242,7 +262,7 @@ function Diagrama({
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize, lineHeight: 1, color: pdfFills[punto.tipo].text }}>{puntos[punto.key]}</Text>
+            <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize, lineHeight: 1, color: estiloPunto(punto).text }}>{puntos[punto.key]}</Text>
           </View>
         );
       })}
@@ -264,22 +284,19 @@ function Diagrama({
           {texto}
         </Text>
       ))}
-      {canal.map((punto) => (
-        <Text
-          key={`l-${punto.key}`}
-          style={{
-            position: "absolute",
-            left: px(punto.key === "dinero" ? punto.x + 13 : punto.x + 4),
-            top: px(punto.key === "dinero" ? punto.y - 4 : punto.y + 14),
-            fontFamily: "Cormorant",
-            fontStyle: "italic",
-            fontSize: 7.5,
-            color: c.doradoSoft,
-          }}
-        >
-          {punto.key}
-        </Text>
-      ))}
+      <View
+        style={{
+          position: "absolute",
+          left: px(simbolosCanal.dinero.x) - 8,
+          top: px(simbolosCanal.dinero.y) - 6,
+          width: 16,
+          height: 12,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 13 * scale, lineHeight: 1, color: c.doradoSoft }}>€</Text>
+      </View>
     </View>
   );
 }
@@ -342,7 +359,6 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
         [calculadoraIndividual.leyenda.talento, p.b],
         [calculadoraIndividual.leyenda.aprendizajes, p.d],
         [calculadoraIndividual.leyenda.material, p.dinero],
-        [calculadoraIndividual.leyenda.linaje, p.k],
       ]
     : [
         [calculadoraPareja.leyenda.centro, p.e],
@@ -419,70 +435,34 @@ function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) 
   );
 }
 
-function Avance({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
-  return (
-    <View wrap={false} style={{ marginTop: 12, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 13, flexDirection: "row", alignItems: "center" }}>
-      <Text style={{ flex: 1, paddingRight: 10, fontFamily: "Cormorant", fontWeight: 500, fontSize: 12.5, color: c.crema, lineHeight: 1.15 }}>{calculadoraPdf.avance}</Text>
-      <Link src={datos.compraUrl} style={{ textDecoration: "none" }}>
-        <View style={{ backgroundColor: c.crema, borderRadius: 16, paddingVertical: 6, paddingHorizontal: 11 }}>
-          <Text style={{ fontSize: 8, fontWeight: 600, color: c.ciruela }}>{datos.precio ? `${calculadoraPdf.ctaBuyShort} · ${datos.precio}` : calculadoraPdf.ctaBuyShort}</Text>
-        </View>
-      </Link>
-    </View>
-  );
-}
-
-function PaginaEdades({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+function EtapaActual({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
   const copy = calculadoraIndividual.edades;
-  const tramos = datos.matriz.edades;
-  const actual = etapaActual(tramos, datos.edad);
+  const actual = etapaActual(datos.matriz.edades, datos.edad);
+  if (!actual) return null;
   return (
-    <Page size="A5" style={s.page}>
-      <Fondo tono="salvia" />
-      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
-      {actual ? (
-        <View wrap={false} style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 12, flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flex: 1, paddingRight: 8 }}>
-            <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.etapa(actual)}</Text>
-            <Text style={{ marginTop: 2, fontSize: 8.2, lineHeight: 1.35, color: c.crema }}>{copy.ahora(Math.floor(datos.edad))}</Text>
-          </View>
-          <Numero numero={actual.valor} size={26} />
-          <Text style={{ marginLeft: 7, fontFamily: "Cormorant", fontWeight: 500, fontSize: 13, color: c.crema }}>{arcano(actual.valor)?.nombre}</Text>
+    <View wrap={false} style={{ marginTop: 8, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 9, paddingHorizontal: 12 }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={{ flex: 1, paddingRight: 8 }}>
+          <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.etapa(actual)}</Text>
+          <Text style={{ marginTop: 2, fontSize: 8.2, lineHeight: 1.35, color: c.crema }}>{copy.ahora(Math.floor(datos.edad))}</Text>
         </View>
-      ) : null}
-      <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 10, marginHorizontal: -3 }}>
-        {tramos.map((tramo) => (
-          <View key={tramo.desde} wrap={false} style={{ width: "25%", paddingHorizontal: 3, marginBottom: 6 }}>
-            <View style={[s.card, { padding: 7, borderRadius: 9 }]}>
-              <Text style={[s.eyebrow, { fontSize: 5.6, letterSpacing: 1 }]}>{copy.tramo(tramo.desde)}</Text>
-              {tramo.etapas.map((etapa) => {
-                const marcada = etapa === actual;
-                return (
-                  <View
-                    key={etapa.etiqueta}
-                    style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 1.5, paddingVertical: 1, paddingHorizontal: 3, borderRadius: 5, backgroundColor: marcada ? "#efe0c4" : etapa.principal ? c.lavanda : "transparent" }}
-                  >
-                    <Text style={{ fontSize: 6.4, lineHeight: 1.25, color: c.inkSoft }}>{etapa.etiqueta}</Text>
-                    <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 7.6, lineHeight: 1.25, color: c.ciruela }}>{etapa.valor}</Text>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-        ))}
+        <Numero numero={actual.valor} size={26} />
+        <Text style={{ marginLeft: 7, fontFamily: "Cormorant", fontWeight: 500, fontSize: 13, color: c.crema }}>{arcano(actual.valor)?.nombre}</Text>
       </View>
-      <Text style={[s.small, { marginTop: 2 }]}>{copy.nota}</Text>
-      <Pie />
-    </Page>
+      <Text style={{ marginTop: 6, fontSize: 7.4, lineHeight: 1.35, color: "#d9cdd4" }}>{calculadoraPdf.edadesCompleta}</Text>
+    </View>
   );
 }
 
 function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
   const copy = calculadoraIndividual.chakras;
-  const linaje = calculadoraIndividual.linaje;
-  const { chakras, totalChakras, puntos: p, propositos } = datos.matriz;
+  const { chakras, totalChakras } = datos.matriz;
   const columna = { width: 46, textAlign: "center" as const };
-  const filas = [...chakras.map((fila, index) => ({ fila, nombre: `${copy.filas[index]!.es} · ${copy.filas[index]!.nombre}`, total: false })), { fila: totalChakras, nombre: copy.total, total: true }];
+  const orden = ["corona", "tercerOjo", "garganta", "corazon", "plexo", "sacro", "raiz"] as const;
+  const filas = [
+    ...chakras.map((fila, index) => ({ fila, nombre: `${copy.filas[index]!.es} · ${copy.filas[index]!.nombre}`, color: coloresChakra[orden[index]!], total: false })),
+    { fila: totalChakras, nombre: copy.total, color: undefined, total: true },
+  ];
   return (
     <Page size="A5" style={s.page}>
       <Fondo tono="rosa" />
@@ -496,8 +476,9 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
             </Text>
           ))}
         </View>
-        {filas.map(({ fila, nombre, total }) => (
+        {filas.map(({ fila, nombre, color, total }) => (
           <View key={nombre} style={{ flexDirection: "row", alignItems: "center", paddingVertical: 2.4, borderTopWidth: total ? 0.6 : 0, borderTopColor: c.linea }}>
+            <View style={{ width: 6, height: 6, borderRadius: 3, marginRight: 6, backgroundColor: color ?? "transparent" }} />
             <Text style={{ flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: total ? 11.5 : 10.5, lineHeight: 1.1 }}>{nombre}</Text>
             {[fila.fisico, fila.energia, fila.emocion].map((valor, index) => (
               <Text key={index} style={[columna, { fontFamily: "Manrope", fontWeight: 600, fontSize: 9 }]}>
@@ -508,24 +489,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
         ))}
       </View>
       <Text style={[s.small, { marginTop: 6, fontSize: 7 }]}>{copy.aviso}</Text>
-      <View style={{ marginTop: 10 }}>
-        <Encabezado eyebrow={linaje.eyebrow} title={linaje.title} />
-      </View>
-      <View style={{ flexDirection: "row", marginTop: 10 }}>
-        {[
-          { label: linaje.paterna.label, valores: [p.f, p.h], resultado: propositos.masculino },
-          { label: linaje.materna.label, valores: [p.g, p.i], resultado: propositos.femenino },
-        ].map((linea, index) => (
-          <View key={linea.label} wrap={false} style={[s.card, { flex: 1, marginLeft: index === 0 ? 0 : 10, padding: 10 }]}>
-            <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 13.5, lineHeight: 1.1 }}>{linea.label}</Text>
-            <Text style={[s.small, { fontSize: 7.2, marginTop: 2 }]}>{`${linea.valores[0]} + ${linea.valores[1]}`}</Text>
-            <View style={{ marginTop: 7 }}>
-              <Arcano numero={linea.resultado} size={24} />
-            </View>
-          </View>
-        ))}
-      </View>
-      <Text style={[s.small, { marginTop: 6, fontSize: 7.4 }]}>{`${linaje.centro.label}: ${p.k} · ${linaje.union.label}: ${p.k1}`}</Text>
+      <EtapaActual datos={datos} />
       <Pie />
     </Page>
   );
@@ -564,26 +528,17 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
         <Propositos filas={filas} nota={copy.propositos.locked} />
         <Pie />
       </Page>
-      <PaginaEdades datos={datos} />
       <PaginaChakras datos={datos} />
       <Page size="A5" style={s.page}>
         <Fondo tono="rosa" />
         <Encabezado eyebrow={copy.bloqueadas.eyebrow} title={calculadoraPdf.bloqueadoTitle} text={copy.bloqueadas.text} />
-        <Bloqueada
-          label={copy.bloqueadas.aprendizajes.label}
-          intro={copy.bloqueadas.aprendizajes.text}
-          numero={p.d}
-          text={arcano(p.d)?.sombra ?? ""}
-          lock={copy.bloqueadas.lock}
-        />
-        <Bloqueada
-          label={copy.bloqueadas.material.label}
-          intro={copy.bloqueadas.material.text}
-          numero={p.dinero}
-          text={arcano(p.dinero)?.dinero ?? ""}
-          lock={copy.bloqueadas.lock}
-        />
-        <Avance datos={datos} />
+        {[
+          { copy: copy.bloqueadas.aprendizajes, numero: p.d, text: arcano(p.d)?.sombra ?? "" },
+          { copy: copy.bloqueadas.material, numero: p.dinero, text: arcano(p.dinero)?.dinero ?? "" },
+          { copy: copy.bloqueadas.linaje, numero: p.k, text: arcano(p.k)?.sombra ?? "" },
+        ].map((item) => (
+          <Bloqueada key={item.copy.label} label={item.copy.label} intro={item.copy.text} numero={item.numero} text={item.text} lock={copy.bloqueadas.lock} compacta />
+        ))}
         <Pie />
       </Page>
     </>

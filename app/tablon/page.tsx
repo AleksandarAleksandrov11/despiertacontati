@@ -18,7 +18,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = pageMetadata({
   title: "Grupos de meditación y novedades | Despierta con Tati",
   description:
-    "Próximos grupos de meditación online y en Valencia, la guía gratuita Tu primera pausa, novedades de la tienda y lo último de Despierta con Tati en Instagram.",
+    "Próximos grupos de meditación online, la guía gratuita Tu primera pausa, novedades de la tienda y lo último de Despierta con Tati en Instagram.",
   path: "/tablon",
 });
 
@@ -26,7 +26,7 @@ export default function TablonPage() {
   const anuncios = getActiveAnuncios();
   const events = anuncios
     .filter((anuncio) => anuncio.date)
-    .map((anuncio) => eventJsonLd(anuncio, absoluteUrl("/tablon"), businessId, site.location.locality));
+    .map((anuncio) => eventJsonLd(anuncio, absoluteUrl("/tablon"), businessId));
   const instagram = tablonPage.instagram;
 
   return (

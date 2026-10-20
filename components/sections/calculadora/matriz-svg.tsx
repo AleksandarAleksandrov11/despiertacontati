@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
 import type { Puntos, Tramo } from "@/lib/matriz";
 import {
+  coloresChakra,
+  corazon,
   lineasMatriz,
   redondear,
   lienzo,
@@ -8,8 +10,10 @@ import {
   puntosAnillo,
   puntosMatriz,
   puntosVariante,
+  simbolosCanal,
   tiempos,
   verticesMatriz,
+  type PuntoMatriz,
   type TipoPunto,
   type Variante,
 } from "@/lib/matriz-geometria";
@@ -17,14 +21,18 @@ import { cn } from "@/lib/utils";
 
 const fills: Record<TipoPunto, { fill: string; text: string; stroke?: string }> = {
   centro: { fill: "url(#mx-oro)", text: "#3f2e3a" },
-  personal: { fill: "#a9799b", text: "#fbf7f2" },
-  material: { fill: "#9c5f6c", text: "#fbf7f2" },
+  vertice: { fill: "#54404e", text: "#fbf7f2" },
   esquina: { fill: "#54404e", text: "#fbf7f2", stroke: "#c8a46a" },
   interno: { fill: "#4a3845", text: "#fbf7f2", stroke: "rgba(221,191,140,0.45)" },
-  corazon: { fill: "#f6e9e6", text: "#3f2e3a" },
   canal: { fill: "#ddbf8c", text: "#3f2e3a" },
   linaje: { fill: "#5e4757", text: "#f3e2bd", stroke: "#c8a46a" },
 };
+
+function estiloPunto(punto: PuntoMatriz) {
+  const base = fills[punto.tipo];
+  if (!punto.chakra || punto.tipo === "centro") return base;
+  return { fill: coloresChakra[punto.chakra], text: "#3f2e3a", stroke: undefined };
+}
 
 const lineStyles = {
   rombo: { stroke: "#c8a46a", width: 1.4, opacity: 0.95, dur: 1 },
@@ -47,7 +55,7 @@ const estrellas = Array.from({ length: 46 }, (_, index) => {
 
 type Props = {
   puntos: Puntos;
-  etiquetas: [string, string, string, string];
+  etiquetas: [string, string, string];
   done: boolean;
   paused?: boolean;
   label: string;
@@ -76,9 +84,8 @@ export function MatrizSvg({
     { x: v.a.x, y: v.a.y + 36 },
     { x: v.b.x + 40, y: v.b.y + 5 },
     { x: v.c.x, y: v.c.y + 36 },
-    { x: v.d.x + 40, y: v.d.y + 5 },
   ];
-  const puntosCanal = puntosMatriz.filter((punto) => punto.key === "dinero" || punto.key === "amor");
+  const delayCanal = (key: "dinero" | "amor") => puntosMatriz.find((punto) => punto.key === key)!.delay + 0.2;
   const visibles = puntosVariante(variante);
 
   return (
@@ -91,9 +98,9 @@ export function MatrizSvg({
     >
       <defs>
         <radialGradient id="mx-oro" cx="40%" cy="35%" r="70%">
-          <stop offset="0%" stopColor="#f3e2bd" />
-          <stop offset="55%" stopColor="#c8a46a" />
-          <stop offset="100%" stopColor="#a8834b" />
+          <stop offset="0%" stopColor="#f8ebb8" />
+          <stop offset="55%" stopColor="#e8c96a" />
+          <stop offset="100%" stopColor="#c9a443" />
         </radialGradient>
         <radialGradient id="mx-halo">
           <stop offset="0%" stopColor="#ddbf8c" stopOpacity="0.55" />
@@ -177,19 +184,24 @@ export function MatrizSvg({
           </text>
         ))}
 
-      {puntosCanal.map((punto) => (
-        <text
-          key={`${punto.key}-label`}
-          x={punto.key === "dinero" ? punto.x + 13 : punto.x + 4}
-          y={punto.key === "dinero" ? punto.y + 4 : punto.y + 23}
-          textAnchor="start"
-          className="mx-fade fill-dorado-soft font-serif text-[12px] italic"
-          style={{ "--d": `${punto.delay + 0.2}s` } as CSSProperties}
-          aria-hidden
-        >
-          {punto.key === "dinero" ? "dinero" : "amor"}
-        </text>
-      ))}
+      <text
+        x={simbolosCanal.dinero.x}
+        y={simbolosCanal.dinero.y}
+        dy="0.35em"
+        textAnchor="middle"
+        className="mx-fade fill-dorado-soft font-sans text-[13px] font-semibold"
+        style={{ "--d": `${delayCanal("dinero")}s` } as CSSProperties}
+        aria-hidden
+      >
+        €
+      </text>
+      <path
+        d={corazon(simbolosCanal.amor, 12)}
+        fill="#d9776f"
+        className="mx-fade"
+        style={{ "--d": `${delayCanal("amor")}s` } as CSSProperties}
+        aria-hidden
+      />
 
       {anillo &&
         marcasEdad.map((marca) => (
@@ -239,7 +251,7 @@ export function MatrizSvg({
         })}
 
       {visibles.map((punto) => {
-        const color = fills[punto.tipo];
+        const color = estiloPunto(punto);
         const valor = puntos[punto.key];
         const destacado = destacados.includes(punto.key);
         return (

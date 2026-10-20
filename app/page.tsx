@@ -22,9 +22,9 @@ import { pageMetadata, siteJsonLd } from "@/lib/seo";
 export const revalidate = 86400;
 
 export const metadata: Metadata = pageMetadata({
-  title: "Reiki, meditación y tarot en Valencia y online | Despierta con Tati",
+  title: "Reiki, meditación y tarot online | Despierta con Tati",
   description:
-    "Tati, terapeuta holística en Valencia con más de 20 años de experiencia. Reiki, meditación, tarot y autoconocimiento. Recuerda quién eres y crea tu nueva vida.",
+    "Tati, terapeuta holística con más de 20 años de experiencia. Reiki, meditación, tarot y autoconocimiento. Recuerda quién eres y crea tu nueva vida.",
   path: "/",
 });
 

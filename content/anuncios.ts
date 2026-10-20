@@ -12,7 +12,6 @@ export type Anuncio = {
     | { kind: "enlace"; label: string; href: string };
   date?: string;
   endDate?: string;
-  location?: "online" | "valencia";
 };
 
 export const anuncios: Anuncio[] = [
@@ -28,21 +27,6 @@ export const anuncios: Anuncio[] = [
       label: "Quiero plaza",
       message: "Hola, Tati. Quiero plaza en el grupo de meditación online.",
     },
-    location: "online",
-  },
-  {
-    id: "grupo-meditacion-valencia",
-    type: "Grupo",
-    title: "Grupo de meditación presencial en Valencia",
-    status: "Abre próximamente",
-    modality: "Presencial en Valencia",
-    text: "Un grupo para meditar en compañía, cara a cara, en Valencia.",
-    cta: {
-      kind: "whatsapp",
-      label: "Quiero plaza",
-      message: "Hola, Tati. Quiero plaza en el grupo de meditación presencial en Valencia.",
-    },
-    location: "valencia",
   },
   {
     id: "guia-tu-primera-pausa",

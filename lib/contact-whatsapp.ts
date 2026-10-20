@@ -16,7 +16,6 @@ export function contactWhatsappHref(values: Partial<ContactInput>) {
     `*${w.name}:* ${values.nombre?.trim() ?? ""}`,
     `*${w.contact}:* ${values.contacto?.trim() ?? ""}`,
     `*${w.topic}:* ${labelFor(copy.topics, values.servicio)}`,
-    `*${w.modality}:* ${labelFor(copy.modalities, values.modalidad)}`,
   ];
   const message = values.mensaje?.trim();
   if (message) lines.push("", `*${w.message}:*`, message);

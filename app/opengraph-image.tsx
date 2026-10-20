@@ -6,7 +6,7 @@ export const contentType = ogContentType;
 
 export default function Image() {
   return renderOg({
-    eyebrow: "Terapeuta holística en Valencia",
+    eyebrow: "Terapeuta holística",
     title: "Despierta.",
     subtitle: "Recuerda quién eres, empodérate y crea tu nueva vida.",
   });

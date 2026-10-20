@@ -1,7 +1,6 @@
 import * as z from "zod/mini";
 
 export const contactTopics = ["reiki", "limpieza", "meditacion", "tarot", "autoconocimiento", "curso-reiki", "no-lo-se"] as const;
-export const contactModalities = ["presencial", "online", "indiferente"] as const;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phonePattern = /^\+?[\d\s().-]{9,20}$/;
@@ -10,7 +9,6 @@ const privacyError = "Necesito que aceptes la política de privacidad";
 export const contactSchema = z.object({
   type: z.literal("contacto"),
   servicio: z.enum(contactTopics, { error: "Elige una opción" }),
-  modalidad: z.enum(contactModalities, { error: "Elige una opción" }),
   mensaje: z.optional(z.string().check(z.trim(), z.maxLength(2000, "Es un poco largo; resume en menos de 2000 caracteres"))),
   nombre: z.string().check(z.trim(), z.minLength(2, "Dime tu nombre"), z.maxLength(80, "Nombre demasiado largo")),
   contacto: z

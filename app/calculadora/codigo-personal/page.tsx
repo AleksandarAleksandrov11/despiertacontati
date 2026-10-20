@@ -14,10 +14,10 @@ import { Section, SectionHeading } from "@/components/ui/section";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 const description =
-  "Calcula gratis tu Código Personal con tu fecha de nacimiento: tu arcano personal, tu perfil de cinco cartas, tu mapa natal de tarot, tu mapa personal anual y tu ciclo vital, con el método Tarot Pragmático de Raúl Muñoz Jara.";
+  "Calcula gratis tu arcano personal y tu Código Personal con tu fecha de nacimiento: tarot numerológico con el método Tarot Pragmático de Raúl Muñoz Jara. Tu carta personal, tus cinco cartas y tu PDF.";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Calcula tu Código Personal y tu Mapa Natal de Tarot | Despierta con Tati",
+  title: "Tu Arcano Personal y Código Personal: tarot numerológico | Despierta con Tati",
   description,
   path: rutasCalculadora.codigo,
 });
@@ -33,7 +33,7 @@ export default function CodigoPersonalPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Calculadoras", path: rutasCalculadora.hub },
-          { name: "Código Personal", path: rutasCalculadora.codigo },
+          { name: "Arcano y Código Personal", path: rutasCalculadora.codigo },
         ])}
       />
       <Suspense fallback={<HeroFallback heading={heading} campos={1} />}>

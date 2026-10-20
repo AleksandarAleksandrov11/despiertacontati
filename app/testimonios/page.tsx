@@ -13,7 +13,7 @@ import { site } from "@/content/site";
 export const metadata: Metadata = pageMetadata({
   title: "Experiencias con Tati | Despierta con Tati",
   description:
-    "Lo que cuentan quienes han pasado por las sesiones, las clases y las lecturas de Tati, en Valencia y online, con sus propias palabras.",
+    "Lo que cuentan quienes han pasado por las sesiones, las clases y las lecturas de Tati, online, con sus propias palabras.",
   path: "/testimonios",
 });
 
