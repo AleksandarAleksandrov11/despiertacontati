@@ -30,6 +30,7 @@ Scripts disponibles: `npm run dev`, `npm run build`, `npm run start`, `npm run l
 | `RESEND_FROM` | Remitente de los emails, con un dominio verificado en Resend. Por ejemplo: `Despierta con Tati <web@despiertacontati.com>`. |
 | `RESEND_AUDIENCE_ID` | ID de la Audience (segmento) de Resend donde se guardan las personas que descargan la guía. Quien no marca la casilla de novedades se guarda como dada de baja. |
 | `CONTACT_TO_EMAIL` | Dirección que recibe las consultas y los avisos de nuevas descargas de la guía. |
+| `LECTURA_COMPLETA_CLAVE` | Clave privada para generar la lectura completa de la Matriz del Destino en `/api/matriz/completa?fecha=AAAA-MM-DD&nombre=Nombre&clave=...`. Sin ella, la ruta responde 404. |
 
 Para enviar la guía a terceros hay que verificar el dominio `despiertacontati.com` en Resend (registros DNS SPF y DKIM) y usar en `RESEND_FROM` una dirección de ese dominio. Sin dominio verificado, Resend solo permite enviar emails a la dirección de la propia cuenta.
 

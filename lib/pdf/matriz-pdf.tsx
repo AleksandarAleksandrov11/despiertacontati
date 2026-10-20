@@ -1,8 +1,9 @@
 import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, Svg, Text, View } from "@react-pdf/renderer";
 import { arcano, teaser } from "@/content/arcanos";
 import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/content/calculadora";
+import { lecturaCompleta } from "@/content/lectura-completa";
 import { site } from "@/content/site";
-import type { Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
+import type { Matriz, Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
@@ -23,9 +24,9 @@ import {
   type Variante,
 } from "@/lib/matriz-geometria";
 import { Boton, c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
-import type { DatosPdf, Persona } from "./datos";
+import type { DatosCompleta, DatosPdf, Persona } from "./datos";
 
-function Numero({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
+export function Numero({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
   return (
     <View
       style={{
@@ -46,13 +47,13 @@ function Numero({ numero, size = 40, oro = false }: { numero: number; size?: num
   );
 }
 
-function Arcano({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
+export function Arcano({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
   const datos = arcano(numero);
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Numero numero={numero} size={size} oro={oro} />
       <View style={{ marginLeft: 12, flex: 1 }}>
-        <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: size > 44 ? 22 : 17, lineHeight: 1.1 }}>{datos?.nombre}</Text>
+        <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: size > 44 ? 22 : size > 28 ? 17 : 14.5, lineHeight: 1.1 }}>{datos?.nombre}</Text>
         <Text style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 10.5, color: c.inkSoft, marginTop: 2 }}>
           {`${calculadoraPdf.arcano} ${numero} · ${datos?.clave ?? ""}`}
         </Text>
@@ -135,7 +136,7 @@ const lineas = {
 
 const esquinasEdad: (keyof Puntos)[] = ["a", "f", "b", "g", "c", "h", "d", "i"];
 
-function Diagrama({
+export function Diagrama({
   puntos,
   etiquetas,
   size,
@@ -352,8 +353,8 @@ function Diagrama({
   );
 }
 
-function Portada({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
-  const individual = datos.tipo === "individual";
+export function Portada({ datos, recursos }: { datos: DatosPdf | DatosCompleta; recursos: Recursos }) {
+  const individual = datos.tipo !== "pareja";
   const nombres = individual
     ? datos.persona.nombre
     : datos.personas.every((persona) => persona.nombre)
@@ -364,7 +365,7 @@ function Portada({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
     <Page size="A5" style={[s.page, { paddingTop: 54, alignItems: "center" }]}>
       <Fondo tono={individual ? "rosa" : "lavanda"} />
       <Image src={recursos.logo} style={{ width: 150, height: 198 }} />
-      <Text style={[s.eyebrow, { marginTop: 40, letterSpacing: 2.4 }]}>{calculadoraPdf.gratuita}</Text>
+      <Text style={[s.eyebrow, { marginTop: 40, letterSpacing: 2.4 }]}>{datos.tipo === "completa" ? lecturaCompleta.etiqueta : calculadoraPdf.gratuita}</Text>
       <Text style={[s.h1, { marginTop: 10, textAlign: "center", fontSize: 34 }]}>
         {individual ? calculadoraPdf.tituloIndividual : calculadoraPdf.tituloPareja}
       </Text>
@@ -394,8 +395,8 @@ function Portada({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
   );
 }
 
-function PaginaMatriz({ datos }: { datos: DatosPdf }) {
-  const individual = datos.tipo === "individual";
+export function PaginaMatriz({ datos }: { datos: DatosPdf | DatosCompleta }) {
+  const individual = datos.tipo !== "pareja";
   const p = datos.matriz.puntos;
   const leyenda: [string, number][] = individual
     ? [
@@ -424,7 +425,7 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
           puntos={p}
           etiquetas={individual ? calculadoraIndividual.etiquetas : calculadoraPareja.etiquetas}
           size={individual ? (titulo.length > 36 ? 248 : 264) : titulo.length > 36 ? 278 : 296}
-          variante={datos.tipo}
+          variante={individual ? "individual" : "pareja"}
           edades={datos.matriz.edades}
           activas={activas}
           propositos={individual ? datos.matriz.propositos : undefined}
@@ -447,9 +448,9 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   );
 }
 
-type FilaProposito = { label: string; etapa: string; partes: string[]; valores: number[]; resultado: number; texto?: string };
+export type FilaProposito = { label: string; etapa: string; partes: string[]; valores: number[]; resultado: number; texto?: string };
 
-function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) {
+export function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) {
   return (
     <View wrap={false} style={[s.card, { marginTop: 12, paddingVertical: 6 }]}>
       {filas.map((fila, index) => (
@@ -458,13 +459,13 @@ function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) 
           style={{
             flexDirection: "row",
             alignItems: "center",
-            paddingVertical: 6,
+            paddingVertical: 5,
             borderTopWidth: index === 0 ? 0 : 0.6,
             borderTopColor: c.linea,
           }}
         >
-          <View style={{ width: 128 }}>
-            <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 13.5, lineHeight: 1.15 }}>{fila.label}</Text>
+          <View style={{ width: 128, paddingRight: 10 }}>
+            <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: 13, lineHeight: 1.1 }}>{fila.label}</Text>
             <Text style={[s.eyebrow, { fontSize: 5.8, marginTop: 2 }]}>{fila.etapa}</Text>
             <Text style={[s.small, { fontSize: 7.2, marginTop: 2 }]}>
               {fila.partes.map((parte, i) => `${parte} ${fila.valores[i]}`).join(" + ")}
@@ -511,9 +512,9 @@ function EnergiasDelAnio({ datos }: { datos: Extract<DatosPdf, { tipo: "individu
   );
 }
 
-function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+export function TablaChakras({ matriz }: { matriz: Matriz }) {
   const copy = calculadoraIndividual.chakras;
-  const { chakras, totalChakras } = datos.matriz;
+  const { chakras, totalChakras } = matriz;
   const columna = { width: 46, textAlign: "center" as const };
   const orden = ["corona", "tercerOjo", "garganta", "corazon", "plexo", "sacro", "raiz"] as const;
   const filas = [
@@ -521,9 +522,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
     { fila: totalChakras, nombre: copy.total, color: undefined, total: true },
   ];
   return (
-    <Page size="A5" style={s.page}>
-      <Fondo tono="rosa" />
-      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
+    <>
       <View wrap={false} style={[s.card, { marginTop: 10, paddingVertical: 6 }]}>
         <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 0.6, borderBottomColor: c.linea }}>
           <Text style={[s.eyebrow, { flex: 1, fontSize: 5.8 }]}>{copy.columnas.chakra}</Text>
@@ -546,6 +545,17 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
         ))}
       </View>
       <Text style={[s.small, { marginTop: 6, fontSize: 7 }]}>{copy.aviso}</Text>
+    </>
+  );
+}
+
+function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+  const copy = calculadoraIndividual.chakras;
+  return (
+    <Page size="A5" style={s.page}>
+      <Fondo tono="rosa" />
+      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
+      <TablaChakras matriz={datos.matriz} />
       <EnergiasDelAnio datos={datos} />
       <Pie />
     </Page>

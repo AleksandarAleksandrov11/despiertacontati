@@ -2,8 +2,9 @@ import { join } from "node:path";
 import { renderToBuffer } from "@react-pdf/renderer";
 import QRCode from "qrcode";
 import { CodigoPdf, type DatosCodigo } from "./codigo-pdf";
-import type { DatosPdf } from "./datos";
+import type { DatosCompleta, DatosPdf } from "./datos";
 import { registrarFuentes } from "./fuentes";
+import { LecturaCompletaPdf } from "./lectura-completa-pdf";
 import { MatrizPdf } from "./matriz-pdf";
 
 export async function renderMatrizPdf(datos: DatosPdf) {
@@ -51,6 +52,22 @@ export async function renderCodigoPdf(datos: DatosCodigo, claves: string[]) {
         qr,
         cartas: join(root, "assets/tarot"),
         raul: join(root, "assets/tarot/tarot-pragmatico.png"),
+      }}
+    />,
+  );
+}
+
+export async function renderLecturaCompleta(datos: DatosCompleta) {
+  registrarFuentes();
+  const root = process.cwd();
+  return renderToBuffer(
+    <LecturaCompletaPdf
+      datos={datos}
+      recursos={{
+        logo: join(root, "public/brand/logo-vertical.png"),
+        simbolo: join(root, "public/brand/simbolo.png"),
+        foto: join(root, "assets/pdf/tati.jpg"),
+        qr: "",
       }}
     />,
   );

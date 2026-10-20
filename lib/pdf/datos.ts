@@ -28,6 +28,8 @@ export type DatosPdf =
   | (Comun & { tipo: "individual"; persona: Persona; anio: EnergiasAnio | null; precio: string | null; compraUrl: string; infoUrl: string })
   | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
 
+export type DatosCompleta = Comun & { tipo: "completa"; persona: Persona; anio: EnergiasAnio | null };
+
 function baseUrl(origin: string) {
   const propio = new URL(site.url).hostname.replace(/^www\./, "");
   const hostname = URL.canParse(origin) ? new URL(origin).hostname : "";
@@ -85,6 +87,19 @@ export function datosDesdeParams(params: URLSearchParams, origin: string): Datos
     };
   }
   return null;
+}
+
+export function datosCompleta(params: URLSearchParams): DatosCompleta | null {
+  const fecha = parsearFecha(params.get("fecha"));
+  if (!fecha) return null;
+  const matriz = calcularMatriz(fecha);
+  return {
+    tipo: "completa",
+    persona: persona(fecha, limpiarNombre(params.get("nombre"))),
+    matriz,
+    anio: energiasDelAnio(matriz.edades, edadCumplida(fecha, hoyEnEspana())),
+    archivo: `lectura-completa-${archivo(fecha)}`,
+  };
 }
 
 export function datosCodigo(params: URLSearchParams, origin: string): DatosCodigo | null {
