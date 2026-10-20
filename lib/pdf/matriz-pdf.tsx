@@ -51,7 +51,7 @@ function Arcano({ numero, size = 40, oro = false }: { numero: number; size?: num
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Numero numero={numero} size={size} oro={oro} />
-      <View style={{ marginLeft: 12, flexShrink: 1 }}>
+      <View style={{ marginLeft: 12, flex: 1 }}>
         <Text style={{ fontFamily: "Cormorant", fontWeight: 500, fontSize: size > 44 ? 22 : 17, lineHeight: 1.1 }}>{datos?.nombre}</Text>
         <Text style={{ fontFamily: "Cormorant", fontStyle: "italic", fontSize: 10.5, color: c.inkSoft, marginTop: 2 }}>
           {`${calculadoraPdf.arcano} ${numero} · ${datos?.clave ?? ""}`}
