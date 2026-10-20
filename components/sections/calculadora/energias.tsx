@@ -101,10 +101,10 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
                 {copy.columnas.chakra}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
-                {copy.columnas.energia}
+                {copy.columnas.fisico}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
-                {copy.columnas.fisico}
+                {copy.columnas.energia}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
                 {copy.columnas.emocion}
@@ -127,8 +127,8 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
                       </span>
                     </span>
                   </th>
-                  <td className={celda}>{fila.energia}</td>
                   <td className={celda}>{fila.fisico}</td>
+                  <td className={celda}>{fila.energia}</td>
                   <td className={celda}>{fila.emocion}</td>
                 </tr>
               );
@@ -137,8 +137,8 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
               <th scope="row" className="px-4 py-4 font-serif text-[1.2rem] font-normal text-ciruela sm:px-6">
                 {copy.total}
               </th>
-              <td className={celda}>{total.energia}</td>
               <td className={celda}>{total.fisico}</td>
+              <td className={celda}>{total.energia}</td>
               <td className={celda}>{total.emocion}</td>
             </tr>
           </tbody>

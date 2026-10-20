@@ -2,13 +2,15 @@ import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, 
 import { arcano, teaser } from "@/content/arcanos";
 import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/content/calculadora";
 import { site } from "@/content/site";
-import type { Posicion, Puntos, Tramo } from "@/lib/matriz";
+import type { Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
   lineasMatriz,
   lienzo,
+  marcoMatriz,
   marcasEdad,
+  propositosMatriz,
   puntosAnillo,
   puntosVariante,
   simboloFemenino,
@@ -140,6 +142,7 @@ function Diagrama({
   variante,
   edades,
   activas,
+  propositos,
 }: {
   puntos: Puntos;
   etiquetas: string[];
@@ -147,15 +150,18 @@ function Diagrama({
   variante: Variante;
   edades: Tramo[];
   activas: Posicion[];
+  propositos?: Propositos;
 }) {
   const anillo = variante === "individual" && edades.length === 8;
   const visibles = puntosVariante(variante);
   const nivel = (tramo: number, etapa: number) => activas.findIndex((item) => item.tramo === tramo && item.etapa === etapa);
   const esquinaActiva = (key: keyof Puntos) => (anillo ? activas.findIndex((item) => item.etapa === 0 && esquinasEdad[item.tramo] === key) : -1);
-  const min = -24;
-  const span = 448;
-  const scale = size / span;
-  const px = (value: number) => (value - min) * scale;
+  const conPropositos = anillo && propositos !== undefined;
+  const marco = conPropositos ? marcoMatriz.propositos : marcoMatriz.normal;
+  const scale = size / marco.ancho;
+  const alto = marco.alto * scale;
+  const px = (value: number) => (value - marco.x) * scale;
+  const py = (value: number) => (value - marco.y) * scale;
   const v = verticesMatriz;
   const labelPos = [
     { x: v.a.x, y: v.a.y + 34 },
@@ -163,8 +169,8 @@ function Diagrama({
     { x: v.c.x, y: v.c.y + 34 },
   ];
   return (
-    <View style={{ width: size, height: size, position: "relative" }}>
-      <Svg width={size} height={size} viewBox={`${min} ${min} ${span} ${span}`}>
+    <View style={{ width: size, height: alto, position: "relative" }}>
+      <Svg width={size} height={alto} viewBox={`${marco.x} ${marco.y} ${marco.ancho} ${marco.alto}`}>
         <Defs>
           <RadialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
             <Stop offset="0" stopColor={c.doradoSoft} stopOpacity={0.55} />
@@ -239,7 +245,32 @@ function Diagrama({
             <Path d={simboloFemenino(simbolosLinaje.femenino)} fill="none" stroke={c.rosa} strokeWidth={1.1} strokeLinecap="round" />
           </>
         )}
+        {conPropositos &&
+          propositosMatriz.map((item, index) => (
+            <Circle
+              key={`p-${index}`}
+              cx={item.x}
+              cy={item.y}
+              r={item.r}
+              fill={item.r > 10 ? "#4a3845" : "none"}
+              stroke={item.r > 10 ? c.dorado : "#8a7268"}
+              strokeWidth={item.r > 10 ? 1 : 0.8}
+            />
+          ))}
       </Svg>
+      {conPropositos &&
+        propositosMatriz.map((item, index) => {
+          const box = item.r * 2 * scale;
+          const valor = item.origen === "propositos" ? propositos[item.key as keyof Propositos] : puntos[item.key as keyof Puntos];
+          return (
+            <View
+              key={`pt-${index}`}
+              style={{ position: "absolute", left: px(item.x) - box / 2, top: py(item.y) - box / 2, width: box, height: box, alignItems: "center", justifyContent: "center" }}
+            >
+              <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: (item.r > 10 ? 10 : 7.4) * scale, lineHeight: 1, color: item.r > 10 ? c.crema : "#cbbcc5" }}>{valor}</Text>
+            </View>
+          );
+        })}
       {anillo &&
         puntosAnillo.map((punto) => {
           const box = 16 * scale;
@@ -247,7 +278,7 @@ function Diagrama({
           return (
             <View
               key={`an-${punto.tramo}-${punto.etapa}`}
-              style={{ position: "absolute", left: px(punto.x) - box / 2, top: px(punto.y) - box / 2, width: box, height: box, alignItems: "center", justifyContent: "center" }}
+              style={{ position: "absolute", left: px(punto.x) - box / 2, top: py(punto.y) - box / 2, width: box, height: box, alignItems: "center", justifyContent: "center" }}
             >
               <Text style={{ fontFamily: "Manrope", fontWeight: 600, fontSize: 7.2 * scale, lineHeight: 1, color: marcada ? c.ciruela : c.crema }}>
                 {edades[punto.tramo]?.etapas[punto.etapa]?.valor}
@@ -259,7 +290,7 @@ function Diagrama({
         marcasEdad.map((marca) => (
           <View
             key={`m-${marca.edad}`}
-            style={{ position: "absolute", left: px(marca.x) - 10, top: px(marca.y) - 5, width: 20, height: 10, alignItems: "center", justifyContent: "center" }}
+            style={{ position: "absolute", left: px(marca.x) - 10, top: py(marca.y) - 5, width: 20, height: 10, alignItems: "center", justifyContent: "center" }}
           >
             <Text style={{ fontFamily: "Manrope", fontWeight: marca.principal ? 600 : 400, fontSize: (marca.principal ? 8.5 : 7) * scale, lineHeight: 1, color: marca.principal ? c.doradoSoft : "#bfaeb8" }}>
               {marca.edad}
@@ -275,7 +306,7 @@ function Diagrama({
             style={{
               position: "absolute",
               left: px(punto.x) - box / 2,
-              top: px(punto.y) - box / 2,
+              top: py(punto.y) - box / 2,
               width: box,
               height: box,
               alignItems: "center",
@@ -292,7 +323,7 @@ function Diagrama({
           style={{
             position: "absolute",
             left: px(labelPos[index]!.x) - 30,
-            top: px(labelPos[index]!.y) - 5,
+            top: py(labelPos[index]!.y) - 5,
             width: 60,
             textAlign: "center",
             fontSize: 5.6,
@@ -308,7 +339,7 @@ function Diagrama({
         style={{
           position: "absolute",
           left: px(simbolosCanal.dinero.x) - 8,
-          top: px(simbolosCanal.dinero.y) - 6,
+          top: py(simbolosCanal.dinero.y) - 6,
           width: 16,
           height: 12,
           alignItems: "center",
@@ -396,6 +427,7 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
           variante={datos.tipo}
           edades={datos.matriz.edades}
           activas={activas}
+          propositos={individual ? datos.matriz.propositos : undefined}
         />
       </View>
       <Text style={[s.small, { marginTop: 8, fontSize: 8 }]}>{individual ? calculadoraPdf.matrizText : calculadoraPdf.matrizParejaText}</Text>
@@ -495,7 +527,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
       <View wrap={false} style={[s.card, { marginTop: 10, paddingVertical: 6 }]}>
         <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 0.6, borderBottomColor: c.linea }}>
           <Text style={[s.eyebrow, { flex: 1, fontSize: 5.8 }]}>{copy.columnas.chakra}</Text>
-          {[copy.columnas.energia, copy.columnas.fisico, copy.columnas.emocion].map((label) => (
+          {[copy.columnas.fisico, copy.columnas.energia, copy.columnas.emocion].map((label) => (
             <Text key={label} style={[s.eyebrow, columna, { fontSize: 5.8 }]}>
               {label}
             </Text>
@@ -505,7 +537,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
           <View key={nombre} style={{ flexDirection: "row", alignItems: "center", paddingVertical: 2.4, borderTopWidth: total ? 0.6 : 0, borderTopColor: c.linea }}>
             <View style={{ width: 6, height: 6, borderRadius: 3, marginRight: 6, backgroundColor: color ?? "transparent" }} />
             <Text style={{ flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: total ? 11.5 : 10.5, lineHeight: 1.1 }}>{nombre}</Text>
-            {[fila.energia, fila.fisico, fila.emocion].map((valor, index) => (
+            {[fila.fisico, fila.energia, fila.emocion].map((valor, index) => (
               <Text key={index} style={[columna, { fontFamily: "Manrope", fontWeight: 600, fontSize: 9 }]}>
                 {valor}
               </Text>

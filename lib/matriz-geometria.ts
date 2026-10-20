@@ -1,4 +1,4 @@
-import type { Puntos } from "./matriz";
+import type { Propositos, Puntos } from "./matriz";
 
 export const lienzo = { size: 400, centro: 200, radio: 164, anillo: 192 };
 
@@ -237,3 +237,33 @@ export function corazon({ x, y }: { x: number; y: number }, size: number) {
   const pt = (dx: number, dy: number) => `${redondear(x + dx * k)} ${redondear(y + dy * k)}`;
   return `M${pt(0, 5)}C${pt(-1.5, 3.6)} ${pt(-6, 0.8)} ${pt(-6, -2)}C${pt(-6, -4.8)} ${pt(-2.6, -6.2)} ${pt(0, -3.4)}C${pt(2.6, -6.2)} ${pt(6, -4.8)} ${pt(6, -2)}C${pt(6, 0.8)} ${pt(1.5, 3.6)} ${pt(0, 5)}Z`;
 }
+
+const exterior = (angulo: number, radio: number) => ({ x: redondear(c + Math.cos(angulo) * radio), y: redondear(c + Math.sin(angulo) * radio) });
+
+export type PropositoMatriz = { key: keyof Propositos | keyof Puntos; origen: "propositos" | "puntos"; x: number; y: number; r: number };
+
+function grupoProposito(
+  angulo: number,
+  centro: keyof Propositos,
+  partes: [{ key: keyof Propositos | keyof Puntos; origen: "propositos" | "puntos" }, { key: keyof Propositos | keyof Puntos; origen: "propositos" | "puntos" }],
+): PropositoMatriz[] {
+  return [
+    { key: centro, origen: "propositos", ...exterior(angulo, 238), r: 13 },
+    { ...partes[0], ...exterior(angulo + 0.12, 259), r: 8 },
+    { ...partes[1], ...exterior(angulo - 0.12, 259), r: 8 },
+  ];
+}
+
+export const propositosMatriz: PropositoMatriz[] = [
+  { key: "planetario", origen: "propositos", ...exterior(-Math.PI / 2, 238), r: 13 },
+  { key: "espiritual", origen: "propositos", ...exterior(Math.PI / 2, 238), r: 13 },
+  ...grupoProposito((-3 * Math.PI) / 4, "masculino", [{ key: "f", origen: "puntos" }, { key: "h", origen: "puntos" }]),
+  ...grupoProposito(-Math.PI / 4, "personal", [{ key: "tierra", origen: "propositos" }, { key: "cielo", origen: "propositos" }]),
+  ...grupoProposito(Math.PI / 4, "social", [{ key: "masculino", origen: "propositos" }, { key: "femenino", origen: "propositos" }]),
+  ...grupoProposito((3 * Math.PI) / 4, "femenino", [{ key: "i", origen: "puntos" }, { key: "g", origen: "puntos" }]),
+];
+
+export const marcoMatriz = {
+  normal: { x: -24, y: -24, ancho: 448, alto: 448 },
+  propositos: { x: -24, y: -60, ancho: 448, alto: 520 },
+};

@@ -1,12 +1,14 @@
 import type { CSSProperties } from "react";
-import type { Posicion, Puntos, Tramo } from "@/lib/matriz";
+import type { Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
   lineasMatriz,
   redondear,
   lienzo,
+  marcoMatriz,
   marcasEdad,
+  propositosMatriz,
   puntosAnillo,
   puntosMatriz,
   puntosVariante,
@@ -68,6 +70,7 @@ type Props = {
   variante?: Variante;
   edades?: Tramo[];
   activas?: Posicion[];
+  propositos?: Propositos;
 };
 
 const esquinasEdad: (keyof Puntos)[] = ["a", "f", "b", "g", "c", "h", "d", "i"];
@@ -83,6 +86,7 @@ export function MatrizSvg({
   variante = "individual",
   edades = [],
   activas = [],
+  propositos,
 }: Props) {
   const anillo = variante === "individual" && edades.length === 8;
   const v = verticesMatriz;
@@ -93,12 +97,14 @@ export function MatrizSvg({
   ];
   const delayCanal = (key: "dinero" | "amor") => puntosMatriz.find((punto) => punto.key === key)!.delay + 0.2;
   const visibles = puntosVariante(variante);
+  const conPropositos = anillo && propositos !== undefined;
+  const marco = conPropositos ? marcoMatriz.propositos : marcoMatriz.normal;
   const nivelActiva = (tramo: number, etapa: number) => activas.findIndex((item) => item.tramo === tramo && item.etapa === etapa);
   const esquinaActiva = (key: keyof Puntos) => activas.findIndex((item) => item.etapa === 0 && esquinasEdad[item.tramo] === key);
 
   return (
     <svg
-      viewBox="-24 -24 448 448"
+      viewBox={`${marco.x} ${marco.y} ${marco.ancho} ${marco.alto}`}
       role={decorativa ? undefined : "img"}
       aria-label={decorativa ? undefined : label}
       aria-hidden={decorativa || undefined}
@@ -260,6 +266,40 @@ export function MatrizSvg({
                 fill={activa ? "#3f2e3a" : "#fbf7f2"}
                 className="nums font-sans font-medium"
                 fontSize={medio ? 7.4 : 6.8}
+              >
+                {valor}
+              </text>
+            </g>
+          );
+        })}
+
+      {conPropositos &&
+        propositosMatriz.map((item, index) => {
+          const valor = item.origen === "propositos" ? propositos[item.key as keyof Propositos] : puntos[item.key as keyof Puntos];
+          const grande = item.r > 10;
+          return (
+            <g
+              key={`proposito-${index}`}
+              className="mx-point"
+              style={{ "--d": `${redondear(tiempos.anillo + 0.5 + index * 0.03)}s` } as CSSProperties}
+              aria-hidden
+            >
+              <circle
+                cx={item.x}
+                cy={item.y}
+                r={item.r}
+                fill={grande ? "#4a3845" : "none"}
+                stroke={grande ? "#c8a46a" : "rgba(251,247,242,0.4)"}
+                strokeWidth={grande ? 1 : 0.8}
+              />
+              <text
+                x={item.x}
+                y={item.y}
+                dy="0.36em"
+                textAnchor="middle"
+                fill={grande ? "#fbf7f2" : "rgba(251,247,242,0.8)"}
+                className="nums font-sans font-medium"
+                fontSize={grande ? 10 : 7.4}
               >
                 {valor}
               </text>

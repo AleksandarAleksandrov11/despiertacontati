@@ -135,6 +135,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                 destacados={["e", "a", "b", "d", "dinero"]}
                 edades={matriz.edades}
                 activas={anio?.posiciones ?? []}
+                propositos={matriz.propositos}
                 actions={<PdfButton href={pdfHref} tipo="individual" label={copy.pdf.short} tone="dark" />}
               />
             </div>

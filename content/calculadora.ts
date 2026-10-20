@@ -187,7 +187,7 @@ export const calculadoraIndividual = {
   chakras: {
     eyebrow: "Tu mapa de chakras",
     title: "Cómo se reparte tu energía.",
-    text: "Cada fila es un chakra, del más alto al más bajo, con tres energías: la energética, la física y la emocional. La última fila es la suma de cada columna.",
+    text: "Cada fila es un chakra, del más alto al más bajo, con tres energías: la física, la energética y la emocional. La última fila es la suma de cada columna.",
     columnas: { chakra: "Chakra", fisico: "Físico", energia: "Energía", emocion: "Emoción" },
     filas: [
       { nombre: "Sahasrara", es: "Corona", area: "Misión y conexión espiritual" },
