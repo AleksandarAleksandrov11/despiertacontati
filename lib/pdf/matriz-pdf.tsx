@@ -2,7 +2,7 @@ import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, 
 import { arcano, teaser } from "@/content/arcanos";
 import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/content/calculadora";
 import { site } from "@/content/site";
-import { etapaActual, type Etapa, type Puntos, type Tramo } from "@/lib/matriz";
+import type { Posicion, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
@@ -11,7 +11,10 @@ import {
   marcasEdad,
   puntosAnillo,
   puntosVariante,
+  simboloFemenino,
+  simboloMasculino,
   simbolosCanal,
+  simbolosLinaje,
   verticesMatriz,
   type PuntoMatriz,
   type TipoPunto,
@@ -124,10 +127,11 @@ const lineas = {
   cuadrado: { stroke: c.doradoSoft, width: 1.2, opacity: 0.75 },
   eje: { stroke: c.crema, width: 0.9, opacity: 0.22 },
   diagonal: { stroke: c.crema, width: 0.9, opacity: 0.22 },
+  interior: { stroke: c.crema, width: 0.8, opacity: 0.16 },
   canal: { stroke: c.doradoSoft, width: 1.1, opacity: 0.85 },
 };
 
-type Activa = { tramo: number; etapa: number } | null;
+const esquinasEdad: (keyof Puntos)[] = ["a", "f", "b", "g", "c", "h", "d", "i"];
 
 function Diagrama({
   puntos,
@@ -135,17 +139,19 @@ function Diagrama({
   size,
   variante,
   edades,
-  activa,
+  activas,
 }: {
   puntos: Puntos;
   etiquetas: string[];
   size: number;
   variante: Variante;
   edades: Tramo[];
-  activa: Activa;
+  activas: Posicion[];
 }) {
   const anillo = variante === "individual" && edades.length === 8;
   const visibles = puntosVariante(variante);
+  const nivel = (tramo: number, etapa: number) => activas.findIndex((item) => item.tramo === tramo && item.etapa === etapa);
+  const esquinaActiva = (key: keyof Puntos) => (anillo ? activas.findIndex((item) => item.etapa === 0 && esquinasEdad[item.tramo] === key) : -1);
   const min = -24;
   const span = 448;
   const scale = size / span;
@@ -191,19 +197,25 @@ function Diagrama({
         })}
         {anillo &&
           puntosAnillo.map((punto) => {
-            const marcada = activa?.tramo === punto.tramo && activa.etapa === punto.etapa;
+            const marca = nivel(punto.tramo, punto.etapa);
             return (
               <Circle
                 key={`a-${punto.tramo}-${punto.etapa}`}
                 cx={punto.x}
                 cy={punto.y}
                 r={punto.etapa === 4 ? 7.6 : 6.6}
-                fill={marcada ? c.doradoSoft : punto.etapa === 4 ? "#6a4f62" : "#4a3845"}
-                stroke={marcada ? "#f3e2bd" : "#8a7268"}
-                strokeWidth={marcada ? 2 : 0.8}
+                fill={marca === 0 ? c.doradoSoft : punto.etapa === 4 ? "#6a4f62" : "#4a3845"}
+                stroke={marca >= 0 ? "#f3e2bd" : "#8a7268"}
+                strokeWidth={marca >= 0 ? 2 : 0.8}
               />
             );
           })}
+        {visibles.map((punto) => {
+          const marca = esquinaActiva(punto.key);
+          return marca >= 0 ? (
+            <Circle key={`e-${punto.key}`} cx={punto.x} cy={punto.y} r={punto.r + 4.5} fill="none" stroke="#f3e2bd" strokeWidth={marca === 0 ? 2 : 1} />
+          ) : null;
+        })}
         {visibles.map((punto) => {
           const color = estiloPunto(punto);
           return (
@@ -219,11 +231,19 @@ function Diagrama({
           );
         })}
         <Path d={corazon(simbolosCanal.amor, 12)} fill={coloresChakra.raiz} />
+        {variante === "individual" && (
+          <>
+            <Circle cx={simbolosLinaje.masculino.x - 0.8} cy={simbolosLinaje.masculino.y + 0.8} r={3.4} fill="none" stroke={coloresChakra.garganta} strokeWidth={1.1} />
+            <Path d={simboloMasculino(simbolosLinaje.masculino)} fill="none" stroke={coloresChakra.garganta} strokeWidth={1.1} strokeLinecap="round" />
+            <Circle cx={simbolosLinaje.femenino.x} cy={simbolosLinaje.femenino.y - 1.2} r={3.4} fill="none" stroke={c.rosa} strokeWidth={1.1} />
+            <Path d={simboloFemenino(simbolosLinaje.femenino)} fill="none" stroke={c.rosa} strokeWidth={1.1} strokeLinecap="round" />
+          </>
+        )}
       </Svg>
       {anillo &&
         puntosAnillo.map((punto) => {
           const box = 16 * scale;
-          const marcada = activa?.tramo === punto.tramo && activa.etapa === punto.etapa;
+          const marcada = nivel(punto.tramo, punto.etapa) === 0;
           return (
             <View
               key={`an-${punto.tramo}-${punto.etapa}`}
@@ -343,12 +363,6 @@ function Portada({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
   );
 }
 
-function activaDe(edades: Tramo[], actual: Etapa | null): Activa {
-  if (!actual) return null;
-  const tramo = edades.findIndex((item) => item.etapas.includes(actual));
-  return tramo >= 0 ? { tramo, etapa: edades[tramo]!.etapas.indexOf(actual) } : null;
-}
-
 function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   const individual = datos.tipo === "individual";
   const p = datos.matriz.puntos;
@@ -369,7 +383,7 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
   const titulo = individual
     ? calculadoraIndividual.stageTitle(datos.persona.nombre)
     : calculadoraPareja.stageTitle(datos.personas.every((persona) => persona.nombre) ? `${datos.personas[0].nombre} y ${datos.personas[1].nombre}` : "");
-  const activa = individual ? activaDe(datos.matriz.edades, etapaActual(datos.matriz.edades, datos.edad)) : null;
+  const activas = individual && datos.anio ? datos.anio.posiciones : [];
   return (
     <Page size="A5" style={s.page}>
       <Fondo tono="lavanda" />
@@ -381,7 +395,7 @@ function PaginaMatriz({ datos }: { datos: DatosPdf }) {
           size={titulo.length > 36 ? 278 : 296}
           variante={datos.tipo}
           edades={datos.matriz.edades}
-          activa={activa}
+          activas={activas}
         />
       </View>
       <Text style={[s.small, { marginTop: 8, fontSize: 8 }]}>{individual ? calculadoraPdf.matrizText : calculadoraPdf.matrizParejaText}</Text>
@@ -435,21 +449,32 @@ function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) 
   );
 }
 
-function EtapaActual({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
-  const copy = calculadoraIndividual.edades;
-  const actual = etapaActual(datos.matriz.edades, datos.edad);
-  if (!actual) return null;
+function EnergiasDelAnio({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+  const copy = calculadoraIndividual.edades.anio;
+  const anio = datos.anio;
+  if (!anio) return null;
+  const items = [
+    { label: copy.edad(anio.edad), valor: anio.propia },
+    { label: copy.edad(anio.opuesta), valor: anio.deOpuesta },
+    { label: copy.suma, valor: anio.suma },
+  ];
   return (
-    <View wrap={false} style={{ marginTop: 8, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 9, paddingHorizontal: 12 }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <View style={{ flex: 1, paddingRight: 8 }}>
-          <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.etapa(actual)}</Text>
-          <Text style={{ marginTop: 2, fontSize: 8.2, lineHeight: 1.35, color: c.crema }}>{copy.ahora(Math.floor(datos.edad))}</Text>
-        </View>
-        <Numero numero={actual.valor} size={26} />
-        <Text style={{ marginLeft: 7, fontFamily: "Cormorant", fontWeight: 500, fontSize: 13, color: c.crema }}>{arcano(actual.valor)?.nombre}</Text>
+    <View wrap={false} style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12 }}>
+      <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.eyebrow}</Text>
+      <Text style={{ marginTop: 3, fontFamily: "Cormorant", fontWeight: 500, fontSize: 15, color: c.crema }}>{copy.title(anio.edad)}</Text>
+      <Text style={{ marginTop: 2, fontSize: 7.4, lineHeight: 1.35, color: "#d9cdd4" }}>{copy.text}</Text>
+      <View style={{ flexDirection: "row", marginTop: 8 }}>
+        {items.map((item, index) => (
+          <View key={item.label} style={{ flex: 1, marginLeft: index === 0 ? 0 : 6, backgroundColor: c.crema, borderRadius: 9, padding: 7 }}>
+            <Text style={[s.eyebrow, { fontSize: 5.4, letterSpacing: 0.8 }]}>{item.label}</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
+              <Numero numero={item.valor} size={20} />
+              <Text style={{ marginLeft: 5, flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: 10.5, lineHeight: 1.1, color: c.ciruela }}>{arcano(item.valor)?.nombre}</Text>
+            </View>
+          </View>
+        ))}
       </View>
-      <Text style={{ marginTop: 6, fontSize: 7.4, lineHeight: 1.35, color: "#d9cdd4" }}>{calculadoraPdf.edadesCompleta}</Text>
+      <Text style={{ marginTop: 7, fontSize: 7.2, lineHeight: 1.35, color: "#d9cdd4" }}>{calculadoraPdf.edadesCompleta}</Text>
     </View>
   );
 }
@@ -470,7 +495,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
       <View wrap={false} style={[s.card, { marginTop: 10, paddingVertical: 6 }]}>
         <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 0.6, borderBottomColor: c.linea }}>
           <Text style={[s.eyebrow, { flex: 1, fontSize: 5.8 }]}>{copy.columnas.chakra}</Text>
-          {[copy.columnas.fisico, copy.columnas.energia, copy.columnas.emocion].map((label) => (
+          {[copy.columnas.energia, copy.columnas.fisico, copy.columnas.emocion].map((label) => (
             <Text key={label} style={[s.eyebrow, columna, { fontSize: 5.8 }]}>
               {label}
             </Text>
@@ -480,7 +505,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
           <View key={nombre} style={{ flexDirection: "row", alignItems: "center", paddingVertical: 2.4, borderTopWidth: total ? 0.6 : 0, borderTopColor: c.linea }}>
             <View style={{ width: 6, height: 6, borderRadius: 3, marginRight: 6, backgroundColor: color ?? "transparent" }} />
             <Text style={{ flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: total ? 11.5 : 10.5, lineHeight: 1.1 }}>{nombre}</Text>
-            {[fila.fisico, fila.energia, fila.emocion].map((valor, index) => (
+            {[fila.energia, fila.fisico, fila.emocion].map((valor, index) => (
               <Text key={index} style={[columna, { fontFamily: "Manrope", fontWeight: 600, fontSize: 9 }]}>
                 {valor}
               </Text>
@@ -489,7 +514,7 @@ function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual
         ))}
       </View>
       <Text style={[s.small, { marginTop: 6, fontSize: 7 }]}>{copy.aviso}</Text>
-      <EtapaActual datos={datos} />
+      <EnergiasDelAnio datos={datos} />
       <Pie />
     </Page>
   );

@@ -11,7 +11,7 @@ import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/tracked";
-import { calcularMatriz, edadEnAnios, etapaActual, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
+import { calcularMatriz, edadCumplida, energiasDelAnio, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
 import { whatsappHref } from "@/lib/utils";
 import { FechaCampos, fechaVacia, type FechaForm } from "./fecha-campos";
 import { EnergiasEdades, Linaje, MapaChakras } from "./energias";
@@ -83,10 +83,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
 
   const matriz = fecha ? calcularMatriz(fecha) : null;
   const texto = fecha ? fechaTexto(fecha) : "";
-  const edad = fecha && hoy ? edadEnAnios(fecha, new Date(hoy)) : null;
-  const actual = matriz && edad !== null ? etapaActual(matriz.edades, edad) : null;
-  const tramoActual = matriz && actual ? matriz.edades.findIndex((tramo) => tramo.etapas.includes(actual)) : -1;
-  const etapaActiva = matriz && actual && tramoActual >= 0 ? { tramo: tramoActual, etapa: matriz.edades[tramoActual]!.etapas.indexOf(actual) } : null;
+  const anio = matriz && fecha && hoy ? energiasDelAnio(matriz.edades, edadCumplida(fecha, new Date(hoy))) : null;
   const pdfHref = fecha
     ? `/api/matriz/pdf?${new URLSearchParams({ tipo: "individual", fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}) }).toString()}`
     : "";
@@ -137,7 +134,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                 instant={instant}
                 destacados={["e", "a", "b", "d", "dinero"]}
                 edades={matriz.edades}
-                etapaActiva={etapaActiva}
+                activas={anio?.posiciones ?? []}
                 actions={<PdfButton href={pdfHref} tipo="individual" label={copy.pdf.short} tone="dark" />}
               />
             </div>
@@ -228,7 +225,7 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
           </ResultadosSection>
 
           <ResultadosSection id="energias-por-edades" eyebrow={copy.edades.eyebrow} title={copy.edades.title} text={copy.edades.text} tone="salvia">
-            <EnergiasEdades tramos={matriz.edades} actual={actual} edad={edad === null ? null : Math.floor(edad)} />
+            <EnergiasEdades tramos={matriz.edades} anio={anio} />
           </ResultadosSection>
 
           <ResultadosSection id="mapa-de-chakras" eyebrow={copy.chakras.eyebrow} title={copy.chakras.title} text={copy.chakras.text} tone="rosa">

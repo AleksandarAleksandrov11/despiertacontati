@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import type { Puntos, Tramo } from "@/lib/matriz";
+import type { Posicion, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
@@ -10,7 +10,10 @@ import {
   puntosAnillo,
   puntosMatriz,
   puntosVariante,
+  simboloFemenino,
+  simboloMasculino,
   simbolosCanal,
+  simbolosLinaje,
   tiempos,
   verticesMatriz,
   type PuntoMatriz,
@@ -39,6 +42,7 @@ const lineStyles = {
   cuadrado: { stroke: "#ddbf8c", width: 1.1, opacity: 0.7, dur: 0.9 },
   eje: { stroke: "#fbf7f2", width: 0.8, opacity: 0.22, dur: 0.6 },
   diagonal: { stroke: "#fbf7f2", width: 0.8, opacity: 0.22, dur: 0.6 },
+  interior: { stroke: "#fbf7f2", width: 0.7, opacity: 0.16, dur: 0.6 },
   canal: { stroke: "#ddbf8c", width: 1, opacity: 0.8, dur: 0.5 },
 };
 
@@ -63,8 +67,10 @@ type Props = {
   decorativa?: boolean;
   variante?: Variante;
   edades?: Tramo[];
-  etapaActiva?: { tramo: number; etapa: number } | null;
+  activas?: Posicion[];
 };
+
+const esquinasEdad: (keyof Puntos)[] = ["a", "f", "b", "g", "c", "h", "d", "i"];
 
 export function MatrizSvg({
   puntos,
@@ -76,7 +82,7 @@ export function MatrizSvg({
   decorativa = false,
   variante = "individual",
   edades = [],
-  etapaActiva = null,
+  activas = [],
 }: Props) {
   const anillo = variante === "individual" && edades.length === 8;
   const v = verticesMatriz;
@@ -87,6 +93,8 @@ export function MatrizSvg({
   ];
   const delayCanal = (key: "dinero" | "amor") => puntosMatriz.find((punto) => punto.key === key)!.delay + 0.2;
   const visibles = puntosVariante(variante);
+  const nivelActiva = (tramo: number, etapa: number) => activas.findIndex((item) => item.tramo === tramo && item.etapa === etapa);
+  const esquinaActiva = (key: keyof Puntos) => activas.findIndex((item) => item.etapa === 0 && esquinasEdad[item.tramo] === key);
 
   return (
     <svg
@@ -195,6 +203,14 @@ export function MatrizSvg({
       >
         €
       </text>
+      {variante === "individual" && (
+        <g className="mx-fade" style={{ "--d": `${tiempos.internos + 1.2}s` } as CSSProperties} fill="none" strokeWidth="1.1" strokeLinecap="round" aria-hidden>
+          <circle cx={simbolosLinaje.masculino.x - 0.8} cy={simbolosLinaje.masculino.y + 0.8} r={3.4} stroke="#7fb3d5" />
+          <path d={simboloMasculino(simbolosLinaje.masculino)} stroke="#7fb3d5" />
+          <circle cx={simbolosLinaje.femenino.x} cy={simbolosLinaje.femenino.y - 1.2} r={3.4} stroke="#c98b93" />
+          <path d={simboloFemenino(simbolosLinaje.femenino)} stroke="#c98b93" />
+        </g>
+      )}
       <path
         d={corazon(simbolosCanal.amor, 12)}
         fill="#d9776f"
@@ -223,10 +239,11 @@ export function MatrizSvg({
         puntosAnillo.map((punto) => {
           const valor = edades[punto.tramo]?.etapas[punto.etapa]?.valor;
           const medio = punto.etapa === 4;
-          const activa = etapaActiva?.tramo === punto.tramo && etapaActiva.etapa === punto.etapa;
+          const nivel = nivelActiva(punto.tramo, punto.etapa);
+          const activa = nivel === 0;
           return (
             <g key={`anillo-${punto.tramo}-${punto.etapa}`} className="mx-point" style={{ "--d": `${punto.delay}s` } as CSSProperties} aria-hidden>
-              {activa && <circle cx={punto.x} cy={punto.y} r={11} fill="none" stroke="#f3e2bd" strokeWidth="1.1" />}
+              {nivel >= 0 && <circle cx={punto.x} cy={punto.y} r={11} fill="none" stroke="#f3e2bd" strokeWidth="1.1" strokeDasharray={activa ? undefined : "2 2"} />}
               <circle
                 cx={punto.x}
                 cy={punto.y}
@@ -254,10 +271,20 @@ export function MatrizSvg({
         const color = estiloPunto(punto);
         const valor = puntos[punto.key];
         const destacado = destacados.includes(punto.key);
+        const edad = anillo ? esquinaActiva(punto.key) : -1;
         return (
           <g key={punto.key} className="mx-point" style={{ "--d": `${punto.delay}s` } as CSSProperties} aria-hidden>
-            {destacado && (
-              <circle cx={punto.x} cy={punto.y} r={punto.r + 5} fill="none" stroke="#ddbf8c" strokeOpacity="0.8" strokeWidth="1" />
+            {(destacado || edad >= 0) && (
+              <circle
+                cx={punto.x}
+                cy={punto.y}
+                r={punto.r + 5}
+                fill="none"
+                stroke={edad >= 0 ? "#f3e2bd" : "#ddbf8c"}
+                strokeOpacity="0.8"
+                strokeWidth={edad === 0 ? 1.6 : 1}
+                strokeDasharray={edad === 1 ? "2 2" : undefined}
+              />
             )}
             <circle
               cx={punto.x}

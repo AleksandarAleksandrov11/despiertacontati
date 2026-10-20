@@ -173,8 +173,13 @@ export const calculadoraIndividual = {
     eyebrow: "Tus energías por edades",
     title: "La energía de cada etapa de tu vida.",
     text: "Alrededor de tu matriz está tu línea de vida. Cada punto es la energía que te acompaña en una edad, desde que naces hasta los 80 años, y empieza de nuevo con la energía de tu día de nacimiento.",
-    ahora: (edad: number) => `Ahora tienes ${edad} ${edad === 1 ? "año" : "años"}. Esta es la energía de tu etapa actual.`,
-    etapa: (etapa: { etiqueta: string; principal: boolean }) => `Tu etapa actual · ${etapa.principal ? "los" : "de"} ${etapa.etiqueta} años`,
+    anio: {
+      eyebrow: "Tu año ahora",
+      title: (edad: number) => `Tus energías de los ${edad} ${edad === 1 ? "año" : "años"}`,
+      text: "La energía de tu edad en tu línea de vida, la del punto opuesto y la suma de las dos.",
+      edad: (edad: number) => `A los ${edad} ${edad === 1 ? "año" : "años"}`,
+      suma: "La suma de las dos",
+    },
     tramo: (desde: number) => `De ${desde} a ${desde + 10} años`,
     edad: "Edad",
     nota: "Qué te pide cada etapa y cómo vivirla lo vemos en tu lectura completa.",
@@ -182,7 +187,7 @@ export const calculadoraIndividual = {
   chakras: {
     eyebrow: "Tu mapa de chakras",
     title: "Cómo se reparte tu energía.",
-    text: "Cada fila es un chakra, del más alto al más bajo, con tres energías: la física, la energética y la emocional. La última fila es la suma de cada columna.",
+    text: "Cada fila es un chakra, del más alto al más bajo, con tres energías: la energética, la física y la emocional. La última fila es la suma de cada columna.",
     columnas: { chakra: "Chakra", fisico: "Físico", energia: "Energía", emocion: "Emoción" },
     filas: [
       { nombre: "Sahasrara", es: "Corona", area: "Misión y conexión espiritual" },
@@ -394,7 +399,7 @@ export const calculadoraPdf = {
   ctaTitle: "Esto es solo el principio.",
   ctaBuy: "Quiero mi lectura completa",
   ctaInfo: "Pedir información por WhatsApp",
-  edadesCompleta: "La energía de cada etapa de tu vida y tus energías del año las vemos en tu lectura completa.",
+  edadesCompleta: "Qué te piden estas energías y las de cada etapa de tu vida lo vemos en tu lectura completa.",
   ctaQr: "O escanea este código y escríbeme por WhatsApp.",
   precio: "Precio",
   precioConsulta: "Precio a consultar",

@@ -1,6 +1,6 @@
 import { arcano } from "@/content/arcanos";
 import { calculadoraIndividual } from "@/content/calculadora";
-import type { Etapa, FilaChakra, Puntos, Tramo } from "@/lib/matriz";
+import type { EnergiasAnio, FilaChakra, Puntos, Tramo } from "@/lib/matriz";
 import { cn } from "@/lib/utils";
 import { ArcanoTitle } from "./lectura";
 
@@ -14,35 +14,52 @@ const chakraColors = [
   "var(--color-chakra-raiz)",
 ];
 
-export function EnergiasEdades({ tramos, actual, edad }: { tramos: Tramo[]; actual: Etapa | null; edad: number | null }) {
+export function EnergiasAnioCard({ anio, className }: { anio: EnergiasAnio; className?: string }) {
+  const copy = calculadoraIndividual.edades.anio;
+  const items = [
+    { label: copy.edad(anio.edad), valor: anio.propia },
+    { label: copy.edad(anio.opuesta), valor: anio.deOpuesta },
+    { label: copy.suma, valor: anio.suma },
+  ];
+  return (
+    <div className={cn("rounded-[1.25rem] bg-ciruela p-7 text-crema sm:p-9", className)}>
+      <p className="eyebrow text-crema/70">{copy.eyebrow}</p>
+      <p className="mt-3 font-serif text-[1.8rem] leading-tight">{copy.title(anio.edad)}</p>
+      <p className="mt-2 max-w-xl text-crema/75">{copy.text}</p>
+      <ul className="mt-7 grid gap-3 md:grid-cols-3">
+        {items.map((item) => (
+          <li key={item.label} className="rounded-2xl bg-crema px-5 py-4">
+            <p className="eyebrow mb-3 text-ink-soft">{item.label}</p>
+            <ArcanoTitle numero={item.valor} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export function EnergiasEdades({ tramos, anio }: { tramos: Tramo[]; anio: EnergiasAnio | null }) {
   const copy = calculadoraIndividual.edades;
+  const nivel = (tramo: number, etapa: number) => (anio ? anio.posiciones.findIndex((item) => item.tramo === tramo && item.etapa === etapa) : -1);
   return (
     <>
-      {actual && edad !== null && (
-        <div className="mb-8 flex flex-col gap-6 rounded-[1.25rem] bg-ciruela p-7 text-crema sm:flex-row sm:items-center sm:justify-between sm:p-9">
-          <div className="max-w-md">
-            <p className="eyebrow text-crema/70">{copy.etapa(actual)}</p>
-            <p className="mt-3 font-serif text-[1.6rem] leading-tight">{copy.ahora(edad)}</p>
-          </div>
-          <div className="rounded-2xl bg-crema px-5 py-4">
-            <ArcanoTitle numero={actual.valor} />
-          </div>
-        </div>
-      )}
+      {anio && <EnergiasAnioCard anio={anio} className="mb-8" />}
       <ol className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {tramos.map((tramo) => (
+        {tramos.map((tramo, tramoIndex) => (
           <li key={tramo.desde} className="rounded-[1.25rem] bg-crema p-5 sm:p-6">
             <p className="eyebrow">{copy.tramo(tramo.desde)}</p>
             <ul className="mt-4 flex flex-col gap-1">
-              {tramo.etapas.map((etapa) => {
-                const activa = actual === etapa;
+              {tramo.etapas.map((etapa, etapaIndex) => {
+                const marca = nivel(tramoIndex, etapaIndex);
                 return (
                   <li
                     key={etapa.etiqueta}
-                    aria-current={activa ? "true" : undefined}
+                    aria-current={marca === 0 ? "true" : undefined}
                     className={cn(
                       "flex items-center gap-3 rounded-xl px-2.5 py-1.5",
-                      activa ? "bg-dorado-soft/45 ring-1 ring-dorado" : etapa.principal && "bg-lavanda/70",
+                      marca === 0 && "bg-dorado-soft/45 ring-1 ring-dorado",
+                      marca === 1 && "outline-1 outline-dashed outline-dorado",
+                      marca < 0 && etapa.principal && "bg-lavanda/70",
                     )}
                   >
                     <span className="nums w-[4.6rem] shrink-0 whitespace-nowrap text-[0.8rem] text-ink-soft">
@@ -84,10 +101,10 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
                 {copy.columnas.chakra}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
-                {copy.columnas.fisico}
+                {copy.columnas.energia}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
-                {copy.columnas.energia}
+                {copy.columnas.fisico}
               </th>
               <th scope="col" className="px-3 py-4 text-center font-medium sm:px-5">
                 {copy.columnas.emocion}
@@ -110,8 +127,8 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
                       </span>
                     </span>
                   </th>
-                  <td className={celda}>{fila.fisico}</td>
                   <td className={celda}>{fila.energia}</td>
+                  <td className={celda}>{fila.fisico}</td>
                   <td className={celda}>{fila.emocion}</td>
                 </tr>
               );
@@ -120,8 +137,8 @@ export function MapaChakras({ filas, total }: { filas: FilaChakra[]; total: Fila
               <th scope="row" className="px-4 py-4 font-serif text-[1.2rem] font-normal text-ciruela sm:px-6">
                 {copy.total}
               </th>
-              <td className={celda}>{total.fisico}</td>
               <td className={celda}>{total.energia}</td>
+              <td className={celda}>{total.fisico}</td>
               <td className={celda}>{total.emocion}</td>
             </tr>
           </tbody>

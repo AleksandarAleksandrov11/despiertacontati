@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowDown } from "lucide-react";
-import type { Puntos, Tramo } from "@/lib/matriz";
+import type { Posicion, Puntos, Tramo } from "@/lib/matriz";
 import { pasosEnTiempo, type Variante } from "@/lib/matriz-geometria";
 import { cn } from "@/lib/utils";
 import { MatrizSvg } from "./matriz-svg";
@@ -23,7 +23,7 @@ type Props = {
   actions?: ReactNode;
   variante?: Variante;
   edades?: Tramo[];
-  etapaActiva?: { tramo: number; etapa: number } | null;
+  activas?: Posicion[];
 };
 
 export function MatrizEscena({
@@ -42,7 +42,7 @@ export function MatrizEscena({
   actions,
   variante = "individual",
   edades,
-  etapaActiva,
+  activas,
 }: Props) {
   const final = pasos.length - 1;
   const [step, setStep] = useState(instant ? final : 0);
@@ -95,7 +95,7 @@ export function MatrizEscena({
           destacados={done ? destacados : []}
           variante={variante}
           edades={edades}
-          etapaActiva={done ? etapaActiva : null}
+          activas={done ? activas : []}
         />
       </div>
       <div className="mx-auto mt-6 flex min-h-[9.5rem] max-w-xl flex-col items-center text-center">

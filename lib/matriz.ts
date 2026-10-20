@@ -30,6 +30,10 @@ export type Puntos = {
   i2: number;
   k: number;
   k1: number;
+  a2b2: number;
+  a1b1: number;
+  b1c1: number;
+  a1d1: number;
   x: number;
   dinero: number;
   amor: number;
@@ -48,9 +52,13 @@ export type Propositos = {
 
 export type FilaChakra = { fisico: number; energia: number; emocion: number };
 
-export type Etapa = { desde: number; hasta: number; etiqueta: string; valor: number; principal: boolean };
+export type Etapa = { etiqueta: string; valor: number; principal: boolean };
 
 export type Tramo = { desde: number; etapas: Etapa[] };
+
+export type Posicion = { tramo: number; etapa: number };
+
+export type EnergiasAnio = { edad: number; opuesta: number; propia: number; deOpuesta: number; suma: number; posiciones: [Posicion, Posicion] };
 
 export type Matriz = {
   puntos: Puntos;
@@ -82,21 +90,19 @@ function tramo(desde: number, inicio: number, fin: number): Tramo {
   const m75 = reducir(m5 + fin);
   const m6 = reducir(m5 + m75);
   const m85 = reducir(fin + m75);
-  const rango = (inicioRango: number, finRango: number, valor: number, etiqueta?: string): Etapa => ({
-    desde: desde + inicioRango,
-    hasta: desde + finRango,
-    etiqueta: etiqueta ?? `${decimal(desde + inicioRango)}-${decimal(desde + finRango)}`,
+  const rango = (inicioRango: number, finRango: number, valor: number): Etapa => ({
+    etiqueta: `${decimal(desde + inicioRango)}-${decimal(desde + finRango)}`,
     valor,
     principal: false,
   });
   return {
     desde,
     etapas: [
-      { desde: Math.max(0, desde - 1), hasta: desde + 1, etiqueta: String(desde), valor: inicio, principal: true },
+      { etiqueta: String(desde), valor: inicio, principal: true },
       rango(1, 2.5, m1),
       rango(2.5, 3.5, m25),
       rango(3.5, 4, m35),
-      { ...rango(4, 6, m5, String(desde + 5)), principal: true },
+      { etiqueta: String(desde + 5), valor: m5, principal: true },
       rango(6, 7.5, m6),
       rango(7.5, 8.5, m75),
       rango(8.5, 9, m85),
@@ -121,13 +127,15 @@ function completar(base: Base, pareja = false): Matriz {
   const h1 = reducir(h + k);
   const i1 = reducir(i + k);
   const x = reducir(c1 + d1);
+  const a2 = reducir(a + a1);
+  const b2 = reducir(b + b1);
   const puntos: Puntos = {
     ...base,
     a1,
-    a2: reducir(a + a1),
+    a2,
     a3: reducir(a1 + e),
     b1,
-    b2: reducir(b + b1),
+    b2,
     b3: reducir(b1 + e),
     c1,
     c2: reducir(c + c1),
@@ -143,6 +151,10 @@ function completar(base: Base, pareja = false): Matriz {
     i2: reducir(i + i1),
     k,
     k1: reducir(e + k),
+    a2b2: reducir(a2 + b2),
+    a1b1: reducir(a1 + b1),
+    b1c1: reducir(b1 + c1),
+    a1d1: reducir(a1 + d1),
     x,
     dinero: reducir(x + c1),
     amor: reducir(x + d1),
@@ -157,7 +169,7 @@ function completar(base: Base, pareja = false): Matriz {
   const fila = (fisico: number, energia: number): FilaChakra => ({ fisico, energia, emocion: reducir(fisico + energia) });
   const chakras = [
     fila(a, b),
-    fila(puntos.a2, puntos.b2),
+    fila(a2, b2),
     fila(a1, b1),
     fila(puntos.a3, puntos.b3),
     fila(e, e),
@@ -207,19 +219,23 @@ export function calcularPareja(primera: Fecha, segunda: Fecha): Matriz {
   );
 }
 
-export function edadEnAnios(fecha: Fecha, hoy = new Date()) {
-  const nacimiento = Date.UTC(fecha.anio, fecha.mes - 1, fecha.dia);
-  const ahora = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
-  return (ahora - nacimiento) / (365.2425 * 24 * 60 * 60 * 1000);
+export function edadCumplida({ dia, mes, anio }: Fecha, hoy = new Date()) {
+  const antesDelCumple = hoy.getMonth() + 1 < mes || (hoy.getMonth() + 1 === mes && hoy.getDate() < dia);
+  return hoy.getFullYear() - anio - (antesDelCumple ? 1 : 0);
 }
 
-export function etapaActual(tramos: Tramo[], edad: number) {
-  for (const item of tramos) {
-    for (const etapa of item.etapas) {
-      if (edad >= etapa.desde && edad < etapa.hasta) return etapa;
-    }
-  }
-  return null;
+const etapaDeAnio = [0, 1, 2, 3, 3, 4, 5, 6, 7, 7];
+
+function posicionEdad(edad: number): Posicion {
+  return { tramo: Math.floor(edad / 10), etapa: etapaDeAnio[edad % 10]! };
+}
+
+export function energiasDelAnio(tramos: Tramo[], edad: number): EnergiasAnio | null {
+  if (tramos.length !== 8 || edad < 0 || edad >= 80) return null;
+  const opuesta = edad >= 40 ? edad - 40 : edad + 40;
+  const posiciones: [Posicion, Posicion] = [posicionEdad(edad), posicionEdad(opuesta)];
+  const [propia, deOpuesta] = posiciones.map((posicion) => tramos[posicion.tramo]!.etapas[posicion.etapa]!.valor) as [number, number];
+  return { edad, opuesta, propia, deOpuesta, suma: reducir(propia + deOpuesta), posiciones };
 }
 
 export function fechaValida(fecha: Fecha) {

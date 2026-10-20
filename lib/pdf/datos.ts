@@ -2,7 +2,19 @@ import { infoIndividualMessage, rutasCalculadora } from "@/content/calculadora";
 import { infoCodigoMessage, type Mazo } from "@/content/codigo-personal";
 import { site } from "@/content/site";
 import { getProducto } from "@/content/tienda";
-import { calcularMatriz, calcularPareja, edadEnAnios, fechaParam, fechaTexto, limpiarNombre, parsearFecha, type Fecha, type Matriz } from "@/lib/matriz";
+import {
+  calcularMatriz,
+  calcularPareja,
+  edadCumplida,
+  energiasDelAnio,
+  fechaParam,
+  fechaTexto,
+  limpiarNombre,
+  parsearFecha,
+  type EnergiasAnio,
+  type Fecha,
+  type Matriz,
+} from "@/lib/matriz";
 import { calcularCodigo } from "@/lib/codigo-personal";
 import { formatPrice } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
@@ -13,7 +25,7 @@ export type Persona = { fecha: Fecha; texto: string; nombre: string; centro: num
 type Comun = { matriz: Matriz; archivo: string };
 
 export type DatosPdf =
-  | (Comun & { tipo: "individual"; persona: Persona; edad: number; precio: string | null; compraUrl: string; infoUrl: string })
+  | (Comun & { tipo: "individual"; persona: Persona; anio: EnergiasAnio | null; precio: string | null; compraUrl: string; infoUrl: string })
   | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
 
 function baseUrl(origin: string) {
@@ -21,6 +33,12 @@ function baseUrl(origin: string) {
   const hostname = URL.canParse(origin) ? new URL(origin).hostname : "";
   const permitido = hostname === "localhost" || hostname.endsWith(".vercel.app") || hostname.replace(/^www\./, "") === propio;
   return permitido ? origin : site.url;
+}
+
+function hoyEnEspana() {
+  const partes = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const [year, month, day] = partes.split("-").map(Number);
+  return new Date(year!, month! - 1, day!);
 }
 
 function persona(fecha: Fecha, nombre: string): Persona {
@@ -41,15 +59,16 @@ export function datosDesdeParams(params: URLSearchParams, origin: string): Datos
     const producto = getProducto("matriz-del-destino");
     const query = new URLSearchParams({ fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}) });
     const texto = fechaTexto(fecha);
+    const matriz = calcularMatriz(fecha);
     return {
       tipo,
       persona: persona(fecha, nombre),
-      matriz: calcularMatriz(fecha),
+      matriz,
       precio: producto?.precio ? formatPrice(producto.precio) : null,
       compraUrl: `${base}${rutasCalculadora.individual}?${query.toString()}#lectura-completa`,
       infoUrl: whatsappHref(infoIndividualMessage(texto, nombre)),
       archivo: archivo(fecha),
-      edad: edadEnAnios(fecha),
+      anio: energiasDelAnio(matriz.edades, edadCumplida(fecha, hoyEnEspana())),
     };
   }
   if (tipo === "pareja") {

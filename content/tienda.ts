@@ -576,7 +576,7 @@ export const productos: Producto[] = [
     precio: null,
     estado: "disponible",
     destacado: false,
-    imagen: "tatiTrabajandoPendulo",
+    imagen: "penduloMadera",
     enlace: "/servicios/reiki#terapias-title",
   },
   {

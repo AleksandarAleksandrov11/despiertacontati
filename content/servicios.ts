@@ -192,7 +192,7 @@ export const reikiPage = {
   subtitle: "Primero, bajar revoluciones.",
   image: "manosCorazon" as ImageKey,
   queEs: {
-    image: "descansoLuz" as ImageKey,
+    image: "mujerSonriendoCampo" as ImageKey,
     title: "Qué es el Reiki",
     text: "El Reiki es una terapia natural de imposición de manos. Un acompañamiento energético orientado a la relajación, la calma y el bienestar interior, para cuando el estrés o la ansiedad no te dejan parar.",
   },
@@ -222,7 +222,7 @@ export const reikiPage = {
     {
       title: "Péndulo hebreo",
       text: "Trabajo energético con péndulo hebreo para explorar y trabajar aspectos relacionados con el equilibrio y el bienestar personal.",
-      image: "tatiTrabajandoPendulo",
+      image: "penduloMadera",
       whatsapp: "Hola, Tati. Me gustaría información sobre el péndulo hebreo.",
     },
     {

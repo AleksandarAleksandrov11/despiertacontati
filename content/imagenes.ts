@@ -19,7 +19,8 @@ import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
 import tatiTrabajandoPendulo from "@/public/images/tati-trabajando-pendulo.webp";
 import reikiManosLuz from "@/public/images/reiki-manos-luz.webp";
 import manosCorazon from "@/public/images/manos-sobre-el-corazon.webp";
-import descansoLuz from "@/public/images/descanso-luz-cortina.webp";
+import mujerSonriendoCampo from "@/public/images/mujer-sonriendo-campo.webp";
+import penduloMadera from "@/public/images/pendulo-madera-radiestesia.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
 import pausaCojin from "@/public/images/pausa-cojin-cortina.webp";
@@ -133,7 +134,7 @@ export const imagenes = {
   },
   tatiTrabajandoPendulo: {
     src: tatiTrabajandoPendulo,
-    alt: "Tati trabajando con el péndulo hebreo",
+    alt: "Tati trabajando con el péndulo",
     position: "50% 40%",
   },
   reikiManosLuz: {
@@ -146,10 +147,15 @@ export const imagenes = {
     alt: "Mujer con blusa de flores y las dos manos apoyadas sobre el corazón",
     position: "50% 50%",
   },
-  descansoLuz: {
-    src: descansoLuz,
-    alt: "Mujer recostada en casa con los ojos cerrados y el rostro hacia la luz cálida que entra por la cortina",
-    position: "62% 40%",
+  mujerSonriendoCampo: {
+    src: mujerSonriendoCampo,
+    alt: "Mujer madura sonriendo con los ojos cerrados entre hierbas altas doradas por el sol",
+    position: "40% 40%",
+  },
+  penduloMadera: {
+    src: penduloMadera,
+    alt: "Péndulo de madera tallada sobre una tabla de radiestesia",
+    position: "30% 50%",
   },
   chakrasPiedras: {
     src: chakrasPiedras,
