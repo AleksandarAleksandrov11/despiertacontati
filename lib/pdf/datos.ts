@@ -4,7 +4,6 @@ import { site } from "@/content/site";
 import { getProducto } from "@/content/tienda";
 import {
   calcularMatriz,
-  calcularPareja,
   edadCumplida,
   energiasDelAnio,
   fechaParam,
@@ -16,17 +15,15 @@ import {
   type Matriz,
 } from "@/lib/matriz";
 import { calcularCodigo } from "@/lib/codigo-personal";
-import { formatPrice } from "@/lib/tienda";
+import { formatPrice, productHref } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
 import type { DatosCodigo } from "./codigo-pdf";
 
-export type Persona = { fecha: Fecha; texto: string; nombre: string; centro: number };
+export type Persona = { fecha: Fecha; texto: string; nombre: string };
 
 type Comun = { matriz: Matriz; archivo: string };
 
-export type DatosPdf =
-  | (Comun & { tipo: "individual"; persona: Persona; anio: EnergiasAnio | null; precio: string | null; compraUrl: string; infoUrl: string })
-  | (Comun & { tipo: "pareja"; personas: [Persona, Persona] });
+export type DatosPdf = Comun & { tipo: "individual"; persona: Persona; precio: string | null; compraUrl: string; tiendaUrl: string; infoUrl: string };
 
 export type DatosCompleta = Comun & { tipo: "completa"; persona: Persona; anio: EnergiasAnio | null };
 
@@ -44,11 +41,11 @@ function hoyEnEspana() {
 }
 
 function persona(fecha: Fecha, nombre: string): Persona {
-  return { fecha, texto: fechaTexto(fecha), nombre, centro: calcularMatriz(fecha).puntos.e };
+  return { fecha, texto: fechaTexto(fecha), nombre };
 }
 
-function archivo(...fechas: Fecha[]) {
-  return `matriz-del-destino-${fechas.map((fecha) => fechaTexto(fecha).replace(/\//g, "-")).join("-y-")}.pdf`;
+function archivo(fecha: Fecha) {
+  return `matriz-del-destino-${fechaTexto(fecha).replace(/\//g, "-")}.pdf`;
 }
 
 export function datosDesdeParams(params: URLSearchParams, origin: string): DatosPdf | null {
@@ -58,32 +55,18 @@ export function datosDesdeParams(params: URLSearchParams, origin: string): Datos
     const fecha = parsearFecha(params.get("fecha"));
     if (!fecha) return null;
     const nombre = limpiarNombre(params.get("nombre"));
-    const producto = getProducto("matriz-del-destino");
+    const producto = getProducto("analisis-matriz-del-destino");
     const query = new URLSearchParams({ fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}) });
     const texto = fechaTexto(fecha);
-    const matriz = calcularMatriz(fecha);
     return {
       tipo,
       persona: persona(fecha, nombre),
-      matriz,
+      matriz: calcularMatriz(fecha),
       precio: producto?.precio ? formatPrice(producto.precio) : null,
       compraUrl: `${base}${rutasCalculadora.individual}?${query.toString()}#lectura-completa`,
+      tiendaUrl: producto ? `${base}${productHref(producto)}` : `${base}/tienda`,
       infoUrl: whatsappHref(infoIndividualMessage(texto, nombre)),
       archivo: archivo(fecha),
-      anio: energiasDelAnio(matriz.edades, edadCumplida(fecha, hoyEnEspana())),
-    };
-  }
-  if (tipo === "pareja") {
-    const fecha1 = parsearFecha(params.get("fecha1"));
-    const fecha2 = parsearFecha(params.get("fecha2"));
-    if (!fecha1 || !fecha2) return null;
-    const nombre1 = limpiarNombre(params.get("nombre1"));
-    const nombre2 = limpiarNombre(params.get("nombre2"));
-    return {
-      tipo,
-      personas: [persona(fecha1, nombre1), persona(fecha2, nombre2)],
-      matriz: calcularPareja(fecha1, fecha2),
-      archivo: archivo(fecha1, fecha2),
     };
   }
   return null;

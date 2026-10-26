@@ -10,6 +10,7 @@ type PageHeaderProps = {
   title: string;
   subtitle?: ReactNode;
   image?: ImageKey;
+  aside?: ReactNode;
   tone?: SectionTone;
   children?: ReactNode;
   blobs?: "a" | "b" | "c";
@@ -29,6 +30,7 @@ export function PageHeader({
   title,
   subtitle,
   image,
+  aside,
   tone = "crema",
   children,
   blobs = "a",
@@ -42,10 +44,10 @@ export function PageHeader({
       <div
         className={cn(
           "container-page relative grid items-end gap-12",
-          image && "lg:grid-cols-12 lg:gap-16",
+          (image || aside) && "lg:grid-cols-12 lg:gap-16",
         )}
       >
-        <div className={cn(image ? (small ? "lg:col-span-8" : "lg:col-span-7") : "max-w-4xl")}>
+        <div className={cn(image ? (small ? "lg:col-span-8" : "lg:col-span-7") : aside ? "lg:col-span-7" : "max-w-4xl")}>
           <FadeUp as="p" className="eyebrow mb-6">
             {eyebrow}
           </FadeUp>
@@ -82,6 +84,7 @@ export function PageHeader({
               />
             </div>
           ))}
+        {aside && <div className="flex justify-center lg:col-span-5">{aside}</div>}
       </div>
     </section>
   );

@@ -52,7 +52,6 @@ export const creditos = {
   instagram: "https://www.instagram.com/tarot.pragmatico",
   instagramLabel: "@tarot.pragmatico",
   original: "https://perfil.tarotpragmatico.com/",
-  libro: "Mapas Natales de Tarot. Viajes y rutas entre los septenarios del tarot",
   title: "Un método de Raúl Muñoz Jara.",
   text: "Esta calculadora sigue el método Tarot Pragmático de Raúl Muñoz Jara, autor de Mapas Natales de Tarot. Viajes y rutas entre los septenarios del tarot. El cálculo de tu arcano personal y de tu Código Personal es de su método.",
   logoAlt: "Tarot Pragmático",

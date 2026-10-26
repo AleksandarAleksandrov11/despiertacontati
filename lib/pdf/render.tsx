@@ -10,15 +10,12 @@ import { MatrizPdf } from "./matriz-pdf";
 export async function renderMatrizPdf(datos: DatosPdf) {
   registrarFuentes();
   const root = process.cwd();
-  const qr =
-    datos.tipo === "individual"
-      ? await QRCode.toDataURL(datos.infoUrl, {
-          margin: 1,
-          width: 320,
-          errorCorrectionLevel: "M",
-          color: { dark: "#3f2e3a", light: "#fbf7f2" },
-        })
-      : "";
+  const qr = await QRCode.toDataURL(datos.infoUrl, {
+    margin: 1,
+    width: 320,
+    errorCorrectionLevel: "M",
+    color: { dark: "#3f2e3a", light: "#fbf7f2" },
+  });
   return renderToBuffer(
     <MatrizPdf
       datos={datos}
@@ -51,7 +48,6 @@ export async function renderCodigoPdf(datos: DatosCodigo, claves: string[]) {
         foto: join(root, "assets/pdf/tati.jpg"),
         qr,
         cartas: join(root, "assets/tarot"),
-        raul: join(root, "assets/tarot/tarot-pragmatico.png"),
       }}
     />,
   );

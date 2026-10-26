@@ -1,5 +1,5 @@
 import type { StaticImageData } from "next/image";
-import mujerBrazosAbiertos from "@/public/images/mujer-brazos-abiertos-sol.webp";
+import mujerCampoTrigo from "@/public/images/mujer-campo-trigo-atardecer.webp";
 import relajacionSillon from "@/public/images/relajacion-sillon-ojos-cerrados.webp";
 import relajacionTaza from "@/public/images/relajacion-taza-ojos-cerrados.webp";
 import hogarLuminoso from "@/public/images/hogar-luminoso-salon.webp";
@@ -16,11 +16,11 @@ import tazaVapor from "@/public/images/taza-manos-vapor.webp";
 import meditacionAuriculares from "@/public/images/meditacion-auriculares.webp";
 import tatiRetrato from "@/public/images/tati-retrato.webp";
 import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
-import tatiTrabajandoPendulo from "@/public/images/tati-trabajando-pendulo.webp";
-import reikiManosLuz from "@/public/images/reiki-manos-luz.webp";
-import manosCorazon from "@/public/images/manos-sobre-el-corazon.webp";
-import mujerSonriendoCampo from "@/public/images/mujer-sonriendo-campo.webp";
-import penduloMadera from "@/public/images/pendulo-madera-radiestesia.webp";
+import sesionReiki from "@/public/images/sesion-reiki-esterilla.webp";
+import reikiManosPecho from "@/public/images/reiki-manos-pecho.webp";
+import manoHazDeLuz from "@/public/images/mano-haz-de-luz.webp";
+import mujerLuzDorada from "@/public/images/mujer-luz-dorada-manos.webp";
+import linoLuzMesa from "@/public/images/lino-luz-mesa-madera.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
 import pausaCojin from "@/public/images/pausa-cojin-cortina.webp";
@@ -53,10 +53,10 @@ export type SiteImage = {
 };
 
 export const imagenes = {
-  mujerBrazosAbiertos: {
-    src: mujerBrazosAbiertos,
-    alt: "Mujer sonriendo con los brazos abiertos en un campo bañado por la luz cálida del atardecer",
-    position: "50% 40%",
+  mujerCampoTrigo: {
+    src: mujerCampoTrigo,
+    alt: "Mujer sonriente con vestido blanco y el pelo al viento en un campo de trigo al atardecer",
+    position: "62% 40%",
   },
   relajacionSillon: {
     src: relajacionSillon,
@@ -132,30 +132,30 @@ export const imagenes = {
     alt: "Tati sonriendo al aire libre",
     position: "45% 40%",
   },
-  tatiTrabajandoPendulo: {
-    src: tatiTrabajandoPendulo,
-    alt: "Tati trabajando con el péndulo",
-    position: "50% 40%",
+  sesionReiki: {
+    src: sesionReiki,
+    alt: "Terapeuta arrodillada con una mano sobre la frente y otra sobre el vientre de una mujer tumbada en una esterilla durante una sesión de Reiki",
+    position: "40% 50%",
   },
-  reikiManosLuz: {
-    src: reikiManosLuz,
-    alt: "Manos que flotan sobre el cuello y el rostro de una persona tumbada, bañadas por una luz cálida de sol",
-    position: "50% 35%",
+  reikiManosPecho: {
+    src: reikiManosPecho,
+    alt: "Manos apoyadas con suavidad sobre el pecho de una mujer tumbada con los ojos cerrados, en tonos cálidos de tierra y crema",
+    position: "40% 45%",
   },
-  manosCorazon: {
-    src: manosCorazon,
-    alt: "Mujer con blusa de flores y las dos manos apoyadas sobre el corazón",
+  manoHazDeLuz: {
+    src: manoHazDeLuz,
+    alt: "Mano abierta que recibe un haz de luz cálida sobre un fondo claro",
+    position: "40% 50%",
+  },
+  mujerLuzDorada: {
+    src: mujerLuzDorada,
+    alt: "Mujer sonriendo con los ojos cerrados y las manos juntas ante el pecho, envuelta en una luz dorada",
+    position: "35% 50%",
+  },
+  linoLuzMesa: {
+    src: linoLuzMesa,
+    alt: "Paño de lino claro sobre una mesa de madera, atravesado por rayas de luz cálida de la ventana",
     position: "50% 50%",
-  },
-  mujerSonriendoCampo: {
-    src: mujerSonriendoCampo,
-    alt: "Mujer madura sonriendo con los ojos cerrados entre hierbas altas doradas por el sol",
-    position: "40% 40%",
-  },
-  penduloMadera: {
-    src: penduloMadera,
-    alt: "Péndulo de madera tallada sobre una tabla de radiestesia",
-    position: "30% 50%",
   },
   chakrasPiedras: {
     src: chakrasPiedras,

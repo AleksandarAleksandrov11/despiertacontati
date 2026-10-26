@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { track } from "@vercel/analytics";
 import { arcano } from "@/content/arcanos";
 import { calculadoraForm, calculadoraIndividual, detalleIndividual, infoIndividualMessage } from "@/content/calculadora";
@@ -11,18 +11,23 @@ import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/tracked";
-import { calcularMatriz, edadCumplida, energiasDelAnio, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
+import { calcularMatriz, fechaParam, fechaTexto, fechaValida, limpiarNombre, parsearFecha } from "@/lib/matriz";
+import { productHref } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
 import { FechaCampos, fechaVacia, type FechaForm } from "./fecha-campos";
-import { EnergiasEdades, Linaje, MapaChakras } from "./energias";
 import { CalculadoraHero, ResultadosSection } from "./layout";
 import { BloqueadaCard, LecturaCard, PropositoCard, TrioCard } from "./lectura";
+import { Linaje } from "./linaje";
 import { MatrizEscena } from "./matriz-escena";
-import { PdfButton, PdfCard } from "./pdf-card";
+import { PdfButton } from "./pdf-card";
 
-const sinSuscripcion = () => () => {};
-const hoyCliente = () => new Date().toDateString();
-const hoyServidor = () => null;
+function Descubrelo({ href, label }: { href: string; label: string }) {
+  return (
+    <div className="mt-8">
+      <Button href={href}>{label}</Button>
+    </div>
+  );
+}
 
 function toForm(fecha: { dia: number; mes: number; anio: number } | null, nombre: string): FechaForm {
   return fecha ? { dia: String(fecha.dia), mes: String(fecha.mes), anio: String(fecha.anio), nombre } : { ...fechaVacia, nombre };
@@ -36,7 +41,6 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
   const lenis = useLenis();
   const fecha = parsearFecha(params.get("fecha"));
   const nombre = limpiarNombre(params.get("nombre"));
-  const hoy = useSyncExternalStore(sinSuscripcion, hoyCliente, hoyServidor);
   const [form, setForm] = useState<FechaForm>(() => toForm(fecha, nombre));
   const [invalid, setInvalid] = useState(false);
   const [run, setRun] = useState(0);
@@ -83,7 +87,6 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
 
   const matriz = fecha ? calcularMatriz(fecha) : null;
   const texto = fecha ? fechaTexto(fecha) : "";
-  const anio = matriz && fecha && hoy ? energiasDelAnio(matriz.edades, edadCumplida(fecha, new Date(hoy))) : null;
   const pdfHref = fecha
     ? `/api/matriz/pdf?${new URLSearchParams({ tipo: "individual", fecha: fechaParam(fecha), ...(nombre ? { nombre } : {}) }).toString()}`
     : "";
@@ -134,7 +137,6 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                 instant={instant}
                 destacados={["e", "a", "b", "d", "dinero"]}
                 edades={matriz.edades}
-                activas={anio?.posiciones ?? []}
                 propositos={matriz.propositos}
                 actions={<PdfButton href={pdfHref} tipo="individual" label={copy.pdf.short} tone="dark" />}
               />
@@ -189,7 +191,6 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                   partes={copy.propositos.personal.partes}
                   valores={[matriz.propositos.cielo, matriz.propositos.tierra]}
                   resultado={matriz.propositos.personal}
-                  text={copy.propositos.locked}
                 />
               </li>
               <li>
@@ -199,7 +200,6 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                   partes={copy.propositos.social.partes}
                   valores={[matriz.propositos.masculino, matriz.propositos.femenino]}
                   resultado={matriz.propositos.social}
-                  text={copy.propositos.locked}
                 />
               </li>
               <li>
@@ -219,22 +219,15 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                   partes={copy.propositos.planetario.partes}
                   valores={[matriz.propositos.social, matriz.propositos.espiritual]}
                   resultado={matriz.propositos.planetario}
-                  text={copy.propositos.locked}
                 />
               </li>
             </ul>
-          </ResultadosSection>
-
-          <ResultadosSection id="energias-por-edades" eyebrow={copy.edades.eyebrow} title={copy.edades.title} text={copy.edades.text} tone="salvia">
-            <EnergiasEdades tramos={matriz.edades} anio={anio} />
-          </ResultadosSection>
-
-          <ResultadosSection id="mapa-de-chakras" eyebrow={copy.chakras.eyebrow} title={copy.chakras.title} text={copy.chakras.text} tone="rosa">
-            <MapaChakras filas={matriz.chakras} total={matriz.totalChakras} />
+            <Descubrelo href={productHref(producto)} label={copy.descubrelo} />
           </ResultadosSection>
 
           <ResultadosSection id="linaje" eyebrow={copy.linaje.eyebrow} title={copy.linaje.title} text={copy.linaje.text} tone="lavanda">
             <Linaje puntos={matriz.puntos} masculino={matriz.propositos.masculino} femenino={matriz.propositos.femenino} />
+            <Descubrelo href={productHref(producto)} label={copy.descubrelo} />
           </ResultadosSection>
 
           <ResultadosSection id="lo-que-guarda" eyebrow={copy.bloqueadas.eyebrow} title={copy.bloqueadas.title} text={copy.bloqueadas.text} tone="salvia">
@@ -276,10 +269,8 @@ export function CalculadoraIndividual({ producto, heading }: { producto: Product
                     </li>
                   ))}
                 </ol>
+                <p className="mt-4 font-serif text-[1.35rem] italic text-ciruela">{copy.completa.mas}</p>
                 <p className="mt-6 text-ink-soft">{copy.completa.formato}</p>
-                <div className="mt-10">
-                  <PdfCard copy={copy.pdf} href={pdfHref} tipo="individual" />
-                </div>
               </div>
               <div className="lg:col-span-5">
                 <div className="lg:sticky lg:top-28">

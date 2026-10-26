@@ -318,7 +318,7 @@ export const condicionesCompra: LegalDocument = {
       id: "productos",
       title: "Qué puedes comprar",
       blocks: [
-        "En la tienda hay meditaciones guiadas en MP3, lecturas en diferido de tarot y de autoconocimiento, que se entregan en vídeo y PDF, y sesiones de tarot en directo, online. Cada ficha explica qué incluye el producto, su formato y cómo se entrega.",
+        "En la tienda hay meditaciones guiadas en MP3, lecturas en diferido de tarot y de autoconocimiento, que se entregan en vídeo y PDF, sesiones en directo online y terapias energéticas, online o presenciales según la terapia, y limpieza energética de espacios a distancia. Cada ficha explica qué incluye el producto, su formato y cómo se entrega.",
         "Los precios publicados son finales e incluyen los impuestos aplicables, si los hay. No hay gastos de envío. Los productos marcados como próximamente todavía no se pueden comprar.",
         { list: catalogo },
       ],
@@ -352,7 +352,7 @@ export const condicionesCompra: LegalDocument = {
           list: [
             "Meditaciones: archivos MP3 por enlace privado de descarga, tras confirmar el pago.",
             "Lecturas en diferido: vídeo y PDF por WhatsApp, tras confirmar el pago.",
-            "Sesiones en directo: online, en la fecha y la hora que acordemos por WhatsApp.",
+            "Sesiones en directo y terapias: online o, en el Reiki y el péndulo hebreo, también presenciales, en la fecha, la hora y el lugar que acordemos por WhatsApp.",
           ],
         },
         "Los enlaces de descarga son privados y solo los recibe la persona que hace el pedido, junto con las instrucciones para descargar y guardar los archivos.",

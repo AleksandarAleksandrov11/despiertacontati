@@ -2,7 +2,7 @@ import { join } from "node:path";
 import { Document, Image, Link, Page, Text, View } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
 import { calculadoraPdf } from "@/content/calculadora";
-import { codigoPersonal, creditos, mazos, nombreCarta, type Mazo } from "@/content/codigo-personal";
+import { codigoPersonal, mazos, nombreCarta, type Mazo } from "@/content/codigo-personal";
 import { site } from "@/content/site";
 import { carta, type CodigoPersonal } from "@/lib/codigo-personal";
 import { Boton, c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
@@ -18,7 +18,7 @@ export type DatosCodigo = {
   archivo: string;
 };
 
-type RecursosCodigo = Recursos & { cartas: string; raul: string };
+type RecursosCodigo = Recursos & { cartas: string };
 
 function CartaPdf({ recursos, mazo, id, width, label, destacada = false }: { recursos: RecursosCodigo; mazo: Mazo; id: number | string; width: number; label?: string; destacada?: boolean }) {
   const alto = mazo === "rider" ? (width * 638) / 360 : (width * mazos[1]!.alto) / 360;
@@ -53,7 +53,7 @@ function Portada({ datos, recursos }: { datos: DatosCodigo; recursos: RecursosCo
       <Text style={[s.eyebrow, { marginTop: datos.nombre ? 6 : 16 }]}>{calculadoraPdf.nacimiento}</Text>
       <Text style={{ fontFamily: "Manrope", fontWeight: 500, fontSize: 12, letterSpacing: 1.2, marginTop: 5 }}>{datos.texto}</Text>
       <View style={{ position: "absolute", bottom: 34, left: 42, right: 42, alignItems: "center" }}>
-        <Text style={[s.small, { textAlign: "center", fontSize: 7.4 }]}>{`${creditos.metodo} · ${creditos.autor}`}</Text>
+        <Text style={[s.eyebrow, { letterSpacing: 2.2 }]}>{site.brandLine}</Text>
         <Link src={site.url} style={{ marginTop: 6, fontSize: 8, color: c.rosaDeep, textDecoration: "none" }}>
           {site.url.replace("https://www.", "")}
         </Link>
@@ -176,16 +176,6 @@ function PaginaLectura({ datos, recursos, claves }: { datos: DatosCodigo; recurs
           <Boton src={datos.infoUrl} claro={false}>
             {calculadoraPdf.ctaInfo}
           </Boton>
-        </View>
-      </View>
-      <View style={{ marginTop: 14, flexDirection: "row", alignItems: "center", backgroundColor: c.crema, borderRadius: 12, padding: 9 }}>
-        <Image src={recursos.raul} style={{ width: 44, height: 44 }} />
-        <View style={{ flex: 1, marginLeft: 10 }}>
-          <Text style={{ fontSize: 7.6, fontWeight: 600, color: c.ciruela }}>{creditos.metodo}</Text>
-          <Text style={{ marginTop: 2, fontSize: 7, lineHeight: 1.45, color: c.inkSoft }}>{`${creditos.autor} · ${creditos.libro}`}</Text>
-          <Link src={creditos.web} style={{ marginTop: 3, fontSize: 7.2, color: c.rosaDeep, textDecoration: "none" }}>
-            {`${creditos.webLabel} · ${creditos.instagramLabel}`}
-          </Link>
         </View>
       </View>
       <Pie oscuro />

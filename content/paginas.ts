@@ -6,8 +6,8 @@ export const inicio = {
     eyebrow: "Terapeuta holística",
     title: "Despierta",
     subtitle: site.tagline,
-    support: "Reiki, meditación, tarot y autoconocimiento online.",
-    image: "mujerBrazosAbiertos" as ImageKey,
+    support: "Reiki, meditación, tarot y Matriz del Destino online.",
+    image: "mujerCampoTrigo" as ImageKey,
   },
   teSuena: {
     eyebrow: "¿Te suena?",
@@ -45,7 +45,7 @@ export const inicio = {
   quienSoy: {
     eyebrow: "Quién soy",
     title: "Soy Tati.",
-    quote: "Despertar es darte cuenta de que tienes el poder de tu vida.",
+    quote: "Despertar es recordar quién eres, recuperar tu poder de elegir y crear tu nueva vida.",
     text: "Terapeuta holística, con más de 20 años acompañando y enseñando Reiki desde 2006. Práctica, cercana y al grano.",
     image: "tatiSonrisa" as ImageKey,
     link: "Conóceme",
@@ -87,9 +87,9 @@ export const quienSoy = {
   subtitle: "Terapeuta holística. Práctica y al grano.",
   intro:
     "Acompaño a mujeres que viven con estrés o ansiedad, o que sienten que han perdido el rumbo. Lo hago con herramientas que a mí me han funcionado.",
-  idea: "Para mí, despertar es darte cuenta de que tienes el poder de tu vida. Sea cual sea la herramienta, el objetivo es ese: que vuelvas a elegir tú.",
+  idea: "Para mí, despertar es recordar quién eres, recuperar tu poder de elegir y crear tu nueva vida. Sea cual sea la herramienta, el objetivo es ese: que vuelvas a elegir tú.",
   image: "tatiRetrato" as ImageKey,
-  manifiesto: ["Sin humo.", "Sin ir de blanco.", "Herramientas que funcionan."],
+  manifiesto: ["Sin humo.", "Con los pies en la tierra.", "Herramientas que funcionan."],
   manifiestoLabel: "Mi manera de trabajar",
   recorrido: {
     eyebrow: "Mi recorrido",
@@ -136,7 +136,6 @@ export const tablonPage = {
     title: "Ahora mismo no hay nada colgado.",
     text: "Escríbeme y te aviso en cuanto abra un grupo nuevo.",
   },
-  image: "tatiTrabajandoPendulo" as ImageKey,
   instagram: {
     eyebrow: "En Instagram",
     title: "Lo último.",

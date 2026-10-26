@@ -47,10 +47,10 @@ export function GET() {
 Frase de marca: ${site.tagline}
 
 ## Quién es Tati
-- Hace más de 20 años abrió Antacarana, su primer centro de terapias naturales.
+- Hace más de 20 años abrió Anthakarana, su primer centro de terapias naturales.
 - Enseña Reiki desde ${site.facts.reikiSince}: formaciones de Reiki y de crecimiento personal.
 - Trabaja con Reiki, péndulo hebreo, chakras, sanación akáshica, limpieza energética, meditación, tarot, Matriz del Destino, Código Personal y Carta Personal.
-- Estilo práctico y directo. Para ella, despertar es darte cuenta de que tienes el poder de tu vida.
+- Estilo práctico y directo. Para ella, despertar es recordar quién eres, recuperar tu poder de elegir y crear tu nueva vida.
 
 ## Método Despierta
 ${metodo.steps.map((step) => `${step.number}. ${step.step} (${step.tool}): ${step.text}`).join("\n")}
@@ -67,10 +67,9 @@ ${tienda()}
 
 ## Calculadoras gratuitas
 ${calculadoraHub.subtitle}
-- [Matriz del Destino](${absoluteUrl(rutasCalculadora.individual)}): con la fecha de nacimiento muestra la matriz completa, las energías por edades, la energía personal, el centro, el talento, el mapa de chakras, el linaje y los cuatro propósitos, con un PDF gratuito.
-- [Compatibilidad de pareja](${absoluteUrl(rutasCalculadora.pareja)}): con las dos fechas de nacimiento muestra la matriz de la pareja, la energía de la relación y sus propósitos, con un PDF gratuito.
+- [Matriz del Destino](${absoluteUrl(rutasCalculadora.individual)}): con la fecha de nacimiento muestra la matriz completa, la energía personal, el centro, el talento, el linaje y los cuatro propósitos, con un PDF gratuito.
 - [Arcano Personal y Código Personal](${absoluteUrl(rutasCalculadora.codigo)}): tarot numerológico. Con la fecha de nacimiento muestra el arcano personal (la carta personal) y las cinco cartas del Código Personal, con el método Tarot Pragmático de Raúl Muñoz Jara y un PDF gratuito.
-La lectura completa, interpretada por Tati, se pide por WhatsApp desde la propia calculadora.
+El análisis completo de la matriz, en una sesión en directo de 50 minutos con Tati, se pide por WhatsApp desde la propia calculadora.
 
 ## Guía gratuita
 [${guia.title}](${absoluteUrl(guia.slug)}): ${guia.subtitle} Incluye: ${guia.puntos.map((punto) => punto.title).join(", ")}.

@@ -21,6 +21,7 @@ export function PriceTag({ producto, size = "md", className }: { producto: Produ
         )}
       </p>
       {producto.lanzamiento && <p className="mt-1.5 text-sm text-malva-deep">{copy.launch}</p>}
+      {producto.directo && size === "md" && <p className="mt-1.5 text-sm text-malva-deep">{copy.directo(formatPrice(producto.directo[0]!.precio))}</p>}
     </div>
   );
 }

@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/sobre-mi", destination: "/quien-soy", statusCode: 301 },
+      { source: "/calculadora/compatibilidad-de-pareja", destination: "/calculadora/matriz-del-destino", permanent: false },
       ...(hayTestimonios ? [] : [{ source: "/testimonios", destination: "/quien-soy", permanent: false }]),
     ];
   },

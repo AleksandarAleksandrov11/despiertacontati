@@ -28,9 +28,6 @@ export function CalculadoraPromo({ tone = "dark", id = "calculadora" }: { tone?:
             <CalculadoraMini idPrefix={`${id}-fecha`} />
           </div>
           <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2">
-            <Button href={rutasCalculadora.pareja} variant="link" tone={dark ? "dark" : "light"}>
-              {copy.pareja}
-            </Button>
             <Button href={rutasCalculadora.codigo} variant="link" tone={dark ? "dark" : "light"}>
               {copy.codigo}
             </Button>

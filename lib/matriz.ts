@@ -50,8 +50,6 @@ export type Propositos = {
   planetario: number;
 };
 
-export type FilaChakra = { fisico: number; energia: number; emocion: number };
-
 export type Etapa = { etiqueta: string; valor: number; principal: boolean };
 
 export type Tramo = { desde: number; etapas: Etapa[] };
@@ -63,8 +61,6 @@ export type EnergiasAnio = { edad: number; opuesta: number; propia: number; deOp
 export type Matriz = {
   puntos: Puntos;
   propositos: Propositos;
-  chakras: FilaChakra[];
-  totalChakras: FilaChakra;
   edades: Tramo[];
 };
 
@@ -115,7 +111,7 @@ function edades({ a, b, c, d, f, g, h, i }: Base): Tramo[] {
   return orden.slice(0, 8).map((inicio, index) => tramo(index * 10, inicio, orden[index + 1]!));
 }
 
-function completar(base: Base, pareja = false): Matriz {
+function completar(base: Base): Matriz {
   const { a, b, c, d, e, f, g, h, i } = base;
   const k = reducir(f + g + h + i);
   const a1 = reducir(a + e);
@@ -166,23 +162,10 @@ function completar(base: Base, pareja = false): Matriz {
   const femenino = reducir(g + i);
   const social = reducir(masculino + femenino);
   const espiritual = reducir(personal + social);
-  const fila = (fisico: number, energia: number): FilaChakra => ({ fisico, energia, emocion: reducir(fisico + energia) });
-  const chakras = [
-    fila(a, b),
-    fila(a2, b2),
-    fila(a1, b1),
-    fila(puntos.a3, puntos.b3),
-    fila(e, e),
-    fila(c1, d1),
-    fila(c, d),
-  ];
-  const suma = (key: keyof FilaChakra) => reducir(chakras.reduce((total, item) => total + item[key], 0));
   return {
     puntos,
     propositos: { cielo, tierra, personal, masculino, femenino, social, espiritual, planetario: reducir(social + espiritual) },
-    chakras,
-    totalChakras: { fisico: suma("fisico"), energia: suma("energia"), emocion: suma("emocion") },
-    edades: pareja ? [] : edades(base),
+    edades: edades(base),
   };
 }
 
@@ -197,26 +180,6 @@ function base({ dia, mes, anio }: Fecha): Base {
 
 export function calcularMatriz(fecha: Fecha): Matriz {
   return completar(base(fecha));
-}
-
-export function calcularPareja(primera: Fecha, segunda: Fecha): Matriz {
-  const uno = base(primera);
-  const dos = base(segunda);
-  const suma = (key: keyof Base) => reducir(uno[key] + dos[key]);
-  return completar(
-    {
-      a: suma("a"),
-      b: suma("b"),
-      c: suma("c"),
-      d: suma("d"),
-      e: suma("e"),
-      f: suma("f"),
-      g: suma("g"),
-      h: suma("h"),
-      i: suma("i"),
-    },
-    true,
-  );
 }
 
 export function edadCumplida({ dia, mes, anio }: Fecha, hoy = new Date()) {

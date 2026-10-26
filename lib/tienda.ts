@@ -12,11 +12,17 @@ export function productHref(producto: Producto) {
   return `/tienda/${producto.slug}`;
 }
 
+export type Directo = NonNullable<Producto["directo"]>[number];
+
 export function isDigital(producto: Producto) {
   return producto.tipo === "meditacion" || producto.tipo === "lectura";
 }
 
-export function buyMessage(producto: Producto, detalle?: string) {
+export function buyMessage(producto: Producto, detalle?: string, directo?: Directo) {
+  if (directo) {
+    const lead = `Hola Tati, quiero ${producto.nombre} en directo, ${directo.duracion} (${formatPrice(directo.precio)}).${detalle ? ` ${detalle}` : ""}`;
+    return `${lead} He leído y acepto las condiciones de compra. ¿Qué disponibilidad tienes?`;
+  }
   const price = producto.precio === null ? "" : ` (${formatPrice(producto.precio)})`;
   const lead = `Hola Tati, quiero comprar ${producto.nombre}${price}.${detalle ? ` ${detalle}` : ""}`;
   if (isDigital(producto)) {

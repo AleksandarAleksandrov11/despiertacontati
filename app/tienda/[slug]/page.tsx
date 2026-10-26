@@ -171,6 +171,16 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                 <div className="rounded-[1.25rem] bg-lavanda/70 p-6">
                   <dt className="eyebrow">{copy.format}</dt>
                   <dd className="mt-3 font-serif text-[1.4rem] leading-snug">{producto.formato}</dd>
+                  {producto.directo && (
+                    <dd className="mt-4 border-t border-ciruela/10 pt-4 text-ink">
+                      <span className="eyebrow block">{copy.directo}</span>
+                      {producto.directo.map((item) => (
+                        <span key={item.duracion} className="nums mt-2 block">
+                          {copy.directoItem(item.duracion, formatPrice(item.precio))}
+                        </span>
+                      ))}
+                    </dd>
+                  )}
                 </div>
                 <div className="rounded-[1.25rem] bg-salvia p-6">
                   <dt className="eyebrow">{copy.delivery}</dt>

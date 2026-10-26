@@ -11,7 +11,7 @@ const disclaimerFaq: Faq = {
 
 const dondeFaq: Faq = {
   question: "¿Dónde son las sesiones?",
-  answer: "Online, desde donde estés. Al reservar te paso todos los detalles.",
+  answer: "Online, desde donde estés. El Reiki y el péndulo hebreo también pueden ser presenciales. Al reservar te paso todos los detalles.",
 };
 
 const reikiOnlineFaq: Faq = {
@@ -68,7 +68,7 @@ export const faqs = {
   reiki: [
     {
       question: "¿Qué tengo que llevar?",
-      answer: "Ropa cómoda. Te tumbas vestida y solo tienes que dejarte llevar.",
+      answer: "Ropa cómoda y ganas de parar un rato. No tienes que hacer nada más.",
     },
     {
       question: "¿Qué se siente durante una sesión?",
@@ -78,7 +78,7 @@ export const faqs = {
     {
       question: "¿Qué es la sanación akáshica?",
       answer:
-        "Un trabajo de sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar. No es una lectura de registros.",
+        "Un trabajo de sanación energética y acompañamiento para tomar conciencia de patrones personales, soltar y armonizar.",
     },
     reikiOnlineFaq,
     {
@@ -94,13 +94,12 @@ export const faqs = {
     },
     {
       question: "¿Cuánto cuesta?",
-      answer: "30 € por espacio. Cuando termino, te envío el informe por WhatsApp.",
+      answer: "27 € por espacio. Cuando termino, te envío el informe por WhatsApp.",
     },
     {
       question: "¿Sirve también para un espacio de trabajo?",
       answer: "Sí. Trabajo en casas y en espacios de trabajo: oficinas, consultas o locales.",
     },
-    disclaimerFaq,
   ],
   meditacion: [
     {

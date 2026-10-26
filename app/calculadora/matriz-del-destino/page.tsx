@@ -5,8 +5,8 @@ import { calculadoraFaqs, calculadoraHub, calculadoraIndividual, rutasCalculador
 import { getProducto } from "@/content/tienda";
 import { CalculadoraIndividual } from "@/components/sections/calculadora/calculadora-individual";
 import { HeroFallback, HeroHeading } from "@/components/sections/calculadora/hero-heading";
-import { Octograma } from "@/components/sections/calculadora/octograma";
 import { FaqSection } from "@/components/sections/faq-section";
+import { BrandSymbol } from "@/components/ui/brand-symbol";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Section, SectionHeading } from "@/components/ui/section";
@@ -23,10 +23,10 @@ export const metadata: Metadata = pageMetadata({
 
 export default function MatrizIndividualPage() {
   const copy = calculadoraIndividual;
-  const producto = getProducto("matriz-del-destino");
+  const producto = getProducto("analisis-matriz-del-destino");
   if (!producto) notFound();
   const heading = <HeroHeading eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />;
-  const pareja = calculadoraHub.opciones[1]!;
+  const codigo = calculadoraHub.opciones[1]!;
 
   return (
     <>
@@ -51,14 +51,14 @@ export default function MatrizIndividualPage() {
             ))}
           </div>
           <div className="lg:col-span-5">
-            <div className="rounded-[1.5rem] bg-malva-deep p-8 text-crema sm:p-10">
-              <Octograma pareja className="w-40 text-crema" />
-              <p className="eyebrow mt-6 text-crema">{pareja.tag}</p>
-              <p className="mt-3 font-serif text-[2rem] leading-tight">{pareja.title}</p>
-              <p className="mt-3 text-crema">{pareja.text}</p>
+            <div className="rounded-[1.5rem] bg-rosa-deep p-8 text-crema sm:p-10">
+              <BrandSymbol size={120} eager={false} className="h-auto w-24 animate-[spin_60s_linear_infinite] motion-reduce:animate-none" />
+              <p className="eyebrow mt-6 text-crema">{codigo.tag}</p>
+              <p className="mt-3 font-serif text-[2rem] leading-tight">{codigo.title}</p>
+              <p className="mt-3 text-crema">{codigo.text}</p>
               <div className="mt-7">
-                <Button href={rutasCalculadora.pareja} tone="dark">
-                  {pareja.cta}
+                <Button href={rutasCalculadora.codigo} tone="dark">
+                  {codigo.cta}
                 </Button>
               </div>
             </div>

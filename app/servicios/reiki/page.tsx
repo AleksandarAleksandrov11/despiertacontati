@@ -17,7 +17,7 @@ import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Reiki y terapias energéticas online: Reiki con péndulo hebreo, péndulo hebreo, análisis de chakras y sanación akáshica con Tati, profesora de Reiki desde 2006.";
+  "Reiki y terapias energéticas online y presenciales: Reiki con péndulo hebreo, péndulo hebreo, análisis de chakras y sanación akáshica con Tati, profesora de Reiki desde 2006.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Reiki y terapias energéticas online | Despierta con Tati",
@@ -76,7 +76,8 @@ export default function ReikiPage() {
                 </li>
               ))}
             </ol>
-            <p className="mt-6 text-ink-soft">{page.notaras.online}</p>
+            <p className="mt-6 font-medium text-ciruela">{page.notaras.modalidad}</p>
+            <p className="mt-2 text-ink-soft">{page.notaras.online}</p>
           </div>
         </div>
       </Section>

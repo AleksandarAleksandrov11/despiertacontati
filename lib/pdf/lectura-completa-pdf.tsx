@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 import type { EnergiasAnio } from "@/lib/matriz";
 import { c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
 import type { DatosCompleta } from "./datos";
-import { Arcano, Numero, PaginaMatriz, Portada, Propositos, TablaChakras, type FilaProposito } from "./matriz-pdf";
+import { Arcano, Numero, PaginaMatriz, Portada, Propositos, type FilaProposito } from "./matriz-pdf";
 
 const copy = lecturaCompleta;
 
@@ -309,11 +309,9 @@ function PaginaAnio({ anio }: { anio: EnergiasAnio }) {
 }
 
 function PaginaEtapas({ datos }: { datos: DatosCompleta }) {
-  const base = calculadoraIndividual.chakras;
   const edades = datos.matriz.edades;
   const actual = datos.anio ? Math.floor(datos.anio.edad / 10) : -1;
   return (
-    <>
     <Page size="A5" style={s.page}>
       <Fondo tono="salvia" />
       <Encabezado eyebrow={copy.anio.eyebrow} title={copy.anio.etapasTitle} text={copy.anio.etapasText} />
@@ -340,13 +338,6 @@ function PaginaEtapas({ datos }: { datos: DatosCompleta }) {
       </View>
       <Pie />
     </Page>
-    <Page size="A5" style={s.page}>
-      <Fondo tono="rosa" />
-      <Encabezado eyebrow={base.eyebrow} title={base.title} text={base.text} />
-      <TablaChakras matriz={datos.matriz} />
-      <Pie />
-    </Page>
-    </>
   );
 }
 

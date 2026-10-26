@@ -8,6 +8,6 @@ export default function Image() {
   return renderOg({
     eyebrow: "Calculadora gratuita",
     title: "Calcula tu Matriz del Destino",
-    subtitle: "Tu energía personal, tus energías por edades, tus chakras y tus propósitos, con tu PDF gratuito.",
+    subtitle: "Tu energía personal, tu talento, tu centro y tus propósitos, con tu PDF gratuito.",
   });
 }

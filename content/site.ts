@@ -66,7 +66,7 @@ export const site = {
     general: "Hola, Tati. Te escribo desde la web y me gustaría información.",
   },
   footer: {
-    blurb: "Reiki, meditación, tarot y autoconocimiento.",
+    blurb: "Reiki, meditación, tarot y Matriz del Destino.",
     guide: {
       title: "Tu primera pausa",
       text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
@@ -108,8 +108,7 @@ export const serviceNav = [
 ];
 
 export const calculadorasNav = [
-  { label: "Matriz del Destino", href: "/calculadora/matriz-del-destino", description: "Tu matriz y tus energías por edades" },
-  { label: "Compatibilidad de pareja", href: "/calculadora/compatibilidad-de-pareja", description: "La matriz de vuestra relación" },
+  { label: "Matriz del Destino", href: "/calculadora/matriz-del-destino", description: "Tu matriz" },
   { label: "Arcano y Código Personal", href: "/calculadora/codigo-personal", description: "Tu arcano personal y tu Código Personal" },
 ];
 

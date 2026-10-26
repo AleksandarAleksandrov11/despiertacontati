@@ -83,7 +83,7 @@ export function PropositoCard({
   partes: string[];
   valores: number[];
   resultado: number;
-  text: string;
+  text?: string;
 }) {
   return (
     <article className="flex h-full flex-col rounded-[1.25rem] bg-crema/90 p-7 sm:p-8">
@@ -102,7 +102,7 @@ export function PropositoCard({
       <div className="mt-6 border-t border-ciruela/10 pt-6">
         <ArcanoTitle numero={resultado} />
       </div>
-      <p className="mt-5 flex-1 text-ink-soft">{text}</p>
+      {text && <p className="mt-5 flex-1 text-ink-soft">{text}</p>}
     </article>
   );
 }

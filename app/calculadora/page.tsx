@@ -16,7 +16,7 @@ import { formatPrice, productHref } from "@/lib/tienda";
 import { cn } from "@/lib/utils";
 
 const description =
-  "Calculadoras gratuitas: tu Matriz del Destino con tus energías por edades, la compatibilidad de pareja y tu arcano personal y Código Personal de tarot numerológico, a partir de la fecha de nacimiento y con tu lectura en PDF.";
+  "Calculadoras gratuitas: tu Matriz del Destino y tu arcano personal y Código Personal de tarot numerológico, a partir de la fecha de nacimiento y con tu lectura en PDF.";
 
 export const metadata: Metadata = pageMetadata({
   title: "Calculadoras gratis: Matriz del Destino y Código Personal | Despierta con Tati",
@@ -26,11 +26,10 @@ export const metadata: Metadata = pageMetadata({
 
 const cardTone = {
   individual: "bg-ciruela text-crema hover:shadow-[0_40px_80px_-40px_rgba(63,46,58,0.8)]",
-  pareja: "bg-malva-deep text-crema hover:shadow-[0_40px_80px_-40px_rgba(142,95,128,0.8)]",
   codigo: "bg-rosa-deep text-crema hover:shadow-[0_40px_80px_-40px_rgba(156,95,108,0.8)]",
 };
 
-const rutas = { individual: rutasCalculadora.individual, pareja: rutasCalculadora.pareja, codigo: rutasCalculadora.codigo };
+const rutas = { individual: rutasCalculadora.individual, codigo: rutasCalculadora.codigo };
 
 function Abanico() {
   return (
@@ -53,7 +52,7 @@ function Abanico() {
 
 export default function CalculadoraPage() {
   const page = calculadoraHub;
-  const lectura = getProducto("matriz-del-destino");
+  const lectura = getProducto("analisis-matriz-del-destino");
 
   return (
     <>
@@ -72,10 +71,9 @@ export default function CalculadoraPage() {
           </div>
 
           <h2 className="eyebrow mb-6 mt-14 sm:mt-16">{page.choose}</h2>
-          <ul className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid gap-5 md:grid-cols-2">
             {page.opciones.map((opcion) => {
               const id = opcion.id as keyof typeof rutas;
-              const pareja = id === "pareja";
               return (
                 <li key={opcion.id}>
                   <Link
@@ -91,13 +89,7 @@ export default function CalculadoraPage() {
                       {id === "codigo" ? (
                         <Abanico />
                       ) : (
-                        <Octograma
-                          pareja={pareja}
-                          className={cn(
-                            "text-crema transition-transform duration-[1.4s] ease-[var(--ease-breath)] group-hover:rotate-[22deg]",
-                            pareja ? "w-36 sm:w-44" : "w-28 sm:w-32",
-                          )}
-                        />
+                        <Octograma className="w-28 text-crema transition-transform duration-[1.4s] ease-[var(--ease-breath)] group-hover:rotate-[22deg] sm:w-32" />
                       )}
                     </div>
                     <p className="relative mt-6 font-serif text-[clamp(2.2rem,1.7rem+2vw,3.4rem)] leading-none xl:text-[2.75rem]">{opcion.title}</p>
@@ -164,7 +156,7 @@ export default function CalculadoraPage() {
             </ul>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href={rutasCalculadora.individual}>{page.opciones[0]!.cta}</Button>
-              <Button href={rutasCalculadora.pareja} variant="secondary">
+              <Button href={rutasCalculadora.codigo} variant="secondary">
                 {page.opciones[1]!.cta}
               </Button>
             </div>

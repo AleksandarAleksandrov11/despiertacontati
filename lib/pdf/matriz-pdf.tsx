@@ -1,9 +1,9 @@
 import { Circle, Defs, Document, Image, Link, Page, Path, RadialGradient, Stop, Svg, Text, View } from "@react-pdf/renderer";
 import { arcano, teaser } from "@/content/arcanos";
-import { calculadoraIndividual, calculadoraPareja, calculadoraPdf } from "@/content/calculadora";
+import { calculadoraIndividual, calculadoraPdf } from "@/content/calculadora";
 import { lecturaCompleta } from "@/content/lectura-completa";
 import { site } from "@/content/site";
-import type { Matriz, Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
+import type { Posicion, Propositos, Puntos, Tramo } from "@/lib/matriz";
 import {
   coloresChakra,
   corazon,
@@ -24,7 +24,7 @@ import {
   type Variante,
 } from "@/lib/matriz-geometria";
 import { Boton, c, Encabezado, Fondo, PaginaTati, Pie, s, type Recursos } from "./comun";
-import type { DatosCompleta, DatosPdf, Persona } from "./datos";
+import type { DatosCompleta, DatosPdf } from "./datos";
 
 export function Numero({ numero, size = 40, oro = false }: { numero: number; size?: number; oro?: boolean }) {
   return (
@@ -354,37 +354,29 @@ export function Diagrama({
 }
 
 export function Portada({ datos, recursos }: { datos: DatosPdf | DatosCompleta; recursos: Recursos }) {
-  const individual = datos.tipo !== "pareja";
-  const nombres = individual
-    ? datos.persona.nombre
-    : datos.personas.every((persona) => persona.nombre)
-      ? `${datos.personas[0].nombre} y ${datos.personas[1].nombre}`
-      : "";
-  const fechas = individual ? datos.persona.texto : `${datos.personas[0].texto}  ·  ${datos.personas[1].texto}`;
+  const nombre = datos.persona.nombre;
   return (
     <Page size="A5" style={[s.page, { paddingTop: 54, alignItems: "center" }]}>
-      <Fondo tono={individual ? "rosa" : "lavanda"} />
+      <Fondo tono="rosa" />
       <Image src={recursos.logo} style={{ width: 150, height: 198 }} />
       <Text style={[s.eyebrow, { marginTop: 40, letterSpacing: 2.4 }]}>{datos.tipo === "completa" ? lecturaCompleta.etiqueta : calculadoraPdf.gratuita}</Text>
-      <Text style={[s.h1, { marginTop: 10, textAlign: "center", fontSize: 34 }]}>
-        {individual ? calculadoraPdf.tituloIndividual : calculadoraPdf.tituloPareja}
-      </Text>
-      {nombres ? (
+      <Text style={[s.h1, { marginTop: 10, textAlign: "center", fontSize: 34 }]}>{calculadoraPdf.tituloIndividual}</Text>
+      {nombre ? (
         <Text
           style={{
             fontFamily: "Allura",
-            fontSize: nombres.length <= 14 ? 38 : nombres.length <= 24 ? 30 : nombres.length <= 40 ? 24 : 19,
+            fontSize: nombre.length <= 14 ? 38 : nombre.length <= 24 ? 30 : 24,
             color: c.rosaDeep,
             marginTop: 8,
             lineHeight: 1.2,
             textAlign: "center",
           }}
         >
-          {nombres}
+          {nombre}
         </Text>
       ) : null}
-      <Text style={[s.eyebrow, { marginTop: nombres ? 6 : 16 }]}>{individual ? calculadoraPdf.nacimiento : calculadoraPdf.fechas}</Text>
-      <Text style={{ fontFamily: "Manrope", fontWeight: 500, fontSize: 12, letterSpacing: 1.2, marginTop: 5 }}>{fechas}</Text>
+      <Text style={[s.eyebrow, { marginTop: nombre ? 6 : 16 }]}>{calculadoraPdf.nacimiento}</Text>
+      <Text style={{ fontFamily: "Manrope", fontWeight: 500, fontSize: 12, letterSpacing: 1.2, marginTop: 5 }}>{datos.persona.texto}</Text>
       <View style={{ position: "absolute", bottom: 34, left: 0, right: 0, alignItems: "center" }}>
         <Text style={[s.eyebrow, { letterSpacing: 2.2 }]}>{site.brandLine}</Text>
         <Link src={site.url} style={{ marginTop: 6, fontSize: 8, color: c.rosaDeep, textDecoration: "none" }}>
@@ -396,42 +388,32 @@ export function Portada({ datos, recursos }: { datos: DatosPdf | DatosCompleta; 
 }
 
 export function PaginaMatriz({ datos }: { datos: DatosPdf | DatosCompleta }) {
-  const individual = datos.tipo !== "pareja";
   const p = datos.matriz.puntos;
-  const leyenda: [string, number][] = individual
-    ? [
-        [calculadoraIndividual.leyenda.energia, p.a],
-        [calculadoraIndividual.leyenda.talento, p.b],
-        [calculadoraIndividual.leyenda.material, p.c],
-        [calculadoraIndividual.leyenda.karma, p.d],
-        [calculadoraIndividual.leyenda.poder, p.e],
-      ]
-    : [
-        [calculadoraPareja.leyenda.centro, p.e],
-        [calculadoraPareja.leyenda.aprendizajes, p.d],
-        [calculadoraPareja.leyenda.amor, p.amor],
-        [calculadoraPareja.leyenda.material, p.dinero],
-      ];
-  const titulo = individual
-    ? calculadoraIndividual.stageTitle(datos.persona.nombre)
-    : calculadoraPareja.stageTitle(datos.personas.every((persona) => persona.nombre) ? `${datos.personas[0].nombre} y ${datos.personas[1].nombre}` : "");
-  const activas = individual && datos.anio ? datos.anio.posiciones : [];
+  const leyenda: [string, number][] = [
+    [calculadoraIndividual.leyenda.energia, p.a],
+    [calculadoraIndividual.leyenda.talento, p.b],
+    [calculadoraIndividual.leyenda.material, p.c],
+    [calculadoraIndividual.leyenda.karma, p.d],
+    [calculadoraIndividual.leyenda.poder, p.e],
+  ];
+  const titulo = calculadoraIndividual.stageTitle(datos.persona.nombre);
+  const activas = datos.tipo === "completa" && datos.anio ? datos.anio.posiciones : [];
   return (
     <Page size="A5" style={s.page}>
       <Fondo tono="lavanda" />
-      <Encabezado eyebrow={individual ? calculadoraPdf.matrizTitle : calculadoraPdf.matrizParejaTitle} title={titulo} />
+      <Encabezado eyebrow={calculadoraPdf.matrizTitle} title={titulo} />
       <View style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 16, paddingVertical: 6, alignItems: "center" }}>
         <Diagrama
           puntos={p}
-          etiquetas={individual ? calculadoraIndividual.etiquetas : calculadoraPareja.etiquetas}
-          size={individual ? (titulo.length > 36 ? 248 : 264) : titulo.length > 36 ? 278 : 296}
-          variante={individual ? "individual" : "pareja"}
+          etiquetas={calculadoraIndividual.etiquetas}
+          size={titulo.length > 36 ? 248 : 264}
+          variante="individual"
           edades={datos.matriz.edades}
           activas={activas}
-          propositos={individual ? datos.matriz.propositos : undefined}
+          propositos={datos.matriz.propositos}
         />
       </View>
-      <Text style={[s.small, { marginTop: 8, fontSize: 8 }]}>{individual ? calculadoraPdf.matrizText : calculadoraPdf.matrizParejaText}</Text>
+      <Text style={[s.small, { marginTop: 8, fontSize: 8 }]}>{calculadoraPdf.matrizText}</Text>
       <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 7 }}>
         {leyenda.map(([label, numero]) => (
           <View
@@ -450,16 +432,16 @@ export function PaginaMatriz({ datos }: { datos: DatosPdf | DatosCompleta }) {
 
 export type FilaProposito = { label: string; etapa: string; partes: string[]; valores: number[]; resultado: number; texto?: string };
 
-export function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: string }) {
+export function Propositos({ filas, descubrelo }: { filas: FilaProposito[]; descubrelo?: string }) {
   return (
-    <View wrap={false} style={[s.card, { marginTop: 12, paddingVertical: 6 }]}>
+    <View wrap={false} style={[s.card, { marginTop: 8, paddingVertical: 5 }]}>
       {filas.map((fila, index) => (
         <View
           key={fila.label}
           style={{
             flexDirection: "row",
             alignItems: "center",
-            paddingVertical: 5,
+            paddingVertical: 3.5,
             borderTopWidth: index === 0 ? 0 : 0.6,
             borderTopColor: c.linea,
           }}
@@ -477,92 +459,20 @@ export function Propositos({ filas, nota }: { filas: FilaProposito[]; nota?: str
           </View>
         </View>
       ))}
-      {nota ? <Text style={[s.small, { borderTopWidth: 0.6, borderTopColor: c.linea, paddingTop: 8, paddingBottom: 4 }]}>{nota}</Text> : null}
-    </View>
-  );
-}
-
-function EnergiasDelAnio({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
-  const copy = calculadoraIndividual.edades.anio;
-  const anio = datos.anio;
-  if (!anio) return null;
-  const items = [
-    { label: copy.edad(anio.edad), valor: anio.propia },
-    { label: copy.edad(anio.opuesta), valor: anio.deOpuesta },
-    { label: copy.suma, valor: anio.suma },
-  ];
-  return (
-    <View wrap={false} style={{ marginTop: 10, backgroundColor: c.ciruela, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12 }}>
-      <Text style={[s.eyebrow, { color: "#cbbcc5", fontSize: 6 }]}>{copy.eyebrow}</Text>
-      <Text style={{ marginTop: 3, fontFamily: "Cormorant", fontWeight: 500, fontSize: 15, color: c.crema }}>{copy.title(anio.edad)}</Text>
-      <Text style={{ marginTop: 2, fontSize: 7.4, lineHeight: 1.35, color: "#d9cdd4" }}>{copy.text}</Text>
-      <View style={{ flexDirection: "row", marginTop: 8 }}>
-        {items.map((item, index) => (
-          <View key={item.label} style={{ flex: 1, marginLeft: index === 0 ? 0 : 6, backgroundColor: c.crema, borderRadius: 9, padding: 7 }}>
-            <Text style={[s.eyebrow, { fontSize: 5.4, letterSpacing: 0.8 }]}>{item.label}</Text>
-            <View style={{ flexDirection: "row", alignItems: "center", marginTop: 5 }}>
-              <Numero numero={item.valor} size={20} />
-              <Text style={{ marginLeft: 5, flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: 10.5, lineHeight: 1.1, color: c.ciruela }}>{arcano(item.valor)?.nombre}</Text>
+      {descubrelo ? (
+        <View style={{ borderTopWidth: 0.6, borderTopColor: c.linea, paddingTop: 7, paddingBottom: 3 }}>
+          <Link src={descubrelo} style={{ textDecoration: "none", alignSelf: "flex-start" }}>
+            <View style={{ backgroundColor: c.ciruela, borderRadius: 20, paddingVertical: 5, paddingHorizontal: 12 }}>
+              <Text style={{ fontSize: 8, fontWeight: 600, color: c.crema }}>{calculadoraIndividual.descubrelo}</Text>
             </View>
-          </View>
-        ))}
-      </View>
-      <Text style={{ marginTop: 7, fontSize: 7.2, lineHeight: 1.35, color: "#d9cdd4" }}>{calculadoraPdf.edadesCompleta}</Text>
+          </Link>
+        </View>
+      ) : null}
     </View>
   );
 }
 
-export function TablaChakras({ matriz }: { matriz: Matriz }) {
-  const copy = calculadoraIndividual.chakras;
-  const { chakras, totalChakras } = matriz;
-  const columna = { width: 46, textAlign: "center" as const };
-  const orden = ["corona", "tercerOjo", "garganta", "corazon", "plexo", "sacro", "raiz"] as const;
-  const filas = [
-    ...chakras.map((fila, index) => ({ fila, nombre: `${copy.filas[index]!.es} · ${copy.filas[index]!.nombre}`, color: coloresChakra[orden[index]!], total: false })),
-    { fila: totalChakras, nombre: copy.total, color: undefined, total: true },
-  ];
-  return (
-    <>
-      <View wrap={false} style={[s.card, { marginTop: 10, paddingVertical: 6 }]}>
-        <View style={{ flexDirection: "row", paddingVertical: 5, borderBottomWidth: 0.6, borderBottomColor: c.linea }}>
-          <Text style={[s.eyebrow, { flex: 1, fontSize: 5.8 }]}>{copy.columnas.chakra}</Text>
-          {[copy.columnas.fisico, copy.columnas.energia, copy.columnas.emocion].map((label) => (
-            <Text key={label} style={[s.eyebrow, columna, { fontSize: 5.8 }]}>
-              {label}
-            </Text>
-          ))}
-        </View>
-        {filas.map(({ fila, nombre, color, total }) => (
-          <View key={nombre} style={{ flexDirection: "row", alignItems: "center", paddingVertical: 2.4, borderTopWidth: total ? 0.6 : 0, borderTopColor: c.linea }}>
-            <View style={{ width: 6, height: 6, borderRadius: 3, marginRight: 6, backgroundColor: color ?? "transparent" }} />
-            <Text style={{ flex: 1, fontFamily: "Cormorant", fontWeight: 500, fontSize: total ? 11.5 : 10.5, lineHeight: 1.1 }}>{nombre}</Text>
-            {[fila.fisico, fila.energia, fila.emocion].map((valor, index) => (
-              <Text key={index} style={[columna, { fontFamily: "Manrope", fontWeight: 600, fontSize: 9 }]}>
-                {valor}
-              </Text>
-            ))}
-          </View>
-        ))}
-      </View>
-      <Text style={[s.small, { marginTop: 6, fontSize: 7 }]}>{copy.aviso}</Text>
-    </>
-  );
-}
-
-function PaginaChakras({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
-  const copy = calculadoraIndividual.chakras;
-  return (
-    <Page size="A5" style={s.page}>
-      <Fondo tono="rosa" />
-      <Encabezado eyebrow={copy.eyebrow} title={copy.title} />
-      <TablaChakras matriz={datos.matriz} />
-      <EnergiasDelAnio datos={datos} />
-      <Pie />
-    </Page>
-  );
-}
-
-function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "individual" }> }) {
+function PaginasIndividual({ datos }: { datos: DatosPdf }) {
   const copy = calculadoraIndividual;
   const p = datos.matriz.puntos;
   const prop = datos.matriz.propositos;
@@ -589,13 +499,12 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
       <Page size="A5" style={s.page}>
         <Fondo tono="salvia" />
         <Lectura label={copy.posiciones.talento.label} intro={copy.posiciones.talento.text} numero={p.b} text={arcano(p.b)?.talento ?? ""} />
-        <View style={{ marginTop: 12 }}>
+        <View style={{ marginTop: 8 }}>
           <Encabezado eyebrow={copy.propositos.eyebrow} title={copy.propositos.title} />
         </View>
-        <Propositos filas={filas} nota={copy.propositos.locked} />
+        <Propositos filas={filas} descubrelo={datos.tiendaUrl} />
         <Pie />
       </Page>
-      <PaginaChakras datos={datos} />
       <Page size="A5" style={s.page}>
         <Fondo tono="rosa" />
         <Encabezado eyebrow={copy.bloqueadas.eyebrow} title={calculadoraPdf.bloqueadoTitle} text={copy.bloqueadas.text} />
@@ -612,69 +521,7 @@ function PaginasIndividual({ datos }: { datos: Extract<DatosPdf, { tipo: "indivi
   );
 }
 
-function Compacta({ label, numero, text }: { label: string; numero: number; text: string }) {
-  return (
-    <View wrap={false} style={[s.card, { marginTop: 10, padding: 13 }]}>
-      <Text style={s.eyebrow}>{label}</Text>
-      <View style={{ marginTop: 8 }}>
-        <Arcano numero={numero} size={30} />
-      </View>
-      <Text style={{ marginTop: 7, fontSize: 8.8, lineHeight: 1.5 }}>{text}</Text>
-    </View>
-  );
-}
-
-function PaginasPareja({ datos }: { datos: Extract<DatosPdf, { tipo: "pareja" }> }) {
-  const copy = calculadoraPareja;
-  const p = datos.matriz.puntos;
-  const prop = datos.matriz.propositos;
-  const filas: FilaProposito[] = [
-    { ...copy.propositos.personal, valores: [prop.cielo, prop.tierra], resultado: prop.personal, texto: arcano(prop.personal)?.proposito },
-    { ...copy.propositos.social, valores: [prop.masculino, prop.femenino], resultado: prop.social, texto: arcano(prop.social)?.proposito },
-    { ...copy.propositos.espiritual, valores: [prop.personal, prop.social], resultado: prop.espiritual, texto: arcano(prop.espiritual)?.proposito },
-  ];
-  return (
-    <>
-      <Page size="A5" style={s.page}>
-        <Fondo tono="rosa" />
-        <Encabezado eyebrow={copy.resultadosEyebrow} title={copy.resultadosTitle} />
-        <Lectura destacada label={copy.centro.label} intro={copy.centro.text} numero={p.e} text={arcano(p.e)?.amor ?? ""} />
-        <View style={{ flexDirection: "row", marginTop: 12 }}>
-          {datos.personas.map((persona: Persona, index) => (
-            <View
-              key={index}
-              wrap={false}
-              style={[s.card, { flex: 1, marginLeft: index === 0 ? 0 : 10, backgroundColor: index === 0 ? c.rosaPolvo : c.lavanda }]}
-            >
-              <Text style={s.eyebrow}>{copy.aporta(persona.nombre || copy.aportaFallback[index]!)}</Text>
-              <Text style={[s.small, { marginTop: 2, fontSize: 7.2 }]}>{`${copy.aportaText} ${persona.texto}`}</Text>
-              <View style={{ marginTop: 9 }}>
-                <Arcano numero={persona.centro} size={30} />
-              </View>
-            </View>
-          ))}
-        </View>
-        <Pie />
-      </Page>
-      <Page size="A5" style={s.page}>
-        <Fondo tono="salvia" />
-        <Encabezado eyebrow={copy.propositos.eyebrow} title={copy.propositos.title} text={copy.propositos.text} />
-        <Propositos filas={filas} />
-        <Pie />
-      </Page>
-      <Page size="A5" style={s.page}>
-        <Fondo tono="rosa" />
-        <Encabezado eyebrow={copy.mas.eyebrow} title={copy.mas.title} />
-        <Compacta label={copy.mas.aprendizajes.label} numero={p.d} text={arcano(p.d)?.sombra ?? ""} />
-        <Compacta label={copy.mas.amor.label} numero={p.amor} text={arcano(p.amor)?.amor ?? ""} />
-        <Compacta label={copy.mas.material.label} numero={p.dinero} text={arcano(p.dinero)?.dinero ?? ""} />
-        <Pie />
-      </Page>
-    </>
-  );
-}
-
-function PaginaVenta({ datos, recursos }: { datos: Extract<DatosPdf, { tipo: "individual" }>; recursos: Recursos }) {
+function PaginaVenta({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
   const copy = calculadoraIndividual.completa;
   return (
     <Page size="A5" style={[s.page, { backgroundColor: c.ciruela, color: c.crema }]}>
@@ -690,6 +537,7 @@ function PaginaVenta({ datos, recursos }: { datos: Extract<DatosPdf, { tipo: "in
           </View>
         ))}
       </View>
+      <Text style={{ marginTop: 6, marginLeft: 16, fontFamily: "Cormorant", fontStyle: "italic", fontSize: 12, color: c.doradoSoft }}>{copy.mas}</Text>
       <Text style={{ marginTop: 10, fontSize: 8.8, color: "#d9cdd4" }}>{copy.formato}</Text>
 
       <View style={{ marginTop: 14, borderTopWidth: 0.6, borderTopColor: "#6e5a66", paddingTop: 12, flexDirection: "row", alignItems: "center" }}>
@@ -719,19 +567,12 @@ function PaginaVenta({ datos, recursos }: { datos: Extract<DatosPdf, { tipo: "in
 }
 
 export function MatrizPdf({ datos, recursos }: { datos: DatosPdf; recursos: Recursos }) {
-  const titulo = datos.tipo === "individual" ? calculadoraPdf.tituloIndividual : calculadoraPdf.tituloPareja;
   return (
-    <Document title={`${titulo} · ${site.name}`} author={site.person.fullName} creator={site.name} producer={site.name} language="es-ES">
+    <Document title={`${calculadoraPdf.tituloIndividual} · ${site.name}`} author={site.person.fullName} creator={site.name} producer={site.name} language="es-ES">
       <Portada datos={datos} recursos={recursos} />
       <PaginaMatriz datos={datos} />
-      {datos.tipo === "individual" ? (
-        <>
-          <PaginasIndividual datos={datos} />
-          <PaginaVenta datos={datos} recursos={recursos} />
-        </>
-      ) : (
-        <PaginasPareja datos={datos} />
-      )}
+      <PaginasIndividual datos={datos} />
+      <PaginaVenta datos={datos} recursos={recursos} />
       <PaginaTati recursos={recursos} />
     </Document>
   );

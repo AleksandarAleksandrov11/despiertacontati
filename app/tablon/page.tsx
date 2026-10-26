@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/sections/page-header";
 import { AnuncioCard } from "@/components/sections/anuncio-card";
 import { InstagramFeed } from "@/components/sections/instagram-feed";
 import { CtaBlock } from "@/components/sections/cta-block";
+import { BrandSymbol } from "@/components/ui/brand-symbol";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
@@ -32,7 +33,14 @@ export default function TablonPage() {
   return (
     <>
       <JsonLd data={[breadcrumbJsonLd([{ name: "Tablón", path: "/tablon" }]), ...events]} />
-      <PageHeader eyebrow={tablonPage.eyebrow} title={tablonPage.title} subtitle={tablonPage.subtitle} image={tablonPage.image} tone="rosa" blobs="b" />
+      <PageHeader
+        eyebrow={tablonPage.eyebrow}
+        title={tablonPage.title}
+        subtitle={tablonPage.subtitle}
+        tone="rosa"
+        blobs="b"
+        aside={<BrandSymbol size={360} className="h-auto w-full max-w-[16rem] animate-[spin_60s_linear_infinite] motion-reduce:animate-none sm:max-w-[20rem]" />}
+      />
       <Section tone="crema" labelledBy="anuncios">
         <h2 id="anuncios" className="sr-only">
           {tablonPage.anunciosTitle}

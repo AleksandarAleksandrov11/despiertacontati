@@ -17,7 +17,7 @@ import { formatPrice, productHref } from "@/lib/tienda";
 import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Limpieza energética a distancia de casas y espacios de trabajo por 30 €: solo necesito la dirección y te envío el informe por WhatsApp. Mudanzas, etapas nuevas y ambientes cargados.";
+  "Limpieza energética a distancia de casas y espacios de trabajo por 27 €: solo necesito la dirección y te envío el informe por WhatsApp. Mudanzas, etapas nuevas y ambientes cargados.";
 
 const accents = [
   "var(--color-chakra-corazon)",
