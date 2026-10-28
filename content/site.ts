@@ -51,7 +51,9 @@ export const site = {
   disclaimer:
     "Las terapias naturales son complementarias y no sustituyen la atención médica ni psicológica.",
   credit: {
-    label: "Web por AAS Marketing",
+    label: "Web creada por",
+    name: "AAS Marketing",
+    href: "https://www.aasmarketing.com/",
   },
   cta: {
     primary: { label: "Reserva tu sesión", href: "/contacto" },

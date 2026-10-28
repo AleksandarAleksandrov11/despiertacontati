@@ -126,7 +126,12 @@ export function Footer() {
                 </li>
               </ul>
             </nav>
-            <p className="text-crema/75">{site.credit.label}</p>
+            <p className="text-crema/75">
+              {site.credit.label}{" "}
+              <a href={site.credit.href} className="link-underline hover:text-crema">
+                {site.credit.name}
+              </a>
+            </p>
           </div>
         </div>
       </div>
