@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
-import { categorias, fichaProducto, getProducto, productos, type Producto } from "@/content/tienda";
+import { categorias, fichaProducto, getProducto, productos, tiendaPage, type Producto } from "@/content/tienda";
 import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/sections/tienda/product-card";
@@ -64,7 +64,7 @@ function requirements(producto: Producto) {
   if (producto.tipo === "meditacion") return [copy.requirementsMeditation];
   if (producto.tipo === "sesion") return [copy.requirementsSession];
   if (producto.tipo === "espacio") return [copy.requirementsSpace];
-  if (producto.categoria === "autoconocimiento" || producto.slug === "lectura-del-cumpleanos") {
+  if (producto.categoria === "autoconocimiento" || producto.slug === "lectura-del-cumpleanos" || producto.regalo) {
     return [copy.requirementsBirthday, copy.requirementsReading];
   }
   return [copy.requirementsReading];
@@ -125,6 +125,32 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
         <div className="grid gap-12 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-16">
           <div className="lg:col-span-7">
             <p className="max-w-2xl text-lead">{producto.descripcion}</p>
+            {producto.regalo && (
+              <div className="mt-8 rounded-[1.25rem] bg-ciruela p-6 text-crema sm:p-8">
+                <p className="eyebrow text-dorado">{producto.regalo.eyebrow}</p>
+                <p className="mt-3 font-serif text-[1.6rem] leading-tight">{producto.regalo.title}</p>
+                <p className="mt-3 text-crema/80">{producto.regalo.text}</p>
+                <ul className="mt-5 space-y-2">
+                  {producto.regalo.items.map((item) => (
+                    <li key={item} className="flex items-baseline gap-3">
+                      <Check size={16} strokeWidth={1.5} aria-hidden className="shrink-0 translate-y-0.5 text-dorado" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {audios && (
+              <div className="mt-8 flex flex-col gap-4 rounded-[1.25rem] bg-salvia p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div>
+                  <p className="font-serif text-[1.5rem] leading-tight">{tiendaPage.compania.title}</p>
+                  <p className="mt-1 text-ink-soft">{tiendaPage.compania.text}</p>
+                </div>
+                <Button href={tiendaPage.compania.href} variant="secondary" className="shrink-0">
+                  {tiendaPage.compania.cta}
+                </Button>
+              </div>
+            )}
             {calculadora && producto.calculadora && (
               <div className="mt-8 flex flex-col gap-4 rounded-[1.25rem] bg-ciruela p-6 text-crema sm:flex-row sm:items-center sm:justify-between sm:p-7">
                 <div>
@@ -171,6 +197,15 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                 <div className="rounded-[1.25rem] bg-lavanda/70 p-6">
                   <dt className="eyebrow">{copy.format}</dt>
                   <dd className="mt-3 font-serif text-[1.4rem] leading-snug">{producto.formato}</dd>
+                  {producto.modalidades && (
+                    <dd className="mt-4 border-t border-ciruela/10 pt-4 text-ink">
+                      {producto.modalidades.map((item) => (
+                        <span key={item.nombre} className="nums mt-2 block first:mt-0">
+                          {item.detalle} · {formatPrice(item.precio)}
+                        </span>
+                      ))}
+                    </dd>
+                  )}
                   {producto.directo && (
                     <dd className="mt-4 border-t border-ciruela/10 pt-4 text-ink">
                       <span className="eyebrow block">{copy.directo}</span>

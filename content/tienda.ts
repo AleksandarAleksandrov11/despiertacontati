@@ -6,6 +6,8 @@ export type CategoriaId = "meditaciones" | "crono-tarot" | "lecturas" | "autocon
 
 export type TipoProducto = "meditacion" | "lectura" | "sesion" | "terapia" | "espacio";
 
+export type Modalidad = { nombre: string; detalle: string; precio: number; digital: boolean; sesion: boolean };
+
 export type Producto = {
   slug: string;
   categoria: CategoriaId;
@@ -20,6 +22,8 @@ export type Producto = {
   paraQuien: string[];
   precio: number | null;
   directo?: { precio: number; duracion: string }[];
+  modalidades?: Modalidad[];
+  regalo?: { eyebrow: string; title: string; text: string; items: string[] };
   precioHabitual?: number;
   lanzamiento?: boolean;
   estado: "disponible" | "proximamente";
@@ -43,14 +47,14 @@ export const categorias: Categoria[] = [
     nav: "Meditaciones",
     eyebrow: "Meditaciones",
     title: "Medita con Tati.",
-    text: "Packs de meditaciones guiadas en MP3 y un programa de 12 semanas. Te llegan por enlace privado de descarga tras confirmar el pago.",
+    text: "Dos programas de meditación guiada, de 6 y de 12 semanas, con una meditación en MP3 para cada semana. Te llegan por enlace privado de descarga tras confirmar el pago.",
   },
   {
     id: "crono-tarot",
     nav: "Crono Tarot",
     eyebrow: "Crono Tarot",
     title: "Lecturas en el tiempo.",
-    text: "Tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo y PDF por WhatsApp o en directo.",
+    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo y PDF por WhatsApp o en directo.",
   },
   {
     id: "lecturas",
@@ -95,12 +99,6 @@ const entregaSesion = "Online. La fecha y la hora se agendan por WhatsApp.";
 const entregaTerapia = "Online, a distancia. La fecha y la hora se agendan por WhatsApp.";
 const entregaPresencial = "Online o presencial. La fecha, la hora y el lugar se agendan por WhatsApp.";
 
-const paraMeditar = [
-  "Quieres dedicarte un rato al día y te ayuda que una voz te guíe.",
-  "Prefieres practicar en casa, a tu ritmo y sin horarios.",
-  "Te apetece volver a la respiración cuando el día se acelera.",
-];
-
 const paraLectura = [
   "Quieres mirar tu momento con más perspectiva.",
   "Te viene bien recibir la lectura y verla con calma cuando puedas.",
@@ -109,85 +107,34 @@ const paraLectura = [
 
 export const productos: Producto[] = [
   {
-    slug: "pausa-y-vuelve-a-ti",
+    slug: "camino-6-semanas-meditacion",
     categoria: "meditaciones",
     tipo: "meditacion",
-    nombre: "Pausa y vuelve a ti",
-    frase:
-      "Cinco meditaciones guiadas para dedicarte un espacio de atención, volver a la respiración y explorar el cuerpo y los sentidos a tu ritmo.",
+    nombre: "Tu camino de 6 semanas de meditación",
+    frase: "Seis meditaciones, una por semana, para despertar los sentidos, observar la mente y volver a tu esencia.",
     descripcion:
-      "Una colección para reservar un momento para ti, volver a la respiración y llevar la atención al cuerpo y a los sentidos.",
+      "Un programa para recorrer a lo largo de seis semanas, con una meditación guiada cada semana, el orden de escucha recomendado y una guía de uso para acompañar la práctica.",
     incluye: [
-      { titulo: "Respiración ancla", detalle: "23:03" },
-      { titulo: "Respiración freno", detalle: "23:16" },
-      { titulo: "Escáner corporal", detalle: "28:46" },
-      { titulo: "Escucha consciente", detalle: "23:10" },
-      { titulo: "Despierta tus sentidos", detalle: "25:31" },
+      { titulo: "Semana 1. Despierta tus sentidos", detalle: "25:31" },
+      { titulo: "Semana 2. Un cielo de pensamientos", detalle: "26:38" },
+      { titulo: "Semana 3. Viaje a tu esencia", detalle: "27:30" },
+      { titulo: "Semana 4. Cerrar ciclos", detalle: "27:03" },
+      { titulo: "Semana 5. La sonrisa interior", detalle: "25:03" },
+      { titulo: "Semana 6", detalle: "Próximamente" },
     ],
-    duracionTotal: "2 h 04 min",
-    formato: "5 audios en MP3",
-    entrega: entregaMeditacion,
-    paraQuien: paraMeditar,
-    precio: 12,
-    lanzamiento: true,
-    estado: "disponible",
-    destacado: true,
-    imagen: "pausaCojin",
-  },
-  {
-    slug: "un-espacio-para-tu-mente",
-    categoria: "meditaciones",
-    tipo: "meditacion",
-    nombre: "Un espacio para tu mente",
-    frase: "Una propuesta para observar los pensamientos y acercarte a tu experiencia interna con más atención.",
-    descripcion:
-      "Tres prácticas guiadas para observar los pensamientos y las emociones con más atención, a tu ritmo.",
-    incluye: [
-      { titulo: "Un cielo de pensamientos", detalle: "26:38" },
-      { titulo: "Arroyo de pensamientos", detalle: "25:22" },
-      { titulo: "Práctica de las emociones, Emo Scan", detalle: "21:20" },
-    ],
-    duracionTotal: "1 h 13 min",
-    formato: "3 audios en MP3",
+    formato: "6 audios en MP3 y guía de uso",
     entrega: entregaMeditacion,
     paraQuien: [
-      "Tu cabeza va a mil y quieres aprender a observarla sin pelearte con ella.",
-      "Te interesa entender mejor tus emociones.",
-      "Ya has meditado algo y quieres dar un paso más.",
+      "Quieres empezar a meditar con un programa corto y con orden.",
+      "Te ayuda tener una práctica nueva cada semana.",
+      "Te apetece explorar los sentidos, la mente y tu interior paso a paso.",
     ],
     precio: 9.9,
+    precioHabitual: 12.9,
     lanzamiento: true,
     estado: "proximamente",
-    destacado: false,
-    imagen: "meditacionSalaBlanca",
-  },
-  {
-    slug: "conecta-contigo",
-    categoria: "meditaciones",
-    tipo: "meditacion",
-    nombre: "Conecta contigo",
-    frase: "Una colección para la introspección, la amabilidad y la gratitud.",
-    descripcion:
-      "Cuatro prácticas guiadas para la introspección, la amabilidad y la gratitud.",
-    incluye: [
-      { titulo: "Viaje a tu esencia", detalle: "27:30" },
-      { titulo: "La sonrisa interior", detalle: "25:03" },
-      { titulo: "Meditación Metta o de la compasión", detalle: "25:31" },
-      { titulo: "La fiesta de la gratitud", detalle: "21:36" },
-    ],
-    duracionTotal: "1 h 39 min",
-    formato: "4 audios en MP3",
-    entrega: entregaMeditacion,
-    paraQuien: [
-      "Te exiges mucho y quieres practicar la amabilidad contigo.",
-      "Te apetece un momento de introspección.",
-      "Quieres que la gratitud forme parte de tu día a día.",
-    ],
-    precio: 12.9,
-    lanzamiento: true,
-    estado: "proximamente",
-    destacado: false,
-    imagen: "manoMudra",
+    destacado: true,
+    imagen: "pausaCojin",
   },
   {
     slug: "camino-12-semanas-meditacion",
@@ -222,9 +169,47 @@ export const productos: Producto[] = [
     precio: 14.9,
     precioHabitual: 19.9,
     lanzamiento: true,
-    estado: "proximamente",
-    destacado: false,
+    estado: "disponible",
+    destacado: true,
     imagen: "meditacionPorche",
+  },
+  {
+    slug: "mapa-2027",
+    categoria: "crono-tarot",
+    tipo: "lectura",
+    nombre: "Mapa 2027",
+    frase: "Tu año, tus caminos y tus posibilidades: 24 cartas para explorar tus doce meses y cinco áreas de tu vida.",
+    descripcion:
+      "Una lectura anual de tarot para explorar las tendencias, las oportunidades, los retos y los aprendizajes que pueden acompañarte durante 2027. No es un destino escrito: es una herramienta de autoconocimiento para comprender mejor tu momento y tomar decisiones con más conciencia.",
+    incluye: [
+      { titulo: "Tu punto de partida: lo que dejas atrás, tu cosecha, tu energía, lo que tienes a favor y en contra, y lo más destacado del año", detalle: "6 cartas" },
+      { titulo: "Tu recorrido por el año: una carta para cada mes, de enero a diciembre", detalle: "12 cartas" },
+      { titulo: "Tus cinco áreas: amor y relaciones, trabajo y proyectos, dinero y recursos, familia y entorno, y crecimiento personal", detalle: "5 cartas" },
+      { titulo: "Tu consejo final para integrar todo lo que revela tu mapa", detalle: "1 carta" },
+    ],
+    formato: "PDF, con vídeo o en directo",
+    entrega: "El PDF y el vídeo, por WhatsApp tras confirmar el pago. La sesión en directo es online y la agendamos por WhatsApp.",
+    paraQuien: [
+      "Quieres empezar 2027 sabiendo qué energía te acompaña cada mes.",
+      "Te gusta mirar el año con perspectiva antes de tomar decisiones.",
+      "Quieres saber qué áreas de tu vida pueden pedirte más atención.",
+    ],
+    precio: 17,
+    modalidades: [
+      { nombre: "Mapa 2027", detalle: "Lectura completa en PDF", precio: 17, digital: true, sesion: false },
+      { nombre: "Mapa 2027 guiado", detalle: "PDF y vídeo explicativo personalizado", precio: 24, digital: true, sesion: false },
+      { nombre: "Mapa 2027 en directo", detalle: "Sesión individual de 50 minutos", precio: 36, digital: false, sesion: true },
+      { nombre: "Mapa 2027 completo", detalle: "PDF y sesión individual de 50 minutos", precio: 45, digital: true, sesion: true },
+    ],
+    regalo: {
+      eyebrow: "Black Friday, del 24 al 30 de noviembre",
+      title: "Tu Carta Personal de 2027, de regalo.",
+      text: "Si pides tu Mapa 2027 en cualquier modalidad durante el Black Friday, te regalo tu Carta Personal del año, calculada con tu fecha de nacimiento.",
+      items: ["El arcano que te acompaña en 2027", "Su energía y su significado", "Sus aprendizajes y oportunidades", "Tu reto personal para el año"],
+    },
+    estado: "disponible",
+    destacado: true,
+    imagen: "diagramaCeleste",
   },
   {
     slug: "lectura-del-cumpleanos",
@@ -666,7 +651,7 @@ export const productos: Producto[] = [
   },
 ];
 
-export const inicioPreview = ["pausa-y-vuelve-a-ti", "lectura-del-cumpleanos", "tu-codigo-personal"];
+export const inicioPreview = ["mapa-2027", "camino-12-semanas-meditacion", "tu-codigo-personal"];
 
 export const tiendaPage = {
   eyebrow: "Tienda",
@@ -681,6 +666,7 @@ export const tiendaPage = {
     usual: "Precio habitual",
     onRequest: "Precio a consultar",
     directo: (precio: string) => `En directo desde ${precio}`,
+    modalidades: "También con vídeo o en directo",
     info: "Pide información",
     calculate: "Calcular gratis",
   },
@@ -693,6 +679,12 @@ export const tiendaPage = {
       { title: "Abonas tu pedido", text: "Te paso los datos para abonarlo de forma privada, por WhatsApp." },
       { title: "Te llega con cariño", text: "Te envío tu meditación o tu lectura, o agendamos tu sesión." },
     ],
+  },
+  compania: {
+    title: "¿Te cuesta meditar a solas?",
+    text: "A mucha gente le pasa. Si prefieres meditar en compañía, tienes las meditaciones en grupo online, en directo conmigo.",
+    cta: "Ver las meditaciones en grupo",
+    href: "/servicios/meditacion#grupales",
   },
   legal: {
     title: "Antes de comprar",

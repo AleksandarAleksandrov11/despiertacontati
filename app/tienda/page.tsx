@@ -61,6 +61,19 @@ export default function TiendaPage() {
                 <ProductCard producto={producto} />
               </li>
             ))}
+            {categoria.id === "meditaciones" && (
+              <li>
+                <div className="flex h-full flex-col justify-between gap-8 rounded-[1.25rem] bg-ciruela p-7 text-crema sm:p-8">
+                  <div>
+                    <p className="font-serif text-[1.9rem] leading-tight">{page.compania.title}</p>
+                    <p className="mt-4 text-crema/80">{page.compania.text}</p>
+                  </div>
+                  <Button href={page.compania.href} tone="dark" className="self-start">
+                    {page.compania.cta}
+                  </Button>
+                </div>
+              </li>
+            )}
           </ul>
         </Section>
       ))}

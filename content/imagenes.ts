@@ -14,7 +14,7 @@ import tarotBaraja from "@/public/images/tarot-baraja-abierta.webp";
 import tarotFlores from "@/public/images/tarot-cartas-flores.webp";
 import tazaVapor from "@/public/images/taza-manos-vapor.webp";
 import meditacionAuriculares from "@/public/images/meditacion-auriculares.webp";
-import tatiRetrato from "@/public/images/tati-retrato.webp";
+import tatiRetrato from "@/public/images/tati-buganvilla.webp";
 import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
 import sesionReiki from "@/public/images/sesion-reiki-esterilla.webp";
 import reikiManosPecho from "@/public/images/reiki-manos-pecho.webp";
@@ -24,8 +24,6 @@ import linoLuzMesa from "@/public/images/lino-luz-mesa-madera.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
 import pausaCojin from "@/public/images/pausa-cojin-cortina.webp";
-import meditacionSalaBlanca from "@/public/images/meditacion-sala-blanca.webp";
-import manoMudra from "@/public/images/mano-gesto-meditacion.webp";
 import meditacionPorche from "@/public/images/meditacion-porche-luz.webp";
 import tarotSol from "@/public/images/tarot-carta-sol.webp";
 import hojasEstaciones from "@/public/images/hojas-estaciones.webp";
@@ -124,8 +122,8 @@ export const imagenes = {
   },
   tatiRetrato: {
     src: tatiRetrato,
-    alt: "Tatiana Guillem, Tati, terapeuta holística",
-    position: "50% 35%",
+    alt: "Tatiana Guillem, Tati, sonriendo delante de una buganvilla en flor",
+    position: "50% 46%",
   },
   tatiSonrisa: {
     src: tatiSonrisa,
@@ -171,16 +169,6 @@ export const imagenes = {
     src: pausaCojin,
     alt: "Mujer sentada en el suelo junto a una cortina blanca, abrazando un cojín en un momento de pausa",
     position: "50% 50%",
-  },
-  meditacionSalaBlanca: {
-    src: meditacionSalaBlanca,
-    alt: "Mujer meditando con los ojos cerrados y las manos unidas en una sala blanca y luminosa",
-    position: "50% 50%",
-  },
-  manoMudra: {
-    src: manoMudra,
-    alt: "Mano en gesto de meditación apoyada sobre la rodilla, con una pulsera de cuentas y fondo verde",
-    position: "35% 40%",
   },
   meditacionPorche: {
     src: meditacionPorche,

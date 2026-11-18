@@ -1,5 +1,5 @@
 import { site } from "@/content/site";
-import { categorias, type Producto } from "@/content/tienda";
+import { categorias, type Modalidad, type Producto } from "@/content/tienda";
 import { absoluteUrl } from "./utils";
 
 export function formatPrice(value: number) {
@@ -16,6 +16,13 @@ export type Directo = NonNullable<Producto["directo"]>[number];
 
 export function isDigital(producto: Producto) {
   return producto.tipo === "meditacion" || producto.tipo === "lectura";
+}
+
+export function modalidadMessage(modalidad: Modalidad, detalle?: string) {
+  const lead = `Hola Tati, quiero ${modalidad.nombre} (${modalidad.detalle}, ${formatPrice(modalidad.precio)}).${detalle ? ` ${detalle}` : ""}`;
+  const digital = modalidad.digital ? " y solicito el inicio inmediato del suministro del contenido digital" : "";
+  const cierre = modalidad.sesion ? "¿Qué disponibilidad tienes?" : "¿Me indicas cómo realizar el pago?";
+  return `${lead} He leído y acepto las condiciones de compra${digital}. ${cierre}`;
 }
 
 export function buyMessage(producto: Producto, detalle?: string, directo?: Directo) {

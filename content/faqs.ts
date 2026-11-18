@@ -110,7 +110,7 @@ export const faqs = {
     {
       question: "¿Cómo consigo las meditaciones grabadas?",
       answer:
-        "En la tienda. Eliges el pack, me escribes por WhatsApp y, tras confirmar el pago, te envío un enlace privado para descargar los MP3.",
+        "En la tienda. Eliges el programa, me escribes por WhatsApp y, tras confirmar el pago, te envío un enlace privado para descargar los MP3.",
     },
     {
       question: "¿Puedo meditar si tengo ansiedad?",

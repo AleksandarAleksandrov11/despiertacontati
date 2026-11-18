@@ -130,7 +130,7 @@ export const formatos: Formato[] = [
   },
   {
     title: "Meditación grabada",
-    text: "Packs de meditaciones guiadas en MP3 para escuchar cuando quieras.",
+    text: "Programas de meditación guiada de 6 y 12 semanas, en MP3, para escuchar cuando quieras.",
     cta: { label: "Ver meditaciones", href: "/tienda#meditaciones" },
   },
   {
@@ -151,7 +151,7 @@ export const formatos: Formato[] = [
 export const destacados = [
   {
     title: "Meditaciones guiadas",
-    text: "Packs para descargar y escuchar a tu ritmo, en casa o donde quieras.",
+    text: "Programas de 6 y 12 semanas para descargar y escuchar a tu ritmo, en casa o donde quieras.",
     image: "meditacionAuriculares" as ImageKey,
     href: "/tienda#meditaciones",
     cta: "Ver en la tienda",
@@ -330,7 +330,7 @@ export const meditacionPage = {
   grabadas: {
     eyebrow: "Meditaciones grabadas",
     title: "Medita con Tati.",
-    text: "Packs de meditaciones guiadas en MP3 para escuchar a tu ritmo. Los encuentras en la tienda.",
+    text: "Dos programas de meditación guiada, de 6 y 12 semanas, en MP3 para escuchar a tu ritmo. Los encuentras en la tienda.",
     cta: "Ver las meditaciones en la tienda",
   },
   grupales: {
@@ -352,6 +352,19 @@ export const tarotPage = {
   subtitle: "Un espejo para ver claro.",
   image: "tarotFlores" as ImageKey,
   shopCta: "Ver lecturas en la tienda",
+  mapa: {
+    eyebrow: "Nuevo · Mapa 2027",
+    title: "Tu año, tus caminos y tus posibilidades.",
+    text: "Una lectura anual de tarot para explorar las tendencias, las oportunidades, los retos y los aprendizajes que pueden acompañarte en 2027. No es un destino escrito: es una herramienta para comprender tu momento y elegir con más conciencia.",
+    cifras: [
+      { valor: "24", label: "cartas" },
+      { valor: "12", label: "meses" },
+      { valor: "5", label: "áreas de tu vida" },
+    ],
+    regalo: "Black Friday, del 24 al 30 de noviembre: tu Carta Personal de 2027, de regalo.",
+    cta: "Ver el Mapa 2027",
+    href: "/tienda/mapa-2027",
+  },
   dentroFuera: {
     image: "tarotBaraja" as ImageKey,
     title: "Dentro y fuera.",
@@ -372,7 +385,7 @@ export const tarotPage = {
     items: [
       {
         title: "Crono Tarot",
-        text: "Lecturas temporales: anual por tu cumpleaños, estacional, mensual y semanal.",
+        text: "Lecturas temporales: tu Mapa 2027, anual por tu cumpleaños, estacional, mensual y semanal.",
         href: "/tienda#crono-tarot",
       },
       {

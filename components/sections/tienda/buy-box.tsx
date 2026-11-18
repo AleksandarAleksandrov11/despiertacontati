@@ -5,19 +5,44 @@ import { useId, useState } from "react";
 import { fichaProducto, tiendaPage, type Producto } from "@/content/tienda";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/tracked";
-import { buyMessage, formatPrice, isDigital, notifyMessage } from "@/lib/tienda";
+import { buyMessage, formatPrice, isDigital, modalidadMessage, notifyMessage } from "@/lib/tienda";
 import { cn, whatsappHref } from "@/lib/utils";
 import { PriceTag } from "./price-tag";
 
 const buttonClass =
   "inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full px-7 py-3 text-center text-[0.95rem] font-medium transition-[background-color,opacity] duration-500";
 
+type Opcion = { label: string; detalle?: string; precio: number | null; digital: boolean; mensaje: string };
+
+function opcionesDe(producto: Producto, detalle?: string): Opcion[] | null {
+  if (producto.modalidades) {
+    return producto.modalidades.map((modalidad) => ({
+      label: modalidad.nombre,
+      detalle: modalidad.detalle,
+      precio: modalidad.precio,
+      digital: modalidad.digital,
+      mensaje: modalidadMessage(modalidad, detalle),
+    }));
+  }
+  if (!producto.directo) return null;
+  return [
+    { label: producto.formato, precio: producto.precio, digital: isDigital(producto), mensaje: buyMessage(producto, detalle) },
+    ...producto.directo.map((item) => ({
+      label: fichaProducto.buy.enDirecto(item.duracion),
+      precio: item.precio,
+      digital: false,
+      mensaje: buyMessage(producto, detalle, item),
+    })),
+  ];
+}
+
 export function BuyBox({ producto, detalle, origen }: { producto: Producto; detalle?: string; origen?: string }) {
   const copy = fichaProducto;
   const id = useId();
-  const [opcion, setOpcion] = useState(-1);
-  const directo = opcion >= 0 ? producto.directo?.[opcion] : undefined;
-  const digital = isDigital(producto) && !directo;
+  const [opcion, setOpcion] = useState(0);
+  const opciones = opcionesDe(producto, detalle);
+  const elegida = opciones?.[opcion];
+  const digital = elegida ? elegida.digital : isDigital(producto);
   const [terms, setTerms] = useState(false);
   const [supply, setSupply] = useState(false);
   const ready = terms && (!digital || supply);
@@ -45,35 +70,39 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
 
   return (
     <div className="rounded-[1.25rem] bg-crema p-7 shadow-[0_30px_70px_-45px_rgba(63,46,58,0.45)] sm:p-8">
-      <PriceTag producto={directo ? { ...producto, precio: directo.precio, precioHabitual: undefined } : producto} size="lg" />
+      <PriceTag
+        producto={elegida && opcion > 0 ? { ...producto, precio: elegida.precio, precioHabitual: undefined } : producto}
+        size="lg"
+      />
       <h2 className="sr-only">{copy.buy.title}</h2>
-      {producto.directo && (
+      {opciones && (
         <fieldset className="mt-7 border-t border-ciruela/10 pt-6">
           <legend className="eyebrow">{copy.buy.modalidad}</legend>
           <div className="mt-3 space-y-2">
-            {[{ label: producto.formato, precio: producto.precio }, ...producto.directo.map((item) => ({ label: copy.buy.enDirecto(item.duracion), precio: item.precio }))].map(
-              (item, index) => (
-                <label
-                  key={item.label}
-                  className={cn(
-                    "flex cursor-pointer items-center justify-between gap-4 rounded-2xl border px-4 py-3 text-[0.95rem] transition-colors duration-300",
-                    opcion === index - 1 ? "border-ciruela bg-rosa-polvo/60" : "border-ciruela/15 hover:border-ciruela/40",
-                  )}
-                >
-                  <span className="flex items-center gap-3">
-                    <input
-                      type="radio"
-                      name={`${id}-modalidad`}
-                      checked={opcion === index - 1}
-                      onChange={() => setOpcion(index - 1)}
-                      className="size-4 shrink-0 cursor-pointer accent-ciruela"
-                    />
+            {opciones.map((item, index) => (
+              <label
+                key={item.label}
+                className={cn(
+                  "flex cursor-pointer items-center justify-between gap-4 rounded-2xl border px-4 py-3 text-[0.95rem] transition-colors duration-300",
+                  opcion === index ? "border-ciruela bg-rosa-polvo/60" : "border-ciruela/15 hover:border-ciruela/40",
+                )}
+              >
+                <span className="flex items-center gap-3">
+                  <input
+                    type="radio"
+                    name={`${id}-modalidad`}
+                    checked={opcion === index}
+                    onChange={() => setOpcion(index)}
+                    className="size-4 shrink-0 cursor-pointer accent-ciruela"
+                  />
+                  <span>
                     {item.label}
+                    {item.detalle && <span className="block text-sm text-ink-soft">{item.detalle}</span>}
                   </span>
-                  {item.precio !== null && <span className="nums font-serif text-lg text-ciruela">{formatPrice(item.precio)}</span>}
-                </label>
-              ),
-            )}
+                </span>
+                {item.precio !== null && <span className="nums shrink-0 font-serif text-lg text-ciruela">{formatPrice(item.precio)}</span>}
+              </label>
+            ))}
           </div>
         </fieldset>
       )}
@@ -111,7 +140,7 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
       <div className="mt-7">
         {ready ? (
           <TrackedAnchor
-            href={whatsappHref(buyMessage(producto, detalle, directo))}
+            href={whatsappHref(elegida ? elegida.mensaje : buyMessage(producto, detalle))}
             target="_blank"
             rel="noopener noreferrer"
             event="click_comprar_whatsapp"

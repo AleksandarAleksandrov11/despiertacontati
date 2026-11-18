@@ -54,6 +54,28 @@ export default function TarotPage() {
         </Button>
       </PageHeader>
 
+      <Section tone="ciruela" id="mapa-2027" labelledBy="mapa-2027-title">
+        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <SectionHeading eyebrow={page.mapa.eyebrow} title={page.mapa.title} text={page.mapa.text} id="mapa-2027-title" tone="dark" />
+            <p className="mt-8 max-w-xl border-l border-dorado/60 pl-5 font-serif text-[1.35rem] italic leading-snug text-crema">{page.mapa.regalo}</p>
+            <div className="mt-10">
+              <Button href={page.mapa.href} tone="dark" magnetic>
+                {page.mapa.cta}
+              </Button>
+            </div>
+          </div>
+          <dl className="grid grid-cols-3 gap-4 lg:col-span-5">
+            {page.mapa.cifras.map((item) => (
+              <div key={item.label} className="flex flex-col-reverse items-center rounded-[1.25rem] border border-dorado/30 px-3 py-8 text-center">
+                <dt className="mt-3 text-sm text-crema/80">{item.label}</dt>
+                <dd className="nums font-serif text-[clamp(2.6rem,2rem+2vw,3.6rem)] leading-none text-dorado">{item.valor}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </Section>
+
       <Section tone="rosa" labelledBy="dentro-fuera">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
