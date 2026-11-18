@@ -12,7 +12,7 @@ import { PriceTag } from "./price-tag";
 const buttonClass =
   "inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full px-7 py-3 text-center text-[0.95rem] font-medium transition-[background-color,opacity] duration-500";
 
-type Opcion = { label: string; detalle?: string; precio: number | null; digital: boolean; mensaje: string };
+type Opcion = { label: string; detalle?: string; precio: number | null; digital: boolean; mensaje: string; mensajeExtra?: string };
 
 function opcionesDe(producto: Producto, detalle?: string): Opcion[] | null {
   if (producto.modalidades) {
@@ -22,6 +22,7 @@ function opcionesDe(producto: Producto, detalle?: string): Opcion[] | null {
       precio: modalidad.precio,
       digital: modalidad.digital,
       mensaje: modalidadMessage(modalidad, detalle),
+      mensajeExtra: producto.extra ? modalidadMessage(modalidad, detalle, producto.extra) : undefined,
     }));
   }
   if (!producto.directo) return null;
@@ -42,7 +43,9 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
   const [opcion, setOpcion] = useState(0);
   const opciones = opcionesDe(producto, detalle);
   const elegida = opciones?.[opcion];
-  const digital = elegida ? elegida.digital : isDigital(producto);
+  const [conExtra, setConExtra] = useState(false);
+  const extra = conExtra ? producto.extra : undefined;
+  const digital = (elegida ? elegida.digital : isDigital(producto)) || Boolean(extra);
   const [terms, setTerms] = useState(false);
   const [supply, setSupply] = useState(false);
   const ready = terms && (!digital || supply);
@@ -71,7 +74,11 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
   return (
     <div className="rounded-[1.25rem] bg-crema p-7 shadow-[0_30px_70px_-45px_rgba(63,46,58,0.45)] sm:p-8">
       <PriceTag
-        producto={elegida && opcion > 0 ? { ...producto, precio: elegida.precio, precioHabitual: undefined } : producto}
+        producto={
+          elegida && (opcion > 0 || extra) && elegida.precio !== null
+            ? { ...producto, precio: elegida.precio + (extra?.precio ?? 0), precioHabitual: undefined }
+            : producto
+        }
         size="lg"
       />
       <h2 className="sr-only">{copy.buy.title}</h2>
@@ -104,6 +111,25 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
               </label>
             ))}
           </div>
+          {producto.extra && (
+            <label
+              className={cn(
+                "mt-3 flex cursor-pointer items-center justify-between gap-4 rounded-2xl border border-dashed px-4 py-3 text-[0.95rem] transition-colors duration-300",
+                conExtra ? "border-ciruela bg-rosa-polvo/60" : "border-ciruela/25 hover:border-ciruela/50",
+              )}
+            >
+              <span className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={conExtra}
+                  onChange={(event) => setConExtra(event.target.checked)}
+                  className="size-4 shrink-0 cursor-pointer accent-ciruela"
+                />
+                {producto.extra.nombre}
+              </span>
+              <span className="nums shrink-0 font-serif text-lg text-ciruela">+{formatPrice(producto.extra.precio)}</span>
+            </label>
+          )}
         </fieldset>
       )}
       <div className="mt-7 space-y-4 border-t border-ciruela/10 pt-6">
@@ -140,7 +166,7 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
       <div className="mt-7">
         {ready ? (
           <TrackedAnchor
-            href={whatsappHref(elegida ? elegida.mensaje : buyMessage(producto, detalle))}
+            href={whatsappHref(elegida ? (extra && elegida.mensajeExtra) || elegida.mensaje : buyMessage(producto, detalle))}
             target="_blank"
             rel="noopener noreferrer"
             event="click_comprar_whatsapp"

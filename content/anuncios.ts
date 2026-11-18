@@ -42,7 +42,7 @@ export const anuncios: Anuncio[] = [
     type: "Tienda",
     title: "Mapa 2027",
     status: "Black Friday, del 24 al 30 de noviembre",
-    modality: "PDF, vídeo o en directo",
+    modality: "En vídeo o en directo",
     text: "Tu lectura anual de tarot: 24 cartas para tu punto de partida, tus 12 meses y 5 áreas de tu vida. Ahora, con tu Carta Personal de 2027 de regalo.",
     cta: { kind: "enlace", label: "Ver el Mapa 2027", href: "/tienda/mapa-2027" },
     date: "2026-11-24",

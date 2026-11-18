@@ -14,13 +14,17 @@ export function productHref(producto: Producto) {
 
 export type Directo = NonNullable<Producto["directo"]>[number];
 
+export type Extra = NonNullable<Producto["extra"]>;
+
 export function isDigital(producto: Producto) {
   return producto.tipo === "meditacion" || producto.tipo === "lectura";
 }
 
-export function modalidadMessage(modalidad: Modalidad, detalle?: string) {
-  const lead = `Hola Tati, quiero ${modalidad.nombre} (${modalidad.detalle}, ${formatPrice(modalidad.precio)}).${detalle ? ` ${detalle}` : ""}`;
-  const digital = modalidad.digital ? " y solicito el inicio inmediato del suministro del contenido digital" : "";
+export function modalidadMessage(modalidad: Modalidad, detalle?: string, extra?: Extra) {
+  const precio = formatPrice(modalidad.precio + (extra?.precio ?? 0));
+  const conExtra = extra ? `, con la lectura en PDF (+${formatPrice(extra.precio)})` : "";
+  const lead = `Hola Tati, quiero ${modalidad.nombre} (${modalidad.detalle})${conExtra}, ${precio} en total.${detalle ? ` ${detalle}` : ""}`;
+  const digital = modalidad.digital || extra ? " y solicito el inicio inmediato del suministro del contenido digital" : "";
   const cierre = modalidad.sesion ? "¿Qué disponibilidad tienes?" : "¿Me indicas cómo realizar el pago?";
   return `${lead} He leído y acepto las condiciones de compra${digital}. ${cierre}`;
 }

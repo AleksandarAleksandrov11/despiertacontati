@@ -204,6 +204,11 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
                           {item.detalle} · {formatPrice(item.precio)}
                         </span>
                       ))}
+                      {producto.extra && (
+                        <span className="nums mt-2 block">
+                          {producto.extra.nombre} · +{formatPrice(producto.extra.precio)}
+                        </span>
+                      )}
                     </dd>
                   )}
                   {producto.directo && (

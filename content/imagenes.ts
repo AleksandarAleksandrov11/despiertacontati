@@ -37,6 +37,7 @@ import cartasDoradas from "@/public/images/tarot-cartas-doradas.webp";
 import tarotCuarzoRosa from "@/public/images/tarot-cuarzo-rosa.webp";
 import tarotErmitano from "@/public/images/tarot-ermitano-luces.webp";
 import diagramaCeleste from "@/public/images/diagrama-celeste-antiguo.webp";
+import mapa2027 from "@/public/images/mapa-2027-cartas.webp";
 import cartaCircular from "@/public/images/carta-circular-dibujo.webp";
 import tiradaSuelo from "@/public/images/tirada-tarot-suelo.webp";
 import escritorioVela from "@/public/images/escritorio-vela-portatil.webp";
@@ -228,6 +229,11 @@ export const imagenes = {
   tarotErmitano: {
     src: tarotErmitano,
     alt: "Carta de El Ermitaño sobre una tela morada rodeada de pequeñas luces",
+    position: "50% 50%",
+  },
+  mapa2027: {
+    src: mapa2027,
+    alt: "Abanico de cartas del tarot Rider-Waite bajo el título Mapa 2027, tu año en 24 cartas",
     position: "50% 50%",
   },
   diagramaCeleste: {

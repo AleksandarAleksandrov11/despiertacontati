@@ -23,6 +23,7 @@ export type Producto = {
   precio: number | null;
   directo?: { precio: number; duracion: string }[];
   modalidades?: Modalidad[];
+  extra?: { nombre: string; precio: number };
   regalo?: { eyebrow: string; title: string; text: string; items: string[] };
   precioHabitual?: number;
   lanzamiento?: boolean;
@@ -187,8 +188,8 @@ export const productos: Producto[] = [
       { titulo: "Tus cinco áreas: amor y relaciones, trabajo y proyectos, dinero y recursos, familia y entorno, y crecimiento personal", detalle: "5 cartas" },
       { titulo: "Tu consejo final para integrar todo lo que revela tu mapa", detalle: "1 carta" },
     ],
-    formato: "PDF, con vídeo o en directo",
-    entrega: "El PDF y el vídeo, por WhatsApp tras confirmar el pago. La sesión en directo es online y la agendamos por WhatsApp.",
+    formato: "En vídeo o en directo",
+    entrega: "El vídeo, por WhatsApp tras confirmar el pago. La sesión en directo es online y la agendamos por WhatsApp. Si añades el PDF, te llega junto a tu lectura.",
     paraQuien: [
       "Quieres empezar 2027 sabiendo qué energía te acompaña cada mes.",
       "Te gusta mirar el año con perspectiva antes de tomar decisiones.",
@@ -196,11 +197,11 @@ export const productos: Producto[] = [
     ],
     precio: 17,
     modalidades: [
-      { nombre: "Mapa 2027", detalle: "Lectura completa en PDF", precio: 17, digital: true, sesion: false },
-      { nombre: "Mapa 2027 guiado", detalle: "PDF y vídeo explicativo personalizado", precio: 24, digital: true, sesion: false },
-      { nombre: "Mapa 2027 en directo", detalle: "Sesión individual de 50 minutos", precio: 36, digital: false, sesion: true },
-      { nombre: "Mapa 2027 completo", detalle: "PDF y sesión individual de 50 minutos", precio: 45, digital: true, sesion: true },
+      { nombre: "Guía 2027", detalle: "Tu punto de partida: las 6 primeras cartas, en vídeo", precio: 17, digital: true, sesion: false },
+      { nombre: "Mapa 2027", detalle: "La lectura completa de 24 cartas, en vídeo", precio: 24, digital: true, sesion: false },
+      { nombre: "Mapa 2027 en directo", detalle: "La lectura completa en una sesión de 50 minutos", precio: 36, digital: false, sesion: true },
     ],
+    extra: { nombre: "Añade tu lectura en PDF", precio: 5 },
     regalo: {
       eyebrow: "Black Friday, del 24 al 30 de noviembre",
       title: "Tu Carta Personal de 2027, de regalo.",
@@ -209,7 +210,7 @@ export const productos: Producto[] = [
     },
     estado: "disponible",
     destacado: true,
-    imagen: "diagramaCeleste",
+    imagen: "mapa2027",
   },
   {
     slug: "lectura-del-cumpleanos",
@@ -666,7 +667,7 @@ export const tiendaPage = {
     usual: "Precio habitual",
     onRequest: "Precio a consultar",
     directo: (precio: string) => `En directo desde ${precio}`,
-    modalidades: "También con vídeo o en directo",
+    modalidades: "En vídeo o en directo",
     info: "Pide información",
     calculate: "Calcular gratis",
   },
