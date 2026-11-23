@@ -19,13 +19,13 @@ export const anuncios: Anuncio[] = [
     id: "grupo-meditacion-online",
     type: "Grupo",
     title: "Grupo de meditación online",
-    status: "Abre próximamente",
+    status: "Empezamos el 26 de noviembre",
     modality: "Online",
-    text: "Meditamos juntas desde casa. Solo necesitas un rato y ganas de parar.",
+    text: "Meditamos en grupo desde casa. Solo necesitas un rato y ganas de parar.",
     cta: {
       kind: "whatsapp",
       label: "Quiero plaza",
-      message: "Hola, Tati. Quiero plaza en el grupo de meditación online.",
+      message: "Hola, Tati. Quiero plaza en el grupo de meditación online que empieza el 26 de noviembre.",
     },
   },
   {

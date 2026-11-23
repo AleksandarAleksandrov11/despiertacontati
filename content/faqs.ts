@@ -119,7 +119,7 @@ export const faqs = {
     },
     {
       question: "¿Cuándo empiezan los grupos?",
-      answer: "Estoy a punto de abrir un grupo online. Escríbeme y te aviso de las fechas.",
+      answer: "Empezamos el 26 de noviembre con un grupo online. Escríbeme y te cuento cómo apuntarte.",
     },
     disclaimerFaq,
   ],
