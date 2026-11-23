@@ -29,7 +29,7 @@ const reservarFaq: Faq = {
 const lecturaFaq: Faq = {
   question: "¿Cómo recibo una lectura?",
   answer:
-    "Las lecturas son en diferido. Eliges la tuya en la tienda, me escribes por WhatsApp y, tras confirmar el pago, te envío el vídeo por WhatsApp. Si quieres también el PDF de tu lectura, lo añades por 5 €.",
+    "Las lecturas son en diferido. Eliges la tuya en la tienda, me escribes por WhatsApp y, tras confirmar el pago, te envío el vídeo por WhatsApp. Si quieres también el PDF de tu lectura, lo añades por 4,95 €.",
 };
 
 export const faqs = {

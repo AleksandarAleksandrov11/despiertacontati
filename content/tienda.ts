@@ -64,14 +64,14 @@ export const categorias: Categoria[] = [
     nav: "Crono Tarot",
     eyebrow: "Crono Tarot",
     title: "Lecturas en el tiempo.",
-    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 5 €.",
+    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
   },
   {
     id: "lecturas",
     nav: "Lecturas concretas",
     eyebrow: "Lecturas concretas",
     title: "Una pregunta, una lectura.",
-    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 5 €.",
+    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
   },
   {
     id: "autoconocimiento",
@@ -105,7 +105,7 @@ export const categorias: Categoria[] = [
 
 const entregaMeditacion = "Archivos MP3 por enlace privado de descarga, tras confirmar el pago.";
 const entregaLectura = "Vídeo por WhatsApp, tras confirmar el pago. Si añades el PDF, te llega junto a tu lectura.";
-const extraPdf = { nombre: "Añade tu lectura en PDF", precio: 5 };
+const extraPdf = { nombre: "Añade tu lectura en PDF", precio: 4.95 };
 const entregaSesion = "Online. La fecha y la hora se agendan por WhatsApp.";
 const entregaTerapia = "Online, a distancia. La fecha y la hora se agendan por WhatsApp.";
 const entregaPresencial = "Online o presencial. La fecha, la hora y el lugar se agendan por WhatsApp.";
@@ -233,7 +233,7 @@ export const productos: Producto[] = [
       { nombre: "Mapa 2027", detalle: "La lectura completa de 24 cartas, en vídeo", precio: 24, digital: true, sesion: false },
       { nombre: "Mapa 2027 en directo", detalle: "La lectura completa en una sesión de 50 minutos", precio: 36, digital: false, sesion: true },
     ],
-    extra: { nombre: "Añade tu lectura en PDF", precio: 5 },
+    extra: { nombre: "Añade tu lectura en PDF", precio: 4.95 },
     regalo: {
       eyebrow: "Black Friday, del 24 al 30 de noviembre",
       title: "Tu Carta Personal de 2027, de regalo.",
@@ -776,7 +776,7 @@ export const tiendaFaqs: Faq[] = [
   {
     question: "¿En qué formato llega?",
     answer:
-      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas de tarot, en vídeo por WhatsApp (con PDF opcional por 5 €), y muchas también las puedes elegir en directo. Las sesiones en directo son online, el Reiki y el péndulo hebreo también pueden ser presenciales, y la limpieza de espacios es a distancia, con su informe por WhatsApp.",
+      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas de tarot, en vídeo por WhatsApp (con PDF opcional por 4,95 €), y muchas también las puedes elegir en directo. Las sesiones en directo son online, el Reiki y el péndulo hebreo también pueden ser presenciales, y la limpieza de espacios es a distancia, con su informe por WhatsApp.",
   },
   {
     question: "¿Qué necesito para escuchar las meditaciones?",

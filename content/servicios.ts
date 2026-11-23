@@ -381,7 +381,7 @@ export const tarotPage = {
   formatos: {
     eyebrow: "Formatos",
     title: "Tres formas de consultar.",
-    note: "Las lecturas son en diferido: te llegan en vídeo por WhatsApp, y puedes añadir el PDF por 5 €. Trabajo con el tarot Rider-Waite.",
+    note: "Las lecturas son en diferido: te llegan en vídeo por WhatsApp, y puedes añadir el PDF por 4,95 €. Trabajo con el tarot Rider-Waite.",
     items: [
       {
         title: "Crono Tarot",
