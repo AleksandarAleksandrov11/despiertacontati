@@ -600,7 +600,7 @@ export const productos: Producto[] = [
     paraQuien: [],
     precio: 27,
     destacado: false,
-    imagen: "sesionReiki",
+    imagen: "relajacionSillon",
     enlace: "/servicios/reiki#terapias-title",
   },
   {

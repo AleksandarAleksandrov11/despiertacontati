@@ -22,7 +22,7 @@ export const bloques: Bloque[] = [
     benefit: "Calma y equilibrio",
     area: "Terapias energéticas",
     accent: "var(--color-chakra-corazon)",
-    image: "sesionReiki",
+    image: "reikiManosPecho",
     summary: "Para bajar revoluciones, soltar tensiones y dedicarte un tiempo solo para ti.",
     includes: ["Reiki + péndulo hebreo", "Péndulo hebreo", "Análisis de chakras", "Sanación akáshica"],
     modality: ["Online", "A distancia"],
@@ -91,7 +91,7 @@ export const metodo = {
       step: "Calma",
       tool: "Reiki",
       accent: "var(--color-chakra-corazon)",
-      image: "sesionReiki" as ImageKey,
+      image: "reikiManosPecho" as ImageKey,
       text: "Primero, bajar revoluciones. El Reiki te ayuda a soltar y a volver a tu cuerpo.",
       href: "/servicios/reiki",
     },
@@ -219,7 +219,7 @@ export const reikiPage = {
     {
       title: "Reiki + péndulo hebreo",
       text: "Mi sesión de Reiki, con el péndulo hebreo. Acompañamiento energético orientado a la relajación, la calma y el bienestar interior: un espacio para desconectar, soltar tensiones y dedicarte tiempo.",
-      image: "sesionReiki",
+      image: "relajacionSillon",
       whatsapp: "Hola, Tati. Me gustaría información sobre la sesión de Reiki con péndulo hebreo.",
     },
     {
