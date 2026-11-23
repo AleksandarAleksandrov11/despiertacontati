@@ -33,9 +33,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/sobre-mi", destination: "/quien-soy", statusCode: 301 },
-      { source: "/tienda/pausa-y-vuelve-a-ti", destination: "/tienda/camino-12-semanas-meditacion", permanent: true },
-      { source: "/tienda/un-espacio-para-tu-mente", destination: "/tienda/camino-6-semanas-meditacion", permanent: true },
-      { source: "/tienda/conecta-contigo", destination: "/tienda/camino-6-semanas-meditacion", permanent: true },
+      { source: "/tienda/pausa-y-vuelve-a-ti", destination: "/tienda/transforma-tu-bienestar", permanent: true },
+      { source: "/tienda/camino-12-semanas-meditacion", destination: "/tienda/transforma-tu-bienestar", permanent: true },
+      { source: "/tienda/un-espacio-para-tu-mente", destination: "/tienda/vuelve-a-ti", permanent: true },
+      { source: "/tienda/conecta-contigo", destination: "/tienda/vuelve-a-ti", permanent: true },
+      { source: "/tienda/camino-6-semanas-meditacion", destination: "/tienda/vuelve-a-ti", permanent: true },
       { source: "/calculadora/compatibilidad-de-pareja", destination: "/calculadora/matriz-del-destino", permanent: false },
       ...(hayTestimonios ? [] : [{ source: "/testimonios", destination: "/quien-soy", permanent: false }]),
     ];

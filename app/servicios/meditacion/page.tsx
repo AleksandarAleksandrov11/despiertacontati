@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { meditacionPage } from "@/content/servicios";
-import { productosDe, tiendaPage } from "@/content/tienda";
+import { productosDe } from "@/content/tienda";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
@@ -19,6 +19,8 @@ import { whatsappHref } from "@/lib/utils";
 
 const description =
   "Clases de meditación en grupo online, meditaciones guiadas para descargar y una guía gratuita para empezar a meditar. Medita en lo cotidiano.";
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = pageMetadata({
   title: "Clases de meditación online | Despierta con Tati",
@@ -118,7 +120,6 @@ export default function MeditacionPage() {
                   <p className="mt-1 text-sm text-ink-soft">
                     {pack.formato}
                     {pack.duracionTotal ? ` · ${pack.duracionTotal}` : ""}
-                    {pack.estado === "proximamente" ? ` · ${tiendaPage.card.soon}` : ""}
                   </p>
                 </div>
                 <PriceTag producto={pack} className="shrink-0 sm:text-right" />

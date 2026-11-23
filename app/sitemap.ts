@@ -29,7 +29,7 @@ const routes: Route[] = [
 ];
 
 const productRoutes: Route[] = productos
-  .filter((producto) => producto.precio !== null)
+  .filter((producto) => producto.precio !== null && !producto.ventana)
   .map((producto) => ({ path: `/tienda/${producto.slug}`, priority: 0.7, changeFrequency: "monthly" }));
 
 export default function sitemap(): MetadataRoute.Sitemap {

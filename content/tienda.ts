@@ -6,6 +6,16 @@ export type CategoriaId = "meditaciones" | "crono-tarot" | "lecturas" | "autocon
 
 export type TipoProducto = "meditacion" | "lectura" | "sesion" | "terapia" | "espacio";
 
+export type Ventana = { desde: string; hasta: string };
+
+export const blackFriday: Ventana = { desde: "2026-11-24", hasta: "2026-11-30" };
+
+export function vigente(ventana?: Ventana, ahora = new Date()) {
+  if (!ventana) return true;
+  const hoy = ahora.toLocaleDateString("sv-SE", { timeZone: "Europe/Madrid" });
+  return hoy >= ventana.desde && hoy <= ventana.hasta;
+}
+
 export type Modalidad = { nombre: string; detalle: string; precio: number; digital: boolean; sesion: boolean };
 
 export type Producto = {
@@ -24,10 +34,9 @@ export type Producto = {
   directo?: { precio: number; duracion: string }[];
   modalidades?: Modalidad[];
   extra?: { nombre: string; precio: number };
-  regalo?: { eyebrow: string; title: string; text: string; items: string[] };
-  precioHabitual?: number;
-  lanzamiento?: boolean;
-  estado: "disponible" | "proximamente";
+  regalo?: { eyebrow: string; title: string; text: string; items: string[]; ventana: Ventana };
+  oferta?: string;
+  ventana?: Ventana;
   destacado: boolean;
   imagen: ImageKey;
   calculadora?: string;
@@ -48,21 +57,21 @@ export const categorias: Categoria[] = [
     nav: "Meditaciones",
     eyebrow: "Meditaciones",
     title: "Medita con Tati.",
-    text: "Dos programas de meditación guiada, de 6 y de 12 semanas, con una meditación en MP3 para cada semana. Te llegan por enlace privado de descarga tras confirmar el pago.",
+    text: "Dos programas de meditación guiada, de 6 y de 12 semanas, con una meditación en MP3 para cada semana y un cuaderno de reflexión. Te llegan por enlace privado de descarga tras confirmar el pago.",
   },
   {
     id: "crono-tarot",
     nav: "Crono Tarot",
     eyebrow: "Crono Tarot",
     title: "Lecturas en el tiempo.",
-    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo y PDF por WhatsApp o en directo.",
+    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 5 €.",
   },
   {
     id: "lecturas",
     nav: "Lecturas concretas",
     eyebrow: "Lecturas concretas",
     title: "Una pregunta, una lectura.",
-    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. Tarot Rider-Waite, en vídeo y PDF por WhatsApp o en directo.",
+    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 5 €.",
   },
   {
     id: "autoconocimiento",
@@ -95,7 +104,8 @@ export const categorias: Categoria[] = [
 ];
 
 const entregaMeditacion = "Archivos MP3 por enlace privado de descarga, tras confirmar el pago.";
-const entregaLectura = "Vídeo y PDF por WhatsApp, tras confirmar el pago.";
+const entregaLectura = "Vídeo por WhatsApp, tras confirmar el pago. Si añades el PDF, te llega junto a tu lectura.";
+const extraPdf = { nombre: "Añade tu lectura en PDF", precio: 5 };
 const entregaSesion = "Online. La fecha y la hora se agendan por WhatsApp.";
 const entregaTerapia = "Online, a distancia. La fecha y la hora se agendan por WhatsApp.";
 const entregaPresencial = "Online o presencial. La fecha, la hora y el lugar se agendan por WhatsApp.";
@@ -108,43 +118,67 @@ const paraLectura = [
 
 export const productos: Producto[] = [
   {
-    slug: "camino-6-semanas-meditacion",
+    slug: "los-dos-programas",
     categoria: "meditaciones",
     tipo: "meditacion",
-    nombre: "Tu camino de 6 semanas de meditación",
-    frase: "Seis meditaciones, una por semana, para despertar los sentidos, observar la mente y volver a tu esencia.",
+    nombre: "Los dos programas",
+    frase: "Vuelve a ti y Transforma tu bienestar juntos: 18 semanas de meditación guiada.",
     descripcion:
-      "Un programa para recorrer a lo largo de seis semanas, con una meditación guiada cada semana, el orden de escucha recomendado y una guía de uso para acompañar la práctica.",
+      "Los dos programas de meditación juntos por 24,80 € durante el Black Friday, del 24 al 30 de noviembre. Por separado cuestan 12,90 € y 19,90 €. Cada programa incluye su guía de uso y su cuaderno de reflexión Mi espacio interior.",
+    incluye: [
+      { titulo: "Vuelve a ti: 6 semanas para encontrar tu calma", detalle: "6 audios" },
+      { titulo: "Transforma tu bienestar: 12 semanas para cultivar tu equilibrio interior", detalle: "12 audios" },
+      { titulo: "Mi espacio interior: cuaderno de reflexión e integración de cada programa", detalle: "2 cuadernos" },
+    ],
+    formato: "18 audios en MP3, guías de uso y cuadernos de reflexión",
+    entrega: entregaMeditacion,
+    paraQuien: [
+      "Quieres empezar con calma y seguir profundizando después.",
+      "Te apetece tener un camino de meditación para los próximos meses.",
+      "Buscas un regalo para ti, o para alguien que lo necesita.",
+    ],
+    precio: 24.8,
+    oferta: "Oferta Black Friday, del 24 al 30 de noviembre",
+    ventana: blackFriday,
+    destacado: true,
+    imagen: "ventanaLuz",
+  },
+  {
+    slug: "vuelve-a-ti",
+    categoria: "meditaciones",
+    tipo: "meditacion",
+    nombre: "Vuelve a ti",
+    frase: "6 semanas para encontrar tu calma.",
+    descripcion:
+      "Un recorrido para parar, respirar, escucharte y empezar a dedicarte tiempo. Una meditación guiada cada semana, con el orden de escucha recomendado, una guía de uso y Mi espacio interior, un cuaderno de reflexión e integración: un lugar para escucharte, descubrirte y conectar contigo.",
     incluye: [
       { titulo: "Semana 1. Despierta tus sentidos", detalle: "25:31" },
       { titulo: "Semana 2. Un cielo de pensamientos", detalle: "26:38" },
       { titulo: "Semana 3. Viaje a tu esencia", detalle: "27:30" },
       { titulo: "Semana 4. Cerrar ciclos", detalle: "27:03" },
       { titulo: "Semana 5. La sonrisa interior", detalle: "25:03" },
-      { titulo: "Semana 6", detalle: "Próximamente" },
+      { titulo: "Semana 6" },
+      { titulo: "Mi espacio interior: cuaderno de reflexión e integración", detalle: "Cuaderno" },
     ],
-    formato: "6 audios en MP3 y guía de uso",
+    formato: "6 audios en MP3, guía de uso y cuaderno de reflexión",
     entrega: entregaMeditacion,
     paraQuien: [
       "Quieres empezar a meditar con un programa corto y con orden.",
       "Te ayuda tener una práctica nueva cada semana.",
-      "Te apetece explorar los sentidos, la mente y tu interior paso a paso.",
+      "Te apetece parar, respirar y dedicarte tiempo paso a paso.",
     ],
-    precio: 9.9,
-    precioHabitual: 12.9,
-    lanzamiento: true,
-    estado: "proximamente",
+    precio: 12.9,
     destacado: true,
     imagen: "pausaCojin",
   },
   {
-    slug: "camino-12-semanas-meditacion",
+    slug: "transforma-tu-bienestar",
     categoria: "meditaciones",
     tipo: "meditacion",
-    nombre: "Tu camino de 12 semanas de meditación",
-    frase: "Doce meditaciones, una por semana, con orden de escucha y guía de uso.",
+    nombre: "Transforma tu bienestar",
+    frase: "12 semanas para cultivar tu equilibrio interior.",
     descripcion:
-      "Un programa para recorrer a lo largo de doce semanas, con el orden de escucha recomendado, una propuesta semanal sencilla y una guía de uso para preparar la práctica.",
+      "Un camino más profundo para incorporar la meditación a tu vida y cultivar tu bienestar. Una meditación guiada cada semana, con el orden de escucha recomendado, una guía de uso y Mi espacio interior, un cuaderno de reflexión e integración: un lugar para escucharte, descubrirte y conectar contigo.",
     incluye: [
       { titulo: "Semana 1. Respiración ancla", detalle: "23:03" },
       { titulo: "Semana 2. Respiración freno", detalle: "23:16" },
@@ -158,19 +192,17 @@ export const productos: Producto[] = [
       { titulo: "Semana 10. Meditación de los chakras", detalle: "27:37" },
       { titulo: "Semana 11. Todo está bien", detalle: "22:20" },
       { titulo: "Semana 12. La fiesta de la gratitud", detalle: "21:36" },
+      { titulo: "Mi espacio interior: cuaderno de reflexión e integración", detalle: "Cuaderno" },
     ],
     duracionTotal: "4 h 52 min",
-    formato: "12 audios en MP3 y guía de uso",
+    formato: "12 audios en MP3, guía de uso y cuaderno de reflexión",
     entrega: entregaMeditacion,
     paraQuien: [
       "Quieres crear el hábito de meditar y necesitas un orden.",
       "Te ayuda avanzar paso a paso, una semana cada vez.",
       "Prefieres un camino completo a ir probando suelto.",
     ],
-    precio: 14.9,
-    precioHabitual: 19.9,
-    lanzamiento: true,
-    estado: "disponible",
+    precio: 19.9,
     destacado: true,
     imagen: "meditacionPorche",
   },
@@ -207,8 +239,8 @@ export const productos: Producto[] = [
       title: "Tu Carta Personal de 2027, de regalo.",
       text: "Si pides tu Mapa 2027 en cualquier modalidad durante el Black Friday, te regalo tu Carta Personal del año, calculada con tu fecha de nacimiento.",
       items: ["El arcano que te acompaña en 2027", "Su energía y su significado", "Sus aprendizajes y oportunidades", "Tu reto personal para el año"],
+      ventana: blackFriday,
     },
-    estado: "disponible",
     destacado: true,
     imagen: "mapa2027",
   },
@@ -221,8 +253,8 @@ export const productos: Producto[] = [
       "Tu nuevo ciclo personal: aprendizajes, oportunidades y retos para los próximos doce meses en las diferentes áreas de tu vida.",
     descripcion:
       "Una lectura para explorar tu nuevo ciclo personal y descubrir los aprendizajes, las oportunidades y los retos que pueden aparecer en las diferentes áreas de tu vida durante los próximos doce meses.",
-    incluye: [{ titulo: "Lectura anual con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura anual con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Se acerca tu cumpleaños y quieres empezar el ciclo con intención.",
@@ -231,7 +263,7 @@ export const productos: Producto[] = [
     ],
     precio: 17,
     directo: [{ precio: 36, duracion: "50 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: true,
     imagen: "tarotSol",
   },
@@ -244,13 +276,13 @@ export const productos: Producto[] = [
       "La energía de una estación (primavera, verano, otoño o invierno) y los temas, retos y aprendizajes de esa etapa.",
     descripcion:
       "Una lectura para explorar la energía de una estación del año (primavera, verano, otoño o invierno) y conectar con los temas, retos y aprendizajes de esa etapa.",
-    incluye: [{ titulo: "Lectura estacional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura estacional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
     precio: 17,
     directo: [{ precio: 36, duracion: "50 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "hojasEstaciones",
   },
@@ -263,13 +295,13 @@ export const productos: Producto[] = [
       "Lectura amplia de un mes concreto: la energía del periodo, los temas más destacados y las áreas que pueden requerir atención.",
     descripcion:
       "Una lectura centrada en un mes concreto. Explora la energía del periodo y descubre los temas más destacados y las áreas de tu vida que pueden requerir atención.",
-    incluye: [{ titulo: "Lectura mensual amplia con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura mensual amplia con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
     precio: 17,
     directo: [{ precio: 36, duracion: "50 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "cartasLunas",
   },
@@ -282,13 +314,13 @@ export const productos: Producto[] = [
       "Lectura breve de un mes concreto para identificar los temas más relevantes y afrontar las próximas semanas con más conciencia.",
     descripcion:
       "Una lectura de un mes concreto para identificar los temas más relevantes, comprender los desafíos y afrontar las próximas semanas con mayor conciencia.",
-    incluye: [{ titulo: "Lectura mensual breve con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura mensual breve con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "tarotLuna",
   },
@@ -300,13 +332,13 @@ export const productos: Producto[] = [
     frase: "Tendencias de la semana, retos que puedes afrontar y oportunidades que conviene aprovechar.",
     descripcion:
       "Una visión de la semana para reconocer las tendencias, los retos que puedes afrontar y las oportunidades que conviene aprovechar.",
-    incluye: [{ titulo: "Lectura semanal con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura semanal con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "agendaFlores",
   },
@@ -327,7 +359,7 @@ export const productos: Producto[] = [
       { titulo: "Trabajo" },
       { titulo: "Dinero" },
     ],
-    formato: "Vídeo y PDF",
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Quieres una visión completa de tu momento vital.",
@@ -336,7 +368,7 @@ export const productos: Producto[] = [
     ],
     precio: 17,
     directo: [{ precio: 36, duracion: "50 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "tiradaCristales",
   },
@@ -348,8 +380,8 @@ export const productos: Producto[] = [
     frase: "La dinámica de una relación: puntos de conexión, diferencias y aprendizajes compartidos.",
     descripcion:
       "Explora la dinámica de una relación, sus puntos de conexión, sus diferencias y los aprendizajes que podéis compartir.",
-    incluye: [{ titulo: "Lectura de la relación con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura de la relación con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Quieres entender mejor cómo funciona tu relación.",
@@ -358,7 +390,7 @@ export const productos: Producto[] = [
     ],
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "tarotEnamorados",
   },
@@ -370,8 +402,8 @@ export const productos: Producto[] = [
     frase: "Tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento.",
     descripcion:
       "Analiza tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento para afrontar tu camino laboral con mayor claridad.",
-    incluye: [{ titulo: "Lectura profesional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura profesional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Te sientes bloqueada en el trabajo.",
@@ -380,7 +412,7 @@ export const productos: Producto[] = [
     ],
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "tarotAsOros",
   },
@@ -392,8 +424,8 @@ export const productos: Producto[] = [
     frase: "Afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
     descripcion:
       "Descubre las afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
-    incluye: [{ titulo: "Lectura de compatibilidad con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura de compatibilidad con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Quieres comprender mejor un vínculo importante para ti.",
@@ -402,7 +434,7 @@ export const productos: Producto[] = [
     ],
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "cartasDoradas",
   },
@@ -414,8 +446,8 @@ export const productos: Producto[] = [
     frase: "Tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
     descripcion:
       "Una lectura centrada en tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
-    incluye: [{ titulo: "Lectura afectiva con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }, { titulo: "PDF de la lectura" }],
-    formato: "Vídeo y PDF",
+    incluye: [{ titulo: "Lectura afectiva con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
       "Sientes que repites patrones en tus relaciones.",
@@ -424,7 +456,7 @@ export const productos: Producto[] = [
     ],
     precio: 8,
     directo: [{ precio: 27, duracion: "30 minutos" }],
-    estado: "disponible",
+    extra: extraPdf,
     destacado: false,
     imagen: "tarotCuarzoRosa",
   },
@@ -451,7 +483,6 @@ export const productos: Producto[] = [
       "Te atrae la numerología y quieres probarla con cartas.",
     ],
     precio: 27,
-    estado: "disponible",
     destacado: true,
     imagen: "tarotErmitano",
     calculadora: "/calculadora/codigo-personal",
@@ -483,7 +514,6 @@ export const productos: Producto[] = [
       { precio: 27, duracion: "30 minutos" },
       { precio: 36, duracion: "50 minutos" },
     ],
-    estado: "disponible",
     destacado: false,
     imagen: "diagramaCeleste",
     calculadora: "/calculadora/matriz-del-destino",
@@ -514,7 +544,6 @@ export const productos: Producto[] = [
       "Buscas recordar tu poder personal.",
     ],
     precio: 36,
-    estado: "disponible",
     destacado: false,
     imagen: "cartaCircular",
     calculadora: "/calculadora/matriz-del-destino",
@@ -535,7 +564,6 @@ export const productos: Producto[] = [
       "Necesitas una mirada desde fuera sobre una situación.",
     ],
     precio: 27,
-    estado: "disponible",
     destacado: false,
     imagen: "tiradaSuelo",
   },
@@ -556,7 +584,6 @@ export const productos: Producto[] = [
       "Prefieres una sesión larga para profundizar.",
     ],
     precio: 36,
-    estado: "disponible",
     destacado: false,
     imagen: "escritorioVela",
   },
@@ -572,9 +599,8 @@ export const productos: Producto[] = [
     entrega: entregaPresencial,
     paraQuien: [],
     precio: 27,
-    estado: "disponible",
     destacado: false,
-    imagen: "reikiManosPecho",
+    imagen: "sesionReiki",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
@@ -589,9 +615,8 @@ export const productos: Producto[] = [
     entrega: entregaPresencial,
     paraQuien: [],
     precio: 27,
-    estado: "disponible",
     destacado: false,
-    imagen: "linoLuzMesa",
+    imagen: "piedrasChakras",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
@@ -606,7 +631,6 @@ export const productos: Producto[] = [
     entrega: "Informe en PDF por WhatsApp, tras confirmar el pago.",
     paraQuien: [],
     precio: 8,
-    estado: "disponible",
     destacado: false,
     imagen: "chakrasLino",
     enlace: "/servicios/reiki#terapias-title",
@@ -623,7 +647,6 @@ export const productos: Producto[] = [
     entrega: entregaTerapia,
     paraQuien: [],
     precio: 27,
-    estado: "disponible",
     destacado: false,
     imagen: "libroPaginasLuz",
     enlace: "/servicios/reiki#terapias-title",
@@ -645,14 +668,13 @@ export const productos: Producto[] = [
       "Notas el ambiente cargado y no terminas de estar a gusto.",
     ],
     precio: 27,
-    estado: "disponible",
     destacado: false,
     imagen: "habitacionCortinas",
     enlace: "/servicios/limpieza-energetica",
   },
 ];
 
-export const inicioPreview = ["mapa-2027", "camino-12-semanas-meditacion", "tu-codigo-personal"];
+export const inicioPreview = ["mapa-2027", "transforma-tu-bienestar", "tu-codigo-personal"];
 
 export const tiendaPage = {
   eyebrow: "Tienda",
@@ -661,10 +683,6 @@ export const tiendaPage = {
   navLabel: "Secciones de la tienda",
   card: {
     details: "Ver detalles",
-    notify: "Avísame",
-    soon: "Próximamente",
-    launch: "Precio de lanzamiento",
-    usual: "Precio habitual",
     onRequest: "Precio a consultar",
     directo: (precio: string) => `En directo desde ${precio}`,
     modalidades: "En vídeo o en directo",
@@ -711,7 +729,7 @@ export const fichaProducto = {
   requirements: "Qué necesitas",
   requirementsMeditation:
     "Un móvil, tablet u ordenador con reproductor de audio, espacio para guardar los archivos y conexión a internet para descargarlos.",
-  requirementsReading: "WhatsApp para recibir el vídeo y el PDF, y un dispositivo que pueda abrirlos.",
+  requirementsReading: "WhatsApp para recibir el vídeo, y el PDF si lo añades, y un dispositivo que pueda abrirlos.",
   requirementsSession: "Para la sesión online, conexión a internet y un dispositivo con cámara y micrófono.",
   requirementsBirthday: "Tu fecha de nacimiento, que me darás por WhatsApp al hacer el pedido.",
   requirementsSpace: "La dirección del espacio, que me darás por WhatsApp al hacer el pedido.",
@@ -728,10 +746,6 @@ export const fichaProducto = {
     button: "Comprar por WhatsApp",
     hint: "Marca las casillas para continuar.",
     note: "Se abre WhatsApp con tu pedido. Allí te indico cómo pagar.",
-  },
-  soon: {
-    title: "Muy pronto",
-    text: "Este producto todavía no está disponible. Si quieres, te aviso en cuanto lo esté.",
   },
   related: "También te puede interesar",
   calculadoras: {
@@ -762,7 +776,7 @@ export const tiendaFaqs: Faq[] = [
   {
     question: "¿En qué formato llega?",
     answer:
-      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas, en vídeo y PDF por WhatsApp, y muchas también las puedes elegir en directo. Las sesiones en directo son online, el Reiki y el péndulo hebreo también pueden ser presenciales, y la limpieza de espacios es a distancia, con su informe por WhatsApp.",
+      "Las meditaciones, en archivos MP3 por enlace privado de descarga. Las lecturas de tarot, en vídeo por WhatsApp (con PDF opcional por 5 €), y muchas también las puedes elegir en directo. Las sesiones en directo son online, el Reiki y el péndulo hebreo también pueden ser presenciales, y la limpieza de espacios es a distancia, con su informe por WhatsApp.",
   },
   {
     question: "¿Qué necesito para escuchar las meditaciones?",
@@ -781,9 +795,9 @@ export const tiendaFaqs: Faq[] = [
 ];
 
 export function getProducto(slug: string) {
-  return productos.find((producto) => producto.slug === slug);
+  return productos.find((producto) => producto.slug === slug && vigente(producto.ventana));
 }
 
 export function productosDe(categoria: CategoriaId) {
-  return productos.filter((producto) => producto.categoria === categoria);
+  return productos.filter((producto) => producto.categoria === categoria && vigente(producto.ventana));
 }

@@ -9,18 +9,8 @@ export function PriceTag({ producto, size = "md", className }: { producto: Produ
   }
   return (
     <div className={className}>
-      <p className="flex flex-wrap items-baseline gap-x-3">
-        <span className={cn("nums font-serif leading-none text-ciruela", size === "lg" ? "text-[3.25rem]" : "text-[2.1rem]")}>
-          {formatPrice(producto.precio)}
-        </span>
-        {producto.precioHabitual && (
-          <span className="nums text-ink-soft">
-            <span className="sr-only">{copy.usual}: </span>
-            <s>{formatPrice(producto.precioHabitual)}</s>
-          </span>
-        )}
-      </p>
-      {producto.lanzamiento && <p className="mt-1.5 text-sm text-malva-deep">{copy.launch}</p>}
+      <p className={cn("nums font-serif leading-none text-ciruela", size === "lg" ? "text-[3.25rem]" : "text-[2.1rem]")}>{formatPrice(producto.precio)}</p>
+      {producto.oferta && <p className="mt-1.5 text-sm text-malva-deep">{producto.oferta}</p>}
       {producto.directo && size === "md" && <p className="mt-1.5 text-sm text-malva-deep">{copy.directo(formatPrice(producto.directo[0]!.precio))}</p>}
       {producto.modalidades && size === "md" && <p className="mt-1.5 text-sm text-malva-deep">{copy.modalidades}</p>}
     </div>

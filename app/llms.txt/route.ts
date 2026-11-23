@@ -9,6 +9,8 @@ import { absoluteUrl } from "@/lib/utils";
 
 export const dynamic = "force-static";
 
+export const revalidate = 3600;
+
 function tienda() {
   return categorias
     .map((categoria) => {
@@ -16,9 +18,8 @@ function tienda() {
         const price =
           producto.precio === null
             ? "precio a consultar"
-            : `${formatPrice(producto.precio)}${producto.precioHabitual ? ` (precio habitual ${formatPrice(producto.precioHabitual)})` : ""}`;
-        const estado = producto.estado === "proximamente" ? ", próximamente" : "";
-        return `- [${producto.nombre}](${absoluteUrl(productHref(producto))}): ${price}${estado}. ${producto.frase}`;
+            : `${formatPrice(producto.precio)}${producto.oferta ? ` (${producto.oferta})` : ""}`;
+        return `- [${producto.nombre}](${absoluteUrl(productHref(producto))}): ${price}. ${producto.frase}`;
       });
       return `### ${categoria.nav}\n${categoria.text}\n${lines.join("\n")}`;
     })

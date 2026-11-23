@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Check } from "lucide-react";
-import { categorias, fichaProducto, getProducto, productos, tiendaPage, type Producto } from "@/content/tienda";
+import { categorias, fichaProducto, getProducto, productos, tiendaPage, vigente, type Producto } from "@/content/tienda";
 import { BuyBox } from "@/components/sections/tienda/buy-box";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/sections/tienda/product-card";
@@ -34,6 +34,8 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
+export const revalidate = 3600;
+
 function seoTitle(producto: Producto) {
   const suffix = seoSuffix[producto.categoria];
   const base = producto.nombre.length + suffix.length < 46 ? `${producto.nombre}: ${suffix}` : producto.nombre;
@@ -54,8 +56,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 function relacionados(producto: Producto) {
-  const misma = comprables.filter((item) => item.categoria === producto.categoria && item.slug !== producto.slug);
-  const otros = comprables.filter((item) => item.categoria !== producto.categoria && item.destacado);
+  const visibles = comprables.filter((item) => vigente(item.ventana));
+  const misma = visibles.filter((item) => item.categoria === producto.categoria && item.slug !== producto.slug);
+  const otros = visibles.filter((item) => item.categoria !== producto.categoria && item.destacado);
   return [...misma, ...otros].slice(0, 3);
 }
 
@@ -125,7 +128,7 @@ export default async function ProductoPage({ params }: { params: Promise<Params>
         <div className="grid gap-12 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-16">
           <div className="lg:col-span-7">
             <p className="max-w-2xl text-lead">{producto.descripcion}</p>
-            {producto.regalo && (
+            {producto.regalo && vigente(producto.regalo.ventana) && (
               <div className="mt-8 rounded-[1.25rem] bg-ciruela p-6 text-crema sm:p-8">
                 <p className="eyebrow text-dorado">{producto.regalo.eyebrow}</p>
                 <p className="mt-3 font-serif text-[1.6rem] leading-tight">{producto.regalo.title}</p>

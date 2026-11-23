@@ -64,7 +64,7 @@ export const bloques: Bloque[] = [
     image: "tarotFlores",
     summary: "Un espejo para ver tu situación desde fuera y elegir tú, con más información y menos miedo.",
     includes: ["Crono Tarot", "Lecturas concretas", "Sesiones de tarot en directo", "Tu carta del día"],
-    modality: ["Lecturas en vídeo y PDF", "Sesiones online"],
+    modality: ["Lecturas en vídeo", "Sesiones online"],
     more: "Ver tarot",
   },
   {
@@ -125,7 +125,7 @@ export type Formato = {
 export const formatos: Formato[] = [
   {
     title: "Lectura en diferido",
-    text: "Crono Tarot, lecturas concretas y autoconocimiento. Te llegan en vídeo y PDF por WhatsApp.",
+    text: "Crono Tarot, lecturas concretas y autoconocimiento. Te llegan en vídeo por WhatsApp, con PDF opcional.",
     cta: { label: "Ver lecturas", href: "/tienda#crono-tarot" },
   },
   {
@@ -190,7 +190,7 @@ export const reikiPage = {
   eyebrow: "Terapias energéticas",
   title: "Reiki y terapias energéticas",
   subtitle: "Primero, bajar revoluciones.",
-  image: "manoHazDeLuz" as ImageKey,
+  image: "reikiManosPecho" as ImageKey,
   queEs: {
     image: "mujerLuzDorada" as ImageKey,
     title: "Qué es el Reiki",
@@ -219,13 +219,13 @@ export const reikiPage = {
     {
       title: "Reiki + péndulo hebreo",
       text: "Mi sesión de Reiki, con el péndulo hebreo. Acompañamiento energético orientado a la relajación, la calma y el bienestar interior: un espacio para desconectar, soltar tensiones y dedicarte tiempo.",
-      image: "reikiManosPecho",
+      image: "sesionReiki",
       whatsapp: "Hola, Tati. Me gustaría información sobre la sesión de Reiki con péndulo hebreo.",
     },
     {
       title: "Péndulo hebreo",
       text: "Trabajo energético con péndulo hebreo para explorar y trabajar aspectos relacionados con el equilibrio y el bienestar personal.",
-      image: "linoLuzMesa",
+      image: "piedrasChakras",
       whatsapp: "Hola, Tati. Me gustaría información sobre el péndulo hebreo.",
     },
     {
@@ -381,7 +381,7 @@ export const tarotPage = {
   formatos: {
     eyebrow: "Formatos",
     title: "Tres formas de consultar.",
-    note: "Las lecturas son en diferido: te llegan en vídeo y PDF por WhatsApp. Trabajo con el tarot Rider-Waite.",
+    note: "Las lecturas son en diferido: te llegan en vídeo por WhatsApp, y puedes añadir el PDF por 5 €. Trabajo con el tarot Rider-Waite.",
     items: [
       {
         title: "Crono Tarot",

@@ -18,9 +18,7 @@ import tatiRetrato from "@/public/images/tati-buganvilla.webp";
 import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
 import sesionReiki from "@/public/images/sesion-reiki-esterilla.webp";
 import reikiManosPecho from "@/public/images/reiki-manos-pecho.webp";
-import manoHazDeLuz from "@/public/images/mano-haz-de-luz.webp";
 import mujerLuzDorada from "@/public/images/mujer-luz-dorada-manos.webp";
-import linoLuzMesa from "@/public/images/lino-luz-mesa-madera.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
 import pausaCojin from "@/public/images/pausa-cojin-cortina.webp";
@@ -141,20 +139,10 @@ export const imagenes = {
     alt: "Manos apoyadas con suavidad sobre el pecho de una mujer tumbada con los ojos cerrados, en tonos cálidos de tierra y crema",
     position: "40% 45%",
   },
-  manoHazDeLuz: {
-    src: manoHazDeLuz,
-    alt: "Mano abierta que recibe un haz de luz cálida sobre un fondo claro",
-    position: "40% 50%",
-  },
   mujerLuzDorada: {
     src: mujerLuzDorada,
     alt: "Mujer sonriendo con los ojos cerrados y las manos juntas ante el pecho, envuelta en una luz dorada",
     position: "35% 50%",
-  },
-  linoLuzMesa: {
-    src: linoLuzMesa,
-    alt: "Paño de lino claro sobre una mesa de madera, atravesado por rayas de luz cálida de la ventana",
-    position: "50% 50%",
   },
   chakrasPiedras: {
     src: chakrasPiedras,

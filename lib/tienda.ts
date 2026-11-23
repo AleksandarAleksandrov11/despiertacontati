@@ -29,22 +29,21 @@ export function modalidadMessage(modalidad: Modalidad, detalle?: string, extra?:
   return `${lead} He leído y acepto las condiciones de compra${digital}. ${cierre}`;
 }
 
-export function buyMessage(producto: Producto, detalle?: string, directo?: Directo) {
+export function buyMessage(producto: Producto, detalle?: string, directo?: Directo, extra?: Extra) {
+  const conExtra = extra ? `, con la lectura en PDF (+${formatPrice(extra.precio)})` : "";
+  const digitalExtra = extra ? " y solicito el inicio inmediato del suministro del contenido digital" : "";
   if (directo) {
-    const lead = `Hola Tati, quiero ${producto.nombre} en directo, ${directo.duracion} (${formatPrice(directo.precio)}).${detalle ? ` ${detalle}` : ""}`;
-    return `${lead} He leído y acepto las condiciones de compra. ¿Qué disponibilidad tienes?`;
+    const total = formatPrice(directo.precio + (extra?.precio ?? 0));
+    const lead = `Hola Tati, quiero ${producto.nombre} en directo, ${directo.duracion}${conExtra}, ${total} en total.${detalle ? ` ${detalle}` : ""}`;
+    return `${lead} He leído y acepto las condiciones de compra${digitalExtra}. ¿Qué disponibilidad tienes?`;
   }
-  const price = producto.precio === null ? "" : ` (${formatPrice(producto.precio)})`;
+  const price = producto.precio === null ? "" : ` (${formatPrice(producto.precio + (extra?.precio ?? 0))}${extra ? ", con la lectura en PDF" : ""})`;
   const lead = `Hola Tati, quiero comprar ${producto.nombre}${price}.${detalle ? ` ${detalle}` : ""}`;
   if (isDigital(producto)) {
     return `${lead} He leído y acepto las condiciones de compra y solicito el inicio inmediato del suministro del contenido digital. ¿Me indicas cómo realizar el pago?`;
   }
   if (producto.tipo === "espacio") return `${lead} He leído y acepto las condiciones de compra. Te paso la dirección del espacio. ¿Me indicas cómo realizar el pago?`;
   return `${lead} He leído y acepto las condiciones de compra. ¿Qué disponibilidad tienes?`;
-}
-
-export function notifyMessage(producto: Producto) {
-  return `Hola Tati, avísame cuando esté disponible «${producto.nombre}».`;
 }
 
 export function infoMessage(producto: Producto) {
@@ -68,8 +67,7 @@ export function productJsonLd(producto: Producto) {
       url,
       price: producto.precio.toFixed(2),
       priceCurrency: "EUR",
-      availability:
-        producto.estado === "disponible" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      availability: "https://schema.org/InStock",
       seller: { "@id": `${site.url}/#negocio` },
     },
   };

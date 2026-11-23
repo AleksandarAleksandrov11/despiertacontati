@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { tarotPage } from "@/content/servicios";
+import { blackFriday, vigente } from "@/content/tienda";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
@@ -19,6 +20,8 @@ const description =
   "Tarot terapéutico online: Crono Tarot, lecturas concretas en vídeo y PDF, sesiones en directo de 30 o 50 minutos y tu carta del día. Tarot Rider-Waite, para decidir tú.";
 
 const accents = ["var(--color-chakra-plexo)", "var(--color-chakra-corazon)", "var(--color-chakra-tercer-ojo)"];
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = pageMetadata({
   title: "Tarot terapéutico online | Despierta con Tati",
@@ -58,7 +61,9 @@ export default function TarotPage() {
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <SectionHeading eyebrow={page.mapa.eyebrow} title={page.mapa.title} text={page.mapa.text} id="mapa-2027-title" tone="dark" />
-            <p className="mt-8 max-w-xl border-l border-dorado/60 pl-5 font-serif text-[1.35rem] italic leading-snug text-crema">{page.mapa.regalo}</p>
+            {vigente(blackFriday) && (
+              <p className="mt-8 max-w-xl border-l border-dorado/60 pl-5 font-serif text-[1.35rem] italic leading-snug text-crema">{page.mapa.regalo}</p>
+            )}
             <div className="mt-10">
               <Button href={page.mapa.href} tone="dark" magnetic>
                 {page.mapa.cta}

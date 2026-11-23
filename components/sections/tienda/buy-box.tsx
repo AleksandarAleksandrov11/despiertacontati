@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useId, useState } from "react";
-import { fichaProducto, tiendaPage, type Producto } from "@/content/tienda";
+import { fichaProducto, type Producto } from "@/content/tienda";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { TrackedAnchor } from "@/components/ui/tracked";
-import { buyMessage, formatPrice, isDigital, modalidadMessage, notifyMessage } from "@/lib/tienda";
+import { buyMessage, formatPrice, isDigital, modalidadMessage } from "@/lib/tienda";
 import { cn, whatsappHref } from "@/lib/utils";
 import { PriceTag } from "./price-tag";
 
@@ -27,12 +27,19 @@ function opcionesDe(producto: Producto, detalle?: string): Opcion[] | null {
   }
   if (!producto.directo) return null;
   return [
-    { label: producto.formato, precio: producto.precio, digital: isDigital(producto), mensaje: buyMessage(producto, detalle) },
+    {
+      label: producto.formato,
+      precio: producto.precio,
+      digital: isDigital(producto),
+      mensaje: buyMessage(producto, detalle),
+      mensajeExtra: producto.extra ? buyMessage(producto, detalle, undefined, producto.extra) : undefined,
+    },
     ...producto.directo.map((item) => ({
       label: fichaProducto.buy.enDirecto(item.duracion),
       precio: item.precio,
       digital: false,
       mensaje: buyMessage(producto, detalle, item),
+      mensajeExtra: producto.extra ? buyMessage(producto, detalle, item, producto.extra) : undefined,
     })),
   ];
 }
@@ -50,33 +57,12 @@ export function BuyBox({ producto, detalle, origen }: { producto: Producto; deta
   const [supply, setSupply] = useState(false);
   const ready = terms && (!digital || supply);
 
-  if (producto.estado === "proximamente") {
-    return (
-      <div className="rounded-[1.25rem] bg-crema p-7 shadow-[0_30px_70px_-45px_rgba(63,46,58,0.45)] sm:p-8">
-        <PriceTag producto={producto} size="lg" />
-        <h2 className="mt-6 text-h3">{copy.soon.title}</h2>
-        <p className="mt-2 text-ink-soft">{copy.soon.text}</p>
-        <TrackedAnchor
-          href={whatsappHref(notifyMessage(producto))}
-          target="_blank"
-          rel="noopener noreferrer"
-          event="click_avisame"
-          data={{ producto: producto.slug }}
-          className={cn(buttonClass, "mt-6 bg-ciruela text-crema hover:bg-malva-deep")}
-        >
-          <WhatsappIcon size={18} />
-          {tiendaPage.card.notify}
-        </TrackedAnchor>
-      </div>
-    );
-  }
-
   return (
     <div className="rounded-[1.25rem] bg-crema p-7 shadow-[0_30px_70px_-45px_rgba(63,46,58,0.45)] sm:p-8">
       <PriceTag
         producto={
           elegida && (opcion > 0 || extra) && elegida.precio !== null
-            ? { ...producto, precio: elegida.precio + (extra?.precio ?? 0), precioHabitual: undefined }
+            ? { ...producto, precio: elegida.precio + (extra?.precio ?? 0) }
             : producto
         }
         size="lg"

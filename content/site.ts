@@ -22,7 +22,7 @@ export const site = {
     label: "Online",
   },
   contact: {
-    email: "tatiana.guillem@gmail.com",
+    email: "despiertacontati@gmail.com",
     phoneDisplay: "+34 673 88 97 02",
     phoneE164: "+34673889702",
     whatsappNumber: "34673889702",

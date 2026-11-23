@@ -14,6 +14,8 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { productHref } from "@/lib/tienda";
 import { absoluteUrl } from "@/lib/utils";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = pageMetadata({
   title: "Tienda: meditaciones y lecturas de tarot online | Despierta con Tati",
   description:
