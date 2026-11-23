@@ -515,7 +515,7 @@ export const productos: Producto[] = [
       { precio: 36, duracion: "50 minutos" },
     ],
     destacado: false,
-    imagen: "diagramaCeleste",
+    imagen: "matrizLectura",
     calculadora: "/calculadora/matriz-del-destino",
   },
   {
@@ -545,7 +545,7 @@ export const productos: Producto[] = [
     ],
     precio: 36,
     destacado: false,
-    imagen: "cartaCircular",
+    imagen: "matrizAnalisis",
     calculadora: "/calculadora/matriz-del-destino",
   },
   {

@@ -30,9 +30,9 @@ import tarotAsOros from "@/public/images/tarot-as-de-oros.webp";
 import cartasDoradas from "@/public/images/tarot-cartas-doradas.webp";
 import tarotCuarzoRosa from "@/public/images/tarot-cuarzo-rosa.webp";
 import tarotErmitano from "@/public/images/tarot-ermitano-luces.webp";
-import diagramaCeleste from "@/public/images/diagrama-celeste-antiguo.webp";
+import matrizLectura from "@/public/images/matriz-del-destino-lectura.webp";
+import matrizAnalisis from "@/public/images/matriz-del-destino-analisis.webp";
 import mapa2027 from "@/public/images/mapa-2027-cartas.webp";
-import cartaCircular from "@/public/images/carta-circular-dibujo.webp";
 import escritorioVela from "@/public/images/escritorio-vela-portatil.webp";
 import habitacionCortinas from "@/public/images/habitacion-cortinas-sol.webp";
 import chakrasLino from "@/public/images/chakras-piedras-lino.webp";
@@ -195,19 +195,19 @@ export const imagenes = {
     alt: "Carta de El Ermitaño sobre una tela morada rodeada de pequeñas luces",
     position: "50% 50%",
   },
+  matrizLectura: {
+    src: matrizLectura,
+    alt: "Diagrama de una Matriz del Destino con sus puntos de colores y números sobre fondo ciruela",
+    position: "50% 50%",
+  },
+  matrizAnalisis: {
+    src: matrizAnalisis,
+    alt: "Matriz del Destino completa, con su octograma dorado y sus puntos de energía",
+    position: "50% 50%",
+  },
   mapa2027: {
     src: mapa2027,
     alt: "Abanico de cartas del tarot Rider-Waite bajo el título Mapa 2027, tu año en 24 cartas",
-    position: "50% 50%",
-  },
-  diagramaCeleste: {
-    src: diagramaCeleste,
-    alt: "Grabado antiguo de un diagrama circular con los signos del zodiaco y las órbitas celestes",
-    position: "50% 50%",
-  },
-  cartaCircular: {
-    src: cartaCircular,
-    alt: "Dibujo a mano de una carta circular con símbolos y líneas sobre papel",
     position: "50% 50%",
   },
   escritorioVela: {
