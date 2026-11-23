@@ -77,7 +77,7 @@ export const bloques: Bloque[] = [
     image: "libretaEscribir",
     summary: "Herramientas que parten de tu fecha de nacimiento para conocerte mejor y usar tu poder personal.",
     includes: ["Matriz del Destino", "Tu Código Personal", "Carta Personal"],
-    modality: ["A partir de tu fecha de nacimiento", "Vídeo y PDF"],
+    modality: ["A partir de tu fecha de nacimiento", "PDF y sesiones en directo"],
     more: "Ver autoconocimiento",
   },
 ];
@@ -125,7 +125,7 @@ export type Formato = {
 export const formatos: Formato[] = [
   {
     title: "Lectura en diferido",
-    text: "Crono Tarot, lecturas concretas y autoconocimiento. Te llegan en vídeo por WhatsApp, con PDF opcional.",
+    text: "Crono Tarot y lecturas concretas en vídeo por WhatsApp, con PDF opcional, y la Matriz del Destino en PDF.",
     cta: { label: "Ver lecturas", href: "/tienda#crono-tarot" },
   },
   {

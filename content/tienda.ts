@@ -78,7 +78,7 @@ export const categorias: Categoria[] = [
     nav: "Autoconocimiento",
     eyebrow: "Autoconocimiento",
     title: "A partir de tu fecha de nacimiento.",
-    text: "Numerología y la energía de los arcanos mayores para conocerte mejor. En vídeo y PDF por WhatsApp o en directo.",
+    text: "Numerología y la energía de los arcanos mayores para conocerte mejor. En PDF por WhatsApp o en directo.",
   },
   {
     id: "sesiones",
@@ -509,8 +509,8 @@ export const productos: Producto[] = [
       { titulo: "Tu bagaje kármico" },
       { titulo: "Tu poder personal" },
     ],
-    formato: "Vídeo y PDF",
-    entrega: entregaLectura,
+    formato: "PDF",
+    entrega: "PDF por WhatsApp, tras confirmar el pago.",
     paraQuien: [
       "Quieres conocer tus talentos y tus retos.",
       "Quieres entender el camino de tu alma.",
@@ -736,6 +736,7 @@ export const fichaProducto = {
   requirements: "Qué necesitas",
   requirementsMeditation:
     "Un móvil, tablet u ordenador con reproductor de audio, espacio para guardar los archivos y conexión a internet para descargarlos.",
+  requirementsPdf: "WhatsApp para recibir el PDF y un dispositivo que pueda abrirlo.",
   requirementsReading: "WhatsApp para recibir el vídeo, y el PDF si lo añades, y un dispositivo que pueda abrirlos.",
   requirementsSession: "Para la sesión online, conexión a internet y un dispositivo con cámara y micrófono.",
   requirementsBirthday: "Tu fecha de nacimiento, que me darás por WhatsApp al hacer el pedido.",

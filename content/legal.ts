@@ -317,7 +317,7 @@ export const condicionesCompra: LegalDocument = {
       id: "productos",
       title: "Qué puedes comprar",
       blocks: [
-        "En la tienda hay meditaciones guiadas en MP3, lecturas en diferido de tarot y de autoconocimiento, que se entregan en vídeo y, si lo añades, en PDF, sesiones en directo online y terapias energéticas, online o presenciales según la terapia, y limpieza energética de espacios a distancia. Cada ficha explica qué incluye el producto, su formato y cómo se entrega.",
+        "En la tienda hay meditaciones guiadas en MP3, lecturas en diferido de tarot y de autoconocimiento, que se entregan en vídeo, con PDF opcional en las de tarot, o en PDF en la Matriz del Destino, sesiones en directo online y terapias energéticas, online o presenciales según la terapia, y limpieza energética de espacios a distancia. Cada ficha explica qué incluye el producto, su formato y cómo se entrega.",
         "Los precios publicados son finales e incluyen los impuestos aplicables, si los hay. No hay gastos de envío.",
         { list: catalogo },
       ],

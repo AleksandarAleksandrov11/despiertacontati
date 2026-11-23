@@ -62,7 +62,7 @@ ${bloques.map((bloque) => `- [${bloque.benefit} · ${bloque.area}](${absoluteUrl
 La sanación akáshica es un trabajo de sanación energética, no una lectura de registros. La Matriz del Destino se calcula con la fecha de nacimiento y no es tarot; el Código Personal y la Carta Personal son tarot numerológico. Todos los servicios son online o a distancia, también las clases de meditación en grupo. Los servicios sin precio publicado se informan por WhatsApp.
 
 ## Tienda
-Compra por WhatsApp desde la ficha de cada producto. Los datos de pago se facilitan de forma privada. Meditaciones en MP3 por enlace privado de descarga y lecturas en vídeo y PDF por WhatsApp, siempre tras confirmar el pago.
+Compra por WhatsApp desde la ficha de cada producto. Los datos de pago se facilitan de forma privada. Meditaciones en MP3 por enlace privado de descarga y lecturas de tarot en vídeo por WhatsApp, con PDF opcional, y la Lectura de la Matriz del Destino en PDF, siempre tras confirmar el pago.
 
 ${tienda()}
 

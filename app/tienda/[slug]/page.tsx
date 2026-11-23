@@ -68,7 +68,7 @@ function requirements(producto: Producto) {
   if (producto.tipo === "sesion") return [copy.requirementsSession];
   if (producto.tipo === "espacio") return [copy.requirementsSpace];
   if (producto.categoria === "autoconocimiento" || producto.slug === "lectura-del-cumpleanos" || producto.regalo) {
-    return [copy.requirementsBirthday, copy.requirementsReading];
+    return [copy.requirementsBirthday, producto.formato === "PDF" ? copy.requirementsPdf : copy.requirementsReading];
   }
   return [copy.requirementsReading];
 }
