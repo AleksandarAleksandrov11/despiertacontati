@@ -9,7 +9,6 @@ import libretaEscribir from "@/public/images/mujer-escribiendo-libreta.webp";
 import cuencoSalvia from "@/public/images/cuenco-tibetano-salvia.webp";
 import duchaLuminosa from "@/public/images/ducha-luminosa.webp";
 import piedrasChakras from "@/public/images/piedras-cuarzo-amatista.webp";
-import penduloHebreo from "@/public/images/pendulo-hebreo-ilustracion.webp";
 import tarotBaraja from "@/public/images/tarot-baraja-abierta.webp";
 import tarotFlores from "@/public/images/tarot-cartas-flores.webp";
 import tazaVapor from "@/public/images/taza-manos-vapor.webp";
@@ -92,11 +91,6 @@ export const imagenes = {
   piedrasChakras: {
     src: piedrasChakras,
     alt: "Piedras pulidas de cuarzo y amatista en tonos rosa, lila y crema",
-  },
-  penduloHebreo: {
-    src: penduloHebreo,
-    alt: "Péndulo hebreo de madera con su cilindro y una cuenta dorada, colgado sobre un círculo con las letras del alfabeto hebreo",
-    position: "50% 50%",
   },
   tarotBaraja: {
     src: tarotBaraja,
