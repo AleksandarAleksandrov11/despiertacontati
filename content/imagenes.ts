@@ -17,7 +17,6 @@ import tazaVapor from "@/public/images/taza-manos-vapor.webp";
 import meditacionAuriculares from "@/public/images/meditacion-auriculares.webp";
 import tatiRetrato from "@/public/images/tati-buganvilla.webp";
 import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
-import reikiManosPecho from "@/public/images/reiki-manos-pecho.webp";
 import mujerLuzDorada from "@/public/images/mujer-luz-dorada-manos.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
@@ -133,11 +132,6 @@ export const imagenes = {
     src: tatiSonrisa,
     alt: "Tati sonriendo al aire libre",
     position: "45% 40%",
-  },
-  reikiManosPecho: {
-    src: reikiManosPecho,
-    alt: "Manos apoyadas con suavidad sobre el pecho de una mujer tumbada con los ojos cerrados, en tonos cálidos de tierra y crema",
-    position: "40% 45%",
   },
   mujerLuzDorada: {
     src: mujerLuzDorada,
