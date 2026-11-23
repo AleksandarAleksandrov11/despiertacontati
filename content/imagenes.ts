@@ -6,7 +6,6 @@ import hogarLuminoso from "@/public/images/hogar-luminoso-salon.webp";
 import ventanaLuz from "@/public/images/salon-plantas-ventana.webp";
 import claseOnline from "@/public/images/clase-meditacion-online.webp";
 import libretaEscribir from "@/public/images/mujer-escribiendo-libreta.webp";
-import salaLuminosa from "@/public/images/sala-luminosa-vacia.webp";
 import cuencoSalvia from "@/public/images/cuenco-tibetano-salvia.webp";
 import duchaLuminosa from "@/public/images/ducha-luminosa.webp";
 import piedrasChakras from "@/public/images/piedras-cuarzo-amatista.webp";
@@ -20,8 +19,6 @@ import tatiSonrisa from "@/public/images/tati-sonrisa.webp";
 import mujerLuzDorada from "@/public/images/mujer-luz-dorada-manos.webp";
 import chakrasPiedras from "@/public/images/piedras-colores-chakras.webp";
 import libroAlma from "@/public/images/libro-del-alma-luz.webp";
-import pausaCojin from "@/public/images/pausa-cojin-cortina.webp";
-import meditacionPorche from "@/public/images/meditacion-porche-luz.webp";
 import tarotSol from "@/public/images/tarot-carta-sol.webp";
 import hojasEstaciones from "@/public/images/hojas-estaciones.webp";
 import cartasLunas from "@/public/images/cartas-fases-luna.webp";
@@ -36,7 +33,6 @@ import tarotErmitano from "@/public/images/tarot-ermitano-luces.webp";
 import diagramaCeleste from "@/public/images/diagrama-celeste-antiguo.webp";
 import mapa2027 from "@/public/images/mapa-2027-cartas.webp";
 import cartaCircular from "@/public/images/carta-circular-dibujo.webp";
-import tiradaSuelo from "@/public/images/tirada-tarot-suelo.webp";
 import escritorioVela from "@/public/images/escritorio-vela-portatil.webp";
 import habitacionCortinas from "@/public/images/habitacion-cortinas-sol.webp";
 import chakrasLino from "@/public/images/chakras-piedras-lino.webp";
@@ -82,10 +78,6 @@ export const imagenes = {
     src: libretaEscribir,
     alt: "Mujer sonriendo mientras escribe a mano en una libreta, con luz clara",
     position: "78% 0%",
-  },
-  salaLuminosa: {
-    src: salaLuminosa,
-    alt: "Sala amplia y vacía con suelo de madera, plantas y luz de tarde entrando por la ventana",
   },
   cuencoSalvia: {
     src: cuencoSalvia,
@@ -146,16 +138,6 @@ export const imagenes = {
   libroAlma: {
     src: libroAlma,
     alt: "Manos sosteniendo un libro abierto del que brota una luz dorada de pequeñas luces, como un libro del alma",
-    position: "50% 50%",
-  },
-  pausaCojin: {
-    src: pausaCojin,
-    alt: "Mujer sentada en el suelo junto a una cortina blanca, abrazando un cojín en un momento de pausa",
-    position: "50% 50%",
-  },
-  meditacionPorche: {
-    src: meditacionPorche,
-    alt: "Mujer meditando de espaldas en un porche de madera bañado por la luz dorada",
     position: "50% 50%",
   },
   tarotSol: {
@@ -227,11 +209,6 @@ export const imagenes = {
     src: cartaCircular,
     alt: "Dibujo a mano de una carta circular con símbolos y líneas sobre papel",
     position: "50% 50%",
-  },
-  tiradaSuelo: {
-    src: tiradaSuelo,
-    alt: "Persona colocando cartas de tarot sobre un suelo de madera junto a una vela, un libro de tarot y un móvil",
-    position: "55% 55%",
   },
   escritorioVela: {
     src: escritorioVela,

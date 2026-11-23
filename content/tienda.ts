@@ -169,7 +169,7 @@ export const productos: Producto[] = [
     ],
     precio: 12.9,
     destacado: true,
-    imagen: "pausaCojin",
+    imagen: "meditacionAuriculares",
   },
   {
     slug: "transforma-tu-bienestar",
@@ -204,7 +204,7 @@ export const productos: Producto[] = [
     ],
     precio: 19.9,
     destacado: true,
-    imagen: "meditacionPorche",
+    imagen: "libretaEscribir",
   },
   {
     slug: "mapa-2027",
@@ -565,7 +565,7 @@ export const productos: Producto[] = [
     ],
     precio: 27,
     destacado: false,
-    imagen: "tiradaSuelo",
+    imagen: "tarotFlores",
   },
   {
     slug: "sesion-tarot-50-minutos",

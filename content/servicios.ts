@@ -337,7 +337,7 @@ export const meditacionPage = {
     eyebrow: "Clases grupales",
     title: "Meditar en compañía.",
     text: "Estoy a punto de abrir un grupo online. Mira el tablón y apúntate.",
-    image: "salaLuminosa" as ImageKey,
+    image: "claseOnline" as ImageKey,
     cta: "Quiero plaza",
     ctaWhatsapp: "Hola, Tati. Quiero plaza en un grupo de meditación. ¿Me cuentas cuándo empieza?",
     tablon: "Ver el tablón",
