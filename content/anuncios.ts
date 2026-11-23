@@ -51,10 +51,10 @@ export const anuncios: Anuncio[] = [
   {
     id: "black-friday-meditacion",
     type: "Tienda",
-    title: "Los dos programas de meditación por 24,80 €",
+    title: "Los dos programas de meditación por 34,80 €",
     status: "Black Friday, del 24 al 30 de noviembre",
     modality: "18 audios en MP3 y dos cuadernos",
-    text: "Vuelve a ti y Transforma tu bienestar juntos, con su cuaderno de reflexión Mi espacio interior. Por separado cuestan 12,90 € y 19,90 €.",
+    text: "Vuelve a ti y Transforma tu bienestar juntos, con su cuaderno de reflexión Mi espacio interior. Por separado cuestan 17,90 € y 27,90 €.",
     cta: { kind: "enlace", label: "Ver la oferta", href: "/tienda/los-dos-programas" },
     date: "2026-11-24",
     endDate: "2026-11-30",
