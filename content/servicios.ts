@@ -327,6 +327,13 @@ export const meditacionPage = {
       "Dale las gracias a esa parte mientras la recorres.",
     ],
   },
+  oferta: {
+    eyebrow: "Black Friday, del 24 al 30 de noviembre",
+    title: "Los dos programas de meditación por 34,80 €.",
+    text: "Vuelve a ti, 6 semanas para encontrar tu calma, y Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior, juntos y con su cuaderno Mi espacio interior.",
+    cta: "Ver la oferta",
+    href: "/tienda/los-dos-programas",
+  },
   grabadas: {
     eyebrow: "Meditaciones grabadas",
     title: "Medita con Tati.",

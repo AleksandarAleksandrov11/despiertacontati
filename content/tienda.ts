@@ -140,6 +140,13 @@ export const productos: Producto[] = [
     precio: 34.8,
     oferta: "Oferta Black Friday, del 24 al 30 de noviembre",
     ventana: blackFriday,
+    regalo: {
+      eyebrow: "Black Friday, del 24 al 30 de noviembre",
+      title: "Los dos programas por 34,80 €.",
+      text: "Vuelve a ti y Transforma tu bienestar juntos, durante el Black Friday. Cada uno con su guía de uso y su cuaderno de reflexión Mi espacio interior.",
+      items: ["Vuelve a ti, 6 semanas para encontrar tu calma", "Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior", "Un cuaderno Mi espacio interior para cada programa"],
+      ventana: blackFriday,
+    },
     destacado: true,
     imagen: "ventanaLuz",
   },

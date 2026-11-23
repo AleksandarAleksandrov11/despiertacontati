@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { meditacionPage } from "@/content/servicios";
-import { productosDe } from "@/content/tienda";
+import { blackFriday, productosDe, vigente } from "@/content/tienda";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
@@ -101,6 +101,19 @@ export default function MeditacionPage() {
           </div>
         </div>
       </Section>
+
+      {vigente(blackFriday) && (
+        <Section tone="ciruela" id="oferta" labelledBy="oferta-title">
+          <div className="relative mx-auto max-w-3xl text-center">
+            <SectionHeading eyebrow={page.oferta.eyebrow} title={page.oferta.title} text={page.oferta.text} id="oferta-title" align="center" tone="dark" />
+            <div className="mt-10 flex justify-center">
+              <Button href={page.oferta.href} tone="dark" magnetic>
+                {page.oferta.cta}
+              </Button>
+            </div>
+          </div>
+        </Section>
+      )}
 
       <Section tone="lavanda" id="grabadas" labelledBy="grabadas-title">
         <div className="grid gap-12 lg:grid-cols-12">
