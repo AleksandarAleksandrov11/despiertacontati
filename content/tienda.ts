@@ -148,7 +148,7 @@ export const productos: Producto[] = [
       ventana: blackFriday,
     },
     destacado: true,
-    imagen: "ventanaLuz",
+    imagen: "losDosProgramas",
   },
   {
     slug: "vuelve-a-ti",

@@ -29,6 +29,7 @@ import tarotAsOros from "@/public/images/tarot-as-de-oros.webp";
 import cartasDoradas from "@/public/images/tarot-cartas-doradas.webp";
 import tarotCuarzoRosa from "@/public/images/tarot-cuarzo-rosa.webp";
 import tarotErmitano from "@/public/images/tarot-ermitano-luces.webp";
+import losDosProgramas from "@/public/images/los-dos-programas.webp";
 import matrizLectura from "@/public/images/matriz-del-destino-lectura.webp";
 import matrizAnalisis from "@/public/images/matriz-del-destino-analisis.webp";
 import mapa2027 from "@/public/images/mapa-2027-cartas.webp";
@@ -187,6 +188,11 @@ export const imagenes = {
   tarotErmitano: {
     src: tarotErmitano,
     alt: "Carta de El Ermitaño sobre una tela morada rodeada de pequeñas luces",
+    position: "50% 50%",
+  },
+  losDosProgramas: {
+    src: losDosProgramas,
+    alt: "A la izquierda, una mujer con auriculares escuchando una meditación con los ojos cerrados; a la derecha, unas manos escribiendo en un cuaderno",
     position: "50% 50%",
   },
   matrizLectura: {
