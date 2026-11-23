@@ -33,9 +33,9 @@ export const anuncios: Anuncio[] = [
     type: "Guía",
     title: "Guía gratuita «Tu primera pausa»",
     status: "Ya disponible",
-    modality: "Descarga gratuita",
+    modality: "Gratis, por WhatsApp",
     text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
-    cta: { kind: "enlace", label: "Descárgala", href: "/tu-primera-pausa" },
+    cta: { kind: "enlace", label: "Pídela gratis", href: "/contacto?servicio=guia" },
   },
   {
     id: "mapa-2027-black-friday",

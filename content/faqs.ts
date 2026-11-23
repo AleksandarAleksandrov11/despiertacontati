@@ -37,7 +37,7 @@ export const faqs = {
     {
       question: "¿Por dónde empiezo?",
       answer:
-        "Si llegas con estrés o ansiedad, por el Reiki: primero hay que bajar revoluciones. Si prefieres empezar por tu cuenta, descarga la guía gratuita Tu primera pausa.",
+        "Si llegas con estrés o ansiedad, por el Reiki: primero hay que bajar revoluciones. Si prefieres empezar por tu cuenta, pídeme la guía gratuita Tu primera pausa.",
     },
     {
       question: "¿Cómo compro una meditación o una lectura?",
@@ -173,12 +173,11 @@ export const faqs = {
   guia: [
     {
       question: "¿Es gratis de verdad?",
-      answer: "Sí. Solo te pido tu nombre y tu email para enviártela.",
+      answer: "Sí. Me escribes por WhatsApp desde el formulario y te la envío, sin coste.",
     },
     {
-      question: "¿Me vas a llenar el correo?",
-      answer:
-        "No. Solo te escribiré con novedades, meditaciones y clases si marcas la casilla. Y puedes darte de baja cuando quieras.",
+      question: "¿Cómo la recibo?",
+      answer: "Por WhatsApp. Eliges la guía en el formulario de contacto, se abre WhatsApp con tu mensaje y yo te mando el PDF y la Meditación Freno.",
     },
     {
       question: "¿Necesito experiencia para meditar?",

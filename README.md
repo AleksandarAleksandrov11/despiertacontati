@@ -8,7 +8,6 @@ Web de Despierta con Tati, terapia holística online: Reiki y terapias energéti
 - Tailwind CSS
 - Motion, Lenis y Embla Carousel
 - React Hook Form y Zod
-- Resend para los emails del formulario, la guía gratuita y la lista de correo
 - React PDF para el PDF gratuito de la calculadora
 - Vercel Analytics y Speed Insights, con eventos de la tienda, la guía y la calculadora
 
@@ -26,17 +25,11 @@ Scripts disponibles: `npm run dev`, `npm run build`, `npm run start`, `npm run l
 
 | Variable | Uso |
 | --- | --- |
-| `RESEND_API_KEY` | Clave de Resend. Sin clave, el formulario de contacto sigue funcionando por WhatsApp y, en desarrollo, los envíos se simulan. |
-| `RESEND_FROM` | Remitente de los emails, con un dominio verificado en Resend. Por ejemplo: `Despierta con Tati <web@despiertacontati.com>`. |
-| `RESEND_AUDIENCE_ID` | ID de la Audience (segmento) de Resend donde se guardan las personas que descargan la guía. Quien no marca la casilla de novedades se guarda como dada de baja. |
-| `CONTACT_TO_EMAIL` | Dirección que recibe las consultas y los avisos de nuevas descargas de la guía. |
 | `LECTURA_COMPLETA_CLAVE` | Clave privada para generar la lectura completa de la Matriz del Destino en `/api/matriz/completa?fecha=AAAA-MM-DD&nombre=Nombre&clave=...`. Sin ella, la ruta responde 404. |
-
-Para enviar la guía a terceros hay que verificar el dominio `despiertacontati.com` en Resend (registros DNS SPF y DKIM) y usar en `RESEND_FROM` una dirección de ese dominio. Sin dominio verificado, Resend solo permite enviar emails a la dirección de la propia cuenta.
 
 ## Tienda
 
-Los productos, precios y estados están en `content/tienda.ts`. Cada producto con precio tiene su ficha en `/tienda/[slug]`. Los productos con `estado: "proximamente"` no se pueden comprar y muestran el botón «Avísame». La compra se hace por WhatsApp desde la ficha, tras aceptar las condiciones de compra.
+Los productos y precios están en `content/tienda.ts`. Cada producto con precio tiene su ficha en `/tienda/[slug]`. La compra se hace por WhatsApp desde la ficha, tras aceptar las condiciones de compra. Los productos con `ventana` (por ejemplo la oferta del Black Friday) solo se muestran entre sus fechas.
 
 ## Calculadora de la Matriz del Destino
 
@@ -48,10 +41,13 @@ Los productos, precios y estados están en `content/tienda.ts`. Cada producto co
 
 ## Guía gratuita
 
-- Página: `/tu-primera-pausa`. El formulario llama a `/api/guia`, que envía la guía por email, guarda el contacto en Resend y avisa por email.
+- Página: `/tu-primera-pausa`. Presenta la guía y lleva al formulario de contacto con la guía ya elegida (`/contacto?servicio=guia`); Tati la envía por WhatsApp.
 - Archivos: `public/descargas/tu-primera-pausa.pdf` y `public/descargas/meditacion-freno.mp3`. La carpeta `/descargas` se sirve con `noindex`.
 - El PDF se genera con `npm run ebook` a partir de `content/ebook.ts` (textos) y `scripts/ebook.ts` (maqueta y código QR). Usa Playwright con Chromium; si Chromium no está en la ruta por defecto, indica su ruta en `CHROMIUM_PATH`.
-- El botón y el enlace del audio aparecen en la web y en el email cuando el archivo `meditacion-freno.mp3` está en `public/descargas` al hacer el build.
+
+## Formulario de contacto
+
+`/contacto` es el único formulario de la web. En tres pasos se elige qué se quiere (la guía gratuita, un programa de meditación, una lectura, una sesión, una terapia, el curso de Reiki u otra consulta), el producto concreto y su formato, y el nombre. Al enviar se abre WhatsApp con un mensaje ya escrito (`lib/contact-whatsapp.ts`); no se guarda nada en la web. Acepta `?servicio=` (guia, meditacion, tarot, autoconocimiento, reiki, limpieza, curso-reiki, no-lo-se) y `?producto=` (el `slug` de un producto, `guia` o `grupo`) para abrirlo con la opción elegida. Las opciones salen de `content/tienda.ts`, así que los productos nuevos aparecen solos.
 
 ## Contenido
 

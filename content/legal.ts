@@ -115,7 +115,7 @@ export const politicaPrivacidad: LegalDocument = {
   intro: "Qué datos recojo, para qué los uso, cuánto tiempo los guardo y cómo puedes ejercer tus derechos.",
   metaTitle: "Política de privacidad | Despierta con Tati",
   metaDescription:
-    "Cómo trata Despierta con Tati tus datos personales: contacto, guía gratuita y lista de correo, pedidos por WhatsApp, hosting y analítica, conforme al RGPD y la LOPDGDD.",
+    "Cómo trata Despierta con Tati tus datos personales: contacto, guía gratuita, pedidos por WhatsApp, hosting y analítica, conforme al RGPD y la LOPDGDD.",
   sections: [
     {
       id: "responsable",
@@ -137,8 +137,7 @@ export const politicaPrivacidad: LegalDocument = {
       id: "datos",
       title: "Qué datos trato y para qué",
       blocks: [
-        "Formulario de contacto. Trato tu nombre, tu email o teléfono, el servicio que te interesa, la modalidad que prefieres y el mensaje que quieras escribir, para responder a tu consulta y, si lo pides, organizar tu sesión, clase o curso. Al enviarlo se abre WhatsApp con tu mensaje para que me lo mandes tú, y puedo recibir además una copia por email.",
-        "Guía gratuita y lista de correo. Trato tu nombre y tu email para enviarte la guía Tu primera pausa. Si marcas la casilla de novedades, también para enviarte por email novedades, meditaciones y clases. Puedes darte de baja cuando quieras desde el enlace de cada email o escribiéndome.",
+        "Formulario de contacto. Trato tu nombre, tu email o teléfono si me los dejas, lo que te interesa (la guía gratuita, un programa, una lectura, una sesión u otra consulta), el formato que prefieres y el mensaje que escribas, para responder a tu consulta, enviarte la guía gratuita o gestionar tu reserva. No guardo estos datos en la web: al enviar se abre WhatsApp con el mensaje preparado para que me lo mandes tú.",
         "Pedidos de la tienda. Cuando compras por WhatsApp trato tu nombre, tu número, los datos del pedido y el justificante de pago para gestionar la compra, enviarte el producto y cumplir con las obligaciones fiscales. En las lecturas de autoconocimiento y en la Lectura del Cumpleaños también tu fecha de nacimiento, que solo uso para hacer tu lectura.",
         "Calculadoras. La fecha de nacimiento y el nombre que escribas en las calculadoras se usan solo en el momento para hacer el cálculo y preparar tu PDF gratuito. No se guardan en ninguna base de datos ni se usan para nada más. Si después pides tu lectura completa por WhatsApp, se aplica lo indicado para los pedidos de la tienda.",
         "No te pido datos de salud. Si decides contarme algo así en un mensaje, lo uso solo para atender tu consulta.",
@@ -153,7 +152,7 @@ export const politicaPrivacidad: LegalDocument = {
       blocks: [
         {
           list: [
-            "Consentimiento (artículo 6.1.a del RGPD): al enviar el formulario, descargar la guía, aceptar las novedades o aceptar la analítica y las cookies de marketing.",
+            "Consentimiento (artículo 6.1.a del RGPD): al enviarme un mensaje desde el formulario o por WhatsApp, o al aceptar la analítica y las cookies de marketing.",
             "Aplicación de medidas precontractuales y ejecución de un contrato (artículo 6.1.b del RGPD): cuando haces un pedido en la tienda o reservas una sesión, clase o curso.",
             "Cumplimiento de obligaciones legales (artículo 6.1.c del RGPD): conservación de los datos de los pedidos con fines fiscales y contables.",
           ],
@@ -165,8 +164,7 @@ export const politicaPrivacidad: LegalDocument = {
       id: "conservacion",
       title: "Cuánto tiempo conservo tus datos",
       blocks: [
-        "Los datos de las consultas se conservan el tiempo necesario para responderte y, si llegamos a trabajar juntas, mientras dure la relación.",
-        "Los datos de la guía y de la lista de correo se conservan hasta que te des de baja o me pidas que los borre.",
+        "Los datos de las consultas se conservan el tiempo necesario para responderte y, si llegamos a trabajar juntos, mientras dure la relación.",
         "Los datos de los pedidos se conservan durante los plazos que marca la normativa fiscal y mercantil. Después se bloquean y se eliminan cuando dejan de ser necesarios.",
       ],
     },
@@ -178,7 +176,6 @@ export const politicaPrivacidad: LegalDocument = {
         {
           list: [
             "Vercel Inc. (Estados Unidos): alojamiento de la web y, si lo aceptas, analítica anónima.",
-            "Resend (Estados Unidos): envío de la guía, de los avisos del formulario y gestión de la lista de correo.",
             "Meta Platforms (WhatsApp e Instagram): cuando me escribes o haces un pedido por WhatsApp y, si lo aceptas, al ver publicaciones de Instagram en el tablón.",
           ],
         },

@@ -32,7 +32,7 @@ export default function NotFound() {
         <div className="mx-auto mt-14 max-w-md border-t border-ciruela/10 pt-10">
           <p className="text-ink-soft">{notFoundPage.guide.text}</p>
           <div className="mt-6 flex justify-center">
-            <Button href={guia.slug} variant="secondary">
+            <Button href={guia.pedir.href} variant="secondary">
               {notFoundPage.guide.cta}
             </Button>
           </div>

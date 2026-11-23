@@ -19,7 +19,3 @@ export function createRateLimiter(maxRequests: number, windowMs: number) {
 export function clientIp(request: NextRequest) {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "anon";
 }
-
-export function senderAddress() {
-  return process.env.RESEND_FROM || "Despierta con Tati <web@despiertacontati.com>";
-}

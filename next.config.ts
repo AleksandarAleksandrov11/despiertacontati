@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
 import type { NextConfig } from "next";
 import { hayTestimonios } from "./content/testimonios";
 
@@ -16,9 +14,6 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/matriz/pdf": ["./assets/fonts/*.ttf", "./assets/pdf/*", "./public/brand/*.png"],
     "/api/codigo-personal/pdf": ["./assets/fonts/*.ttf", "./assets/pdf/*", "./assets/tarot/**/*", "./public/brand/*.png"],
-  },
-  env: {
-    NEXT_PUBLIC_GUIA_AUDIO: existsSync(join(process.cwd(), "public/descargas/meditacion-freno.mp3")) ? "1" : "0",
   },
   images: {
     formats: ["image/webp"],

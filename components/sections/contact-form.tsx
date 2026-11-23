@@ -10,13 +10,14 @@ import { useEffect, useId, useRef, useState, type KeyboardEvent, type MouseEvent
 import { contactoPage } from "@/content/paginas";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
+import { formatPrice } from "@/lib/tienda";
 import { contactSchema, contactTopics, type ContactInput } from "@/lib/schemas";
 import { contactWhatsappHref } from "@/lib/contact-whatsapp";
-import { sendMessage } from "@/lib/send-message";
+import { formatosDe, gruposDe, opcionesDe, productoDe, servicioDe } from "@/lib/contacto";
 import { cn } from "@/lib/utils";
 
 const copy = contactoPage.form;
-const stepFields: (keyof ContactInput)[][] = [["servicio"], ["mensaje"], ["nombre", "contacto", "privacidad"]];
+const stepFields: (keyof ContactInput)[][] = [["servicio"], ["mensaje"], ["nombre", "contacto"]];
 const lastStep = stepFields.length - 1;
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -26,8 +27,11 @@ function isTopic(value: string | null): value is ContactInput["servicio"] {
 
 export function ContactForm() {
   const params = useSearchParams();
-  const preset = params.get("servicio");
-  const [step, setStep] = useState(0);
+  const presetProducto = params.get("producto");
+  const presetServicio = params.get("servicio");
+  const preset = isTopic(presetServicio) ? presetServicio : servicioDe(presetProducto);
+  const presetOpcion = presetProducto && opcionesDe(preset).some((item) => item.value === presetProducto) ? presetProducto : undefined;
+  const [step, setStep] = useState(preset ? 1 : 0);
   const [direction, setDirection] = useState(1);
   const [sentHref, setSentHref] = useState<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -46,17 +50,26 @@ export function ContactForm() {
     resolver: zodResolver(contactSchema),
     mode: "onTouched",
     defaultValues: {
-      type: "contacto",
-      servicio: isTopic(preset) ? preset : undefined,
+      servicio: preset,
+      producto: preset === "guia" ? "guia" : presetOpcion,
+      formato: undefined,
+      pdf: false,
       mensaje: "",
       nombre: "",
       contacto: "",
-      empresa: "",
     },
   });
 
   const values = useWatch({ control });
   const waHref = contactWhatsappHref(values);
+  const grupos = gruposDe(values.servicio);
+  const opciones = opcionesDe(values.servicio);
+  const producto = productoDe(values.producto);
+  const formatos = formatosDe(producto);
+  const resumen = [
+    copy.topics.find((item) => item.value === values.servicio)?.label,
+    producto?.nombre ?? opciones.find((item) => item.value === values.producto)?.label,
+  ].filter((item): item is string => Boolean(item));
 
   useEffect(() => {
     if (firstRender.current) {
@@ -78,7 +91,17 @@ export function ContactForm() {
 
   function choose(value: string) {
     setValue("servicio", value as ContactInput["servicio"], { shouldValidate: true });
-    window.setTimeout(() => goTo(step + 1), 260);
+    setValue("producto", value === "guia" ? "guia" : undefined);
+    setValue("formato", undefined);
+    setValue("pdf", false);
+    window.setTimeout(() => goTo(1), 260);
+  }
+
+  function chooseProducto(value: string) {
+    const selected = getValues("producto") === value;
+    setValue("producto", selected ? undefined : value);
+    setValue("formato", undefined);
+    setValue("pdf", false);
   }
 
   function validateAll() {
@@ -91,7 +114,6 @@ export function ContactForm() {
   }
 
   function complete(data: ContactInput) {
-    if (!data.empresa) void sendMessage(data).catch(() => undefined);
     const href = contactWhatsappHref(data);
     window.setTimeout(() => setSentHref(href), 0);
   }
@@ -121,7 +143,7 @@ export function ContactForm() {
   }
 
   function restart() {
-    reset({ type: "contacto", mensaje: "", nombre: "", contacto: "", empresa: "" });
+    reset({ servicio: undefined, producto: undefined, formato: undefined, pdf: false, mensaje: "", nombre: "", contacto: "" });
     setStep(0);
     setSentHref(null);
   }
@@ -154,7 +176,8 @@ export function ContactForm() {
     );
   }
 
-  const current = copy.steps[step];
+  const sinOpciones = step === 1 && opciones.length === 0;
+  const current = sinOpciones ? { ...copy.steps[1], question: copy.noOptionsQuestion, hint: copy.noOptionsHint } : copy.steps[step];
 
   return (
     <form
@@ -163,12 +186,6 @@ export function ContactForm() {
       onKeyDown={onKeyDown}
       className="relative overflow-hidden rounded-[2rem] bg-crema shadow-[0_30px_80px_-50px_rgba(63,46,58,0.45)]"
     >
-      <input type="hidden" {...register("type")} />
-      <div aria-hidden className="absolute -left-[9999px] h-px w-px overflow-hidden">
-        <label htmlFor={`${id}-empresa`}>Empresa</label>
-        <input id={`${id}-empresa`} type="text" tabIndex={-1} autoComplete="off" {...register("empresa")} />
-      </div>
-
       <div className="border-b border-ciruela/10 px-6 pb-6 pt-7 sm:px-10">
         <p className="sr-only" aria-live="polite">
           {copy.stepLabel} {step + 1} {copy.of} {copy.steps.length}: {current.label}
@@ -233,19 +250,61 @@ export function ContactForm() {
             )}
 
             {step === 1 && (
-              <div className="mt-8">
-                <label htmlFor={`${id}-mensaje`} className="mb-2 block text-sm font-medium">
-                  {copy.messageLabel}
-                </label>
-                <textarea
-                  id={`${id}-mensaje`}
-                  rows={5}
-                  placeholder={copy.messagePlaceholder}
-                  className="block w-full resize-none rounded-2xl border border-ciruela/15 bg-white/70 px-5 py-4 text-base leading-relaxed placeholder:text-ink-soft/70 focus:border-ciruela/50 focus:outline-none focus:ring-4 focus:ring-lavanda"
-                  aria-invalid={errors.mensaje ? true : undefined}
-                  {...register("mensaje")}
-                />
-                {errors.mensaje && <FieldError id={`${id}-mensaje-error`}>{errors.mensaje.message}</FieldError>}
+              <div className="mt-8 space-y-8">
+                {grupos.map((grupo) => (
+                  <div key={grupo.titulo ?? "opciones"}>
+                    {grupo.titulo && <p className="eyebrow mb-3">{grupo.titulo}</p>}
+                    <div role="radiogroup" aria-label={grupo.titulo ?? copy.optionsTitle} className="grid gap-3 sm:grid-cols-2">
+                      {grupo.opciones.map((option) => (
+                        <OptionCard
+                          key={option.value}
+                          label={option.label}
+                          detail={option.detalle}
+                          selected={values.producto === option.value}
+                          onSelect={() => chooseProducto(option.value)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+                {values.servicio === "guia" && <p className="rounded-2xl bg-salvia px-5 py-4 text-ink-soft">{copy.guiaHint}</p>}
+                {formatos.length > 0 && (
+                  <div>
+                    <p className="mb-3 text-sm font-medium">{copy.formatTitle}</p>
+                    <div role="radiogroup" aria-label={copy.formatTitle} className="grid gap-3 sm:grid-cols-2">
+                      {formatos.map((option) => (
+                        <OptionCard
+                          key={option.value}
+                          label={option.label}
+                          detail={option.detalle}
+                          selected={values.formato === option.value}
+                          onSelect={() => setValue("formato", values.formato === option.value ? undefined : option.value)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {producto?.extra && (
+                  <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed border-ciruela/25 px-5 py-3 text-[0.95rem]">
+                    <input type="checkbox" className="size-5 shrink-0 cursor-pointer accent-ciruela" {...register("pdf")} />
+                    <span className="flex-1">{copy.pdfLabel}</span>
+                    <span className="nums font-serif text-lg text-ciruela">+{formatPrice(producto.extra.precio)}</span>
+                  </label>
+                )}
+                <div>
+                  <label htmlFor={`${id}-mensaje`} className="mb-2 block text-sm font-medium">
+                    {copy.messageLabel}
+                  </label>
+                  <textarea
+                    id={`${id}-mensaje`}
+                    rows={4}
+                    placeholder={copy.messagePlaceholder}
+                    className="block w-full resize-none rounded-2xl border border-ciruela/15 bg-white/70 px-5 py-4 text-base leading-relaxed placeholder:text-ink-soft/70 focus:border-ciruela/50 focus:outline-none focus:ring-4 focus:ring-lavanda"
+                    aria-invalid={errors.mensaje ? true : undefined}
+                    {...register("mensaje")}
+                  />
+                  {errors.mensaje && <FieldError id={`${id}-mensaje-error`}>{errors.mensaje.message}</FieldError>}
+                </div>
               </div>
             )}
 
@@ -253,18 +312,16 @@ export function ContactForm() {
               <div className="mt-8 space-y-6">
                 <div className="flex flex-wrap items-center gap-2 text-sm">
                   <span className="text-ink-soft">{copy.summary}:</span>
-                  {[{ label: copy.topics.find((t) => t.value === values.servicio)?.label, step: 0 }]
-                    .filter((item) => item.label)
-                    .map((item) => (
-                      <button
-                        key={item.step}
-                        type="button"
-                        onClick={() => goTo(item.step)}
-                        className="inline-flex min-h-9 items-center rounded-full bg-rosa-polvo px-4 text-ciruela transition-colors hover:bg-lavanda"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
+                  {resumen.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => goTo(1)}
+                      className="inline-flex min-h-9 items-center rounded-full bg-rosa-polvo px-4 text-ciruela transition-colors hover:bg-lavanda"
+                    >
+                      {item}
+                    </button>
+                  ))}
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <TextField
@@ -284,25 +341,12 @@ export function ContactForm() {
                     {...register("contacto", { onChange: () => errors.contacto && trigger("contacto") })}
                   />
                 </div>
-                <div>
-                  <label className="flex cursor-pointer items-start gap-3 text-[0.95rem]">
-                    <input
-                      type="checkbox"
-                      className="mt-0.5 size-5 shrink-0 cursor-pointer accent-ciruela"
-                      aria-invalid={errors.privacidad ? true : undefined}
-                      aria-describedby={errors.privacidad ? `${id}-privacidad-error` : undefined}
-                      {...register("privacidad", { onChange: () => errors.privacidad && trigger("privacidad") })}
-                    />
-                    <span>
-                      {copy.privacyLabel}{" "}
-                      <Link href="/politica-de-privacidad" className="underline underline-offset-4">
-                        {copy.privacyLink}
-                      </Link>
-                    </span>
-                  </label>
-                  {errors.privacidad && <FieldError id={`${id}-privacidad-error`}>{errors.privacidad.message}</FieldError>}
-                </div>
-                <p className="rounded-2xl bg-rosa-polvo/60 px-5 py-4 text-xs leading-relaxed text-ink-soft">{copy.privacyNote}</p>
+                <p className="rounded-2xl bg-rosa-polvo/60 px-5 py-4 text-xs leading-relaxed text-ink-soft">
+                  {copy.privacyNote}{" "}
+                  <Link href="/politica-de-privacidad" className="underline underline-offset-4">
+                    {copy.privacyLink}
+                  </Link>
+                </p>
               </div>
             )}
           </m.fieldset>
@@ -336,7 +380,7 @@ export function ContactForm() {
   );
 }
 
-function OptionCard({ label, selected, onSelect }: { label: string; selected: boolean; onSelect: () => void }) {
+function OptionCard({ label, detail, selected, onSelect }: { label: string; detail?: string; selected: boolean; onSelect: () => void }) {
   return (
     <button
       type="button"
@@ -350,7 +394,10 @@ function OptionCard({ label, selected, onSelect }: { label: string; selected: bo
           : "border-ciruela/15 bg-white/60 text-ciruela hover:border-ciruela/40 hover:bg-white",
       )}
     >
-      <span className="font-medium">{label}</span>
+      <span className="min-w-0">
+        <span className="block font-medium">{label}</span>
+        {detail && <span className={cn("block text-sm", selected ? "text-crema/75" : "text-ink-soft")}>{detail}</span>}
+      </span>
       <span
         aria-hidden
         className={cn(

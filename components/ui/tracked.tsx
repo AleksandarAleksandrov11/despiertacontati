@@ -6,7 +6,6 @@ import { useEffect, type ComponentPropsWithoutRef } from "react";
 export type TrackEvent =
   | "ver_producto"
   | "click_comprar_whatsapp"
-  | "descarga_guia"
   | "calcular_matriz"
   | "descarga_pdf_matriz"
   | "descarga_pdf_codigo"

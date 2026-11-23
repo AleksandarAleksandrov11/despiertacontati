@@ -28,7 +28,7 @@ export function GuiaBlock({ tone = "salvia", id = "guia" }: { tone?: SectionTone
             ))}
           </ul>
           <div className="mt-10">
-            <Button href={guia.slug} magnetic>
+            <Button href={guia.pedir.href} magnetic>
               {bloque.cta}
             </Button>
           </div>

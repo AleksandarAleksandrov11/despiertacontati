@@ -59,7 +59,7 @@ export const site = {
     primary: { label: "Reserva tu sesión", href: "/contacto" },
     services: { label: "Ver servicios", href: "/servicios" },
     about: { label: "Conóceme", href: "/quien-soy" },
-    guide: { label: "Guía gratuita", href: "/tu-primera-pausa" },
+    guide: { label: "Guía gratuita", href: "/contacto?servicio=guia" },
     shop: { label: "Ver la tienda", href: "/tienda" },
     info: "Pide información",
     whatsapp: "Escríbeme por WhatsApp",
@@ -72,7 +72,7 @@ export const site = {
     guide: {
       title: "Tu primera pausa",
       text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
-      cta: "Descarga la guía gratuita",
+      cta: "Pide la guía gratuita",
     },
   },
   ui: {

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { guia } from "@/content/guia";
 import { faqs } from "@/content/faqs";
-import { GuiaForm } from "@/components/sections/guia/guia-form";
 import { FaqSection } from "@/components/sections/faq-section";
 import { Button } from "@/components/ui/button";
 import { EbookCover } from "@/components/ui/ebook-cover";
@@ -13,7 +12,7 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Guía gratuita para empezar a meditar | Despierta con Tati",
   description:
-    "Descarga gratis Tu primera pausa: una guía sencilla para empezar a meditar, cinco claves prácticas y la Meditación Freno, tu primera meditación guiada.",
+    "Pide gratis Tu primera pausa: una guía sencilla para empezar a meditar, cinco claves prácticas y la Meditación Freno, tu primera meditación guiada.",
   path: guia.slug,
 });
 
@@ -45,8 +44,8 @@ export default function GuiaPage() {
               </ol>
             </FadeUp>
             <FadeUp delay={800} className="mt-10">
-              <Button href="#formulario" magnetic>
-                {guia.form.title}
+              <Button href={guia.pedir.href} magnetic>
+                {guia.pedir.cta}
               </Button>
             </FadeUp>
           </div>
@@ -55,9 +54,17 @@ export default function GuiaPage() {
           </FadeUp>
         </div>
       </section>
-      <Section tone="crema" id="formulario" className="scroll-mt-4">
-        <div className="mx-auto max-w-3xl">
-          <GuiaForm />
+      <Section tone="crema" labelledBy="pedir-guia">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 id="pedir-guia" className="text-h2">
+            {guia.pedir.title}
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-lead text-ink-soft">{guia.pedir.text}</p>
+          <div className="mt-10 flex justify-center">
+            <Button href={guia.pedir.href} magnetic>
+              {guia.pedir.cta}
+            </Button>
+          </div>
         </div>
       </Section>
       <FaqSection faqs={faqs.guia} title={guia.faqTitle} tone="lavanda" />
