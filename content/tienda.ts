@@ -57,7 +57,7 @@ export const categorias: Categoria[] = [
     nav: "Meditaciones",
     eyebrow: "Meditaciones",
     title: "Medita con Tati.",
-    text: "Dos programas de meditación guiada, de 6 y de 12 semanas, con una meditación en MP3 para cada semana y un cuaderno de reflexión. Te llegan por enlace privado de descarga tras confirmar el pago.",
+    text: "Dos programas de meditación guiada, de 5 y de 12 semanas, con una meditación en MP3 para cada semana y un cuaderno de reflexión. Te llegan por enlace privado de descarga tras confirmar el pago.",
   },
   {
     id: "crono-tarot",
@@ -122,15 +122,15 @@ export const productos: Producto[] = [
     categoria: "meditaciones",
     tipo: "meditacion",
     nombre: "Los dos programas",
-    frase: "Vuelve a ti y Transforma tu bienestar juntos: 18 semanas de meditación guiada.",
+    frase: "Vuelve a ti y Transforma tu bienestar juntos: 17 semanas de meditación guiada.",
     descripcion:
       "Los dos programas de meditación juntos por 34,80 € durante el Black Friday, del 24 al 30 de noviembre. Por separado cuestan 17,90 € y 27,90 €. Cada programa incluye su guía de uso y su cuaderno de reflexión Mi espacio interior.",
     incluye: [
-      { titulo: "Vuelve a ti: 6 semanas para encontrar tu calma", detalle: "6 audios" },
+      { titulo: "Vuelve a ti: 5 semanas para encontrar tu calma", detalle: "5 audios" },
       { titulo: "Transforma tu bienestar: 12 semanas para cultivar tu equilibrio interior", detalle: "12 audios" },
       { titulo: "Mi espacio interior: cuaderno de reflexión e integración de cada programa", detalle: "2 cuadernos" },
     ],
-    formato: "18 audios en MP3, guías de uso y cuadernos de reflexión",
+    formato: "17 audios en MP3, guías de uso y cuadernos de reflexión",
     entrega: entregaMeditacion,
     paraQuien: [
       "Quieres empezar con calma y seguir profundizando después.",
@@ -144,7 +144,7 @@ export const productos: Producto[] = [
       eyebrow: "Black Friday, del 24 al 30 de noviembre",
       title: "Los dos programas por 34,80 €.",
       text: "Vuelve a ti y Transforma tu bienestar juntos, durante el Black Friday. Cada uno con su guía de uso y su cuaderno de reflexión Mi espacio interior.",
-      items: ["Vuelve a ti, 6 semanas para encontrar tu calma", "Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior", "Un cuaderno Mi espacio interior para cada programa"],
+      items: ["Vuelve a ti, 5 semanas para encontrar tu calma", "Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior", "Un cuaderno Mi espacio interior para cada programa"],
       ventana: blackFriday,
     },
     destacado: true,
@@ -155,7 +155,7 @@ export const productos: Producto[] = [
     categoria: "meditaciones",
     tipo: "meditacion",
     nombre: "Vuelve a ti",
-    frase: "6 semanas para encontrar tu calma.",
+    frase: "5 semanas para encontrar tu calma.",
     descripcion:
       "Un recorrido para parar, respirar, escucharte y empezar a dedicarte tiempo. Una meditación guiada cada semana, con el orden de escucha recomendado, una guía de uso y Mi espacio interior, un cuaderno de reflexión e integración: un lugar para escucharte, descubrirte y conectar contigo.",
     incluye: [
@@ -164,10 +164,9 @@ export const productos: Producto[] = [
       { titulo: "Semana 3. Viaje a tu esencia", detalle: "27:30" },
       { titulo: "Semana 4. Cerrar ciclos", detalle: "27:03" },
       { titulo: "Semana 5. La sonrisa interior", detalle: "25:03" },
-      { titulo: "Semana 6" },
       { titulo: "Mi espacio interior: cuaderno de reflexión e integración", detalle: "Cuaderno" },
     ],
-    formato: "6 audios en MP3, guía de uso y cuaderno de reflexión",
+    formato: "5 audios en MP3, guía de uso y cuaderno de reflexión",
     entrega: entregaMeditacion,
     paraQuien: [
       "Quieres empezar a meditar con un programa corto y con orden.",

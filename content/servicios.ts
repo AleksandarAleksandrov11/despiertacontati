@@ -130,7 +130,7 @@ export const formatos: Formato[] = [
   },
   {
     title: "Meditación grabada",
-    text: "Programas de meditación guiada de 6 y 12 semanas, en MP3, para escuchar cuando quieras.",
+    text: "Programas de meditación guiada de 5 y 12 semanas, en MP3, para escuchar cuando quieras.",
     cta: { label: "Ver meditaciones", href: "/tienda#meditaciones" },
   },
   {
@@ -151,7 +151,7 @@ export const formatos: Formato[] = [
 export const destacados = [
   {
     title: "Meditaciones guiadas",
-    text: "Programas de 6 y 12 semanas para descargar y escuchar a tu ritmo, en casa o donde quieras.",
+    text: "Programas de 5 y 12 semanas para descargar y escuchar a tu ritmo, en casa o donde quieras.",
     image: "meditacionAuriculares" as ImageKey,
     href: "/tienda#meditaciones",
     cta: "Ver en la tienda",
@@ -330,14 +330,14 @@ export const meditacionPage = {
   oferta: {
     eyebrow: "Black Friday, del 24 al 30 de noviembre",
     title: "Los dos programas de meditación por 34,80 €.",
-    text: "Vuelve a ti, 6 semanas para encontrar tu calma, y Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior, juntos y con su cuaderno Mi espacio interior.",
+    text: "Vuelve a ti, 5 semanas para encontrar tu calma, y Transforma tu bienestar, 12 semanas para cultivar tu equilibrio interior, juntos y con su cuaderno Mi espacio interior.",
     cta: "Ver la oferta",
     href: "/tienda/los-dos-programas",
   },
   grabadas: {
     eyebrow: "Meditaciones grabadas",
     title: "Medita con Tati.",
-    text: "Dos programas de meditación guiada, de 6 y 12 semanas, en MP3 para escuchar a tu ritmo. Los encuentras en la tienda.",
+    text: "Dos programas de meditación guiada, de 5 y 12 semanas, en MP3 para escuchar a tu ritmo. Los encuentras en la tienda.",
     cta: "Ver las meditaciones en la tienda",
   },
   grupales: {
