@@ -225,7 +225,7 @@ export const reikiPage = {
     {
       title: "Péndulo hebreo",
       text: "Trabajo energético con péndulo hebreo para explorar y trabajar aspectos relacionados con el equilibrio y el bienestar personal.",
-      image: "piedrasChakras",
+      image: "penduloHebreo",
       whatsapp: "Hola, Tati. Me gustaría información sobre el péndulo hebreo.",
     },
     {

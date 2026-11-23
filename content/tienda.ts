@@ -616,7 +616,7 @@ export const productos: Producto[] = [
     paraQuien: [],
     precio: 27,
     destacado: false,
-    imagen: "piedrasChakras",
+    imagen: "penduloHebreo",
     enlace: "/servicios/reiki#terapias-title",
   },
   {
