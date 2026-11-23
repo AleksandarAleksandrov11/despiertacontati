@@ -8,7 +8,7 @@ export type TipoProducto = "meditacion" | "lectura" | "sesion" | "terapia" | "es
 
 export type Ventana = { desde: string; hasta: string };
 
-export const blackFriday: Ventana = { desde: "2026-11-24", hasta: "2026-11-30" };
+export const blackFriday: Ventana = { desde: "2026-11-23", hasta: "2026-11-30" };
 
 export function vigente(ventana?: Ventana, ahora = new Date()) {
   if (!ventana) return true;
