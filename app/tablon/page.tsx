@@ -9,6 +9,7 @@ import { BrandSymbol } from "@/components/ui/brand-symbol";
 import { Button } from "@/components/ui/button";
 import { WhatsappIcon } from "@/components/ui/icons";
 import { JsonLd } from "@/components/ui/json-ld";
+import { AgendaClases } from "@/components/sections/agenda-clases";
 import { Section, SectionHeading } from "@/components/ui/section";
 import { eventJsonLd, getActiveAnuncios } from "@/lib/anuncios";
 import { breadcrumbJsonLd, businessId, pageMetadata } from "@/lib/seo";
@@ -64,6 +65,9 @@ export default function TablonPage() {
             </div>
           </div>
         )}
+      </Section>
+      <Section tone="salvia" id="agenda" labelledBy="agenda-title">
+        <AgendaClases />
       </Section>
       <Section tone="lavanda" id="instagram" labelledBy="instagram-title">
         <div>

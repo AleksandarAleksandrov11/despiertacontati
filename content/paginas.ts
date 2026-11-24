@@ -189,7 +189,7 @@ export const contactoPage = {
       { value: "curso-reiki", label: "Curso de Reiki" },
       { value: "no-lo-se", label: "Otra consulta o aún no lo sé" },
     ],
-    grupo: { label: "Grupo de meditación online", detalle: "Empieza el 26 de noviembre" },
+    grupo: { label: "Clases de meditación online", detalle: "Clase gratuita el 26 de noviembre" },
     optionsTitle: "Elige una opción",
     formatTitle: "Cómo lo quieres",
     pdfLabel: "Añadir mi lectura en PDF",

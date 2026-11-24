@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { meditacionPage } from "@/content/servicios";
+import { AgendaClases } from "@/components/sections/agenda-clases";
 import { blackFriday, productosDe, vigente } from "@/content/tienda";
 import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
@@ -152,12 +153,16 @@ export default function MeditacionPage() {
               <Button href={whatsappHref(page.grupales.ctaWhatsapp)} icon={<WhatsappIcon size={18} />}>
                 {page.grupales.cta}
               </Button>
-              <Button href="/tablon" variant="link">
+              <Button href="#agenda" variant="link">
                 {page.grupales.tablon}
               </Button>
             </div>
           </div>
         </div>
+      </Section>
+
+      <Section tone="salvia" id="agenda" labelledBy="agenda-title" className="scroll-mt-20">
+        <AgendaClases />
       </Section>
 
       <Respira />

@@ -119,7 +119,7 @@ export const faqs = {
     },
     {
       question: "¿Cuándo empiezan los grupos?",
-      answer: "Empezamos el 26 de noviembre con un grupo online. Escríbeme y te cuento cómo apuntarte.",
+      answer: "Empezamos el 26 de noviembre con una clase gratuita online. Después hay clases en diciembre y en enero: tienes las fechas en la agenda del tablón y de la página de Meditación. Escríbeme y te apunto.",
     },
     disclaimerFaq,
   ],
