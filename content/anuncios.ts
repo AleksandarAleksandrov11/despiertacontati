@@ -45,7 +45,7 @@ export const anuncios: Anuncio[] = [
     title: "Los dos programas de meditación por 34,80 €",
     status: "Black Friday, del 24 al 30 de noviembre",
     modality: "17 audios en MP3 y dos cuadernos",
-    text: "Vuelve a ti y Transforma tu bienestar juntos, con su cuaderno de reflexión Mi espacio interior. Por separado cuestan 17,90 € y 27,90 €.",
+    text: "Vuelve a ti y Transforma tu bienestar juntos, con su cuaderno de reflexión Mi espacio interior y la guía «Beneficios de la meditación» de regalo. Por separado cuestan 17,90 € y 27,90 €.",
     cta: { kind: "enlace", label: "Ver la oferta", href: "/tienda/los-dos-programas" },
     date: "2026-11-24",
     endDate: "2026-11-30",
@@ -56,7 +56,7 @@ export const anuncios: Anuncio[] = [
     title: "Transforma tu bienestar",
     status: "Ya disponible en la tienda",
     modality: "Doce audios en MP3 y cuaderno",
-    text: "12 semanas para cultivar tu equilibrio interior: una meditación guiada cada semana y Mi espacio interior, un cuaderno de reflexión e integración.",
+    text: "12 semanas para cultivar tu equilibrio interior: una meditación guiada cada semana y Mi espacio interior, un cuaderno de reflexión e integración. De regalo, la guía «Beneficios de la meditación y el mindfulness».",
     cta: { kind: "enlace", label: "Ver en la tienda", href: "/tienda/transforma-tu-bienestar" },
   },
 ];

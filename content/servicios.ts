@@ -337,7 +337,7 @@ export const meditacionPage = {
   grabadas: {
     eyebrow: "Meditaciones grabadas",
     title: "Medita con Tati.",
-    text: "Dos programas de meditación guiada, de 5 y 12 semanas, en MP3 para escuchar a tu ritmo. Los encuentras en la tienda.",
+    text: "Dos programas de meditación guiada, de 5 y 12 semanas, en MP3 para escuchar a tu ritmo. Con cada uno, cuaderno de reflexión y la guía «Beneficios de la meditación y el mindfulness» de regalo. Los encuentras en la tienda.",
     cta: "Ver las meditaciones en la tienda",
   },
   grupales: {
