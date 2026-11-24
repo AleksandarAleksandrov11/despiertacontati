@@ -18,7 +18,7 @@ import { whatsappHref } from "@/lib/utils";
 export const metadata: Metadata = pageMetadata({
   title: "Contacto y reservas online | Despierta con Tati",
   description:
-    "Pide la guía gratuita, un programa de meditación, una lectura de tarot o una sesión de Reiki online. Eliges lo que quieres y se abre WhatsApp con tu mensaje listo.",
+    "Pide un programa de meditación, una lectura de tarot o una sesión de Reiki online. Eliges lo que quieres y se abre WhatsApp con tu mensaje listo.",
   path: "/contacto",
 });
 

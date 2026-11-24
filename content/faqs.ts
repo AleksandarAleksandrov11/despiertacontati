@@ -37,7 +37,7 @@ export const faqs = {
     {
       question: "¿Por dónde empiezo?",
       answer:
-        "Si llegas con estrés o ansiedad, por el Reiki: primero hay que bajar revoluciones. Si prefieres empezar por tu cuenta, pídeme la guía gratuita Tu primera pausa.",
+        "Si llegas con estrés o ansiedad, por el Reiki: primero hay que bajar revoluciones. Si prefieres empezar por tu cuenta, empieza por la meditación.",
     },
     {
       question: "¿Cómo compro una meditación o una lectura?",
@@ -105,7 +105,7 @@ export const faqs = {
     {
       question: "Nunca he meditado. ¿Puedo empezar?",
       answer:
-        "Claro. Si nunca has meditado, mejor: empiezas sin ideas raras sobre cómo tiene que ser. La guía gratuita Tu primera pausa es un buen primer paso.",
+        "Claro. Si nunca has meditado, mejor: empiezas sin ideas raras sobre cómo tiene que ser. Los programas de la tienda van paso a paso, una meditación cada semana.",
     },
     {
       question: "¿Cómo consigo las meditaciones grabadas?",
@@ -169,20 +169,6 @@ export const faqs = {
     },
     dondeFaq,
     disclaimerFaq,
-  ],
-  guia: [
-    {
-      question: "¿Es gratis de verdad?",
-      answer: "Sí. Me escribes por WhatsApp desde el formulario y te la envío, sin coste.",
-    },
-    {
-      question: "¿Cómo la recibo?",
-      answer: "Por WhatsApp. Eliges la guía en el formulario de contacto, se abre WhatsApp con tu mensaje y yo te mando el PDF y la Meditación Freno.",
-    },
-    {
-      question: "¿Necesito experiencia para meditar?",
-      answer: "No. La guía está pensada justo para empezar desde cero.",
-    },
   ],
 } satisfies Record<string, Faq[]>;
 

@@ -1,6 +1,6 @@
 import * as z from "zod/mini";
 
-export const contactTopics = ["guia", "meditacion", "tarot", "autoconocimiento", "reiki", "limpieza", "curso-reiki", "no-lo-se"] as const;
+export const contactTopics = ["meditacion", "tarot", "autoconocimiento", "reiki", "limpieza", "curso-reiki", "no-lo-se"] as const;
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const phonePattern = /^\+?[\d\s().-]{9,20}$/;

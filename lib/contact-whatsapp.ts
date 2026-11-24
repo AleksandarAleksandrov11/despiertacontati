@@ -13,15 +13,14 @@ export function contactWhatsappHref(values: Partial<ContactInput>) {
   const nombreProducto = producto?.nombre ?? opcion?.label;
 
   let motivo: string = w.forOther;
-  if (values.servicio === "guia") motivo = w.forGuide;
-  else if (nombreProducto) motivo = w.forProduct(nombreProducto);
+  if (nombreProducto) motivo = w.forProduct(nombreProducto);
   else if (tema && values.servicio !== "no-lo-se") motivo = w.forTopic(tema);
 
   const lines = [`${w.greeting} ${motivo}.`, "", `*${w.name}:* ${values.nombre?.trim() ?? ""}`];
   const contacto = values.contacto?.trim();
   if (contacto) lines.push(`*${w.contact}:* ${contacto}`);
-  if (tema && values.servicio !== "guia" && values.servicio !== "no-lo-se") lines.push(`*${w.topic}:* ${tema}`);
-  if (nombreProducto && values.servicio !== "guia") lines.push(`*${w.item}:* ${nombreProducto}${opcion?.detalle ? ` (${opcion.detalle.toLowerCase()})` : ""}`);
+  if (tema && values.servicio !== "no-lo-se") lines.push(`*${w.topic}:* ${tema}`);
+  if (nombreProducto) lines.push(`*${w.item}:* ${nombreProducto}${opcion?.detalle ? ` (${opcion.detalle.toLowerCase()})` : ""}`);
   const formato = formatosDe(producto).find((item) => item.value === values.formato);
   if (formato) lines.push(`*${w.format}:* ${formato.label}${formato.detalle ? ` (${formato.detalle})` : ""}`);
   if (values.pdf) lines.push(`*${w.pdf}*`);

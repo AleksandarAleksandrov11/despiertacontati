@@ -25,12 +25,6 @@ export const inicio = {
     eyebrow: "Para empezar",
     title: "Cuatro formas de cuidarte.",
   },
-  guia: {
-    eyebrow: "Guía gratuita",
-    title: "Tu primera pausa.",
-    text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada, gratis.",
-    cta: "Quiero la guía",
-  },
   respira: {
     eyebrow: "Respira",
     title: "Para un momento.",
@@ -163,7 +157,7 @@ export const tablonPage = {
 export const contactoPage = {
   eyebrow: "Contacto",
   title: "Hablemos.",
-  subtitle: "Pide la guía, un programa, una lectura o una sesión. Se abre WhatsApp con tu mensaje listo.",
+  subtitle: "Pide un programa, una lectura o una sesión. Se abre WhatsApp con tu mensaje listo.",
   aside: {
     avatar: "tatiSonrisa" as ImageKey,
     avatarTitle: "Te contesto yo.",
@@ -182,12 +176,11 @@ export const contactoPage = {
   },
   form: {
     steps: [
-      { id: "servicio", label: "Qué quieres", question: "¿Qué te trae por aquí?", hint: "Elige una opción. Aquí puedes pedirlo todo: la guía gratuita, los programas, las lecturas, las sesiones y más." },
+      { id: "servicio", label: "Qué quieres", question: "¿Qué te trae por aquí?", hint: "Elige una opción. Aquí puedes pedirlo todo: los programas, las lecturas, las sesiones y más." },
       { id: "detalle", label: "Detalles", question: "¿Cuál te interesa?", hint: "Elige una opción y cuéntame lo que quieras. Si dudas, déjalo en blanco y lo vemos." },
       { id: "datos", label: "Tus datos", question: "¿Cómo te llamo?", hint: "Al enviar se abre WhatsApp con tu mensaje ya escrito, solo tienes que pulsar enviar." },
     ],
     topics: [
-      { value: "guia", label: "Guía gratuita para empezar a meditar" },
       { value: "meditacion", label: "Programas de meditación y grupo online" },
       { value: "tarot", label: "Tarot: Mapa 2027, lecturas y sesiones" },
       { value: "autoconocimiento", label: "Matriz del Destino y Código Personal" },
@@ -196,14 +189,12 @@ export const contactoPage = {
       { value: "curso-reiki", label: "Curso de Reiki" },
       { value: "no-lo-se", label: "Otra consulta o aún no lo sé" },
     ],
-    guia: { label: "Tu primera pausa y la Meditación Freno", detalle: "Gratis" },
     grupo: { label: "Grupo de meditación online", detalle: "Empieza el 26 de noviembre" },
     optionsTitle: "Elige una opción",
     formatTitle: "Cómo lo quieres",
     pdfLabel: "Añadir mi lectura en PDF",
     noOptionsQuestion: "Cuéntame un poco",
     noOptionsHint: "Lo que te apetezca contarme sobre lo que necesitas. Es opcional.",
-    guiaHint: "Te la envío por WhatsApp en cuanto me escribas. Es gratis.",
     messagePlaceholder: "Por ejemplo: llevo unas semanas con mucho estrés y me gustaría saber por dónde empezar.",
     messageLabel: "Tu mensaje (opcional)",
     nameLabel: "Nombre",
@@ -223,7 +214,6 @@ export const contactoPage = {
     of: "de",
     whatsapp: {
       greeting: "Hola, Tati. Te escribo desde la web",
-      forGuide: "para pedirte la guía gratuita Tu primera pausa y la Meditación Freno",
       forProduct: (nombre: string) => `porque me interesa ${nombre}`,
       forTopic: (tema: string) => `porque me interesa ${tema.toLowerCase()}`,
       forOther: "para hacerte una consulta",
@@ -255,10 +245,6 @@ export const notFoundPage = {
     { label: "Tienda", href: "/tienda" },
     { label: "Contacto", href: "/contacto" },
   ],
-  guide: {
-    text: "Y si te apetece una pausa de verdad, llévate la guía gratuita.",
-    cta: "Pedir Tu primera pausa",
-  },
 };
 
 export const loadingLabel = "Cargando";

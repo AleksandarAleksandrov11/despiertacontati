@@ -6,7 +6,6 @@ import { whatsappHref } from "@/lib/utils";
 
 const accents: Record<Anuncio["type"], string> = {
   Grupo: "var(--color-chakra-tercer-ojo)",
-  Guía: "var(--color-chakra-corazon)",
   Tienda: "var(--color-chakra-garganta)",
   Novedad: "var(--color-chakra-sacro)",
 };

@@ -5,7 +5,6 @@ import { faqs } from "@/content/faqs";
 import { site } from "@/content/site";
 import { PageHeader } from "@/components/sections/page-header";
 import { Respira } from "@/components/sections/respira";
-import { GuiaBlock } from "@/components/sections/guia-block";
 import { PriceTag } from "@/components/sections/tienda/price-tag";
 import { FaqSection } from "@/components/sections/faq-section";
 import { CtaBlock } from "@/components/sections/cta-block";
@@ -18,7 +17,7 @@ import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { whatsappHref } from "@/lib/utils";
 
 const description =
-  "Clases de meditación en grupo online, meditaciones guiadas para descargar y una guía gratuita para empezar a meditar. Medita en lo cotidiano.";
+  "Clases de meditación en grupo online, meditaciones guiadas para descargar. Medita en lo cotidiano.";
 
 export const revalidate = 3600;
 
@@ -161,7 +160,6 @@ export default function MeditacionPage() {
         </div>
       </Section>
 
-      <GuiaBlock tone="rosa" />
       <Respira />
       <FaqSection faqs={faqs.meditacion} />
       <CtaBlock whatsappMessage={page.ctaWhatsapp} primary={{ label: site.cta.primary.label, href: "/contacto?servicio=meditacion" }} />

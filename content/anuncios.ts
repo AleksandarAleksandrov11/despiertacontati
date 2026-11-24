@@ -1,4 +1,4 @@
-export type AnuncioTipo = "Grupo" | "Guía" | "Tienda" | "Novedad";
+export type AnuncioTipo = "Grupo" | "Tienda" | "Novedad";
 
 export type Anuncio = {
   id: string;
@@ -27,15 +27,6 @@ export const anuncios: Anuncio[] = [
       label: "Quiero plaza",
       message: "Hola, Tati. Quiero plaza en el grupo de meditación online que empieza el 26 de noviembre.",
     },
-  },
-  {
-    id: "guia-tu-primera-pausa",
-    type: "Guía",
-    title: "Guía gratuita «Tu primera pausa»",
-    status: "Ya disponible",
-    modality: "Gratis, por WhatsApp",
-    text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
-    cta: { kind: "enlace", label: "Pídela gratis", href: "/contacto?servicio=guia" },
   },
   {
     id: "mapa-2027-black-friday",

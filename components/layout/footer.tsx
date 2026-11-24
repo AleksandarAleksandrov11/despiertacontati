@@ -26,7 +26,7 @@ export function Footer() {
         <div className="gold-rule my-14 sm:my-16" />
 
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-          <div className="sm:col-span-2 lg:col-span-3">
+          <div className="sm:col-span-2 lg:col-span-4">
             <Logo tone="dark" />
             <p className="mt-3 max-w-xs text-crema/75">
               {site.footer.blurb} {site.location.label}.
@@ -46,7 +46,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label={site.ui.footerServices} className="lg:col-span-2">
+          <nav aria-label={site.ui.footerServices} className="lg:col-span-3">
             <h2 className="eyebrow mb-4 text-crema/75">{site.ui.footerServices}</h2>
             <ul className="space-y-1">
               {serviceNav.map((item) => (
@@ -94,14 +94,6 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="sm:col-span-2 lg:col-span-2">
-            <h2 className="eyebrow mb-4 text-crema/75">{site.ui.footerGuide}</h2>
-            <p className="font-serif text-2xl italic text-crema">{site.footer.guide.title}</p>
-            <p className="mb-5 mt-2 text-crema/75">{site.footer.guide.text}</p>
-            <Button href={site.cta.guide.href} tone="dark" variant="link">
-              {site.footer.guide.cta}
-            </Button>
-          </div>
         </div>
 
         <div className="mt-16 border-t border-crema/15 pt-8 text-sm text-crema/80">

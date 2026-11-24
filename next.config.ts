@@ -22,12 +22,12 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
-      { source: "/descargas/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
     ];
   },
   async redirects() {
     return [
       { source: "/sobre-mi", destination: "/quien-soy", statusCode: 301 },
+      { source: "/tu-primera-pausa", destination: "/servicios/meditacion", permanent: true },
       { source: "/tienda/pausa-y-vuelve-a-ti", destination: "/tienda/transforma-tu-bienestar", permanent: true },
       { source: "/tienda/camino-12-semanas-meditacion", destination: "/tienda/transforma-tu-bienestar", permanent: true },
       { source: "/tienda/un-espacio-para-tu-mente", destination: "/tienda/vuelve-a-ti", permanent: true },

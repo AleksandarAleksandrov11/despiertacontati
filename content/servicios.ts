@@ -50,7 +50,7 @@ export const bloques: Bloque[] = [
     accent: "var(--color-chakra-tercer-ojo)",
     image: "relajacionSillon",
     summary: "Con calma llega la claridad. Aprendes a parar en tu día a día, sin cojín ni silencio perfecto.",
-    includes: ["Clases grupales online", "Meditaciones grabadas en la tienda", "Guía gratuita"],
+    includes: ["Clases grupales online", "Meditaciones grabadas en la tienda"],
     modality: ["Online", "Grabada"],
     more: "Ver meditación",
   },

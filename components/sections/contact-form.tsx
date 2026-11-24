@@ -51,7 +51,7 @@ export function ContactForm() {
     mode: "onTouched",
     defaultValues: {
       servicio: preset,
-      producto: preset === "guia" ? "guia" : presetOpcion,
+      producto: presetOpcion,
       formato: undefined,
       pdf: false,
       mensaje: "",
@@ -91,7 +91,7 @@ export function ContactForm() {
 
   function choose(value: string) {
     setValue("servicio", value as ContactInput["servicio"], { shouldValidate: true });
-    setValue("producto", value === "guia" ? "guia" : undefined);
+    setValue("producto", undefined);
     setValue("formato", undefined);
     setValue("pdf", false);
     window.setTimeout(() => goTo(1), 260);
@@ -267,7 +267,6 @@ export function ContactForm() {
                     </div>
                   </div>
                 ))}
-                {values.servicio === "guia" && <p className="rounded-2xl bg-salvia px-5 py-4 text-ink-soft">{copy.guiaHint}</p>}
                 {formatos.length > 0 && (
                   <div>
                     <p className="mb-3 text-sm font-medium">{copy.formatTitle}</p>

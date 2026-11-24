@@ -59,7 +59,6 @@ export const site = {
     primary: { label: "Reserva tu sesión", href: "/contacto" },
     services: { label: "Ver servicios", href: "/servicios" },
     about: { label: "Conóceme", href: "/quien-soy" },
-    guide: { label: "Guía gratuita", href: "/contacto?servicio=guia" },
     shop: { label: "Ver la tienda", href: "/tienda" },
     info: "Pide información",
     whatsapp: "Escríbeme por WhatsApp",
@@ -69,11 +68,6 @@ export const site = {
   },
   footer: {
     blurb: "Reiki, meditación, tarot y Matriz del Destino.",
-    guide: {
-      title: "Tu primera pausa",
-      text: "Una guía sencilla para empezar a meditar y tu primera meditación guiada.",
-      cta: "Pide la guía gratuita",
-    },
   },
   ui: {
     skipLink: "Saltar al contenido",
@@ -86,7 +80,6 @@ export const site = {
     footerNav: "Navegación",
     footerServices: "Servicios",
     footerContact: "Contacto",
-    footerGuide: "Guía gratuita",
     footerSocial: "Redes",
     legalNav: "Información legal",
     configureCookies: "Configurar cookies",

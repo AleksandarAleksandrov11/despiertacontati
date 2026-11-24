@@ -18,7 +18,6 @@ const routes: Route[] = [
   { path: "/calculadora", priority: 0.9, changeFrequency: "monthly" },
   { path: "/calculadora/matriz-del-destino", priority: 0.9, changeFrequency: "monthly" },
   { path: "/calculadora/codigo-personal", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/tu-primera-pausa", priority: 0.8, changeFrequency: "monthly" },
   { path: "/tablon", priority: 0.7, changeFrequency: "weekly" },
   ...(hayTestimonios ? [{ path: "/testimonios", priority: 0.6, changeFrequency: "monthly" as const }] : []),
   { path: "/contacto", priority: 0.8, changeFrequency: "yearly" },

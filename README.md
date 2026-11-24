@@ -1,6 +1,6 @@
 # Despierta con Tati
 
-Web de Despierta con Tati, terapia holística online: Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, con tienda, calculadora de la Matriz del Destino y guía gratuita.
+Web de Despierta con Tati, terapia holística online: Reiki y terapias energéticas, limpieza energética de espacios, meditación, tarot y autoconocimiento, con tienda y calculadora de la Matriz del Destino.
 
 ## Stack
 
@@ -9,7 +9,7 @@ Web de Despierta con Tati, terapia holística online: Reiki y terapias energéti
 - Motion, Lenis y Embla Carousel
 - React Hook Form y Zod
 - React PDF para el PDF gratuito de la calculadora
-- Vercel Analytics y Speed Insights, con eventos de la tienda, la guía y la calculadora
+- Vercel Analytics y Speed Insights, con eventos de la tienda y la calculadora
 
 ## Arranque
 
@@ -19,7 +19,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Scripts disponibles: `npm run dev`, `npm run build`, `npm run start`, `npm run lint` y `npm run ebook`.
+Scripts disponibles: `npm run dev`, `npm run build`, `npm run start` y `npm run lint`.
 
 ## Variables de entorno
 
@@ -39,15 +39,9 @@ Los productos y precios están en `content/tienda.ts`. Cada producto con precio 
 - La compra de la lectura completa usa la misma caja de compra que la tienda, con la fecha y el nombre ya escritos en el mensaje de WhatsApp. La lectura de pareja no tiene precio publicado y abre WhatsApp para pedir información; al ponerle precio en `content/tienda.ts` pasa a tener ficha propia.
 - Textos: `content/calculadora.ts` (páginas, formularios, PDF y mensajes) y `content/arcanos.ts` (los 22 arcanos).
 
-## Guía gratuita
-
-- Página: `/tu-primera-pausa`. Presenta la guía y lleva al formulario de contacto con la guía ya elegida (`/contacto?servicio=guia`); Tati la envía por WhatsApp.
-- Archivos: `public/descargas/tu-primera-pausa.pdf` y `public/descargas/meditacion-freno.mp3`. La carpeta `/descargas` se sirve con `noindex`.
-- El PDF se genera con `npm run ebook` a partir de `content/ebook.ts` (textos) y `scripts/ebook.ts` (maqueta y código QR). Usa Playwright con Chromium; si Chromium no está en la ruta por defecto, indica su ruta en `CHROMIUM_PATH`.
-
 ## Formulario de contacto
 
-`/contacto` es el único formulario de la web. En tres pasos se elige qué se quiere (la guía gratuita, un programa de meditación, una lectura, una sesión, una terapia, el curso de Reiki u otra consulta), el producto concreto y su formato, y el nombre. Al enviar se abre WhatsApp con un mensaje ya escrito (`lib/contact-whatsapp.ts`); no se guarda nada en la web. Acepta `?servicio=` (guia, meditacion, tarot, autoconocimiento, reiki, limpieza, curso-reiki, no-lo-se) y `?producto=` (el `slug` de un producto, `guia` o `grupo`) para abrirlo con la opción elegida. Las opciones salen de `content/tienda.ts`, así que los productos nuevos aparecen solos.
+`/contacto` es el único formulario de la web. En tres pasos se elige qué se quiere (un programa de meditación, una lectura, una sesión, una terapia, el curso de Reiki u otra consulta), el producto concreto y su formato, y el nombre. Al enviar se abre WhatsApp con un mensaje ya escrito (`lib/contact-whatsapp.ts`); no se guarda nada en la web. Acepta `?servicio=` (meditacion, tarot, autoconocimiento, reiki, limpieza, curso-reiki, no-lo-se) y `?producto=` (el `slug` de un producto o `grupo`) para abrirlo con la opción elegida. Las opciones salen de `content/tienda.ts`, así que los productos nuevos aparecen solos.
 
 ## Contenido
 
@@ -57,7 +51,6 @@ Todo el contenido editable está en `/content`:
 - `paginas.ts`: textos de inicio, quién soy, testimonios, tablón, contacto y errores.
 - `servicios.ts`: bloques de servicios, Método Despierta y textos de cada página de servicio.
 - `tienda.ts`: catálogo, precios, textos de la tienda y de las fichas.
-- `guia.ts` y `ebook.ts`: guía gratuita, emails y textos del PDF.
 - `calculadora.ts` y `arcanos.ts`: calculadora de la Matriz del Destino, su PDF y los textos de los arcanos.
 - `anuncios.ts`: anuncios del tablón. Si un anuncio lleva `date`, se muestra la fecha, se ordena por ella, desaparece al pasar y genera datos estructurados de evento.
 - `instagram.ts`: publicaciones de Instagram para el tablón. Con la lista vacía se muestran las tarjetas para seguir las dos cuentas.

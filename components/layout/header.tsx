@@ -147,8 +147,8 @@ export function Header() {
           </nav>
           <div className="flex items-center gap-2">
             <div className="hidden xl:block">
-              <Button href={site.cta.guide.href} magnetic>
-                {site.cta.guide.label}
+              <Button href={site.cta.primary.href} magnetic>
+                {site.cta.primary.label}
               </Button>
             </div>
             <button

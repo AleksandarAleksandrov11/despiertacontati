@@ -19,7 +19,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = pageMetadata({
   title: "Grupos de meditación y novedades | Despierta con Tati",
   description:
-    "Próximos grupos de meditación online, la guía gratuita Tu primera pausa, novedades de la tienda y lo último de Despierta con Tati en Instagram.",
+    "Próximos grupos de meditación online, novedades de la tienda y lo último de Despierta con Tati en Instagram.",
   path: "/tablon",
 });
 

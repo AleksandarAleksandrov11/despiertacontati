@@ -11,7 +11,6 @@ import { TiendaPreview } from "@/components/sections/home/tienda-preview";
 import { TablonPreview } from "@/components/sections/home/tablon-preview";
 import { TestimoniosHome } from "@/components/sections/home/testimonios-home";
 import { KeywordMarquee } from "@/components/sections/keyword-marquee";
-import { GuiaBlock } from "@/components/sections/guia-block";
 import { CalculadoraPromo } from "@/components/sections/calculadora/calculadora-promo";
 import { Respira } from "@/components/sections/respira";
 import { FaqSection } from "@/components/sections/faq-section";
@@ -41,7 +40,6 @@ export default function HomePage() {
       <Destacados />
       <Respira />
       <TiendaPreview />
-      <GuiaBlock tone="salvia" />
       <TablonPreview />
       <TestimoniosHome />
       <FaqSection eyebrow={inicio.faq.eyebrow} title={inicio.faq.title} faqs={faqs.inicio} />

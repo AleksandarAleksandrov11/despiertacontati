@@ -13,8 +13,7 @@ const categoriasDe: Partial<Record<ContactTopic, CategoriaId[]>> = {
   limpieza: ["espacios"],
 };
 
-const { guia, grupo } = contactoPage.form;
-const opcionGuia: OpcionContacto = { value: "guia", ...guia };
+const { grupo } = contactoPage.form;
 const opcionGrupo: OpcionContacto = { value: "grupo", ...grupo };
 
 function todos() {
@@ -31,7 +30,6 @@ export type GrupoContacto = { titulo?: string; opciones: OpcionContacto[] };
 
 export function gruposDe(servicio?: ContactTopic): GrupoContacto[] {
   if (!servicio) return [];
-  if (servicio === "guia") return [{ opciones: [opcionGuia] }];
   const ids = categoriasDe[servicio] ?? [];
   const grupos: GrupoContacto[] = ids.map((id) => ({
     titulo: ids.length > 1 ? categorias.find((categoria) => categoria.id === id)?.nav : undefined,
@@ -50,7 +48,6 @@ export function productoDe(slug?: string) {
 }
 
 export function servicioDe(slug: string | null): ContactTopic | undefined {
-  if (slug === "guia") return "guia";
   if (slug === "grupo") return "meditacion";
   const producto = productoDe(slug ?? undefined);
   if (!producto) return undefined;

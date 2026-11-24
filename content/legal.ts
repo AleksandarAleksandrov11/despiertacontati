@@ -57,7 +57,7 @@ export const avisoLegal: LegalDocument = {
       id: "objeto",
       title: "Objeto de la web",
       blocks: [
-        "Esta web da a conocer los servicios de terapia holística de Despierta con Tati: Reiki y terapias energéticas, limpieza energética de casas y espacios, meditación, tarot y autoconocimiento, online. También ofrece una tienda de meditaciones, lecturas y sesiones con compra por WhatsApp, una calculadora gratuita de la Matriz del Destino, una guía gratuita y el contacto para reservar o pedir información.",
+        "Esta web da a conocer los servicios de terapia holística de Despierta con Tati: Reiki y terapias energéticas, limpieza energética de casas y espacios, meditación, tarot y autoconocimiento, online. También ofrece una tienda de meditaciones, lecturas y sesiones con compra por WhatsApp, una calculadora gratuita de la Matriz del Destino y el contacto para reservar o pedir información.",
       ],
     },
     {
@@ -115,7 +115,7 @@ export const politicaPrivacidad: LegalDocument = {
   intro: "Qué datos recojo, para qué los uso, cuánto tiempo los guardo y cómo puedes ejercer tus derechos.",
   metaTitle: "Política de privacidad | Despierta con Tati",
   metaDescription:
-    "Cómo trata Despierta con Tati tus datos personales: contacto, guía gratuita, pedidos por WhatsApp, hosting y analítica, conforme al RGPD y la LOPDGDD.",
+    "Cómo trata Despierta con Tati tus datos personales: contacto, pedidos por WhatsApp, hosting y analítica, conforme al RGPD y la LOPDGDD.",
   sections: [
     {
       id: "responsable",
@@ -137,7 +137,7 @@ export const politicaPrivacidad: LegalDocument = {
       id: "datos",
       title: "Qué datos trato y para qué",
       blocks: [
-        "Formulario de contacto. Trato tu nombre, tu email o teléfono si me los dejas, lo que te interesa (la guía gratuita, un programa, una lectura, una sesión u otra consulta), el formato que prefieres y el mensaje que escribas, para responder a tu consulta, enviarte la guía gratuita o gestionar tu reserva. No guardo estos datos en la web: al enviar se abre WhatsApp con el mensaje preparado para que me lo mandes tú.",
+        "Formulario de contacto. Trato tu nombre, tu email o teléfono si me los dejas, lo que te interesa (un programa, una lectura, una sesión u otra consulta), el formato que prefieres y el mensaje que escribas, para responder a tu consulta o gestionar tu reserva. No guardo estos datos en la web: al enviar se abre WhatsApp con el mensaje preparado para que me lo mandes tú.",
         "Pedidos de la tienda. Cuando compras por WhatsApp trato tu nombre, tu número, los datos del pedido y el justificante de pago para gestionar la compra, enviarte el producto y cumplir con las obligaciones fiscales. En las lecturas de autoconocimiento y en la Lectura del Cumpleaños también tu fecha de nacimiento, que solo uso para hacer tu lectura.",
         "Calculadoras. La fecha de nacimiento y el nombre que escribas en las calculadoras se usan solo en el momento para hacer el cálculo y preparar tu PDF gratuito. No se guardan en ninguna base de datos ni se usan para nada más. Si después pides tu lectura completa por WhatsApp, se aplica lo indicado para los pedidos de la tienda.",
         "No te pido datos de salud. Si decides contarme algo así en un mensaje, lo uso solo para atender tu consulta.",

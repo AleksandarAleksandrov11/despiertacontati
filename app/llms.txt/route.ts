@@ -1,7 +1,6 @@
 import { site } from "@/content/site";
 import { bloques, metodo } from "@/content/servicios";
 import { categorias, productosDe } from "@/content/tienda";
-import { guia } from "@/content/guia";
 import { calculadoraHub, rutasCalculadora } from "@/content/calculadora";
 import { hayTestimonios } from "@/content/testimonios";
 import { formatPrice, productHref } from "@/lib/tienda";
@@ -34,7 +33,6 @@ export function GET() {
     ["Servicios", "/servicios"],
     ["Tienda", "/tienda"],
     ["Calculadoras gratuitas", rutasCalculadora.hub],
-    ["Guía gratuita Tu primera pausa", guia.slug],
     ["Tablón", "/tablon"],
     ...(hayTestimonios ? [["Testimonios", "/testimonios"]] : []),
     ["Contacto", "/contacto"],
@@ -71,9 +69,6 @@ ${calculadoraHub.subtitle}
 - [Matriz del Destino](${absoluteUrl(rutasCalculadora.individual)}): con la fecha de nacimiento muestra la matriz completa, la energía personal, el centro, el talento, el linaje y los cuatro propósitos, con un PDF gratuito.
 - [Arcano Personal y Código Personal](${absoluteUrl(rutasCalculadora.codigo)}): tarot numerológico. Con la fecha de nacimiento muestra el arcano personal (la carta personal) y las cinco cartas del Código Personal, con el método Tarot Pragmático de Raúl Muñoz Jara y un PDF gratuito.
 El análisis completo de la matriz, en una sesión en directo de 50 minutos con Tati, se pide por WhatsApp desde la propia calculadora.
-
-## Guía gratuita
-[${guia.title}](${absoluteUrl(guia.slug)}): ${guia.subtitle} Incluye: ${guia.puntos.map((punto) => punto.title).join(", ")}.
 
 ## Contacto
 - Web: ${site.url}
