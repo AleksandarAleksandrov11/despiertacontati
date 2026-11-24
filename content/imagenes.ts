@@ -207,7 +207,7 @@ export const imagenes = {
   },
   mapa2027: {
     src: mapa2027,
-    alt: "Abanico de cartas del tarot Rider-Waite bajo el título Mapa 2027, tu año en 24 cartas",
+    alt: "Abanico de cartas del tarot bajo el título Mapa 2027, tu año en 24 cartas",
     position: "50% 50%",
   },
   escritorioVela: {
