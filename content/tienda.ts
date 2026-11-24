@@ -64,14 +64,14 @@ export const categorias: Categoria[] = [
     nav: "Crono Tarot",
     eyebrow: "Crono Tarot",
     title: "Lecturas en el tiempo.",
-    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
+    text: "Tu Mapa 2027, tu cumpleaños, una estación, un mes o una semana. En vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
   },
   {
     id: "lecturas",
     nav: "Lecturas concretas",
     eyebrow: "Lecturas concretas",
     title: "Una pregunta, una lectura.",
-    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. Tarot Rider-Waite, en vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
+    text: "Tu mapa de vida, la pareja, el trabajo, la compatibilidad y el corazón. En vídeo por WhatsApp o en directo. El PDF es opcional por 4,95 €.",
   },
   {
     id: "autoconocimiento",
@@ -262,7 +262,7 @@ export const productos: Producto[] = [
       "Tu nuevo ciclo personal: aprendizajes, oportunidades y retos para los próximos doce meses en las diferentes áreas de tu vida.",
     descripcion:
       "Una lectura para explorar tu nuevo ciclo personal y descubrir los aprendizajes, las oportunidades y los retos que pueden aparecer en las diferentes áreas de tu vida durante los próximos doce meses.",
-    incluye: [{ titulo: "Lectura anual con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura anual con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
@@ -285,7 +285,7 @@ export const productos: Producto[] = [
       "La energía de una estación (primavera, verano, otoño o invierno) y los temas, retos y aprendizajes de esa etapa.",
     descripcion:
       "Una lectura para explorar la energía de una estación del año (primavera, verano, otoño o invierno) y conectar con los temas, retos y aprendizajes de esa etapa.",
-    incluye: [{ titulo: "Lectura estacional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura estacional con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
@@ -312,7 +312,7 @@ export const productos: Producto[] = [
       { titulo: "Entorno" },
       { titulo: "Trabajo" },
       { titulo: "Dinero" },
-      { titulo: "Lectura con tarot Rider-Waite, en vídeo" },
+      { titulo: "Lectura con tarot, en vídeo" },
     ],
     formato: "Vídeo, 22 cartas",
     entrega: entregaLectura,
@@ -344,7 +344,7 @@ export const productos: Producto[] = [
       { titulo: "Trabajo" },
       { titulo: "Dinero" },
       { titulo: "Consejo" },
-      { titulo: "Lectura con tarot Rider-Waite, en vídeo" },
+      { titulo: "Lectura con tarot, en vídeo" },
     ],
     formato: "Vídeo, 16 cartas",
     entrega: entregaLectura,
@@ -363,7 +363,7 @@ export const productos: Producto[] = [
     frase: "Tendencias de la semana, retos que puedes afrontar y oportunidades que conviene aprovechar.",
     descripcion:
       "Una visión de la semana para reconocer las tendencias, los retos que puedes afrontar y las oportunidades que conviene aprovechar.",
-    incluye: [{ titulo: "Lectura semanal con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura semanal con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
@@ -411,7 +411,7 @@ export const productos: Producto[] = [
     frase: "La dinámica de una relación: puntos de conexión, diferencias y aprendizajes compartidos.",
     descripcion:
       "Explora la dinámica de una relación, sus puntos de conexión, sus diferencias y los aprendizajes que podéis compartir.",
-    incluye: [{ titulo: "Lectura de la relación con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura de la relación con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
@@ -433,7 +433,7 @@ export const productos: Producto[] = [
     frase: "Tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento.",
     descripcion:
       "Analiza tu situación profesional, tus fortalezas, los obstáculos y las posibilidades de crecimiento para afrontar tu camino laboral con mayor claridad.",
-    incluye: [{ titulo: "Lectura profesional con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura profesional con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
@@ -455,7 +455,7 @@ export const productos: Producto[] = [
     frase: "Afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
     descripcion:
       "Descubre las afinidades, diferencias, fortalezas y retos de una relación para comprender mejor vuestro vínculo.",
-    incluye: [{ titulo: "Lectura de compatibilidad con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura de compatibilidad con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [
@@ -477,7 +477,7 @@ export const productos: Producto[] = [
     frase: "Tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
     descripcion:
       "Una lectura centrada en tus necesidades afectivas, tus emociones y los patrones que influyen en tu manera de amar y relacionarte.",
-    incluye: [{ titulo: "Lectura afectiva con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+    incluye: [{ titulo: "Lectura afectiva con tarot" }, { titulo: "Vídeo con la lectura" }],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: [

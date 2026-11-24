@@ -17,7 +17,7 @@ import { TiltCard } from "@/components/ui/tilt-card";
 import { breadcrumbJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 
 const description =
-  "Tarot terapéutico online: Crono Tarot, lecturas concretas en vídeo, con PDF opcional, sesiones en directo de 30 o 50 minutos y tu carta del día. Tarot Rider-Waite, para decidir tú.";
+  "Tarot terapéutico online: Crono Tarot, lecturas concretas en vídeo, con PDF opcional, sesiones en directo de 30 o 50 minutos y tu carta del día. Para decidir tú.";
 
 const accents = ["var(--color-chakra-plexo)", "var(--color-chakra-corazon)", "var(--color-chakra-tercer-ojo)"];
 

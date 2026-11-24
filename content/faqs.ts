@@ -132,7 +132,7 @@ export const faqs = {
     lecturaFaq,
     {
       question: "¿Qué baraja usas?",
-      answer: "El tarot Rider-Waite.",
+      answer: "Depende de la lectura: trabajo con distintos tarots y elijo el que mejor encaja.",
     },
     {
       question: "¿Puedo hacer una sesión en directo?",
