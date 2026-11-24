@@ -301,10 +301,19 @@ export const productos: Producto[] = [
     tipo: "lectura",
     nombre: "Tu Mapa Mensual",
     frase:
-      "Lectura amplia de un mes concreto: la energía del periodo, los temas más destacados y las áreas que pueden requerir atención.",
+      "Lectura de 22 cartas de un mes concreto: la energía del periodo a través de siete áreas de tu vida.",
     descripcion:
-      "Una lectura centrada en un mes concreto. Explora la energía del periodo y descubre los temas más destacados y las áreas de tu vida que pueden requerir atención.",
-    incluye: [{ titulo: "Lectura mensual amplia con tarot Rider-Waite" }, { titulo: "Vídeo con la lectura" }],
+      "Una lectura amplia centrada en un mes concreto, con 22 cartas repartidas en siete áreas. Explora la energía del periodo y descubre los temas más destacados y las áreas de tu vida que pueden requerir atención.",
+    incluye: [
+      { titulo: "Consultante" },
+      { titulo: "A favor" },
+      { titulo: "Reto" },
+      { titulo: "Amor" },
+      { titulo: "Entorno" },
+      { titulo: "Trabajo" },
+      { titulo: "Dinero" },
+      { titulo: "Lectura con tarot Rider-Waite, en vídeo" },
+    ],
     formato: "Vídeo",
     entrega: entregaLectura,
     paraQuien: paraLectura,
