@@ -43,7 +43,7 @@ export default function AutoconocimientoPage() {
             description,
             path: "/servicios/autoconocimiento",
             serviceType: "Autoconocimiento",
-            offers: ["Lectura de la Matriz del Destino", "Análisis de la Matriz del Destino", "Tu Código Personal", "Carta Personal"],
+            offers: ["Análisis de la Matriz del Destino", "Tu Código Personal", "Carta Personal"],
           }),
         ]}
       />

@@ -139,6 +139,7 @@ export const politicaPrivacidad: LegalDocument = {
       blocks: [
         "Formulario de contacto. Trato tu nombre, tu email o teléfono si me los dejas, lo que te interesa (un programa, una lectura, una sesión u otra consulta), el formato que prefieres y el mensaje que escribas, para responder a tu consulta o gestionar tu reserva. No guardo estos datos en la web: al enviar se abre WhatsApp con el mensaje preparado para que me lo mandes tú.",
         "Pedidos de la tienda. Cuando compras por WhatsApp trato tu nombre, tu número, los datos del pedido y el justificante de pago para gestionar la compra, enviarte el producto y cumplir con las obligaciones fiscales. En las lecturas de autoconocimiento y en la Lectura del Cumpleaños también tu fecha de nacimiento, que solo uso para hacer tu lectura.",
+        "Sesiones grabadas. El análisis de la Matriz del Destino se hace por Zoom y se graba para enviarte el vídeo de la sesión. Si no quieres que se grabe, dímelo antes de empezar. La grabación es solo para ti y para mí.",
         "Calculadoras. La fecha de nacimiento y el nombre que escribas en las calculadoras se usan solo en el momento para hacer el cálculo y preparar tu PDF gratuito. No se guardan en ninguna base de datos ni se usan para nada más. Si después pides tu lectura completa por WhatsApp, se aplica lo indicado para los pedidos de la tienda.",
         "No te pido datos de salud. Si decides contarme algo así en un mensaje, lo uso solo para atender tu consulta.",
         "WhatsApp. Si me escribes por WhatsApp, trataré tu número, tu nombre de perfil y lo que me cuentes para atender tu consulta. WhatsApp es un servicio de Meta Platforms y se rige también por sus propias condiciones y política de privacidad.",
@@ -176,6 +177,7 @@ export const politicaPrivacidad: LegalDocument = {
         {
           list: [
             "Vercel Inc. (Estados Unidos): alojamiento de la web y, si lo aceptas, analítica anónima.",
+            "Zoom Video Communications (Estados Unidos): videollamada de las sesiones online que se hacen por Zoom.",
             "Meta Platforms (WhatsApp e Instagram): cuando me escribes o haces un pedido por WhatsApp y, si lo aceptas, al ver publicaciones de Instagram en el tablón.",
           ],
         },

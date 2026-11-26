@@ -80,7 +80,7 @@ export const calculadoraHub = {
         "Tu karma material y tu bagaje kármico",
         "El canal del dinero y el canal de las relaciones",
         "Y mucho más",
-        "En una sesión en directo de 50 minutos, online",
+        "En una sesión en directo de 50 minutos, por Zoom, con vídeo",
       ],
       cta: "Ver el análisis",
     },
@@ -200,7 +200,7 @@ export const calculadoraIndividual = {
     text: "En tu análisis interpreto tu matriz entera, a fondo y de forma personal, para que sepas qué hacer con lo que descubres.",
     claves: ["Análisis de tu esencia", "Tus talentos", "Tu karma material", "Tu bagaje kármico", "Tu poder", "El canal del dinero", "El canal de las relaciones"],
     mas: "Y mucho más.",
-    formato: "Lo vemos en una sesión en directo de 50 minutos, online.",
+    formato: "Lo vemos en una sesión en directo de 50 minutos, por Zoom. Te envío el vídeo de la sesión.",
     info: "Prefiero preguntar antes",
   },
 };
@@ -225,7 +225,7 @@ export const calculadoraFaqs: Faq[] = [
   {
     question: "¿En qué se diferencia del análisis?",
     answer:
-      "La calculadora te muestra las energías principales de tu matriz con una lectura general. En el análisis interpreto tu matriz entera, a fondo y de forma personal, en una sesión en directo de 50 minutos.",
+      "La calculadora te muestra las energías principales de tu matriz con una lectura general. En el análisis interpreto tu matriz entera, a fondo y de forma personal, en una sesión en directo de 50 minutos, por Zoom, que te envío grabada.",
   },
   {
     question: "¿La Matriz del Destino es tarot?",

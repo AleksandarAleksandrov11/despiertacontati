@@ -77,7 +77,7 @@ export const bloques: Bloque[] = [
     image: "libretaEscribir",
     summary: "Herramientas que parten de tu fecha de nacimiento para conocerte mejor y usar tu poder personal.",
     includes: ["Matriz del Destino", "Tu Código Personal", "Carta Personal"],
-    modality: ["A partir de tu fecha de nacimiento", "PDF y sesiones en directo"],
+    modality: ["A partir de tu fecha de nacimiento", "Sesiones en directo"],
     more: "Ver autoconocimiento",
   },
 ];
@@ -483,7 +483,7 @@ export const autoconocimientoPage = {
     ],
   },
   herramientasHeading: { eyebrow: "Herramientas", title: "Elige por dónde empezar." },
-  herramientas: ["matriz-del-destino", "analisis-matriz-del-destino", "tu-codigo-personal"],
+  herramientas: ["analisis-matriz-del-destino", "tu-codigo-personal"],
   carta: {
     image: "tarotFlores" as ImageKey,
     tag: "Tarot numerológico",

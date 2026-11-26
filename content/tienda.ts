@@ -78,7 +78,7 @@ export const categorias: Categoria[] = [
     nav: "Autoconocimiento",
     eyebrow: "Autoconocimiento",
     title: "A partir de tu fecha de nacimiento.",
-    text: "Numerología y la energía de los arcanos mayores para conocerte mejor. En PDF por WhatsApp o en directo.",
+    text: "Numerología y la energía de los arcanos mayores para conocerte mejor, en sesiones en directo y online.",
   },
   {
     id: "sesiones",
@@ -519,44 +519,13 @@ export const productos: Producto[] = [
     calculadora: "/calculadora/codigo-personal",
   },
   {
-    slug: "matriz-del-destino",
-    categoria: "autoconocimiento",
-    tipo: "lectura",
-    nombre: "Lectura de la Matriz del Destino",
-    frase: "Las cinco llaves de tu Matriz del Destino, con una carta para cada una.",
-    descripcion:
-      "Calculo tu Matriz del Destino con tu fecha de nacimiento y leo sus cinco llaves con cinco cartas, para que entiendas desde dónde partes y hacia dónde te lleva tu camino.",
-    incluye: [
-      { titulo: "Tu energía personal" },
-      { titulo: "Tu talento" },
-      { titulo: "Dificultades en el mundo material" },
-      { titulo: "Tu bagaje kármico" },
-      { titulo: "Tu poder personal" },
-    ],
-    formato: "PDF",
-    entrega: "PDF por WhatsApp, tras confirmar el pago.",
-    paraQuien: [
-      "Quieres conocer tus talentos y tus retos.",
-      "Quieres entender el camino de tu alma.",
-      "Buscas recordar tu poder personal.",
-    ],
-    precio: 8,
-    directo: [
-      { precio: 27, duracion: "30 minutos" },
-      { precio: 36, duracion: "50 minutos" },
-    ],
-    destacado: false,
-    imagen: "matrizLectura",
-    calculadora: "/calculadora/matriz-del-destino",
-  },
-  {
     slug: "analisis-matriz-del-destino",
     categoria: "autoconocimiento",
     tipo: "sesion",
     nombre: "Análisis de la Matriz del Destino",
     frase: "Tu Matriz del Destino completa, analizada a fondo contigo en directo.",
     descripcion:
-      "Analizo tu Matriz del Destino completa a partir de tu fecha de nacimiento, en una sesión en directo contigo, para que entiendas tu camino y sepas qué hacer con lo que descubres.",
+      "Analizo tu Matriz del Destino completa a partir de tu fecha de nacimiento, en una sesión en directo contigo, por Zoom, para que entiendas tu camino y sepas qué hacer con lo que descubres. La sesión se graba y te envío el vídeo para que puedas volver a verla.",
     incluye: [
       { titulo: "Análisis de tu esencia" },
       { titulo: "Tus talentos" },
@@ -566,9 +535,10 @@ export const productos: Producto[] = [
       { titulo: "El canal del dinero" },
       { titulo: "El canal de las relaciones" },
       { titulo: "Y mucho más" },
+      { titulo: "Vídeo de la sesión, grabada y enviada por mí" },
     ],
-    formato: "Sesión en directo de 50 minutos",
-    entrega: entregaSesion,
+    formato: "Sesión en directo de 50 minutos, con vídeo",
+    entrega: "Online, por Zoom. La fecha y la hora se agendan por WhatsApp, y después te envío el vídeo de la sesión.",
     paraQuien: [
       "Quieres conocer tus talentos y tus retos.",
       "Quieres entender el camino de tu alma.",
